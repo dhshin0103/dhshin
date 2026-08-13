@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+auth_state.json
+audit_log.jsonl
+work_queue.json
