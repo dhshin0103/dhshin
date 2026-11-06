@@ -110,14 +110,19 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .news .ic { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--sky); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
 .news.good .ic { background: var(--good); }
 .mv-body { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 16px; align-items: start; }
-.mapbox { background: #bfe6ff; border: 3px solid var(--deep); border-radius: 20px; overflow: hidden; position: relative; }
+.mapbox { background: #f4efe8; border: 3px solid var(--deep); border-radius: 20px; overflow: hidden; position: relative; }
 .mapbox svg { display: block; width: 100%; height: auto; max-height: 78vh; }
 .rg { cursor: pointer; outline: none; }
 .rg .land { stroke: #fff; stroke-width: 3; stroke-linejoin: round; transition: fill .5s; }
 .rg:hover .land, .rg:focus-visible .land { stroke: #ffc53d; stroke-width: 5; }
 .rg.locked { cursor: not-allowed; }
-.rg.won { animation: won 1s ease-out 3; }
-@keyframes won { 50% { filter: brightness(1.15) drop-shadow(0 0 12px #ffc53d); } }
+.rg.won { animation: won 1.1s cubic-bezier(.2,1.4,.4,1) both; transform-box: fill-box; transform-origin: center; }
+@keyframes won { from { transform: translateY(-40px) scale(1.15); opacity: .3; } to { transform: none; opacity: 1; } }
+.pname { font-family: var(--display); font-size: 15px; text-anchor: middle; pointer-events: none; }
+.psub { font-family: var(--body); font-weight: 700; font-size: 9.5px; text-anchor: middle; pointer-events: none; }
+.sea { font-family: var(--display); font-size: 17px; fill: #b08a68; text-anchor: middle; letter-spacing: 2px; }
+.sea.big { font-size: 24px; fill: #6e4630; }
+.rg:hover .edge, .rg:focus-visible .edge { stroke: #ffc53d; stroke-width: 3.5; }
 .tiger { fill: none; stroke: #3a2a1a; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 .rname { font-family: var(--display); font-size: 19px; fill: #1c2024; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #fff; stroke-width: 5px; }
 .rsub { font-family: var(--body); font-weight: 700; font-size: 12.5px; fill: #003a5c; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #fff; stroke-width: 4px; }
@@ -213,7 +218,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     <div class="mv-body">
       <div>
         <div class="mapbox" id="mapbox"></div>
-        <div class="legend" id="legend"><span><i style="background:#c9a227"></i>정복 완료</span><span><i style="background:#fff"></i>도전 가능</span><span><i style="background:#cfd8e0"></i>잠김</span></div>
+        <div class="legend" id="legend"><span><i style="background:#b97a45"></i>맞춘 조각 (컬러 원목)</span><span><i style="background:#bdbdbd"></i>아직 못 맞춘 조각 (흑백)</span><span>🔒 잠긴 조각</span></div>
       </div>
       <div id="side"></div>
     </div>
@@ -637,7 +642,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     $('skipBtn').hidden = true;
     if (runMode === 'ta') { showTaResults(); return; }
     saveM();
-    $('doneTitle').textContent = M.lastRegionDone ? `${REG[pick.g - 1].name} 전체 정복!` : `${curCity().name} 정복!`;
+    $('doneTitle').textContent = M.lastRegionDone ? `${REG[pick.g - 1].name} 퍼즐 조각 완성!` : `${curCity().name} 정복!`;
     $('taBox').hidden = true;
     $('reviewBox').hidden = false;
     $('doneScore').textContent = stats.first + ' / ' + TOTAL;
@@ -1099,24 +1104,25 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     jg: [127.6, 35.9], gy: [128.4, 37.15], cn: [127.55, 37.2], asan: [126.85, 36.95], boryeong: [126.5, 36.35], taean: [126.15, 36.75], seosan: [126.45, 37.0],
     incheon: [126.6, 37.45], ganghwa: [126.4, 37.72], dmz1: [127.0, 38.0], dmz2: [127.5, 38.3], dmz3: [128.0, 38.3], goseong: [128.4, 38.6], sokcho: [128.6, 38.2], gangneung: [128.9, 37.75], samcheok: [129.17, 37.45],
     haeju: [125.7, 38.0], ongjin: [125.2, 37.85], changsan: [124.8, 38.1], nampo: [125.3, 38.7], cc: [125.4, 39.6], hamhung: [127.6, 39.8], wonsan: [127.45, 39.15], tongcheon: [127.9, 38.95],
-    cheolsan: [124.6, 39.6], yalu: [124.3, 39.9], b1: [125.0, 40.4], b2: [125.8, 40.7], b3: [126.6, 41.4], b4: [127.2, 41.5], b5: [128.1, 41.6], baekdu: [128.08, 42.0], b6: [129.0, 42.3], b7: [129.9, 42.95], b8: [130.4, 42.6], tumen: [130.7, 42.3],
+    cheolsan: [124.6, 39.6], yalu: [124.3, 39.9], b1: [125.0, 40.4], b2: [125.8, 40.7], b3: [126.6, 41.4], b4: [127.2, 41.5], b5: [128.1, 41.6], baekdu: [128.08, 42.0], b6: [129.0, 42.3], b7: [129.9, 42.95], b8: [130.4, 42.6], tumen: [130.7, 42.3], dmzK: [127.2, 38.12], gw1: [127.5, 37.75],
     chongjin: [129.8, 41.8], kimchaek: [129.2, 40.7], tanchon: [128.9, 40.45], sinpo: [128.2, 40.05]
   };
+  // 남한 6조각 = 1~6학년. 나무 퍼즐처럼 조각마다 다른 원목 색
   const REG = [
-    { g: 1, name: '제주도', col: '#ff9f8f', ring: null, lab: [126.55, 33.0],
-      extra: () => { const [x, y] = XY([126.58, 33.37]); return `<ellipse class="land" cx="${x}" cy="${y}" rx="29" ry="14"/>`; },
+    { g: 1, name: '제주도', wood: '#d9a066', ring: null, lab: [127.55, 33.42], outside: true,
+      extra: () => { const [x, y] = XY([126.58, 33.37]); return `<ellipse cx="${x}" cy="${y}" rx="29" ry="14"/>`; },
       cities: [['제주시', 126.53, 33.50], ['애월', 126.33, 33.46], ['한림', 126.3, 33.4], ['대정', 126.32, 33.26], ['서귀포', 126.56, 33.25], ['남원', 126.72, 33.28], ['표선', 126.83, 33.33], ['성산', 126.93, 33.46], ['구좌', 126.8, 33.5], ['한라산', 126.53, 33.36]] },
-    { g: 2, name: '전라도', col: '#ffc76b', ring: ['gunsan', 'yeonggwang', 'mokpo', 'jindo', 'haenam', 'wando', 'goheung', 'yeosu', 'jg'], lab: [126.95, 35.3],
+    { g: 2, name: '전라도', wood: '#a8653a', ring: ['gunsan', 'yeonggwang', 'mokpo', 'jindo', 'haenam', 'wando', 'goheung', 'yeosu', 'jg'], lab: [126.95, 35.3],
       cities: [['군산', 126.71, 35.97], ['익산', 126.95, 35.93], ['전주', 127.15, 35.82], ['정읍', 126.86, 35.57], ['남원', 127.39, 35.42], ['광주', 126.85, 35.16], ['나주', 126.71, 35.02], ['목포', 126.45, 34.81], ['순천', 127.45, 34.95], ['여수', 127.62, 34.76]] },
-    { g: 3, name: '경상도', col: '#7fd39b', ring: ['yeosu', 'namhae', 'tongyeong', 'geoje', 'busan', 'ulsan', 'pohang', 'yeongdeok', 'uljin', 'gy', 'jg'], lab: [128.75, 35.95],
-      extra: () => { const [ux, uy] = XY([130.87, 37.5]), [dx, dy] = XY([131.87, 37.24]); return `<circle class="land" cx="${ux}" cy="${uy}" r="7"/><circle class="land" cx="${dx}" cy="${dy}" r="4"/>`; },
+    { g: 3, name: '경상도', wood: '#c88a52', ring: ['yeosu', 'namhae', 'tongyeong', 'geoje', 'busan', 'ulsan', 'pohang', 'yeongdeok', 'uljin', 'gy', 'jg'], lab: [128.75, 35.95],
+      extra: () => { const [ux, uy] = XY([130.87, 37.5]), [dx, dy] = XY([131.87, 37.24]); return `<circle cx="${ux}" cy="${uy}" r="7"/><circle cx="${dx}" cy="${dy}" r="4"/>`; },
       cities: [['대구', 128.6, 35.87], ['부산', 129.0, 35.2], ['울산', 129.28, 35.54], ['포항', 129.33, 36.02], ['경주', 129.15, 35.82], ['안동', 128.73, 36.57], ['창원', 128.62, 35.25], ['진주', 128.11, 35.18], ['구미', 128.34, 36.12], ['울릉도·독도', 130.87, 37.5]] },
-    { g: 4, name: '충청도', col: '#8ec9ff', ring: ['gunsan', 'boryeong', 'taean', 'seosan', 'asan', 'cn', 'gy', 'jg'], lab: [127.35, 36.55],
+    { g: 4, name: '충청도', wood: '#8a5a3b', ring: ['gunsan', 'boryeong', 'taean', 'seosan', 'asan', 'cn', 'gy', 'jg'], lab: [127.3, 36.6],
       cities: [['대전', 127.38, 36.35], ['세종', 127.27, 36.5], ['청주', 127.49, 36.64], ['천안', 127.15, 36.81], ['아산', 126.98, 36.77], ['공주', 127.1, 36.45], ['서산', 126.5, 36.78], ['보령', 126.62, 36.33], ['충주', 127.93, 36.99], ['제천', 128.19, 37.1]] },
-    { g: 5, name: '경기·강원도', col: '#c4a8ff', ring: ['asan', 'incheon', 'ganghwa', 'dmz1', 'dmz2', 'dmz3', 'goseong', 'sokcho', 'gangneung', 'samcheok', 'uljin', 'gy', 'cn'], lab: [127.85, 37.6],
-      cities: [['서울', 127.02, 37.58], ['인천', 126.68, 37.45], ['수원', 127.02, 37.22], ['고양', 126.72, 37.68], ['성남', 127.24, 37.4], ['파주', 126.86, 37.86], ['춘천', 127.73, 37.88], ['원주', 127.95, 37.34], ['강릉', 128.8, 37.75], ['속초', 128.48, 38.18]] },
-    { g: 6, name: '황해·평안·함경도', col: '#ff9cc2', ring: ['ganghwa', 'haeju', 'ongjin', 'changsan', 'nampo', 'cc', 'cheolsan', 'yalu', 'b1', 'b2', 'b3', 'b4', 'b5', 'baekdu', 'b6', 'b7', 'b8', 'tumen', 'chongjin', 'kimchaek', 'tanchon', 'sinpo', 'hamhung', 'wonsan', 'tongcheon', 'goseong', 'dmz3', 'dmz2', 'dmz1'], lab: [126.7, 39.9],
-      cities: [['개성', 126.55, 37.97], ['해주', 125.8, 38.1], ['남포', 125.45, 38.75], ['평양', 125.75, 39.03], ['신의주', 124.62, 40.0], ['강계', 126.6, 40.97], ['원산', 127.3, 39.15], ['함흥', 127.45, 39.93], ['청진', 129.6, 41.85], ['백두산', 128.1, 41.9]] }
+    { g: 5, name: '강원도', wood: '#b97a45', ring: ['dmzK', 'dmz2', 'dmz3', 'goseong', 'sokcho', 'gangneung', 'samcheok', 'uljin', 'gy', 'cn', 'gw1'], lab: [128.3, 37.65],
+      cities: [['춘천', 127.73, 37.88], ['원주', 127.95, 37.34], ['강릉', 128.8, 37.75], ['속초', 128.48, 38.18], ['동해', 129.05, 37.5], ['삼척', 129.08, 37.3], ['태백', 128.95, 37.16], ['홍천', 127.95, 37.69], ['평창', 128.39, 37.45], ['철원', 127.38, 38.05]] },
+    { g: 6, name: '경기도', wood: '#6e4630', ring: ['asan', 'incheon', 'ganghwa', 'dmz1', 'dmzK', 'gw1', 'cn'], lab: [127.15, 37.55],
+      cities: [['서울', 127.0, 37.56], ['인천', 126.68, 37.45], ['수원', 127.02, 37.26], ['고양', 126.8, 37.68], ['성남', 127.18, 37.42], ['파주', 126.82, 37.86], ['용인', 127.22, 37.23], ['안산', 126.78, 37.33], ['의정부', 127.06, 37.76], ['가평', 127.35, 37.82]] }
   ];
   const UNITS = {
     1: ['9까지의 수', '여러 가지 모양', '덧셈', '뺄셈', '50까지의 수', '100까지의 수', '덧셈(받아올림)', '뺄셈(받아내림)', '시각', '규칙 찾기'],
@@ -1127,7 +1133,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     6: ['분수의 나눗셈', '각기둥과 각뿔', '소수의 나눗셈', '비와 비율', '부피', '분수의 나눗셈(2)', '소수의 나눗셈(2)', '비례식', '비례배분', '원의 넓이']
   };
   // 지역 상세 지도에서 이름표를 왼쪽에 붙일 도시 (겹침 방지)
-  const LEFT = { '대구': 1, '구미': 1, '진주': 1, '창원': 1, '목포': 1, '나주': 1, '정읍': 1, '군산': 1, '공주': 1, '보령': 1, '서산': 1, '아산': 1, '인천': 1, '고양': 1, '파주': 1, '수원': 1, '애월': 1, '한림': 1, '대정': 1, '해주': 1, '남포': 1, '신의주': 1, '평양': 1, '울릉도·독도': 1 };
+  const LEFT = { '대구': 1, '구미': 1, '진주': 1, '창원': 1, '목포': 1, '나주': 1, '정읍': 1, '군산': 1, '공주': 1, '보령': 1, '서산': 1, '아산': 1, '인천': 1, '고양': 1, '파주': 1, '애월': 1, '한림': 1, '대정': 1, '해주': 1, '남포': 1, '신의주': 1, '평양': 1, '울릉도·독도': 1, '안산': 1 };
   const NICKS = ['하늘고래', '번개토끼', '초코펭귄', '구름여우', '파도곰', '달빛다람쥐'];
   const KEY = 'boogi-tiger-v1';
   const cid = (g, c) => g + '-' + c;
@@ -1143,7 +1149,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     [0, 1, 2, 5, 6, 7].forEach(c => { con[cid(2, c)] = 1; });
     REG.forEach(r => { for (let c = 0; c < 10; c++) rec[cid(r.g, c)] = [0, 1, 2].map(i => ({ n: NICKS[(r.g + c + i) % NICKS.length], t: +(22 + r.g * 1.5 + (c % 5) * 0.8 + i * 3.4 + ((r.g * 7 + c * 3 + i) % 5) * 0.6).toFixed(1) })); });
     return { con, ta: { '1-0': 24.1 }, rec, newRegion: 0, lastRegionDone: 0,
-      news: { good: false, text: '1학년 제주도는 정복 완료! 3학년 경상도부터 도시를 하나씩 정복해 볼까요? 2학년 전라도도 4개 도시가 남았어요.' } };
+      news: { good: false, text: '1학년 제주도 조각은 맞췄어요! 3학년 경상도 단원을 정복해서 다음 조각을 맞춰 볼까요? 2학년 전라도도 단원 4개가 남았어요.' } };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
@@ -1170,9 +1176,9 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     const r = REG[g - 1], city = r.cities[pick.c][0];
     if (!was && regionDone(g)) {
       M.newRegion = g; M.lastRegionDone = g;
-      endBanner = doneRegions() === 6 ? '한반도 전체 정복!' : `${r.name} 정복!`;
+      endBanner = doneRegions() === 6 ? '남한 퍼즐 완성!' : `${r.name} 조각 완성!`;
       const opened = g < 6 && !nextWasOpen && regionOpen(g + 1);
-      M.news = { good: true, text: doneRegions() === 6 ? '6개 지역을 모두 정복했어요. 한반도 정복 완료!' : `${r.name}의 도시 10곳을 모두 정복했어요!` + (opened ? ` ${g + 1}학년 ${REG[g].name}가 열렸어요.` : '') };
+      M.news = { good: true, text: doneRegions() === 6 ? '6조각을 모두 맞췄어요. 남한 퍼즐 완성!' : `${r.name} 단원 10개를 모두 정복해서 퍼즐 조각을 맞췄어요!` + (opened ? ` ${g + 1}학년 ${REG[g].name}가 열렸어요.` : '') };
     } else if (fresh) {
       M.news = { good: true, text: `${city} 정복! (${UNITS[g][pick.c]}) ${r.name} ${conqCount(g)}/10` };
     }
@@ -1181,69 +1187,65 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   // ---------- 그리기 ----------
   const ringPts = r => r.ring.map(n => XY(P[n]).join(',')).join(' ');
-  function regionShape(r, fill, extraAttr) {
-    const poly = r.ring ? `<polygon class="land" points="${ringPts(r)}" fill="${fill}"/>` : '';
-    const ex = r.extra ? r.extra().replace(/class="land"/g, `class="land" fill="${fill}"`) : '';
-    return poly + ex;
+  const shapeOf = (r, noExtra) => (r.ring ? `<polygon points="${ringPts(r)}"/>` : '') + (r.extra && !noExtra ? r.extra() : '');
+  // 원목 결 + 3D 두께 필터
+  const DEFS = `<defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.32" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.16  0 0 0 0 0.09  0 0 0 0 0.03  0.9 0 0 0 -0.32"/></filter>
+    <filter id="gray" x="-5%" y="-5%" width="110%" height="110%"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope=".8" intercept=".16"/><feFuncG type="linear" slope=".8" intercept=".16"/><feFuncB type="linear" slope=".8" intercept=".16"/></feComponentTransfer></filter>
+    <filter id="lift" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="2" dy="7" stdDeviation="5" flood-color="#2b1708" flood-opacity=".45"/></filter>
+  </defs>`;
+  // 조각 하나: 맞춘 조각 = 원목 컬러 + 두께 + 그림자, 못 맞춘 조각 = 흑백 + 얇게
+  function pieceArt(r, k, done, noExtra) {
+    const sh = shapeOf(r, noExtra), id = 'cp' + r.g;
+    const d = done ? [3 * k, 7 * k] : [1.5 * k, 3 * k];
+    return `<g fill="${done ? '#4a2b16' : '#7d7d7d'}" transform="translate(${d[0].toFixed(1)},${d[1].toFixed(1)})">${sh}</g>
+      <g class="face" ${done ? `filter="url(#lift)" transform="translate(${(-1.5 * k).toFixed(1)},${(-3 * k).toFixed(1)})"` : 'filter="url(#gray)"'}>
+        <clipPath id="${id}">${sh}</clipPath>
+        <g clip-path="url(#${id})"><rect x="-100" y="-100" width="900" height="1100" fill="${r.wood}"/><rect x="-100" y="-100" width="900" height="1100" filter="url(#grain)"/></g>
+        <g class="edge" fill="none" stroke="${done ? '#f6dfb8' : '#f4f4f4'}" stroke-width="${(1.6 * k).toFixed(1)}" stroke-linejoin="round">${sh}</g>
+      </g>`;
   }
-  // 호랑이: 머리(함경북도), 앞발(평안북도·황해도), 뒷발(충남·전남), 꼬리(포항 호미곶), 등 줄무늬 몇 개
-  function tigerSVG() {
-    // 등 줄무늬: 동해안을 따라 안쪽으로 들어오는 쐐기 모양
-    const back = ['chongjin', 'kimchaek', 'tanchon', 'sinpo', 'wonsan', 'goseong', 'gangneung', 'samcheok', 'uljin', 'yeongdeok'];
-    const stripes = back.map(n => { const [x, y] = XY(P[n]); return `<path d="M${x - 1} ${y - 5} L${x - 34} ${y + 3} L${x - 1} ${y + 6} Z" fill="#3a2a1a" stroke="none" opacity=".55"/>`; }).join('');
-    const claw = (lon, lat) => { const [x, y] = XY([lon, lat]); return [0, 1, 2].map(i => `<path d="M${x} ${y - 6 + i * 7} l-13 ${-3 + i * 3}" stroke-width="3"/>`).join(''); };
-    const [hx, hy] = XY([130.05, 42.5]);
-    const [t0x, t0y] = XY(P.pohang);
-    return `<g class="tiger">
-      <path d="M${hx - 34} ${hy - 22} l-8 -30 l28 16 Z" fill="#ffb347" stroke-width="3"/>
-      <path d="M${hx + 4} ${hy - 30} l6 -30 l20 26 Z" fill="#ffb347" stroke-width="3"/>
-      <circle cx="${hx - 6}" cy="${hy - 6}" r="9" fill="#fff" stroke-width="2.5"/><circle cx="${hx - 3}" cy="${hy - 6}" r="4.5" fill="#3a2a1a" stroke="none"/>
-      <path d="M${hx + 30} ${hy + 14} l12 2 l-8 9 Z" fill="#3a2a1a" stroke-width="2"/>
-      <path d="M${hx + 20} ${hy + 30} q12 8 24 -2" stroke-width="3"/>
-      <path d="M${hx + 40} ${hy + 22} l26 -6 M${hx + 40} ${hy + 27} l26 4 M${hx + 40} ${hy + 32} l22 12" stroke-width="2"/>
-      ${stripes}
-      ${claw(124.4, 39.85)}${claw(124.8, 38.1)}${claw(126.15, 36.75)}${claw(126.25, 34.45)}
-      <path d="M${t0x} ${t0y} q34 -4 40 -34 q4 -22 -16 -26" stroke="#3a2a1a" stroke-width="10"/>
-      <path d="M${t0x} ${t0y} q34 -4 40 -34 q4 -22 -16 -26" stroke="#ffb347" stroke-width="6"/>
-      <path d="M${t0x + 26} ${t0y - 6} l6 -7 M${t0x + 36} ${t0y - 22} l9 -2 M${t0x + 34} ${t0y - 46} l6 6" stroke="#3a2a1a" stroke-width="3"/>
-    </g>`;
-  }
+  // 남한만 보이게 자른 화면 (울릉도·독도 포함)
+  const VB = [128, 372, 474, 516];
   function worldSVG(wonG) {
-    const regions = REG.map(r => {
+    const pieces = REG.map(r => {
       const open = regionOpen(r.g), done = regionDone(r.g), n = conqCount(r.g);
-      const fill = done ? r.col : open ? tint(r.col, 0.72) : '#cfd8e0';
       const [lx, ly] = XY(r.lab);
-      const lock = !open ? `<g transform="translate(${lx - 9},${ly + 20})" pointer-events="none"><rect x="0" y="8" width="18" height="14" rx="3" fill="#5b6672"/><path d="M4 9v-3a5 5 0 0 1 10 0v3" stroke="#5b6672" stroke-width="3" fill="none"/></g>` : '';
-      const flag = done ? `<g transform="translate(${lx + 34},${ly - 40})" pointer-events="none"><rect width="4" height="34" fill="#3d5a2e"/><path d="M4 2L30 10L4 18Z" fill="#fff" stroke="#3d5a2e" stroke-width="1.5"/></g>` : '';
-      return `<g class="rg${open ? '' : ' locked'}${wonG === r.g ? ' won' : ''}" data-g="${r.g}" tabindex="0" role="button" aria-label="${r.g}학년 ${r.name}, ${open ? `정복 ${n}/10` : '잠김'}">${regionShape(r, fill)}
-        <text class="rname" x="${lx}" y="${ly}">${r.name}</text>
-        <text class="rsub${open ? '' : ' lock'}" x="${lx}" y="${ly + 17}">${r.g}학년 · ${done ? '정복 완료' : open ? `정복 ${n}/10` : '잠김'}</text>${lock}${flag}</g>`;
+      const tc = r.outside ? '#3a2a1a' : done ? '#fff4dc' : '#2f2f2f';
+      const lock = !open ? `<g transform="translate(${lx - 7},${ly + 14})" pointer-events="none"><rect x="0" y="6" width="14" height="11" rx="2" fill="#555"/><path d="M3 7v-2a4 4 0 0 1 8 0v2" stroke="#555" stroke-width="2.4" fill="none"/></g>` : '';
+      const sub = done ? '조각 완성' : open ? `단원 ${n}/10` : '잠김';
+      return `<g class="rg${open ? '' : ' locked'}${wonG === r.g ? ' won' : ''}" data-g="${r.g}" tabindex="0" role="button" aria-label="${r.g}학년 ${r.name} 조각, ${done ? '완성' : open ? `단원 ${n}/10 정복` : '잠김'}">${pieceArt(r, 1, done)}
+        <text class="pname" x="${lx}" y="${ly - 2}" fill="${tc}">${r.name}</text>
+        <text class="psub" x="${lx}" y="${ly + 11}" fill="${tc}">${r.g}학년 · ${sub}</text>${lock}</g>`;
     }).join('');
     const [ux, uy] = XY([130.87, 37.5]), [dx, dy] = XY([131.87, 37.24]);
-    const isl = `<text class="rsub" x="${ux}" y="${uy - 12}">울릉도</text><text class="rsub" x="${dx}" y="${dy + 20}">독도</text>`;
-    return `<svg viewBox="0 0 620 880" role="group" aria-label="호랑이 모양 한반도 지도"><rect width="620" height="880" fill="#bfe6ff"/>${regions}${tigerSVG()}${isl}</svg><span class="mapcount">정복 ${doneRegions()} / 6 지역</span>`;
+    const sea = `<text class="sea" x="${XY([130.3, 36.2])[0]}" y="${XY([130.3, 36.2])[1]}">동해</text><text class="sea" x="${XY([125.6, 35.9])[0] + 22}" y="${XY([125.6, 35.9])[1]}">서해</text><text class="sea" x="${XY([128.6, 34.1])[0]}" y="${XY([128.6, 34.1])[1]}">남해</text>
+      <text class="psub" x="${ux}" y="${uy - 11}" fill="#5a4030">울릉도</text><text class="psub" x="${dx}" y="${dy + 16}" fill="#5a4030">독도</text>`;
+    return `<svg viewBox="${VB.join(' ')}" role="group" aria-label="남한 나무 퍼즐 지도">${DEFS}<rect x="${VB[0]}" y="${VB[1]}" width="${VB[2]}" height="${VB[3]}" fill="#f4efe8"/>${sea}${pieces}
+      ${doneRegions() === 6 ? `<text class="sea big" x="${XY([130.2, 34.4])[0]}" y="${XY([130.2, 34.4])[1]}">퍼즐 완성!</text>` : ''}</svg>
+      <span class="mapcount">퍼즐 ${doneRegions()} / 6 조각</span>`;
   }
   function regionSVG(r) {
     const pts = (r.ring ? r.ring.map(n => XY(P[n])) : []).concat(r.cities.map(c => XY([c[1], c[2]])));
-    if (r.g === 1) { const [x, y] = XY([126.55, 33.38]); pts.push([x - 30, y - 14], [x + 30, y + 14]); }
+    if (r.g === 1) { const [x, y] = XY([126.58, 33.37]); pts.push([x - 31, y - 16], [x + 31, y + 16]); }
     if (r.g === 3) pts.splice(pts.length - 1, 1);
     let x0 = Math.min(...pts.map(p => p[0])), x1 = Math.max(...pts.map(p => p[0])), y0 = Math.min(...pts.map(p => p[1])), y1 = Math.max(...pts.map(p => p[1]));
     const pad = Math.max(x1 - x0, y1 - y0) * 0.12 + 8; x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
-    const k = Math.max(x1 - x0, y1 - y0) / 420;
-    const fill = regionDone(r.g) ? r.col : tint(r.col, 0.6);
+    const k = Math.max(x1 - x0, y1 - y0) / 420, done = regionDone(r.g);
     const inset = r.g === 3 ? [x1 - 34 * k, y0 + 30 * k] : null;
     const cities = r.cities.map(([nm, lon, lat], c) => {
       const [x, y] = inset && c === 9 ? inset : XY([lon, lat]), won = !!M.con[cid(r.g, c)];
       return `<g class="city${selCity === c ? ' sel' : ''}" data-c="${c}" tabindex="0" role="button" aria-label="${nm}, ${UNITS[r.g][c]}, ${won ? '정복 완료' : '도전 가능'}">
-        <circle class="dot" cx="${x}" cy="${y}" r="${(9 * k).toFixed(1)}" fill="${won ? '#c9a227' : '#fff'}" stroke-width="${((selCity === c ? 4.5 : 2.5) * k).toFixed(1)}"/>
-        ${won ? `<path d="M${x - 3 * k} ${y + 4 * k}V${y - 5 * k}L${x + 5 * k} ${y - 2.5 * k}L${x - 3 * k} ${y}" fill="#fff" stroke="#fff" stroke-width="${k}" pointer-events="none"/>` : `<text x="${x}" y="${y + 4 * k}" font-size="${(10 * k).toFixed(1)}" text-anchor="middle" font-family="Jua" fill="#003a5c" pointer-events="none">${c + 1}</text>`}
+        <circle class="dot" cx="${x}" cy="${y}" r="${(9 * k).toFixed(1)}" fill="${won ? '#e8b44a' : '#fff'}" stroke-width="${((selCity === c ? 4.5 : 2.5) * k).toFixed(1)}"/>
+        ${won ? `<path d="M${x - 3 * k} ${y + 4 * k}V${y - 5 * k}L${x + 5 * k} ${y - 2.5 * k}L${x - 3 * k} ${y}" fill="#5a3517" stroke="#5a3517" stroke-width="${k}" pointer-events="none"/>` : `<text x="${x}" y="${y + 4 * k}" font-size="${(10 * k).toFixed(1)}" text-anchor="middle" font-family="Jua" fill="#3a2a1a" pointer-events="none">${c + 1}</text>`}
         <text class="cname" x="${(x + (LEFT[nm] ? -13 : 13) * k).toFixed(1)}" y="${(y + 5 * k).toFixed(1)}" text-anchor="${LEFT[nm] ? 'end' : 'start'}" font-size="${(14 * k).toFixed(1)}" stroke-width="${(4 * k).toFixed(1)}">${nm}</text></g>`;
     }).join('');
-    return `<svg viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}" role="group" aria-label="${r.name} 도시 지도">
-      <rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" fill="#bfe6ff"/>
-      ${inset ? `<rect x="${inset[0] - 30 * k}" y="${inset[1] - 22 * k}" width="${60 * k}" height="${48 * k}" rx="${6 * k}" fill="none" stroke="#003a5c" stroke-dasharray="${4 * k} ${3 * k}" stroke-width="${1.5 * k}"/>` : ''}
-      <g style="stroke-width:${(3 * k).toFixed(1)}px" pointer-events="none">${regionShape(Object.assign({}, r, r.g === 3 ? { extra: null } : {}), fill).replace(/class="land"/g, `class="land" stroke="#fff" stroke-width="${(3 * k).toFixed(1)}"`)}</g>${cities}</svg>
-      <span class="mapcount">${r.name} ${conqCount(r.g)} / 10</span>`;
+    return `<svg viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}" role="group" aria-label="${r.name} 퍼즐 조각과 도시">${DEFS}
+      <rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" fill="#f4efe8"/>
+      ${inset ? `<rect x="${inset[0] - 30 * k}" y="${inset[1] - 22 * k}" width="${60 * k}" height="${48 * k}" rx="${6 * k}" fill="none" stroke="#7a5a40" stroke-dasharray="${4 * k} ${3 * k}" stroke-width="${1.5 * k}"/>` : ''}
+      <g pointer-events="none">${pieceArt(r, k, done, r.g === 3)}</g>${cities}</svg>
+      <span class="mapcount">${r.name} 조각 · 단원 ${conqCount(r.g)} / 10</span>`;
   }
 
   // ---------- 화면 ----------
@@ -1253,16 +1255,16 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     n.innerHTML = `<span class="ic">${M.news.good ? '✓' : 'i'}</span><span>${esc(M.news.text)}</span>`;
   }
   function renderWorld(wonG) {
-    $('mapTitle').textContent = '부기의 한반도 정복';
-    $('mapDesc').textContent = '지역은 학년이에요. 지역을 눌러 도시(단원)를 하나씩 정복하면, 그 지역이 지도에서 정복돼요.';
+    $('mapTitle').textContent = '부기의 남한 퍼즐';
+    $('mapDesc').textContent = '조각 하나가 한 학년이에요. 조각을 눌러 그 학년 단원(도시)을 모두 정복하면 퍼즐 조각이 맞춰져요.';
     $('legend').hidden = false;
     $('mapbox').innerHTML = worldSVG(wonG);
     $('side').innerHTML = `<ol class="rlist">${REG.map(r => {
       const open = regionOpen(r.g), done = regionDone(r.g), n = conqCount(r.g);
-      const st = done ? ['done', '정복 ✓'] : !open ? ['lock', '잠김'] : r.g === MY_GRADE ? ['now', '내 학년'] : ['open', '도전 가능'];
+      const st = done ? ['done', '조각 완성 ✓'] : !open ? ['lock', '잠김'] : r.g === MY_GRADE ? ['now', '내 학년'] : ['open', '도전 가능'];
       return `<li><button type="button" class="ritem${open ? '' : ' locked'}" data-g="${r.g}" ${open ? '' : 'aria-disabled="true"'}>
-        <span class="rnum" style="background:${done ? r.col : '#fff'}">${r.g}<br>학년</span>
-        <span class="rinfo"><b>${r.name}</b><span>${open ? `도시 ${n}/10 정복 · 단원 10개` : `${r.g - 1}학년 ${REG[r.g - 2].name}를 모두 정복하면 열려요`}</span>${open ? `<span class="bar2"><i style="width:${n * 10}%"></i></span>` : ''}</span>
+        <span class="rnum" style="background:${done ? r.wood : '#fff'};color:${done ? '#fff4dc' : ''}">${r.g}<br>학년</span>
+        <span class="rinfo"><b>${r.name}</b><span>${open ? `단원 ${n}/10 정복` : `${r.g - 1}학년 ${REG[r.g - 2].name}를 모두 정복하면 열려요`}</span>${open ? `<span class="bar2"><i style="width:${n * 10}%"></i></span>` : ''}</span>
         <span class="rst ${st[0]}">${st[1]}</span></button></li>`;
     }).join('')}</ol>`;
   }
@@ -1276,8 +1278,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   }
   function renderRegion() {
     const r = REG[curG - 1];
-    $('mapTitle').innerHTML = `<button type="button" class="back" id="backWorld">← 한반도</button>${r.g}학년 · ${r.name}`;
-    $('mapDesc').textContent = '도시 하나 = 단원 하나예요. 도시를 눌러 그 단원 문제를 풀면 도시를 정복해요. 10곳을 모두 정복하면 지역 정복!';
+    $('mapTitle').innerHTML = `<button type="button" class="back" id="backWorld">← 퍼즐 지도</button>${r.g}학년 · ${r.name}`;
+    $('mapDesc').textContent = '도시 하나 = 단원 하나예요. 도시를 눌러 단원 문제를 풀면 정복! 10곳을 모두 정복하면 이 퍼즐 조각이 맞춰져요.';
     $('legend').hidden = true;
     $('mapbox').innerHTML = regionSVG(r);
     $('side').innerHTML = [1, 2].map(s => `<div class="semgrp"><h4>${s}학기</h4>${[0, 1, 2, 3, 4].map(i => cityRow(r, (s - 1) * 5 + i)).join('')}</div>`).join('');
