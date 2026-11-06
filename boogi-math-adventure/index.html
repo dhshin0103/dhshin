@@ -92,6 +92,36 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .toast { position: absolute; left: 50%; top: 14%; transform: translateX(-50%); font-family: var(--display); font-size: clamp(1.2rem, 3vw, 1.8rem); color: #fff; background: var(--good); border: 3px solid var(--deep); border-radius: 999px; padding: 6px 22px; pointer-events: none; white-space: nowrap; }
 .skip { position: absolute; right: 12px; bottom: 12px; font-family: var(--display); font-size: 1rem; color: var(--deep); background: var(--card); border: 2px solid var(--deep); border-radius: 999px; padding: 6px 16px; cursor: pointer; }
 .skip:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+/* 학년·학기 맵 */
+.map-card { width: min(980px, 100%); gap: 16px; background: linear-gradient(180deg, #e3f6ff, #c8ecff); }
+.map-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 6px 16px; }
+.map-head h2 { margin: 0; }
+.map-head p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.islands { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; counter-reset: none; }
+.island { position: relative; background: var(--card); border: 3px solid var(--deep); border-radius: 20px; box-shadow: 0 5px 0 var(--deep); overflow: hidden; display: flex; flex-direction: column; }
+.island.mine { box-shadow: 0 5px 0 var(--deep), 0 0 0 4px var(--sun); }
+.island-top { position: relative; height: 84px; display: flex; align-items: center; gap: 12px; padding: 0 14px; color: var(--deep); }
+.island-top::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 18px, transparent 18px 30px); opacity: .6; }
+.island-num { font-family: var(--display); font-size: 2.6rem; line-height: 1; }
+.island-name { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 2px; }
+.island-name b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; }
+.island-name span { font-size: 0.8rem; font-weight: 700; opacity: .8; }
+.mine-badge { align-self: flex-start; font-size: 0.72rem; font-weight: 700; background: var(--sun); color: #5a3a00; border-radius: 999px; padding: 3px 10px; }
+.sems { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+.sem { font-family: var(--display); font-size: 1.05rem; color: var(--deep); background: var(--paper); border: 2px solid var(--line); border-radius: 14px; min-height: 52px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.sem::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--deep); background: var(--card); }
+.sem[aria-pressed="true"] { background: var(--sky); border-color: var(--deep); color: #fff; }
+.sem[aria-pressed="true"]::before { background: var(--sun); }
+.sem:focus-visible, .map-go:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.map-foot { position: sticky; bottom: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: var(--card); border: 3px solid var(--deep); border-radius: 18px; padding: 12px 14px 12px 18px; }
+.map-foot .sel { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.map-foot .sel b { font-family: var(--display); font-weight: 400; font-size: 1.35rem; color: var(--deep); }
+.map-foot .sel span { font-size: 0.85rem; color: var(--muted); }
+.map-foot .sel .demo { color: #ab6400; font-weight: 700; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 10px; }
+.btnrow .btn { flex: 1; }
+@media (max-width: 760px) { .islands { grid-template-columns: repeat(2, minmax(0, 1fr)); } .island-top { height: 70px; } .island-num { font-size: 2.1rem; } }
+@media (max-width: 420px) { .sems { grid-template-columns: minmax(0, 1fr); } .map-foot .map-go { width: 100%; } }
 @media (max-width: 520px) {
   .choices { grid-template-columns: minmax(0, 1fr); }
   .pad button { min-width: 72px; min-height: 60px; }
@@ -103,7 +133,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 <div class="wrap">
   <div class="top">
     <h1>부기의 수학 모험</h1>
-    <p>초등 3학년 1학기 · 문제 문 10개를 열고 깃발까지 가요</p>
+    <p id="subline">학년·학기 맵을 고르고, 문제 문 5개를 열어 깃발까지 가요</p>
   </div>
   <div class="stage" id="stage">
     <canvas id="game" width="960" height="540" aria-label="부기가 달리는 수학 모험 게임 화면"></canvas>
@@ -120,16 +150,30 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동, <kbd>스페이스</kbd> 점프, 문제는 <kbd>1</kbd>~<kbd>4</kbd> 숫자로도 고를 수 있어요.</p>
 </div>
 
-<div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+<div class="modal" id="mapModal" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
+  <div class="card map-card">
+    <div class="map-head">
+      <h2 id="mapTitle">어느 섬으로 모험을 떠날까요?</h2>
+      <p>학년마다 섬이 하나, 학기마다 맵이 하나 있어요.</p>
+    </div>
+    <ul class="islands" id="islands"></ul>
+    <div class="map-foot">
+      <div class="sel"><b id="selName"></b><span id="selInfo"></span><span class="demo" id="selDemo" hidden>시제품에서는 3학년 1학기 문제로 체험해요</span></div>
+      <button type="button" class="btn map-go" id="mapGo">이 맵으로 출발</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startTitle" hidden>
   <div class="card">
-    <div class="tagrow"><span class="tag">초등 3-1</span><span class="tag">10문제</span><span class="tag">스쿨플랫 시제품</span></div>
+    <div class="tagrow"><span class="tag" id="startStage">초등 3-1</span><span class="tag">5문제</span><span class="tag">스쿨플랫 시제품</span></div>
     <h2 id="startTitle">부기와 함께 문제 문을 열어 볼까요?</h2>
     <ul class="how">
       <li>길을 막은 <b>문제 문</b>에 닿으면 문제가 나와요. 맞히면 문이 열려요.</li>
       <li>틀려도 괜찮아요. 풀이를 보고 <b>비슷한 문제</b>로 다시 도전해요.</li>
       <li>헷갈이를 위에서 밟으면 코인을 얻고, 옆에서 부딪히면 하트가 줄어요.</li>
     </ul>
-    <button type="button" class="btn" id="startBtn">모험 시작</button>
+    <div class="btnrow"><button type="button" class="btn ghost" id="toMapBtn">맵 다시 고르기</button><button type="button" class="btn" id="startBtn">모험 시작</button></div>
   </div>
 </div>
 
@@ -168,7 +212,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       <p class="lead"><b>다시 보면 좋은 단원</b></p>
       <ul class="units" id="reviewList"></ul>
     </div>
-    <button type="button" class="btn" id="againBtn">처음부터 다시 하기</button>
+    <div class="btnrow"><button type="button" class="btn ghost" id="mapBackBtn">맵으로 돌아가기</button><button type="button" class="btn" id="againBtn">이 맵 다시 하기</button></div>
   </div>
 </div>
 
@@ -178,7 +222,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   // ---------- 문제 (초등 3-1, 2022 개정 단원) ----------
   // [a/b] 는 분수로 표시됩니다.
-  const QUESTIONS = [
+  const ALL_QUESTIONS = [
     { unit: '덧셈과 뺄셈',
       main: { q: '345 + 278 = ?', c: ['623', '513', '613', '523'], a: 0, e: '일의 자리: 5 + 8 = 13 → 3을 쓰고 1을 올려요. 십의 자리: 4 + 7 + 1 = 12 → 2를 쓰고 1을 올려요. 백의 자리: 3 + 2 + 1 = 6. 그래서 623이에요.' },
       twin: { q: '456 + 367 = ?', c: ['713', '823', '813', '723'], a: 1, e: '6 + 7 = 13 (1 올림), 5 + 6 + 1 = 12 (1 올림), 4 + 3 + 1 = 8. 그래서 823이에요.' } },
@@ -211,15 +255,19 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       twin: { q: '0.1이 7개인 수는?', c: ['7', '0.7', '0.07', '70'], a: 1, e: '0.1이 1개면 0.1, 7개면 0.7이에요. 영 점 칠이라고 읽어요.' } }
   ];
 
+  // 5문제 버전: 단원이 겹치지 않게 다섯 세트만 사용해요.
+  const QUESTIONS = [0, 2, 3, 5, 9].map(i => ALL_QUESTIONS[i]);
+  const TOTAL = QUESTIONS.length;
+
   const esc = s => s.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
   const fmt = s => esc(s).replace(/\[(\d+)\/(\d+)\]/g, '<span class="fr" aria-label="$2분의 $1"><span>$1</span><span>$2</span></span>');
 
   // ---------- 월드 ----------
   const W = 960, H = 540, GROUND = 460;
-  const LEVEL_W = 7600;
-  const GROUND_SEGS = [[0, 2300], [2420, 4100], [4220, 5900], [6020, LEVEL_W]];
-  const GATE_X = [600, 1240, 1880, 2520, 3160, 3800, 4440, 5080, 5720, 6360];
-  const FLAG_X = 7280;
+  const LEVEL_W = 4100;
+  const GROUND_SEGS = [[0, 2300], [2420, LEVEL_W]];
+  const GATE_X = [600, 1240, 1880, 2520, 3160];
+  const FLAG_X = 3800;
 
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
@@ -245,7 +293,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
         if (onGroundAt(cx)) coins.push({ x: cx, y: 420, got: false });
       }
     }
-    [[1240, 1880], [3160, 3800], [5080, 5720], [6360, 7100]].forEach(([a, b]) => {
+    [[1240, 1880], [2520, 3160], [3160, 3700]].forEach(([a, b]) => {
       enemies.push({ x: a + 180, y: GROUND - 34, w: 44, h: 34, vx: -70, min: a + 120, max: b - 120, alive: true, squash: 0 });
     });
   }
@@ -289,7 +337,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   bindPad('btnJump', 'jump');
 
   // ---------- 모달 ----------
-  function showModal(id) { ['startModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
+  function showModal(id) { ['mapModal', 'startModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
   function hideModals() { showModal(null); }
 
   function openQuestion(gate) {
@@ -303,7 +351,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   function renderQuestion() {
     const set = QUESTIONS[current.gate.i];
     const item = current.twin ? set.twin : set.main;
-    $('qNum').textContent = '문제 ' + (current.gate.i + 1) + ' / 10';
+    $('qNum').textContent = '문제 ' + (current.gate.i + 1) + ' / ' + TOTAL;
     $('qUnit').textContent = set.unit;
     $('qTwin').hidden = !current.twin;
     $('qText').innerHTML = fmt(item.q);
@@ -377,7 +425,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   function showResults() {
     state = 'done';
     $('skipBtn').hidden = true;
-    $('doneScore').textContent = stats.first + ' / 10';
+    $('doneScore').textContent = stats.first + ' / ' + TOTAL;
     $('statFirst').textContent = stats.first;
     $('statRetry').textContent = stats.retries;
     $('statCoin').textContent = stats.coins;
@@ -736,7 +784,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       const k = ease((t - 3.6) / 0.6);
       ctx.save(); ctx.translate(W / 2, 112); ctx.scale(0.6 + 0.4 * k, 0.6 + 0.4 * k); ctx.globalAlpha = k;
       ctx.fillStyle = '#003a5c'; rr(-330, -52, 660, 104, 28); ctx.fill();
-      ctx.fillStyle = '#ffc53d'; ctx.font = '46px Jua, sans-serif'; ctx.fillText('문제 문 10개를 모두 열었어요!', 0, 16);
+      ctx.fillStyle = '#ffc53d'; ctx.font = '46px Jua, sans-serif'; ctx.fillText('문제 문 5개를 모두 열었어요!', 0, 16);
       ctx.restore();
     }
     if (t > 5.2) {
@@ -766,7 +814,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     ctx.fillStyle = '#003a5c'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'left'; ctx.fillText('× ' + stats.coins, 178, 45);
     const solved = gates.filter(g => g.solved).length;
     ctx.fillStyle = 'rgba(252,252,253,0.9)'; rr(W - 230, 14, 216, 46, 23); ctx.fill();
-    ctx.fillStyle = '#003a5c'; ctx.textAlign = 'center'; ctx.fillText('문제 문 ' + solved + ' / 10', W - 122, 45);
+    ctx.fillStyle = '#003a5c'; ctx.textAlign = 'center'; ctx.fillText('문제 문 ' + solved + ' / ' + TOTAL, W - 122, 45);
     // 진행 막대
     const prog = Math.min(1, (player.x) / FLAG_X);
     ctx.fillStyle = 'rgba(0,58,92,0.2)'; rr(W / 2 - 160, 30, 320, 10, 5); ctx.fill();
@@ -801,7 +849,48 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   resetAll();
   requestAnimationFrame(frame);
-  $('startBtn').focus({ preventScroll: true });
+  // ---------- 학년·학기 맵 (시제품: 고르기만, 문제는 3-1로 체험) ----------
+  const MY_GRADE = 3;
+  const ISLANDS = [
+    { g: 1, name: '숫자 들판', col: '#ffe08a' },
+    { g: 2, name: '구구단 숲', col: '#a8e6b8' },
+    { g: 3, name: '계산 바다', col: '#9fdcff' },
+    { g: 4, name: '도형 산맥', col: '#d4c2ff' },
+    { g: 5, name: '분수 사막', col: '#ffcf9e' },
+    { g: 6, name: '비율 하늘섬', col: '#ffc2d1' }
+  ];
+  let pick = { g: MY_GRADE, s: 1 };
+
+  function renderMap() {
+    $('islands').innerHTML = ISLANDS.map(is => `
+      <li class="island${is.g === MY_GRADE ? ' mine' : ''}">
+        <div class="island-top" style="background:${is.col}"><span class="island-num">${is.g}</span><span class="island-name"><b>${is.name}</b><span>${is.g}학년</span>${is.g === MY_GRADE ? '<span class="mine-badge">내 학년</span>' : ''}</span></div>
+        <div class="sems">${[1, 2].map(s => `<button type="button" class="sem" id="sem-${is.g}-${s}" data-g="${is.g}" data-s="${s}" aria-pressed="${pick.g === is.g && pick.s === s}">${s}학기</button>`).join('')}</div>
+      </li>`).join('');
+    const is = ISLANDS[pick.g - 1];
+    $('selName').textContent = `${pick.g}학년 ${pick.s}학기 · ${is.name}`;
+    $('selInfo').textContent = '문제 문 5개 · 약 5분';
+    $('selDemo').hidden = pick.g === 3 && pick.s === 1;
+  }
+  $('islands').addEventListener('click', e => {
+    const b = e.target.closest('.sem'); if (!b) return;
+    pick = { g: Number(b.dataset.g), s: Number(b.dataset.s) };
+    renderMap();
+    $('sem-' + pick.g + '-' + pick.s).focus({ preventScroll: true });
+  });
+  function openMap() { state = 'start'; renderMap(); showModal('mapModal'); $('mapGo').focus({ preventScroll: true }); }
+  $('mapGo').addEventListener('click', () => {
+    const label = pick.g + '학년 ' + pick.s + '학기';
+    $('startStage').textContent = '초등 ' + pick.g + '-' + pick.s;
+    $('subline').textContent = label + ' · ' + ISLANDS[pick.g - 1].name + ' · 문제 문 5개를 열고 깃발까지 가요';
+    resetAll();
+    showModal('startModal');
+    $('startBtn').focus({ preventScroll: true });
+  });
+  $('toMapBtn').addEventListener('click', openMap);
+  $('mapBackBtn').addEventListener('click', () => { resetAll(); openMap(); });
+
+  openMap();
 })();
 </script>
 
