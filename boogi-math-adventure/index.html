@@ -99,60 +99,66 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .ctlbtn.armed { background: var(--sun); color: var(--deep); }
 .ctlbtn.mini { margin-left: auto; font-size: 0.85rem; padding: 4px 12px; box-shadow: none; }
 .ctlbtn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
-/* 탐험 지도 (남한 6개 권역 = 1~6학년) */
+/* 탐험 지도: 학년(섬) > 학기(줄) > 단원(땅 한 칸) */
 .map-card { width: min(1060px, 100%); gap: 14px; background: linear-gradient(180deg, #e3f6ff, #c8ecff); }
+.map-card > * { flex-shrink: 0; }
 .map-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 6px 16px; }
 .map-head h2 { margin: 0; }
 .map-head p { margin: 0; color: var(--muted); font-size: 0.9rem; }
 .news { display: flex; gap: 10px; align-items: flex-start; background: #fff7c2; border: 2px solid #f3d27a; border-radius: 14px; padding: 10px 14px; font-size: 0.92rem; line-height: 1.55; }
 .news .ic { flex: none; width: 24px; height: 24px; border-radius: 50%; background: #e5484d; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
 .news.good .ic { background: var(--good); }
-.map-body { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 16px; align-items: start; }
 .kmap { background: #bfe6ff; border: 3px solid var(--deep); border-radius: 20px; overflow: hidden; }
-.kmap svg { display: block; width: 100%; height: auto; max-height: 70vh; }
-.rg { cursor: pointer; outline: none; }
-.rg path, .rg ellipse, .rg circle { stroke: #003a5c; stroke-width: 2.5; stroke-linejoin: round; transition: fill .5s; }
-.rg:hover path, .rg:hover ellipse, .rg:focus-visible path, .rg:focus-visible ellipse { stroke-width: 4; }
-.rg.sel path, .rg.sel ellipse, .rg.sel circle { stroke: #ffc53d; stroke-width: 5; }
-.rg.lit { animation: lit 1.1s ease-out 3; }
-@keyframes lit { 50% { filter: brightness(1.2) drop-shadow(0 0 10px #ffc53d); } }
-.rlabel { font-family: var(--display); font-size: 16px; fill: #003a5c; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(255,255,255,.85); stroke-width: 4px; }
-.rlabel.sm { font-size: 12px; }
-.panel { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.kmap svg { display: block; width: 100%; height: auto; }
+.isl { cursor: pointer; outline: none; }
+.isl .ground { stroke: #003a5c; stroke-width: 3; }
+.isl:hover .ground, .isl:focus-visible .ground { stroke-width: 5; }
+.isl.sel .ground { stroke: #ffc53d; stroke-width: 6; }
+.isl.lit { animation: lit 1.1s ease-out 3; }
+@keyframes lit { 50% { filter: brightness(1.15) drop-shadow(0 0 10px #ffc53d); } }
+.hx { stroke: #003a5c; stroke-width: 2; transition: fill .4s; }
+.mlabel { font-family: var(--display); font-size: 19px; fill: #003a5c; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(255,255,255,.9); stroke-width: 5px; }
+.mlabel.sm { font-size: 13px; font-family: var(--body); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.85rem; color: var(--muted); align-items: center; }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 2px solid var(--deep); vertical-align: -2px; margin-right: 4px; }
 .gchips { display: flex; flex-wrap: wrap; gap: 6px; }
 .gchip { font-family: var(--display); font-size: 0.95rem; border: 2px solid var(--line); background: var(--card); color: var(--deep); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
 .gchip[aria-pressed="true"] { background: var(--deep); color: #fff; border-color: var(--deep); }
-.rbox { background: var(--card); border: 3px solid var(--deep); border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.rbox { background: var(--card); border: 3px solid var(--deep); border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
 .rbox h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.45rem; color: var(--deep); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .rbox h3 small { font-family: var(--body); font-size: 0.85rem; color: var(--muted); font-weight: 700; }
 .mine-badge { font-family: var(--body); font-size: 0.72rem; font-weight: 700; background: var(--sun); color: #5a3a00; border-radius: 999px; padding: 2px 9px; vertical-align: middle; }
-.prog { height: 10px; border-radius: 5px; background: #dbe7ef; overflow: hidden; }
-.prog i { display: block; height: 100%; background: var(--good); transition: width .5s; }
-.semrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 10px; align-items: center; padding: 12px; border-radius: 14px; background: var(--paper); }
-.semrow .nm { font-weight: 700; }
-.st { font-size: 0.75rem; font-weight: 700; border-radius: 999px; padding: 2px 8px; margin-left: 6px; white-space: nowrap; }
-.st.done { background: var(--good-bg); color: var(--good); }
-.st.fog { background: #e8edf2; color: var(--muted); }
-.semrow .flag { grid-column: 1 / -1; font-size: 0.86rem; color: var(--muted); line-height: 1.55; }
-.semrow .flag b { color: var(--deep); }
-.semrow .flag .mineflag { color: var(--good); }
-.acts { display: flex; gap: 6px; }
+.semblock { display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: 14px; background: var(--paper); }
+.semhead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.semhead b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); }
+.semhead span { font-size: 0.85rem; color: var(--muted); font-weight: 700; }
+.acts { display: flex; gap: 6px; margin-left: auto; }
 .sbtn { font-family: var(--display); font-size: 1rem; border: 2px solid var(--deep); border-radius: 12px; padding: 7px 12px; background: var(--card); color: var(--deep); cursor: pointer; box-shadow: 0 3px 0 var(--deep); white-space: nowrap; }
 .sbtn.ta { background: #e5484d; color: #fff; }
 .sbtn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--deep); }
 .sbtn:focus-visible, .gchip:focus-visible, .tools button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.tile { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; min-width: 0; }
+.tile .hex { width: 52px; height: 58px; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #003a5c; display: grid; place-items: center; }
+.tile .hex i { width: 46px; height: 52px; clip-path: inherit; display: grid; place-items: center; font-style: normal; font-family: var(--display); font-size: 0.85rem; color: #fff; }
+.tile b { font-size: 0.8rem; line-height: 1.3; color: var(--ink); word-break: keep-all; }
+.tile span { font-size: 0.72rem; line-height: 1.3; color: var(--muted); font-variant-numeric: tabular-nums; word-break: keep-all; }
+.tile.mine span { color: var(--good); font-weight: 700; }
+.tile.rival span { color: #6e56cf; font-weight: 700; }
 .note { margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
 .tools { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; align-items: center; }
 .tools button { font-size: 0.8rem; border: 1px solid #9fb6c6; background: rgba(255,255,255,.75); border-radius: 999px; padding: 5px 11px; cursor: pointer; color: var(--deep); }
 .board { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.board li { display: grid; grid-template-columns: 30px 1fr auto; gap: 8px; font-size: 0.9rem; padding: 6px 10px; border-radius: 10px; background: var(--paper); font-variant-numeric: tabular-nums; }
-.board li.me { background: #d5efff; font-weight: 700; }
-.board li b { font-family: var(--display); font-weight: 400; color: #ab6400; }
+.board li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; font-size: 0.9rem; padding: 7px 10px; border-radius: 10px; background: var(--paper); font-variant-numeric: tabular-nums; }
+.board li.won { background: var(--good-bg); }
+.board li .res { font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
+.board li.won .res { color: var(--good); }
+.board li.lost .res { color: #b45309; }
 .ta-msg { margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--good-bg); color: var(--good); font-weight: 700; line-height: 1.6; }
 .ta-msg.lose { background: #fff1e6; color: #b45309; }
 .btnrow { display: flex; flex-wrap: wrap; gap: 10px; }
 .btnrow .btn { flex: 1; }
-@media (max-width: 840px) { .map-body { grid-template-columns: minmax(0, 1fr); } .kmap svg { max-height: 56vh; } }
+@media (max-width: 560px) { .tile .hex { width: 42px; height: 47px; } .tile .hex i { width: 37px; height: 42px; } .acts { margin-left: 0; width: 100%; } .acts .sbtn { flex: 1; } }
 @media (max-width: 520px) {
   .choices { grid-template-columns: minmax(0, 1fr); }
   .pad button { min-width: 72px; min-height: 60px; padding: 0 10px; font-size: 1.1rem; white-space: nowrap; }
@@ -186,17 +192,14 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   <div class="card map-card">
     <div class="map-head">
       <h2 id="mapTitle">부기의 탐험 지도</h2>
-      <p>학년 미션을 끝내면 그 지역이 밝아져요. 타임어택 1등은 지역 깃발을 가져가요.</p>
+      <p>섬은 학년, 줄은 학기, 땅 한 칸은 단원이에요. 타임어택에서 단원을 가장 빨리 푼 사람이 그 땅을 차지해요.</p>
     </div>
     <div class="news" id="news"></div>
-    <div class="map-body">
-      <div class="kmap" id="kmap"></div>
-      <div class="panel">
-        <div class="gchips" id="gchips" aria-label="학년 고르기"></div>
-        <div class="rbox" id="rbox"></div>
-      </div>
-    </div>
-    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tRival">반 친구가 내 기록 깨기</button><button type="button" id="tReset">처음 상태로</button></div>
+    <div class="kmap" id="kmap"></div>
+    <div class="legend"><span><i style="background:#30a46c"></i>내 땅</span><span><i style="background:#8e6bd8"></i>반 친구 땅</span><span><i style="background:#ffe9a8"></i>탐험한 빈 땅</span><span><i style="background:#d3dbe3"></i>미탐험</span></div>
+    <div class="gchips" id="gchips" aria-label="학년 고르기"></div>
+    <div class="rbox" id="rbox"></div>
+    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tRival">반 친구가 내 땅 빼앗기</button><button type="button" id="tReset">처음 상태로</button></div>
   </div>
 </div>
 
@@ -449,7 +452,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   const $ = id => document.getElementById(id);
 
   let gates, coins, platforms, enemies, player, state, stats, keys, camX, checkpointX, toastTimer, current;
-  let runMode = 'normal', taTime = 0;
+  let runMode = 'normal', taTime = 0, segStart = 0, taSplits = [];
 
   function buildLevel() {
     gates = GATE_X.map((x, i) => ({ x, w: 52, h: 260, i, solved: false, open: 0 }));
@@ -483,7 +486,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     keys = { left: false, right: false, jump: false, jumpHeld: false };
     camX = 0;
     checkpointX = 120;
-    taTime = 0;
+    taTime = 0; segStart = 0; taSplits = [];
     state = 'start';
   }
 
@@ -559,6 +562,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       if (current.attempts === 0) stats.first++;
       stats.coins += 3;
       current.gate.solved = true;
+      onGateSolved(current.gate.i);
       checkpointX = current.gate.x + 80;
       setTimeout(() => { hideModals(); state = 'play'; showToast(current.attempts === 0 ? '정답! 문이 열려요' : '해냈어요! 문이 열려요'); }, 650);
     } else {
@@ -605,7 +609,6 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   function showResults() {
     state = 'done';
     $('skipBtn').hidden = true;
-    M.done[pick.g + '-' + pick.s] = 1;
     M.justLit = pick.g;
     if (runMode === 'ta') { showTaResults(); return; }
     saveM();
@@ -1059,83 +1062,121 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   resetAll();
   requestAnimationFrame(frame);
-  // ---------- 탐험 지도: 남한 6개 권역 = 1~6학년, 권역마다 1·2학기 ----------
-  // 시제품: 어느 지역을 골라도 3학년 1학기 문제로 체험하고, 반 친구 기록은 예시 데이터예요.
+  // ---------- 탐험 지도: 학년(섬) > 학기(줄) > 단원(땅 한 칸) ----------
+  // 단원 한 칸 = 그 맵의 문제 문 하나. 반 친구 기록은 예시 데이터예요.
   const MY_GRADE = 3;
-  const REG = [
-    { g: 1, name: '제주', col: '#ffb3a7', sem: ['한라산', '바다'], lx: 84, ly: 652 },
-    { g: 2, name: '전라', col: '#ffd27a', sem: ['들판', '갯벌'], lx: 116, ly: 430 },
-    { g: 3, name: '경상', col: '#8fd6a8', sem: ['해안', '울릉도·독도'], lx: 262, ly: 345 },
-    { g: 4, name: '충청', col: '#9fd3ff', sem: ['강', '호수'], lx: 152, ly: 272 },
-    { g: 5, name: '강원', col: '#c7b6ff', sem: ['산맥', '동해'], lx: 246, ly: 128 },
-    { g: 6, name: '수도권', col: '#ffb8d2', sem: ['도시', '한강'], lx: 118, ly: 160 }
+  const ISL = [
+    { g: 1, name: '숫자 섬', col: '#ffe08a' }, { g: 2, name: '구구단 섬', col: '#a8e6b8' }, { g: 3, name: '계산 섬', col: '#9fdcff' },
+    { g: 4, name: '도형 섬', col: '#d4c2ff' }, { g: 5, name: '분수 섬', col: '#ffcf9e' }, { g: 6, name: '비율 섬', col: '#ffc2d1' }
   ];
-  const SHAPE = {
-    1: '<ellipse cx="84" cy="622" rx="40" ry="16"/>',
-    2: '<path d="M88 329L150 335L170 380L176 473L160 500L144 497L128 512L112 530L96 520L80 526L64 514L58 500L54 480L68 462L62 436L80 410L70 392L84 370L76 350Z"/>',
-    3: '<path d="M236 214L312 206L318 250L324 317L312 380L284 427L240 438L206 452L176 473L170 380L150 335L205 325L222 270Z"/><circle cx="414" cy="168" r="8"/><circle cx="452" cy="196" r="3.5"/><circle cx="460" cy="199" r="3"/>',
-    4: '<path d="M104 212L160 212L200 200L236 214L222 270L205 325L150 335L88 329L70 318L74 300L56 272L62 256L48 240L60 226L84 218Z"/>',
-    5: '<path d="M168 55L228 20L250 70L272 119L292 154L312 206L236 214L200 200L176 150Z"/>',
-    6: '<path d="M56 119L110 88L168 55L176 150L200 200L160 212L104 212L92 186L80 172L88 154L66 140L48 132Z"/>'
+  const TILES = {
+    '1-1': ['9까지의 수', '여러 가지 모양', '덧셈', '뺄셈', '50까지의 수'],
+    '1-2': ['100까지의 수', '덧셈', '뺄셈', '시각', '규칙 찾기'],
+    '2-1': ['세 자리 수', '여러 가지 도형', '덧셈과 뺄셈', '길이 재기', '곱셈'],
+    '2-2': ['네 자리 수', '곱셈구구', '길이 재기', '시각과 시간', '규칙 찾기'],
+    '3-1': ['덧셈과 뺄셈', '평면도형', '나눗셈', '곱셈', '분수와 소수'],
+    '3-2': ['곱셈', '나눗셈', '원', '분수', '들이와 무게'],
+    '4-1': ['큰 수', '각도', '곱셈', '나눗셈', '규칙 찾기'],
+    '4-2': ['분수의 덧셈', '분수의 뺄셈', '소수의 덧셈', '삼각형', '사각형'],
+    '5-1': ['혼합 계산', '약수와 배수', '약분과 통분', '분수의 덧셈', '넓이'],
+    '5-2': ['어림하기', '분수의 곱셈', '합동과 대칭', '소수의 곱셈', '평균'],
+    '6-1': ['분수의 나눗셈', '각기둥과 각뿔', '소수의 나눗셈', '비와 비율', '부피'],
+    '6-2': ['분수의 나눗셈', '소수의 나눗셈', '비례식', '비례배분', '원의 넓이']
   };
+  const C_MINE = '#30a46c', C_RIVAL = '#8e6bd8', C_OPEN = '#ffe9a8', C_FOG = '#d3dbe3';
   const NICKS = ['하늘고래', '번개토끼', '초코펭귄', '구름여우', '파도곰', '달빛다람쥐'];
-  const KEY = 'boogi-map-v1';
-  function baseRecords() {
-    const r = {};
-    REG.forEach(x => [1, 2].forEach(s => {
-      const k = x.g + '-' + s, base = 44 + x.g * 3 + s * 2;
-      r[k] = [0, 1, 2].map(i => ({ n: NICKS[(x.g + s + i) % NICKS.length], t: +(base + i * 6.3 + ((x.g * 7 + s * 3 + i) % 5) * 0.7).toFixed(1) }));
-    }));
-    r['3-1'] = [{ n: '하늘고래', t: 48.6 }, { n: '번개토끼', t: 55.1 }, { n: '초코펭귄', t: 63.0 }];
-    return r;
-  }
+  const KEY = 'boogi-map-v2';
+  const keyOf = (g, s) => g + '-' + s;
+
   function defaultsM() {
-    return { done: { '1-1': 1, '1-2': 1, '2-1': 1, '2-2': 1 }, mine: { '1-1': 52.4, '2-2': 49.8 }, rec: baseRecords(),
-      news: { good: false, text: '하늘고래 님이 경상 1학기(해안) 깃발을 48.6초로 가져갔어요. 3학년 미션을 열고 도전해 볼까요?' }, justLit: 0 };
+    const explored = {}, mine = {}, rec = {};
+    Object.keys(TILES).forEach(k => {
+      const [g, s] = k.split('-').map(Number);
+      explored[k] = [0, 1, 2, 3, 4].map(() => g <= 2);
+      mine[k] = [null, null, null, null, null];
+      rec[k] = [0, 1, 2, 3, 4].map(i => (g > MY_GRADE ? !(s === 1 && i === 0) : (g * 5 + s * 3 + i * 7) % 3 === 0) ? null : { n: NICKS[(g + s * 2 + i) % NICKS.length], t: +(5.5 + ((g * 13 + s * 7 + i * 5) % 40) / 10).toFixed(1) });
+    });
+    mine['1-1'] = [6.2, null, 5.8, 7.0, null];
+    mine['1-2'] = [null, 6.5, null, 5.1, 8.1];
+    mine['2-1'] = [5.0, null, null, 8.4, 6.0];
+    mine['2-2'] = [null, 5.2, 7.7, null, null];
+    rec['3-1'] = [{ n: '하늘고래', t: 7.4 }, null, { n: '번개토끼', t: 9.2 }, null, { n: '초코펭귄', t: 8.0 }];
+    return { explored, mine, rec, justLit: 0,
+      news: { good: false, text: "하늘고래 님이 3학년 1학기 '덧셈과 뺄셈' 땅을 7.4초로 가져갔어요. 계산 섬에서 땅을 넓혀 볼까요?" } };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
   function saveM() { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} }
 
   let pick = { g: MY_GRADE, s: 1 };
-  const explored = g => (M.done[g + '-1'] ? 1 : 0) + (M.done[g + '-2'] ? 1 : 0);
-  function board(k) {
-    const list = (M.rec[k] || []).map(r => ({ n: r.n, t: r.t, me: false }));
-    if (M.mine[k] != null) list.push({ n: '나 (부기)', t: M.mine[k], me: true });
-    return list.sort((a, b) => a.t - b.t);
+  // 땅 주인: 내 최고 기록과 반 친구 최고 기록 중 더 빠른 쪽
+  function owner(k, i) {
+    const m = M.mine[k][i], r = M.rec[k][i];
+    if (m != null && (!r || m <= r.t)) return { me: true, n: '나', t: m };
+    if (r) return { me: false, n: r.n, t: r.t };
+    return null;
   }
-  const holder = k => board(k)[0];
-  const myFlags = g => [1, 2].filter(s => { const h = holder(g + '-' + s); return h && h.me; }).length;
+  function tileState(k, i) {
+    const o = owner(k, i);
+    if (o) return o.me ? 'mine' : 'rival';
+    return M.explored[k][i] ? 'open' : 'fog';
+  }
+  const colorOf = st => ({ mine: C_MINE, rival: C_RIVAL, open: C_OPEN, fog: C_FOG })[st];
+  function countG(g) {
+    const c = { mine: 0, rival: 0, open: 0, fog: 0, explored: 0 };
+    [1, 2].forEach(s => { const k = keyOf(g, s); for (let i = 0; i < 5; i++) { c[tileState(k, i)]++; if (M.explored[k][i]) c.explored++; } });
+    return c;
+  }
 
+  function onGateSolved(i) {
+    const k = keyOf(pick.g, pick.s);
+    M.explored[k][i] = true;
+    if (runMode === 'ta') { taSplits[i] = +(taTime - segStart).toFixed(1); segStart = taTime; }
+    saveM();
+  }
+
+  function hexPts(cx, cy, r) { const p = []; for (let k = 0; k < 6; k++) { const a = Math.PI / 180 * (60 * k - 30); p.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); } return p.join(' '); }
   function mapSVG() {
-    const defs = REG.map(r => `<pattern id="half${r.g}" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="12" height="12" fill="#e8eef3"/><rect width="6" height="12" fill="${r.col}"/></pattern>`).join('');
-    const fill = r => { const d = explored(r.g); return d === 2 ? r.col : d === 1 ? `url(#half${r.g})` : '#d3dbe3'; };
-    const regions = REG.map(r => `<g class="rg${pick.g === r.g ? ' sel' : ''}${M.justLit === r.g ? ' lit' : ''}" data-g="${r.g}" tabindex="0" role="button" aria-label="${r.g}학년 ${r.name} 지역, 탐험 ${explored(r.g)}/2" fill="${fill(r)}">${SHAPE[r.g]}</g>`).join('');
-    const labels = REG.map(r => {
-      const d = explored(r.g), f = myFlags(r.g);
-      let t = `<text class="rlabel" x="${r.lx}" y="${r.ly}">${r.g}학년 ${r.name}</text><text class="rlabel sm" x="${r.lx}" y="${r.ly + 16}">${d === 2 ? '탐험 완료' : d === 1 ? '탐험 1/2' : '미탐험'}</text>`;
-      if (f) t += `<g transform="translate(${r.lx + 34},${r.ly - 46})" pointer-events="none"><rect x="0" y="0" width="4" height="34" fill="#3d5a2e"/><path d="M4 2L30 10L4 18Z" fill="#b5cf5f" stroke="#3d5a2e" stroke-width="1.5"/>${f > 1 ? '<text x="16" y="14" font-size="10" font-family="Jua" fill="#3d5a2e" text-anchor="middle">2</text>' : ''}</g>`;
-      return t;
+    const r = 21, w = Math.sqrt(3) * r;
+    const out = ISL.map(is => {
+      const cx = [170, 480, 790][(is.g - 1) % 3], cy = [150, 380][Math.floor((is.g - 1) / 3)];
+      let hexes = '';
+      [1, 2].forEach(s => {
+        const k = keyOf(is.g, s), y = cy + (s === 1 ? -16 : 16);
+        for (let i = 0; i < 5; i++) {
+          const x = cx + (i - 2) * w + (s === 1 ? -w / 4 : w / 4), st = tileState(k, i);
+          hexes += `<polygon class="hx" points="${hexPts(x, y, r - 1)}" fill="${colorOf(st)}"><title>${is.g}학년 ${s}학기 ${TILES[k][i]}</title></polygon>`;
+          if (st === 'mine') hexes += `<path d="M${(x - 4).toFixed(1)} ${y + 8}V${y - 9}L${(x + 8).toFixed(1)} ${y - 5}L${(x - 4).toFixed(1)} ${y - 1}" fill="#fff" stroke="#fff" stroke-width="1.5" pointer-events="none"/>`;
+        }
+      });
+      const c = countG(is.g);
+      return `<g class="isl${pick.g === is.g ? ' sel' : ''}${M.justLit === is.g ? ' lit' : ''}" data-g="${is.g}" tabindex="0" role="button" aria-label="${is.g}학년 ${is.name}: 내 땅 ${c.mine}칸, 친구 땅 ${c.rival}칸, 탐험 ${c.explored}/10">
+        <ellipse cx="${cx}" cy="${cy + 6}" rx="146" ry="82" fill="#fff3c4"/>
+        <ellipse class="ground" cx="${cx}" cy="${cy}" rx="132" ry="70" fill="${is.col}"/>
+        ${hexes}
+        <text class="mlabel" x="${cx}" y="${cy - 80}">${is.g}학년 · ${is.name}${is.g === MY_GRADE ? ' ★' : ''}</text>
+        <text class="mlabel sm" x="${cx}" y="${cy + 100}">내 땅 ${c.mine} · 친구 ${c.rival} · 탐험 ${c.explored}/10</text></g>`;
     }).join('');
-    const waves = [80, 260, 520].map(y => `<path d="M300 ${y}q15 -8 30 0t30 0t30 0" stroke="#9fd3f2" stroke-width="2" fill="none"/>`).join('');
-    return `<svg viewBox="0 0 480 680" role="group" aria-label="남한 지도 모양의 학년별 탐험 지역">
-      <defs>${defs}</defs><rect width="480" height="680" fill="#bfe6ff"/>${waves}
-      <path d="M56 119L110 88L168 55L228 20" stroke="#5b7f99" stroke-width="2" stroke-dasharray="5 5" fill="none"/>
-      ${regions}${labels}
-      <text class="rlabel sm" x="414" y="152">울릉도</text><text class="rlabel sm" x="456" y="218">독도</text>
-      <text class="rlabel sm" x="380" y="420">동해</text><text class="rlabel sm" x="30" y="300">서해</text><text class="rlabel sm" x="250" y="560">남해</text>
-    </svg>`;
+    const waves = [[40, 270], [600, 270], [330, 500], [880, 40]].map(([x, y]) => `<path d="M${x} ${y}q14 -8 28 0t28 0t28 0" stroke="#9fd3f2" stroke-width="2.5" fill="none"/>`).join('');
+    return `<svg viewBox="0 0 960 520" role="group" aria-label="학년별 섬 지도"><rect width="960" height="520" fill="#bfe6ff"/>${waves}${out}</svg>`;
   }
 
-  function semRow(r, s) {
-    const k = r.g + '-' + s, done = M.done[k], h = holder(k), b = board(k), mine = M.mine[k];
-    const rank = mine != null ? b.findIndex(x => x.me) + 1 : 0;
-    let flag;
-    if (h && h.me) flag = `<span class="mineflag">깃발: <b>나</b> ${h.t.toFixed(1)}초 · 반 1등</span>`;
-    else if (h) flag = `깃발: <b>${h.n}</b> ${h.t.toFixed(1)}초 · ` + (mine != null ? `내 기록 ${mine.toFixed(1)}초 (${rank}위, ${(mine - h.t).toFixed(1)}초 차이)` : '내 기록 없음');
-    return `<div class="semrow"><div><span class="nm">${s}학기 · ${r.sem[s - 1]}</span><span class="st ${done ? 'done' : 'fog'}">${done ? '탐험 완료' : '미탐험'}</span></div>
-      <div class="acts"><button type="button" class="sbtn" data-go="normal" data-s="${s}">모험</button><button type="button" class="sbtn ta" data-go="ta" data-s="${s}">타임어택</button></div>
-      <div class="flag">${flag}</div></div>`;
+  function tileHTML(k, i) {
+    const st = tileState(k, i), o = owner(k, i), m = M.mine[k][i];
+    let line;
+    if (st === 'mine') line = `내 땅 ${o.t.toFixed(1)}초`;
+    else if (st === 'rival') line = `${o.n} ${o.t.toFixed(1)}초` + (m != null ? `<br>나 ${m.toFixed(1)}초` : '');
+    else if (st === 'open') line = '빈 땅';
+    else line = '미탐험';
+    return `<div class="tile ${st}"><div class="hex"><i style="background:${colorOf(st)}">${i + 1}</i></div><b>${TILES[k][i]}</b><span>${line}</span></div>`;
+  }
+  function semBlock(g, s) {
+    const k = keyOf(g, s);
+    let ex = 0, mine = 0;
+    for (let i = 0; i < 5; i++) { if (M.explored[k][i]) ex++; if (tileState(k, i) === 'mine') mine++; }
+    return `<div class="semblock"><div class="semhead"><b>${s}학기</b><span>단원 5개 · 탐험 ${ex}/5 · 내 땅 ${mine}칸</span>
+      <div class="acts"><button type="button" class="sbtn" data-go="normal" data-s="${s}">모험</button><button type="button" class="sbtn ta" data-go="ta" data-s="${s}">타임어택</button></div></div>
+      <div class="tiles">${[0, 1, 2, 3, 4].map(i => tileHTML(k, i)).join('')}</div></div>`;
   }
 
   function renderMap() {
@@ -1143,66 +1184,71 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     n.className = 'news' + (M.news.good ? ' good' : '');
     n.innerHTML = `<span class="ic">${M.news.good ? '✓' : '!'}</span><span>${esc(M.news.text)}</span>`;
     $('kmap').innerHTML = mapSVG();
-    $('gchips').innerHTML = REG.map(r => `<button type="button" class="gchip" data-g="${r.g}" aria-pressed="${pick.g === r.g}">${r.g}학년 ${r.name}</button>`).join('');
-    const r = REG[pick.g - 1], d = explored(r.g);
-    $('rbox').innerHTML = `<h3><span>${r.g}학년 · ${r.name} ${r.g === MY_GRADE ? '<span class="mine-badge">내 학년</span>' : ''}</span><small>탐험 ${d}/2 · 내 깃발 ${myFlags(r.g)}개</small></h3>
-      <div class="prog"><i style="width:${d * 50}%"></i></div>${semRow(r, 1)}${semRow(r, 2)}
-      <p class="note">반 친구는 닉네임으로만 보여요. 친구가 내 기록을 깨도 깃발만 넘어가고, 내가 탐험한 땅은 그대로 남아요.</p>`;
+    $('gchips').innerHTML = ISL.map(is => `<button type="button" class="gchip" data-g="${is.g}" aria-pressed="${pick.g === is.g}">${is.g}학년 ${is.name}</button>`).join('');
+    const is = ISL[pick.g - 1], c = countG(is.g);
+    $('rbox').innerHTML = `<h3><span>${is.g}학년 · ${is.name} ${is.g === MY_GRADE ? '<span class="mine-badge">내 학년</span>' : ''}</span><small>내 땅 ${c.mine}칸 · 친구 땅 ${c.rival}칸 · 탐험 ${c.explored}/10</small></h3>
+      ${semBlock(is.g, 1)}${semBlock(is.g, 2)}
+      <p class="note">모험으로 문제 문을 열면 그 단원 땅이 탐험돼요. 타임어택에서는 문제 문 사이 구간 기록이 단원 기록이 되고, 반에서 가장 빠르면 그 땅을 차지해요. 반 친구는 닉네임으로만 보여요.</p>`;
     M.justLit = 0;
     saveM();
   }
 
   function selectGrade(g) { pick = { g, s: pick.s }; renderMap(); }
-  $('kmap').addEventListener('click', e => { const rg = e.target.closest('.rg'); if (rg) selectGrade(Number(rg.dataset.g)); });
-  $('kmap').addEventListener('keydown', e => { const rg = e.target.closest('.rg'); if (rg && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); selectGrade(Number(rg.dataset.g)); const el = $('kmap').querySelector(`.rg[data-g="${rg.dataset.g}"]`); if (el) el.focus(); } });
+  $('kmap').addEventListener('click', e => { const el = e.target.closest('.isl'); if (el) selectGrade(Number(el.dataset.g)); });
+  $('kmap').addEventListener('keydown', e => { const el = e.target.closest('.isl'); if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const g = el.dataset.g; selectGrade(Number(g)); const f = $('kmap').querySelector(`.isl[data-g="${g}"]`); if (f) f.focus(); } });
   $('gchips').addEventListener('click', e => { const c = e.target.closest('.gchip'); if (c) selectGrade(Number(c.dataset.g)); });
   $('rbox').addEventListener('click', e => {
     const b = e.target.closest('[data-go]'); if (!b) return;
     pick = { g: pick.g, s: Number(b.dataset.s) };
     runMode = b.dataset.go;
-    const r = REG[pick.g - 1];
+    const is = ISL[pick.g - 1];
+    QUESTIONS = BANK[keyOf(pick.g, pick.s)] || BANK['3-1'];
     $('startStage').textContent = '초등 ' + pick.g + '-' + pick.s;
-    QUESTIONS = BANK[pick.g + '-' + pick.s] || BANK['3-1'];
     $('startMode').textContent = runMode === 'ta' ? '타임어택' : '5문제';
     $('taRule').hidden = runMode !== 'ta';
-    $('startTitle').textContent = runMode === 'ta' ? `${r.name} ${pick.s}학기 깃발에 도전해 볼까요?` : '부기와 함께 문제 문을 열어 볼까요?';
-    $('subline').textContent = `${pick.g}학년 ${pick.s}학기 · ${r.name} ${r.sem[pick.s - 1]} · ${runMode === 'ta' ? '타임어택' : '문제 문 5개를 열고 깃발까지'}`;
+    $('startTitle').textContent = runMode === 'ta' ? `${is.name} ${pick.s}학기, 땅따먹기 타임어택!` : '부기와 함께 문제 문을 열어 볼까요?';
+    $('subline').textContent = `${pick.g}학년 ${pick.s}학기 · ${is.name} · ${runMode === 'ta' ? '타임어택 땅따먹기' : '단원 5개를 탐험해요'}`;
     resetAll();
     showModal('startModal');
     $('startBtn').focus({ preventScroll: true });
   });
 
   function showTaResults() {
-    const k = pick.g + '-' + pick.s, r = REG[pick.g - 1], t = +taTime.toFixed(1);
-    const before = holder(k), hadFlag = before && before.me, prevBest = M.mine[k];
-    const best = prevBest == null || t < prevBest;
-    if (best) M.mine[k] = t;
-    const after = holder(k), b = board(k), rank = b.findIndex(x => x.me) + 1;
-    let msg, lose = false;
-    if (after.me && !hadFlag) { msg = `깃발을 가져왔어요! ${r.name} ${pick.s}학기 깃발이 부기 깃발로 바뀌었어요.`; M.news = { good: true, text: `내가 ${r.name} ${pick.s}학기 깃발을 ${t.toFixed(1)}초로 가져왔어요.` }; }
-    else if (after.me) msg = best ? `깃발을 지켰어요! 내 기록을 ${t.toFixed(1)}초로 줄였어요.` : `깃발은 그대로 내 거예요. 내 최고 기록은 ${M.mine[k].toFixed(1)}초예요.`;
-    else { lose = true; msg = `깃발 주인 ${after.n} 님과 ${(M.mine[k] - after.t).toFixed(1)}초 차이예요. ${best ? '내 최고 기록을 새로 세웠어요!' : ''} 다시 도전해 볼까요?`; }
+    const k = keyOf(pick.g, pick.s), is = ISL[pick.g - 1], total = +taTime.toFixed(1);
+    let won = 0, kept = 0;
+    const rows = [0, 1, 2, 3, 4].map(i => {
+      const t = taSplits[i], before = owner(k, i);
+      if (t == null) return { i, t: null, res: '기록 없음', cls: '' };
+      if (M.mine[k][i] == null || t < M.mine[k][i]) M.mine[k][i] = t;
+      const after = owner(k, i);
+      if (after.me && !(before && before.me)) { won++; return { i, t, res: before ? `땅 차지! (${before.n} ${before.t.toFixed(1)}초)` : '빈 땅 차지!', cls: 'won' }; }
+      if (after.me) { kept++; return { i, t, res: '내 땅 지킴', cls: 'won' }; }
+      return { i, t, res: `${after.n} 님과 ${(t - after.t).toFixed(1)}초 차이`, cls: 'lost' };
+    });
+    if (won) M.news = { good: true, text: `${is.name} ${pick.s}학기에서 땅 ${won}칸을 새로 차지했어요!` };
     saveM();
     $('doneTitle').textContent = '타임어택 완주!';
-    $('doneScore').textContent = t.toFixed(1) + '초';
+    $('doneScore').textContent = total.toFixed(1) + '초';
     $('statFirst').textContent = stats.first;
     $('statRetry').textContent = stats.retries + ' (+' + stats.retries * 5 + '초)';
     $('statCoin').textContent = stats.coins;
     $('reviewBox').hidden = true;
     $('taBox').hidden = false;
-    $('taBox').innerHTML = `<p class="ta-msg${lose ? ' lose' : ''}">${esc(msg)}</p><p class="lead"><b>${r.name} ${pick.s}학기 반 기록</b> · 나는 ${rank}위</p>
-      <ol class="board">${b.slice(0, 5).map((x, i) => `<li class="${x.me ? 'me' : ''}"><b>${i + 1}</b><span>${esc(x.n)}</span><span>${x.t.toFixed(1)}초</span></li>`).join('')}</ol>`;
+    const msg = won ? `땅 ${won}칸을 새로 차지했어요!${kept ? ` ${kept}칸은 지켰어요.` : ''}` : kept ? `내 땅 ${kept}칸을 지켰어요. 더 빨리 풀면 친구 땅도 가져올 수 있어요.` : '이번에는 차지한 땅이 없어요. 구간 기록을 줄여서 다시 도전해 볼까요?';
+    $('taBox').innerHTML = `<p class="ta-msg${won || kept ? '' : ' lose'}">${esc(msg)}</p><p class="lead"><b>단원별 구간 기록</b> (문제 문 사이 시간)</p>
+      <ol class="board">${rows.map(r => `<li class="${r.cls}"><span>${r.i + 1}. ${TILES[k][r.i]}</span><span>${r.t == null ? '-' : r.t.toFixed(1) + '초'}</span><span class="res">${esc(r.res)}</span></li>`).join('')}</ol>`;
     showModal('doneModal');
     $('againBtn').focus({ preventScroll: true });
   }
 
   $('tRival').addEventListener('click', () => {
-    const r = REG[pick.g - 1];
-    const s = [1, 2].find(x => { const h = holder(r.g + '-' + x); return h && h.me; });
-    if (!s) { M.news = { good: false, text: `${r.g}학년 ${r.name}에는 아직 내 깃발이 없어요. 타임어택으로 먼저 깃발을 가져와 보세요.` }; renderMap(); return; }
-    const k = r.g + '-' + s, t = +(M.mine[k] - 1.3).toFixed(1);
-    M.rec[k].push({ n: '번개토끼', t });
-    M.news = { good: false, text: `번개토끼 님이 ${r.name} ${s}학기 기록을 ${t.toFixed(1)}초로 깼어요. 깃발을 빼앗겼어요! 내가 탐험한 땅은 그대로예요. 다시 도전해서 깃발을 되찾아 보세요.` };
+    const g = pick.g, is = ISL[g - 1];
+    let hit = null;
+    [1, 2].some(s => { const k = keyOf(g, s); for (let i = 0; i < 5; i++) if (tileState(k, i) === 'mine') { hit = { k, s, i }; return true; } return false; });
+    if (!hit) { M.news = { good: false, text: `${is.g}학년 ${is.name}에는 아직 내 땅이 없어요. 타임어택으로 먼저 땅을 차지해 보세요.` }; renderMap(); return; }
+    const t = +Math.max(1, M.mine[hit.k][hit.i] - 0.8).toFixed(1);
+    M.rec[hit.k][hit.i] = { n: '번개토끼', t };
+    M.news = { good: false, text: `번개토끼 님이 ${is.g}학년 ${hit.s}학기 '${TILES[hit.k][hit.i]}' 땅을 ${t.toFixed(1)}초로 빼앗아 갔어요! 타임어택으로 되찾아 보세요.` };
     renderMap();
   });
   $('tReset').addEventListener('click', () => { M = defaultsM(); pick = { g: MY_GRADE, s: 1 }; renderMap(); });
