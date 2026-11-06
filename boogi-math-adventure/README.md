@@ -33,5 +33,10 @@ cd boogi-math-adventure && python3 -m http.server 8000
 - 조작: ←/→ 이동, 스페이스 점프, 문제는 1~4 숫자 키. 화면 아래 터치 버튼 지원
 - 게임 중 "처음부터"·"그만하기" (두 번 눌러야 실행)
 - 문제 은행: 1-1 ~ 6-2 각 5문제 × (기본 + 비슷한 문제). 도시 하나는 그중 한 단원의 기본·응용 2문제를 사용
-- 지도는 위도·경도로 단순화한 남한 외곽선에 직접 그린 단순 도형(섬·배·물고기·구름)을 얹은 시제품용 그림. 실제 서비스에서는 디자이너 일러스트로 교체 권장
+- 지도 경계는 실제 시·도 경계입니다. 통계청(KOSTAT) 2018 시·도 경계를 정리한 공개 자료 [southkorea-maps](https://github.com/southkorea/southkorea-maps)의 `skorea-provinces-2018-geo.json`을 `geo2js.py`로 단순화(약 4,300점, 54KB)해 `index.html`에 넣었습니다. 바다 꾸미기(물결·배·물고기·구름)는 직접 그린 단순 도형입니다.
+- 학년 조각 = 시·도 묶음: 1 제주 / 2 전남·전북·광주 / 3 경북·경남·대구·울산·부산 / 4 충남·충북·대전·세종 / 5 강원 / 6 경기·서울·인천
+
+```bash
+python3 geo2js.py skorea-provinces-2018-geo.json prov.js   # PROV 데이터 다시 만들기
+```
 - 진행 상황은 브라우저 `localStorage`에만 저장
