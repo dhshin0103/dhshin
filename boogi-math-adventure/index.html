@@ -145,7 +145,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .city { cursor: pointer; outline: none; }
 .city circle.dot { stroke: #003a5c; }
 .city.sel circle.dot { stroke: #ffc53d; }
-.cname { font-family: var(--display); fill: #1c2024; pointer-events: none; paint-order: stroke; stroke: #fff; }
+.cname { font-family: var(--display); fill: #1c2024; paint-order: stroke; stroke: #fff; }
 .semgrp { display: flex; flex-direction: column; gap: 8px; }
 .semgrp h4 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--deep); }
 .crow { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 12px; border-radius: 14px; background: var(--card); border: 2px solid var(--line); }
@@ -1242,7 +1242,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     return `<svg viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}" role="group" aria-label="${r.name} 도시 지도">
       <rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" fill="#bfe6ff"/>
       ${inset ? `<rect x="${inset[0] - 30 * k}" y="${inset[1] - 22 * k}" width="${60 * k}" height="${48 * k}" rx="${6 * k}" fill="none" stroke="#003a5c" stroke-dasharray="${4 * k} ${3 * k}" stroke-width="${1.5 * k}"/>` : ''}
-      <g style="stroke-width:${(3 * k).toFixed(1)}px">${regionShape(Object.assign({}, r, r.g === 3 ? { extra: null } : {}), fill).replace(/class="land"/g, `class="land" stroke="#fff" stroke-width="${(3 * k).toFixed(1)}"`)}</g>${cities}</svg>
+      <g style="stroke-width:${(3 * k).toFixed(1)}px" pointer-events="none">${regionShape(Object.assign({}, r, r.g === 3 ? { extra: null } : {}), fill).replace(/class="land"/g, `class="land" stroke="#fff" stroke-width="${(3 * k).toFixed(1)}"`)}</g>${cities}</svg>
       <span class="mapcount">${r.name} ${conqCount(r.g)} / 10</span>`;
   }
 
