@@ -1583,7 +1583,7 @@ body.story-on { overflow: hidden; }
   const NSTG = GUARD.length;
   function defaultsM() {
     return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0 }, badges: [], sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
-      news: { good: false, text: '시계탑 3층 [분수와 소수]의 방에 도착했어요! 송이의 치즈 블록 작업실부터 황금 나침반 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false, quizBest: 0 };
+      news: { good: false, text: '시계탑 3층 [분수와 소수]의 방에 도착했어요! 1단계부터 황금 나침반 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false, quizBest: 0 };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
@@ -1783,19 +1783,16 @@ body.story-on { overflow: hidden; }
     const nodes = GUARD.map((G, i) => {
       const [x, y] = P[i], open = ready && unlocked(key, i), done = pr.cl[i], st = pr.st[i], got = hasPiece(key, i), fog = !open;
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
-      const title = `${i + 1}단계 · ${G.step}`, quest = questOf(key, i);
-      return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}, ${G.place}: ${quest}. 난이도 ${G.level}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 나침반 조각 획득' : ''}">
+      const title = `${i + 1}단계 · ${G.step}`;
+      return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 나침반 조각 획득' : ''}">
         <g ${fog ? 'filter="url(#fogblur)" opacity=".6"' : ''}>
         <ellipse cx="${x}" cy="${y + 54}" rx="70" ry="14" fill="#c9a46a" opacity=".45"/>
         <circle class="ring" cx="${x}" cy="${y}" r="62" fill="${G.bg}" stroke="${open ? '#ffffff' : '#cfd6de'}" stroke-width="7"/>
         <g transform="translate(${x - 47},${y - 50}) scale(0.94)" ${open ? '' : 'filter="url(#jgs)" opacity=".5"'}>${art}</g>
-        <rect x="${x - 94}" y="${y + 72}" width="188" height="104" rx="16" fill="#fff" stroke="${open ? '#2b3a55' : '#cfd6de'}" stroke-width="2"/>
+        <rect x="${x - 94}" y="${y + 72}" width="188" height="72" rx="16" fill="#fff" stroke="${open ? '#2b3a55' : '#cfd6de'}" stroke-width="2"/>
         <text x="${x}" y="${y + 97}" text-anchor="middle" font-family="Jua" font-size="20" fill="${open ? '#1f2a40' : '#8b95a3'}">${title}</text>
-        <text x="${x}" y="${y + 117}" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-weight="700" font-size="13" fill="${open ? '#0077b3' : '#a3acb8'}"${fitText(G.place, 14)}>${G.place}</text>
-        <text x="${x}" y="${y + 136}" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-size="12.5" fill="${open ? '#4a5563' : '#a3acb8'}"${fitText(quest, 14)}>${quest}</text>
-        <text x="${x}" y="${y + 162}" text-anchor="middle" font-family="Jua" font-size="18" fill="${open ? '#b07800' : '#a3acb8'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : '잠김'}</text>
+        <text x="${x}" y="${y + 130}" text-anchor="middle" font-family="Jua" font-size="18" fill="${open ? '#b07800' : '#a3acb8'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : '잠김'}</text>
         </g>
-        <g pointer-events="none"><rect x="${x - 34}" y="${y - 88}" width="68" height="24" rx="12" fill="${G.lv}"/><text x="${x}" y="${y - 71}" text-anchor="middle" font-family="Jua" font-size="14" fill="#fff">난이도 ${G.level}</text></g>
         ${fog ? `<g pointer-events="none" transform="translate(${x - 17},${y - 20})"><rect x="0" y="15" width="34" height="27" rx="6" fill="#5b6672"/><path d="M7 16v-6a10 10 0 0 1 20 0v6" stroke="#5b6672" stroke-width="5.5" fill="none"/></g>` : ''}
         ${done ? `<circle cx="${x + 46}" cy="${y - 44}" r="15" fill="#30a46c"/><path d="M${x + 39} ${y - 44}l5 6 9-11" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>` : ''}
         ${got ? `<g class="${popI === i ? 'piece-got' : ''}"><circle cx="${x - 46}" cy="${y - 44}" r="17" fill="#ffd34d" stroke="#b07800" stroke-width="2.5"/><path d="M${x - 46} ${y - 56} L${x - 40} ${y - 44} L${x - 46} ${y - 32} L${x - 52} ${y - 44} Z" fill="#e5484d"/></g>` : ''}</g>`;
@@ -2104,7 +2101,7 @@ body.story-on { overflow: hidden; }
   });
   $('mapModal').addEventListener('change', e => {
     if (e.target.id === 'gsSel') { M.sel.gs = e.target.value; M.sel.u = 0; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층(${gsLabel(M.sel.gs)})으로 올라왔어요. 탐험할 단원의 방을 골라 보세요.` }; render(); $('gsSel').focus(); }
-    if (e.target.id === 'unitSel') { M.sel.u = Number(e.target.value); M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 송이의 치즈 블록 작업실부터 시작해요.` }; render(); $('unitSel').focus(); }
+    if (e.target.id === 'unitSel') { M.sel.u = Number(e.target.value); M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; render(); $('unitSel').focus(); }
   });
   $('mapModal').addEventListener('keydown', e => {
     const jn = e.target.closest && e.target.closest('.jnode');
