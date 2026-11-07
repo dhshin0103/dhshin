@@ -189,9 +189,9 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .clue { text-decoration: none; background: linear-gradient(transparent 60%, #ffe27a 60%); border-bottom: 3px solid #e0a800; padding: 0 2px; }
 .cluenote { margin: 0; font-size: 0.9rem; color: #8a5a00; background: #fff7c2; border-radius: 10px; padding: 6px 12px; }
 /* 첫 화면: 큰 섬 지도 + 옆 황금 나침반 퍼즐 */
-.home2 { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 14px; align-items: start; }
-.home2 .journey svg { min-width: 680px; }
-.pzside { background: #fff; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.home2 { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
+.home2 .journey svg { min-width: 0; }
+.pzside { background: #fff; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
 .pzside h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.2rem; color: var(--deep); }
 .pzside .sub { margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
 .pzside svg { display: block; width: 100%; height: auto; }
@@ -214,7 +214,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .crew { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
 .crew span { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; }
 .crew svg { width: 44px; }
-@media (max-width: 960px) { .home2 { grid-template-columns: minmax(0, 1fr); } .pzside { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); align-items: start; } .pzside > :not(.cmpbox) { grid-column: 2; } .pzside .cmpbox { grid-row: 1 / span 5; } }
+@media (max-width: 1060px) { .home2 { grid-template-columns: minmax(0, 1fr); } .pzside { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); align-items: center; } .pzside > :not(.cmpbox) { grid-column: 2; } .pzside .cmpbox { grid-row: 1 / span 5; } }
 @media (max-width: 560px) { .pzside { display: flex; } }
 @media (max-width: 900px) { .grades.stages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .shop-grid { grid-template-columns: minmax(0, 1fr); } }
@@ -1649,7 +1649,6 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
         <h3>황금 나침반 퍼즐</h3>
         <div class="pzcount"><span>${gsLabel(M.sel.gs)} · ${esc(unitName(M.sel.gs, M.sel.u))}</span><b>${n} / 8</b></div>
         <p class="sub">관문을 <b>별 3개</b>로 통과하면 그 수호자의 나침반 조각을 얻어요. 8조각을 모두 맞추면 숫자 시계탑이 다시 움직여요!${n === 8 ? ' <b>완성!</b>' : ''}</p>
-        <ul class="pzlist">${GUARD.map((G, i) => `<li class="${hasPiece(key, i) ? 'got' : ''}"><i>${hasPiece(key, i) ? '✓' : i + 1}</i>${i < 7 ? G.name : '바늘'} · ${i < 7 ? G.step : '보물지도'}</li>`).join('')}</ul>
         <p class="sub">관문 완료 ${doneN} / 8${badge && M.badges.includes(badge) ? ` · <b>${badge}</b>` : ''}</p>
       </aside></div>`;
     saveM();
