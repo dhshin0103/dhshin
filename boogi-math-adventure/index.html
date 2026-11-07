@@ -188,6 +188,58 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .qtimer i { display: block; height: 100%; width: 100%; background: #e5484d; transition: width .1s linear; }
 .clue { text-decoration: none; background: linear-gradient(transparent 60%, #ffe27a 60%); border-bottom: 3px solid #e0a800; padding: 0 2px; }
 .cluenote { margin: 0; font-size: 0.9rem; color: #8a5a00; background: #fff7c2; border-radius: 10px; padding: 6px 12px; }
+/* 지도: 흐린 잠금 방, 통통 튀는 핀, 깜빡이는 최종 깃발 */
+.pinbounce { animation: bounce 1s ease-in-out infinite; }
+@keyframes bounce { 50% { transform: translateY(-8px); } }
+.flagblink { animation: blink 1.1s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: .35; } }
+.pzfoot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.cinebtn { font-family: var(--display); font-size: 1rem; border: 2px solid #b07800; border-radius: 999px; background: linear-gradient(90deg, #ffd34d, #fff3b0, #ffd34d); background-size: 200% 100%; color: #6a4500; padding: 6px 14px; cursor: pointer; animation: shine 1.6s linear infinite; box-shadow: 0 3px 0 #b07800; }
+.cinebtn:focus-visible { outline: 3px solid var(--deep); outline-offset: 2px; }
+@keyframes shine { to { background-position: -200% 0; } }
+/* 8/8 완성 시네마틱 (약 7초) */
+.cine { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: radial-gradient(circle at 50% 45%, #2a2f55, #0d1026 70%); transition: background 1s; }
+.cine.s3, .cine.s4 { background: linear-gradient(180deg, #7fd0ff, #d9f3ff 70%, #bfe9a8); }
+.cine #confetti { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+.cs { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .6s; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.cine.s1 .cs1, .cine.s2 .cs2, .cine.s3 .cs3, .cine.s4 .cs4 { opacity: 1; pointer-events: auto; }
+.cs1 .zoom { width: min(70vmin, 420px); animation: zoomin 1.6s cubic-bezier(.2,1.2,.4,1) both; filter: drop-shadow(0 0 18px #ffd34d) drop-shadow(0 0 40px #ffb300); }
+.cs1 .zoom svg { width: 100%; height: auto; display: block; }
+.cs1 .zoom path[stroke="#b07800"] { stroke: #fff3a0; }
+.cine .hands { animation: spin .35s linear infinite !important; }
+@keyframes zoomin { from { transform: scale(.25); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.cs2 .towerbig { width: min(60vmin, 360px); animation: rise 1s ease-out both; }
+.cs2 .towerbig svg { width: 100%; height: auto; display: block; }
+.cs2 .gear { animation: spin 1.6s linear infinite; transform-box: fill-box; transform-origin: center; }
+.cs2 .gear.rev { animation-direction: reverse; }
+.cs2 .bell { animation: ring .5s ease-in-out 4; transform-box: fill-box; transform-origin: 50% 0; }
+@keyframes ring { 25% { transform: rotate(18deg); } 75% { transform: rotate(-18deg); } }
+@keyframes rise { from { transform: translateY(40px) scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
+.cs2 .dust { animation: dust 1.6s ease-out both; }
+@keyframes dust { to { transform: translateY(-60px); opacity: 0; } }
+.cs3 { align-content: end; }
+.cs3 .cloud { position: absolute; top: 12%; width: 46%; height: 34%; background: #fff; border-radius: 50%; filter: blur(4px); opacity: .95; }
+.cs3 .cloud.l { left: 2%; animation: partl 1.4s ease-in both; } .cs3 .cloud.r { right: 2%; animation: partr 1.4s ease-in both; }
+@keyframes partl { to { transform: translateX(-110%); opacity: 0; } } @keyframes partr { to { transform: translateX(110%); opacity: 0; } }
+.cs3 .say { position: absolute; top: 18%; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid var(--deep); border-radius: 22px; padding: 12px 22px; font-family: var(--display); font-size: clamp(1.3rem, 4vw, 2rem); color: var(--deep); white-space: nowrap; box-shadow: 0 6px 0 var(--deep); animation: rise .6s .6s both; }
+.cs3 .crew2 { display: flex; gap: clamp(4px, 1.5vw, 14px); justify-content: center; margin-bottom: 6vh; }
+.cs3 .crew2 span { width: clamp(52px, 11vw, 110px); animation: hop .5s ease-in-out infinite alternate; }
+.cs3 .crew2 span:nth-child(2n) { animation-delay: .15s; } .cs3 .crew2 span:nth-child(3n) { animation-delay: .3s; }
+@keyframes hop { from { transform: translateY(0); } to { transform: translateY(-26px); } }
+.cs3 .crew2 svg { width: 100%; height: auto; display: block; }
+.cs4 { background: rgba(13, 16, 38, .55); }
+.cs4 .award { position: relative; width: min(520px, 100%); background: var(--card); border: 3px solid var(--deep); border-radius: 26px; box-shadow: 0 10px 0 var(--deep); padding: 26px 22px 22px; display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; }
+.cs4 .halo { position: absolute; top: -70px; left: 50%; width: 220px; height: 220px; margin-left: -110px; background: repeating-conic-gradient(#ffd34d 0 10deg, transparent 10deg 20deg); border-radius: 50%; opacity: .55; animation: spin 8s linear infinite; z-index: -1; }
+.cs4 .emblem { width: 150px; height: 150px; margin-top: -90px; animation: stamp .7s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes stamp { from { transform: scale(2.4) rotate(-12deg); opacity: 0; } 70% { transform: scale(.92); opacity: 1; } to { transform: scale(1); } }
+.cs4 h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.4rem, 4vw, 1.9rem); color: var(--deep); text-wrap: balance; }
+.cs4 .rewards { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.cs4 .rewards span { font-family: var(--display); font-size: 1.05rem; background: #fff3c4; border: 2px solid #f3d27a; color: #8a5a00; border-radius: 999px; padding: 6px 14px; }
+.cs4 .btnrow { width: 100%; }
+.cine-skip { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 6; font-family: var(--display); font-size: 1rem; color: var(--deep); background: #fff; border: 2px solid var(--deep); border-radius: 999px; padding: 6px 16px; cursor: pointer; }
+.cine.s4 .cine-skip { display: none; }
+.cine-skip:focus-visible, .cs4 .btn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .cine *, .pinbounce, .flagblink, .cinebtn { animation: none !important; } }
 /* 첫 화면: 큰 섬 지도 + 옆 황금 나침반 퍼즐 */
 .home2 { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
 .home2 .journey svg { min-width: 0; }
@@ -304,6 +356,15 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     <div id="homeBody"></div>
     <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">다음 관문 바로 클리어</button><button type="button" id="tStory">이야기 처음부터</button><button type="button" id="tReset">처음 상태로</button></div>
   </div>
+</div>
+
+<div class="cine" id="cine" hidden role="dialog" aria-modal="true" aria-labelledby="cineMsg">
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <div class="cs cs1" id="cs1" aria-hidden="true"></div>
+  <div class="cs cs2" id="cs2" aria-hidden="true"></div>
+  <div class="cs cs3" id="cs3"></div>
+  <div class="cs cs4" id="cs4"></div>
+  <button type="button" class="cine-skip" id="cineSkip">건너뛰기 ▶▶</button>
 </div>
 
 <div class="modal" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
@@ -768,7 +829,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   function finish() {
     scoreStage();
-    if (M.justBadge || M.justCompass) startEnding(); else showResults();
+    if (M.justCompass) { state = 'cine'; playCine({ key: pick.key, fromGame: true }); }
+    else if (M.justBadge) startEnding(); else showResults();
   }
   function showResults() {
     state = 'done';
@@ -1449,6 +1511,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     M.last = { stars: got, best: P.st[i], s1, s2, s3, first: stats.first, opened: wasCleared ? [] : opened, newPiece };
     M.popPiece = newPiece ? i : null;
     M.justCompass = newPiece && piecesBefore === 7;
+    if (M.justCompass) M.coins = (M.coins || 0) + 100;
     M.coins = (M.coins || 0) + stats.coins;
     const badge = CONTENT[key].badge;
     M.justBadge = i === 7 && got === 3 && !M.badges.includes(badge) ? badge : '';
@@ -1585,6 +1648,19 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       </div>
       <div class="wallet"><span class="chip">배지 ${M.badges.length}</span><span class="chip">코인 ${M.coins}</span><button type="button" class="shopbtn" id="openShop">코인 상점</button></div>`;
   }
+  // 관문 장소 (모든 섬 공통)
+  const PLACE = ['송이의 치즈 블록 작업실', '루미의 베이커리 마켓', '로키의 스피드 퀴즈쇼', '부기의 부품 수리 공방', '달이의 암호 탐정 사무소', '토리의 열기구 비행선', '샌디의 비밀 분석기지', '숫자 시계탑의 심장'];
+  // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
+  const QUEST = {
+    '3-1-4': ['멈춘 톱니 사이에 분수 블록 끼우기', '주문서의 분모와 분자 재료 분류하기', '10초 안에 크기 비교 밸브 작동시키기', '수직선 눈금을 조립해 기계 틈 메우기',
+      '단서 2개로 잠긴 보관함 비밀번호 풀기', '게이지 소수점을 맞춰 안개 구역 탈출하기', '흔들리는 데이터 회로를 고치고 점검하기', '7개 암호를 풀어 황금 시계바늘 가동'],
+    '5-1-4': ['모눈 블록을 쌓아 넓이 단위 만들기', 'cm²와 m² 단위 라벨을 바르게 붙이기', '10초 안에 둘레·넓이 계산 밸브 돌리기', '평행사변형을 잘라 직사각형 부품 만들기',
+      '단서 2개로 잘린 땅의 넓이 암호 풀기', '울타리 길이를 맞춰 착륙장에 안전 착륙하기', '흔들리는 데이터 회로를 고치고 점검하기', '7개 암호를 풀어 황금 시계바늘 가동']
+  };
+  const questOf = (key, i) => (QUEST[key] || [])[i] || GUARD[i].short;
+  const floorOf = gs => +gs[0];
+  // 긴 글은 칸 너비에 맞춰 살짝 좁혀요
+  const fitText = (t, max) => t.length * 0.94 > max ? ` textLength="${max * 13}" lengthAdjust="spacingAndGlyphs"` : '';
   function islandSVG(key, popI) {
     // 2줄로 이어진 길: 1~4단계 → 5~8단계(보물지도) → 끝에 숫자 시계탑
     const P = [[110, 150], [330, 128], [550, 150], [770, 128], [880, 372], [660, 394], [440, 372], [220, 394]];
@@ -1597,26 +1673,32 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     const nodes = GUARD.map((G, i) => {
       const [x, y] = P[i], open = ready && unlocked(key, i), done = pr.cl[i], st = pr.st[i], got = hasPiece(key, i);
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
-      const title = i < 7 ? `${i + 1}단계 · ${G.step}` : '최종 · 단원평가';
-      return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}, ${G.name}: ${G.short}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 나침반 조각 획득' : ''}">
+      const title = i < 7 ? `${i + 1}단계 · ${G.step}` : '최종 · 단원평가', place = PLACE[i], quest = questOf(key, i);
+      const fog = ready && !open;   // 아직 못 가는 방: 흐리게 + 자물쇠
+      const flag = i === 7 && open ? `<g class="flagblink" pointer-events="none"><rect x="${x + 30}" y="${y - 66}" width="4" height="40" fill="#5b6672"/><path d="M${x + 34} ${y - 66} L${x + 62} ${y - 57} L${x + 34} ${y - 48} Z" fill="#e5484d"/></g>` : '';
+      return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}, ${place}: ${quest}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 나침반 조각 획득' : ''}">
+        <g ${fog ? 'filter="url(#fogblur)" opacity=".6"' : ''}>
         <circle class="ring" cx="${x}" cy="${y}" r="50" fill="${G.bg}" stroke="${open ? '#ffffff' : '#cfd6de'}" stroke-width="6"/>
         <g transform="translate(${x - 38},${y - 40}) scale(0.76)" ${open ? '' : 'filter="url(#jgs)" opacity=".5"'}>${art}</g>
+        <rect x="${x - 108}" y="${y + 56}" width="216" height="98" rx="16" fill="#fff" stroke="${open ? '#2b3a55' : '#cfd6de'}" stroke-width="2"/>
+        <text x="${x}" y="${y + 80}" text-anchor="middle" font-family="Jua" font-size="20" fill="${open ? '#1f2a40' : '#8b95a3'}">${title}</text>
+        <text x="${x}" y="${y + 100}" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-weight="700" font-size="14" fill="${open ? '#0077b3' : '#a3acb8'}">${place}</text>
+        <text x="${x}" y="${y + 119}" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-size="13" fill="${open ? '#4a5563' : '#a3acb8'}"${fitText(quest, 15)}>${quest}</text>
+        <text x="${x}" y="${y + 141}" text-anchor="middle" font-family="Jua" font-size="16" fill="${open ? '#b07800' : '#a3acb8'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : '잠김'}</text>
+        </g>
+        ${fog || !ready ? `<g pointer-events="none" transform="translate(${x - 15},${y - 18})"><rect x="0" y="13" width="30" height="24" rx="5" fill="#5b6672"/><path d="M6 14v-5a9 9 0 0 1 18 0v5" stroke="#5b6672" stroke-width="5" fill="none"/></g>` : ''}
         ${done ? `<circle cx="${x + 37}" cy="${y - 37}" r="13" fill="#30a46c"/><path d="M${x + 31} ${y - 37}l5 5 8-9" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>` : ''}
-        ${got ? `<g class="${popI === i ? 'piece-got' : ''}"><circle cx="${x - 37}" cy="${y - 37}" r="15" fill="#ffd34d" stroke="#b07800" stroke-width="2.5"/><path d="M${x - 37} ${y - 47} L${x - 32} ${y - 37} L${x - 37} ${y - 27} L${x - 42} ${y - 37} Z" fill="#e5484d"/></g>` : ''}
-        <rect x="${x - 106}" y="${y + 56}" width="212" height="76" rx="16" fill="#fff" stroke="${open ? '#2b3a55' : '#cfd6de'}" stroke-width="2"/>
-        <text x="${x}" y="${y + 81}" text-anchor="middle" font-family="Jua" font-size="21" fill="${open ? '#1f2a40' : '#8b95a3'}">${title}</text>
-        <text x="${x}" y="${y + 102}" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-weight="700" font-size="14.5" fill="${open ? '#4a5563' : '#a3acb8'}">${i < 7 ? G.name + ' · ' : ''}${G.short}</text>
-        <text x="${x}" y="${y + 123}" text-anchor="middle" font-family="Jua" font-size="17" fill="${open ? '#b07800' : '#a3acb8'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : '🔒 잠김'}</text></g>`;
+        ${got ? `<g class="${popI === i ? 'piece-got' : ''}"><circle cx="${x - 37}" cy="${y - 37}" r="15" fill="#ffd34d" stroke="#b07800" stroke-width="2.5"/><path d="M${x - 37} ${y - 47} L${x - 32} ${y - 37} L${x - 37} ${y - 27} L${x - 42} ${y - 37} Z" fill="#e5484d"/></g>` : ''}${flag}</g>`;
     }).join('');
-    const pin = cur === null ? '' : (() => { const [px, py] = P[cur]; return `<g pointer-events="none"><path d="M${px} ${py - 54} c-13 -16 -16 -24 -16 -31 a16 16 0 0 1 32 0 c0 7 -3 15 -16 31z" fill="#e5484d"/><circle cx="${px}" cy="${py - 85}" r="6" fill="#fff"/>
+    const pin = cur === null ? '' : (() => { const [px, py] = P[cur]; return `<g pointer-events="none" class="pinbounce"><path d="M${px} ${py - 54} c-13 -16 -16 -24 -16 -31 a16 16 0 0 1 32 0 c0 7 -3 15 -16 31z" fill="#e5484d"/><circle cx="${px}" cy="${py - 85}" r="6" fill="#fff"/>
       <rect x="${px + 18}" y="${py - 104}" width="78" height="26" rx="13" fill="#1f2a40"/><text x="${px + 57}" y="${py - 86}" text-anchor="middle" font-family="Jua" font-size="15" fill="#fff">지금 여기</text></g>`; })();
-    return `<svg viewBox="0 0 1000 540" role="group" aria-label="${unitName(M.sel.gs, M.sel.u)} 섬 지도, 황금 나침반 ${n}/8조각">
-      <defs><filter id="jgs"><feColorMatrix type="saturate" values="0"/></filter></defs>
-      <rect width="1000" height="540" rx="22" fill="#bfe6ff"/>
+    return `<svg viewBox="0 0 1000 560" role="group" aria-label="${unitName(M.sel.gs, M.sel.u)} 섬 지도, 황금 나침반 ${n}/8조각">
+      <defs><filter id="jgs"><feColorMatrix type="saturate" values="0"/></filter><filter id="fogblur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.5"/></filter></defs>
+      <rect width="1000" height="560" rx="22" fill="#bfe6ff"/>
       <path d="M30 470 C10 300 40 60 200 40 C380 18 560 60 700 34 C860 10 990 50 985 230 C980 420 900 505 720 498 C540 490 380 510 220 504 C110 500 40 505 30 470Z" fill="#f6e3c3"/>
       <path d="M50 452 C34 300 64 80 205 60 C380 38 560 80 700 54 C850 30 965 70 962 230 C958 400 885 482 720 476 C540 468 380 488 222 482 C120 478 62 484 50 452Z" fill="#e9f6e3"/>
-      <text x="26" y="36" font-family="Jua" font-size="22" fill="#0077b3">${esc(unitName(M.sel.gs, M.sel.u))} 섬</text>
-      <text x="974" y="36" text-anchor="end" font-family="Jua" font-size="20" fill="#b07800">황금 나침반 ${n} / 8</text>
+      <text x="26" y="36" font-family="Jua" font-size="22" fill="#0077b3">시계탑 ${floorOf(M.sel.gs)}층 : ${esc(unitName(M.sel.gs, M.sel.u))}의 방</text>
+      <text x="974" y="36" text-anchor="end" font-family="Jua" font-size="20" fill="#b07800">황금 나침반 복원율 ${n} / 8</text>
       <path d="${road}" fill="none" stroke="#f3e3c3" stroke-width="26" stroke-linecap="round"/>
       <path d="${road}" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="12 12" stroke-linecap="round"/>
       <g transform="translate(36,330) scale(.62)" aria-hidden="true">${towerSVG(n === 8).replace(/<\/?svg[^>]*>/g, '')}</g>
@@ -1648,8 +1730,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
         <div class="cmpbox">${compassSVG(key, popI)}</div>
         <h3>황금 나침반 퍼즐</h3>
         <div class="pzcount"><span>${gsLabel(M.sel.gs)} · ${esc(unitName(M.sel.gs, M.sel.u))}</span><b>${n} / 8</b></div>
-        <p class="sub">관문을 <b>별 3개</b>로 통과하면 그 수호자의 나침반 조각을 얻어요. 8조각을 모두 맞추면 숫자 시계탑이 다시 움직여요!${n === 8 ? ' <b>완성!</b>' : ''}</p>
-        <p class="sub">관문 완료 ${doneN} / 8${badge && M.badges.includes(badge) ? ` · <b>${badge}</b>` : ''}</p>
+        <p class="sub">${n === 8 ? '관문을 별 3개로 통과하여 8개의 황금 조각을 모두 모았습니다! 시계탑 중앙의 마법 바늘이 다시 작동할 준비가 되었습니다.' : '관문을 <b>별 3개</b>로 통과하면 그 수호자의 나침반 조각을 얻어요. 8조각을 모두 맞추면 숫자 시계탑이 다시 움직여요!'}</p>
+        <div class="pzfoot"><span class="sub">관문 완료 ${doneN} / 8${badge && M.badges.includes(badge) ? ` · <b>${badge}</b>` : ''}</span>${n === 8 ? '<button type="button" class="cinebtn" id="cineBtn">시계탑 가동 영상 보기 ▶</button>' : ''}</div>
       </aside></div>`;
     saveM();
   }
@@ -1679,6 +1761,108 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     showModal('startModal');
     $('startBtn').focus({ preventScroll: true });
   }
+  // ---------- 8/8 완성 시네마틱: 나침반 각성 → 시계탑 부활 → 축하 파티 → 마스터 배지 ----------
+  let cineCtx = null, cineTimers = [], confettiRAF = 0;
+  function sfx(fn) { try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; const ac = new AC(); fn(ac); setTimeout(() => { try { ac.close(); } catch (_) {} }, 4000); } catch (_) {} }
+  function playCharge() {    // 마법 차징 "위이잉- 챠르르륵"
+    sfx(ac => {
+      const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sawtooth';
+      o.frequency.setValueAtTime(180, ac.currentTime); o.frequency.exponentialRampToValueAtTime(1100, ac.currentTime + 1.5);
+      g.gain.setValueAtTime(0.0001, ac.currentTime); g.gain.exponentialRampToValueAtTime(0.08, ac.currentTime + 0.2); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 1.7);
+      o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime + 1.8);
+      for (let i = 0; i < 12; i++) { const t = ac.currentTime + 0.9 + i * 0.07, c = ac.createOscillator(), cg = ac.createGain(); c.type = 'square'; c.frequency.value = 2400 + i * 60;
+        cg.gain.setValueAtTime(0.05, t); cg.gain.exponentialRampToValueAtTime(0.0001, t + 0.04); c.connect(cg); cg.connect(ac.destination); c.start(t); c.stop(t + 0.05); }
+    });
+  }
+  function playBell() {      // 시계 종 "댕~ 댕~" + 톱니 소리
+    sfx(ac => {
+      [0, 0.9].forEach((at, k) => [[k ? 392 : 523.25, 0.22], [k ? 784 : 1046.5, 0.08], [k ? 1176 : 1568, 0.04]].forEach(([f, v]) => {
+        const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + at; o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+        o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + 1.7); }));
+      for (let i = 0; i < 6; i++) { const t = ac.currentTime + 0.1 + i * 0.25, c = ac.createOscillator(), cg = ac.createGain(); c.type = 'triangle'; c.frequency.value = 140 + (i % 2) * 30;
+        cg.gain.setValueAtTime(0.06, t); cg.gain.exponentialRampToValueAtTime(0.0001, t + 0.08); c.connect(cg); cg.connect(ac.destination); c.start(t); c.stop(t + 0.1); }
+    });
+  }
+  function bigTowerSVG() {
+    const gear = (cx, cy, r, cls) => { let t = ''; for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5; t += `<rect x="${(cx + (r + 4) * Math.cos(a) - 4).toFixed(1)}" y="${(cy + (r + 4) * Math.sin(a) - 4).toFixed(1)}" width="8" height="8" fill="#b07800" transform="rotate(${i * 36} ${(cx + (r + 4) * Math.cos(a)).toFixed(1)} ${(cy + (r + 4) * Math.sin(a)).toFixed(1)})"/>`; }
+      return `<g class="gear ${cls}">${t}<circle cx="${cx}" cy="${cy}" r="${r}" fill="#ffd34d" stroke="#b07800" stroke-width="3"/><circle cx="${cx}" cy="${cy}" r="${r / 3}" fill="#b07800"/></g>`; };
+    return `<svg viewBox="0 0 200 260" aria-hidden="true"><ellipse cx="100" cy="248" rx="90" ry="12" fill="#2f6b3a" opacity=".5"/>
+      ${gear(30, 170, 18, '')}${gear(170, 160, 22, 'rev')}${gear(160, 205, 14, '')}
+      <rect x="62" y="92" width="76" height="152" rx="5" fill="#f6e7c8" stroke="#2b3a55" stroke-width="3"/>
+      <path d="M48 94 L100 30 L152 94 Z" fill="#e5484d" stroke="#2b3a55" stroke-width="3"/>
+      <g class="bell"><path d="M88 46 q12 -16 24 0 l4 16 h-32 z" fill="#ffd34d" stroke="#b07800" stroke-width="2"/><circle cx="100" cy="64" r="3" fill="#b07800"/></g>
+      <circle cx="100" cy="132" r="28" fill="#fff8d6" stroke="#2b3a55" stroke-width="3"/>
+      <g class="hands" style="transform-origin:100px 132px"><path d="M100 132 L100 110 M100 132 L116 140" stroke="#2b3a55" stroke-width="4" stroke-linecap="round"/></g>
+      <path d="M88 244 v-30 a12 12 0 0 1 24 0 v30 z" fill="#c98b4a" stroke="#2b3a55" stroke-width="2.5"/>
+      ${[[60, 230], [140, 226], [100, 250]].map(([x, y], i) => `<circle class="dust" style="animation-delay:${i * .2}s" cx="${x}" cy="${y}" r="9" fill="#e9dcc4" opacity=".8"/>`).join('')}</svg>`;
+  }
+  function emblemSVG(text) {
+    return `<svg class="emblem" viewBox="0 0 150 150" aria-hidden="true"><circle cx="75" cy="75" r="68" fill="#ffd34d" stroke="#b07800" stroke-width="6"/><circle cx="75" cy="75" r="54" fill="none" stroke="#fff3b0" stroke-width="3" stroke-dasharray="4 5"/>
+      <path d="M75 34 L84 62 L113 62 L89 79 L98 107 L75 90 L52 107 L61 79 L37 62 L66 62 Z" fill="#fff" stroke="#b07800" stroke-width="3"/>
+      <path d="M30 118 h90 l-8 12 8 12 h-90 l8 -12 z" fill="#e5484d"/><text x="75" y="135" text-anchor="middle" font-family="Jua" font-size="15" fill="#fff">MASTER</text></svg>`;
+  }
+  function confettiRun(on) {
+    const cv = $('confetti'); cancelAnimationFrame(confettiRAF);
+    const c2 = cv.getContext('2d'); cv.width = cv.clientWidth; cv.height = cv.clientHeight; c2.clearRect(0, 0, cv.width, cv.height);
+    if (!on || reduceMotion) return;
+    const cols = ['#ffd34d', '#e5484d', '#00abff', '#30a46c', '#8e6bd8', '#ff8a3d', '#ffffff'];
+    const ps = Array.from({ length: 160 }, () => ({ x: cv.width * (0.2 + Math.random() * 0.6), y: cv.height * 0.55, vx: (Math.random() - 0.5) * 14, vy: -8 - Math.random() * 12, r: 4 + Math.random() * 5, c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * 6, star: Math.random() < 0.25 }));
+    let t0 = performance.now();
+    const step = now => {
+      const dt = Math.min(0.05, (now - t0) / 1000); t0 = now;
+      c2.clearRect(0, 0, cv.width, cv.height);
+      for (const p of ps) { p.vy += 18 * dt; p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.a += 0.2;
+        c2.save(); c2.translate(p.x, p.y); c2.rotate(p.a); c2.fillStyle = p.c;
+        if (p.star) { c2.font = `${p.r * 3}px Jua, sans-serif`; c2.fillText('★', 0, 0); } else c2.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); c2.restore(); }
+      if (ps.some(p => p.y < cv.height + 20)) confettiRAF = requestAnimationFrame(step);
+    };
+    confettiRAF = requestAnimationFrame(step);
+  }
+  function cineScene(n) {
+    const el = $('cine'); el.className = 'cine s' + n;
+    if (n === 1) playCharge();
+    if (n === 2) playBell();
+    if (n === 3) { playFanfare(); confettiRun(true); }
+    if (n === 4) { confettiRun(true); $('cineNext').focus({ preventScroll: true }); }
+  }
+  function nextContentKey(key) {
+    const keys = Object.keys(CONTENT); const i = keys.indexOf(key);
+    return keys.length > 1 ? keys[(i + 1) % keys.length] : null;
+  }
+  function playCine(opt) {
+    cineCtx = opt;
+    const key = opt.key, gs = key.slice(0, 3), u = +key.slice(4), fl = floorOf(gs), unit = unitName(gs, u);
+    $('cs1').innerHTML = `<div class="zoom">${compassSVG(key, null)}</div>`;
+    $('cs2').innerHTML = `<div class="towerbig">${bigTowerSVG()}</div>`;
+    $('cs3').innerHTML = `<div class="cloud l"></div><div class="cloud r"></div><p class="say" id="cineMsg">해냈어! ${fl}층의 시간이 다시 움직여!</p>
+      <div class="crew2">${[1, 2, 4, 3, 5, 6, 7].map(a => `<span>${charSVG(a)}</span>`).join('')}</div>`;
+    $('cs4').innerHTML = `<div class="award"><div class="halo"></div>${emblemSVG()}
+      <h2>${gs[0]}학년 ${esc(unit)} 완벽 마스터</h2>
+      <p class="lead">황금 나침반이 다시 돌고, 시계탑 ${fl}층의 시간이 움직이기 시작했어요!</p>
+      <div class="rewards"><span>수학 코인 +100</span><span>황금 나침반 수료증</span>${CONTENT[key] && M.badges.includes(CONTENT[key].badge) ? `<span>${CONTENT[key].badge}</span>` : ''}</div>
+      <div class="btnrow"><button type="button" class="btn ghost" id="cineReplay">다시 보기</button><button type="button" class="btn ghost" id="cineClose">${opt.fromGame ? '결과 보기' : '닫기'}</button><button type="button" class="btn next" id="cineNext">다음 단원 탐험하기 ▶</button></div></div>`;
+    $('cine').hidden = false;
+    hideModals();
+    cineTimers.forEach(clearTimeout); cineTimers = [];
+    if (reduceMotion) { cineScene(4); return; }
+    cineScene(1);
+    cineTimers.push(setTimeout(() => cineScene(2), 2000), setTimeout(() => cineScene(3), 4000), setTimeout(() => cineScene(4), 6200));
+  }
+  function closeCine() { cineTimers.forEach(clearTimeout); cineTimers = []; confettiRun(false); $('cine').hidden = true; }
+  $('cine').addEventListener('click', e => {
+    if (e.target.closest('#cineSkip')) { cineTimers.forEach(clearTimeout); cineScene(4); return; }
+    if (e.target.closest('#cineReplay')) { playCine(cineCtx); return; }
+    if (e.target.closest('#cineClose')) { closeCine(); if (cineCtx.fromGame) showResults(); else { render(); showModal('mapModal'); } return; }
+    if (e.target.closest('#cineNext')) {
+      closeCine();
+      const nk = nextContentKey(cineCtx.key);
+      if (cineCtx.fromGame) { M.justCompass = false; resetAll(); }
+      if (nk) { M.sel = { gs: nk.slice(0, 3), u: +nk.slice(4) }; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 황금 나침반 조각을 다시 모아 볼까요?` }; }
+      openMap();
+    }
+  });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('cine').hidden) { cineTimers.forEach(clearTimeout); cineScene(4); } });
   const STORY = [
     ['평화로운 동물 마을, 매스 랜드', '매스 랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
     ['황금 나침반이 부서졌어요!', '어느 날 갑작스러운 오류로 시계탑의 핵심 부품인 황금 나침반이 조각나 흩어졌어요. 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
@@ -1702,6 +1886,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   $('tStory').addEventListener('click', () => { M.seenStory = false; saveM(); openMap(); });
   $('mapModal').addEventListener('click', e => {
     if (e.target.closest('#storyBtn')) { openStory(); return; }
+    if (e.target.closest('#cineBtn')) { playCine({ key: ukey(M.sel.gs, M.sel.u), fromGame: false }); return; }
     if (e.target.closest('#openShop')) { openShop('mapModal'); return; }
     const st = e.target.closest('[data-stage]'); if (st) startStage(Number(st.dataset.stage));
   });
