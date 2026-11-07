@@ -78,7 +78,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .btn.ghost { background: var(--card); color: var(--deep); }
 .card .lead { margin: 0; color: var(--muted); line-height: 1.7; }
 .card .big { font-family: var(--display); font-size: clamp(2.6rem, 9vw, 3.6rem); color: var(--deep); margin: 0; line-height: 1.1; }
-.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .stats div { background: var(--paper); border-radius: 14px; padding: 12px; text-align: center; }
 .stats b { display: block; font-family: var(--display); font-weight: 400; font-size: 1.6rem; color: var(--deep); font-variant-numeric: tabular-nums; }
 .stats span { font-size: 0.85rem; color: var(--muted); }
@@ -99,40 +99,13 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .ctlbtn.armed { background: var(--sun); color: var(--deep); }
 .ctlbtn.mini { margin-left: auto; font-size: 0.85rem; padding: 4px 12px; box-shadow: none; }
 .ctlbtn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
-/* 홈: 매스 랜드 지도 > 구역 퍼즐(단원 10조각) */
-.landbox { border: 3px solid var(--deep); border-radius: 22px; overflow: hidden; background: #d6edb5; }
-.landbox svg { display: block; width: 100%; height: auto; }
-.zone { cursor: pointer; outline: none; }
-.zone:hover > g:first-of-type, .zone:focus-visible > g:first-of-type { filter: drop-shadow(0 0 6px #f2b705); }
-.zone.locked { cursor: not-allowed; }
-.zone .ring { animation: dash 1.2s linear infinite; }
-@keyframes dash { to { stroke-dashoffset: -34; } }
-.zone.won { animation: pop 1s cubic-bezier(.2,1.5,.4,1) both; transform-box: fill-box; transform-origin: center; }
-.mtxt { font-family: var(--display); font-size: 14px; fill: #1f2a40; }
-.mtxt.sm { font-family: var(--body); font-weight: 700; font-size: 10.5px; fill: #5b6672; }
-.mtxt.gold { fill: #b07800; }
-.mtxt.title { font-size: 26px; fill: #2b3a55; }
-.mtxt.big { font-size: 20px; fill: #e5484d; }
-.hands.spin { animation: spin 3s linear infinite; transform-origin: 400px 222px; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.zchips { display: none; flex-wrap: wrap; gap: 6px; }
-.zchip { font-family: var(--display); font-size: 0.92rem; border: 2px solid var(--deep); border-radius: 999px; background: #fff; color: var(--deep); padding: 5px 12px; cursor: pointer; }
-.zchip.locked { border-color: #b9c4d0; color: #8a96a3; }
-@media (max-width: 640px) { .zchips { display: flex; } }
-.pzhead .say { display: block; font-size: 0.86rem; color: #1f2a40; background: #fff8e1; border-radius: 10px; padding: 6px 10px; margin: 4px 0; line-height: 1.5; }
-.story { width: min(560px, 100%); text-align: center; }
-.storyart { display: grid; place-items: center; min-height: 150px; }
-.storyart svg { width: 150px; height: auto; }
-.crew { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-.crew span { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; }
-.crew svg { width: 48px; }
 /* 홈: 학년 카드 > 학년 퍼즐(단원 10조각) */
 .map-card { width: min(1080px, 100%); gap: 14px; background: #e6f4ef; }
 .map-card > * { flex-shrink: 0; }
 .map-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 6px 16px; }
-.map-head h2 { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.map-head h2 { margin: 0; display: flex; align-items: center; gap: 10px; }
 .map-head p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-.back { white-space: nowrap; font-family: var(--display); font-size: 1rem; border: 2px solid var(--deep); border-radius: 999px; background: var(--card); color: var(--deep); padding: 5px 14px; cursor: pointer; box-shadow: 0 3px 0 var(--deep); }
+.back { font-family: var(--display); font-size: 1rem; border: 2px solid var(--deep); border-radius: 999px; background: var(--card); color: var(--deep); padding: 5px 14px; cursor: pointer; box-shadow: 0 3px 0 var(--deep); }
 .news { display: flex; gap: 10px; align-items: flex-start; background: #fff7c2; border: 2px solid #f3d27a; border-radius: 14px; padding: 10px 14px; font-size: 0.92rem; line-height: 1.55; }
 .news .ic { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--sky); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
 .news.good .ic { background: var(--good); }
@@ -154,6 +127,97 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .gview { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 16px; align-items: start; }
 .pzbox { background: #fff; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
 .pzbox svg { display: block; width: 100%; height: auto; }
+.tile { cursor: pointer; }
+.tile:focus { outline: none; }
+.tile:focus-visible > path:last-of-type { stroke: #ffc53d; stroke-width: 4; stroke-dasharray: none; }
+.pzinfo { min-height: 64px; }
+.pzi { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: #fff8e1; border: 2px solid #ffd36b; }
+.pzi .no { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; font-family: var(--display); font-size: 1rem; color: #1f2a40; }
+.pzi .ut { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pzi .ut b { font-family: var(--display); font-weight: 400; font-size: 1.2rem; color: #1f2a40; }
+.pzi .ut small { font-size: 0.78rem; color: var(--muted); }
+.ucard.sel { border-color: var(--sky); }
+.mapbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.wallet { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--display); font-size: 1.05rem; background: #fff; border: 2px solid #dfe4ea; border-radius: 999px; padding: 5px 14px; color: var(--deep); font-variant-numeric: tabular-nums; }
+.chip .st { color: #f2b705; }
+.shopbtn { font-family: var(--display); font-size: 1.05rem; background: var(--sun); color: var(--deep); border: 2px solid var(--deep); border-radius: 999px; padding: 6px 16px; cursor: pointer; box-shadow: 0 3px 0 var(--deep); }
+.shopbtn:focus-visible, .buy:focus-visible, .useitem:focus-visible, .hintbtn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.journey { background: #fff; border-radius: 22px; padding: 8px; overflow-x: auto; }
+.journey svg { display: block; width: 100%; min-width: 720px; height: auto; }
+.jnode { cursor: pointer; }
+.jnode:focus { outline: none; }
+.jnode:focus-visible .ring { stroke: #ffc53d; stroke-width: 8; }
+.cards-title { margin: 6px 0 0; font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--deep); }
+.shop-card { width: min(640px, 100%); }
+.shop-card .tagrow h2 { margin: 0; }
+.shop-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.item { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; align-items: start; background: var(--paper); border-radius: 16px; padding: 12px; }
+.item svg { width: 52px; height: 52px; }
+.item b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); }
+.item p { margin: 2px 0 8px; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.item .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.item small { color: var(--muted); }
+.buy { font-family: var(--display); font-size: 1rem; border: 2px solid var(--deep); border-radius: 12px; background: var(--sun); color: var(--deep); padding: 5px 12px; cursor: pointer; }
+.buy:disabled { opacity: 0.45; cursor: not-allowed; }
+.shop-msg { margin: 0; min-height: 1.5em; font-weight: 700; color: var(--good); }
+.useblock { display: flex; flex-direction: column; gap: 6px; }
+.useitems { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.useitem { font-size: 0.9rem; border: 2px solid #cfd6de; background: #fff; border-radius: 999px; padding: 6px 12px; cursor: pointer; color: var(--deep); }
+.useitem[aria-pressed="true"] { background: var(--good-bg); border-color: var(--good); color: var(--good); font-weight: 700; }
+.useitem:disabled { opacity: 0.45; cursor: not-allowed; }
+.useitem.shopgo { background: var(--sun); border-color: var(--deep); }
+.qtools { display: flex; justify-content: flex-end; }
+.hintbtn { font-family: var(--display); font-size: 1rem; border: 2px solid #b07a00; background: #fff7c2; color: #8a5a00; border-radius: 999px; padding: 5px 14px; cursor: pointer; }
+.hintbtn:disabled { opacity: 0.45; cursor: not-allowed; }
+.choices button.gone { opacity: 0.3; text-decoration: line-through; }
+.ctlbtn.freeze { color: #0077b3; }
+.selrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.sel select { font-family: var(--display); font-size: 1.05rem; color: var(--deep); background: #fff; border: 2px solid var(--deep); border-radius: 12px; padding: 6px 10px; max-width: 100%; cursor: pointer; }
+.sel select:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wallet { align-items: center; }
+.unithead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.unithead .cards-title { margin: 0; margin-right: auto; }
+.chip.badge { background: #fff7c2; border-color: #f3d27a; color: #8a5a00; }
+.grades.stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.gcard .stepb { position: absolute; left: 10px; top: 10px; background: rgba(255,255,255,.9); color: #1f2a40; font-size: 0.78rem; font-weight: 700; border-radius: 999px; padding: 3px 10px; }
+.gcard .lockb { top: auto; bottom: 18%; right: 8px; left: 8px; text-align: center; }
+.gpct { font-size: 0.78rem; color: var(--muted); padding: 0 4px; font-variant-numeric: tabular-nums; }
+.qtimer { height: 10px; border-radius: 5px; background: #eceef2; overflow: hidden; }
+.qtimer i { display: block; height: 100%; width: 100%; background: #e5484d; transition: width .1s linear; }
+.clue { text-decoration: none; background: linear-gradient(transparent 60%, #ffe27a 60%); border-bottom: 3px solid #e0a800; padding: 0 2px; }
+.cluenote { margin: 0; font-size: 0.9rem; color: #8a5a00; background: #fff7c2; border-radius: 10px; padding: 6px 12px; }
+/* 첫 화면: 큰 섬 지도 + 옆 황금 나침반 퍼즐 */
+.home2 { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 14px; align-items: start; }
+.home2 .journey svg { min-width: 680px; }
+.pzside { background: #fff; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.pzside h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.2rem; color: var(--deep); }
+.pzside .sub { margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+.pzside svg { display: block; width: 100%; height: auto; }
+.pzcount { display: flex; justify-content: space-between; align-items: center; font-family: var(--display); color: #1f2a40; }
+.pzcount b { font-weight: 400; font-size: 1.3rem; color: #b07800; }
+.pzlist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px; }
+.pzlist li { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; padding: 5px 8px; border-radius: 10px; background: #f1f3f6; color: #6b7684; }
+.pzlist li.got { background: #fff3c4; color: #8a5a00; font-weight: 700; }
+.pzlist li i { font-style: normal; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 0.7rem; background: #d7dbe2; color: #fff; flex: none; }
+.pzlist li.got i { background: #f2b705; }
+.jnode .piece-got { animation: pop .9s cubic-bezier(.2,1.5,.4,1) both; transform-box: fill-box; transform-origin: center; }
+.cmp-new { animation: pop .9s cubic-bezier(.2,1.5,.4,1) both; transform-box: fill-box; transform-origin: center; }
+.hands.spin { animation: spin 3s linear infinite; transform-box: view-box; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.storybtn { font-family: var(--display); font-size: 0.95rem; border: 2px solid var(--deep); border-radius: 999px; background: #fff; color: var(--deep); padding: 4px 12px; cursor: pointer; box-shadow: 0 3px 0 var(--deep); white-space: nowrap; }
+.storybtn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.story { width: min(560px, 100%); text-align: center; }
+.storyart { display: grid; place-items: center; min-height: 150px; }
+.storyart svg { width: 160px; height: auto; }
+.crew { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.crew span { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; }
+.crew svg { width: 44px; }
+@media (max-width: 960px) { .home2 { grid-template-columns: minmax(0, 1fr); } .pzside { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); align-items: start; } .pzside > :not(.cmpbox) { grid-column: 2; } .pzside .cmpbox { grid-row: 1 / span 5; } }
+@media (max-width: 560px) { .pzside { display: flex; } }
+@media (max-width: 900px) { .grades.stages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .shop-grid { grid-template-columns: minmax(0, 1fr); } }
 .pzhead { display: flex; align-items: center; gap: 12px; }
 .pzhead .pic { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; flex: none; }
 .pzhead .pic svg { width: 46px; }
@@ -194,9 +258,13 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .btnrow { display: flex; flex-wrap: wrap; gap: 10px; }
 .btnrow .btn { flex: 1; }
 .btn.next { background: #30a46c; }
+.xbtn { margin-left: auto; font-family: var(--display); font-size: 1rem; color: var(--deep); background: var(--card); border: 2px solid var(--deep); border-radius: 999px; padding: 4px 14px; cursor: pointer; }
+.xbtn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.ctlbtn.result { color: var(--deep); }
 @media (max-width: 900px) { .grades { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gview { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 520px) { .grades { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 520px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .choices { grid-template-columns: minmax(0, 1fr); }
   .pad button { min-width: 72px; min-height: 60px; padding: 0 10px; font-size: 1.1rem; white-space: nowrap; }
   .pad button.jump { min-width: 110px; }
@@ -207,8 +275,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 <div class="wrap">
   <div class="top">
     <h1>부기의 수학 모험</h1>
-    <p id="subline">매스 랜드: 숫자 시계탑의 비밀</p>
-    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
+    <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
+    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><button type="button" class="ctlbtn freeze" id="freezeBtn" hidden>시간 멈추기</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
   <div class="stage" id="stage">
     <canvas id="game" width="960" height="540" aria-label="부기가 달리는 수학 모험 게임 화면"></canvas>
@@ -231,9 +299,10 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       <h2 id="mapTitle"></h2>
       <p id="mapDesc"></p>
     </div>
+    <div class="mapbar" id="mapBar"></div>
     <div class="news" id="news"></div>
     <div id="homeBody"></div>
-    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">다음 단원 별 3개로 바로 클리어</button><button type="button" id="tStory">이야기 처음부터</button><button type="button" id="tReset">처음 상태로</button></div>
+    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">다음 관문 바로 클리어</button><button type="button" id="tStory">이야기 처음부터</button><button type="button" id="tReset">처음 상태로</button></div>
   </div>
 </div>
 
@@ -259,7 +328,17 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       <li id="starRule"><b>별 3개 조건</b>: ① 깃발까지 완주 ② 문제를 한 번에 모두 맞히기 ③ 하트 지키기(한 번도 다치지 않기). 별 3개를 모으면 퍼즐 조각 1개!</li>
       <li id="taRule" hidden><b>타임어택</b>: 출발부터 깃발까지 걸린 시간이 기록이에요. 틀리면 +5초, 보기는 1.2초 뒤에 열려요. 반 1등이 지역 깃발을 가져가요.</li>
     </ul>
-    <div class="btnrow"><button type="button" class="btn ghost" id="toMapBtn">단원 목록</button><button type="button" class="btn" id="startBtn">모험 시작</button></div>
+    <div class="useblock"><p class="lead"><b>이번 판에 쓸 아이템</b></p><div class="useitems" id="useItems"></div></div>
+    <div class="btnrow"><button type="button" class="btn ghost" id="toMapBtn">섬 지도로</button><button type="button" class="btn" id="startBtn">모험 시작</button></div>
+  </div>
+</div>
+
+<div class="modal" id="shopModal" role="dialog" aria-modal="true" aria-labelledby="shopTitle" hidden>
+  <div class="card shop-card">
+    <div class="tagrow"><h2 id="shopTitle">코인 상점</h2><button type="button" class="xbtn" id="shopClose">닫기 ✕</button></div>
+    <p class="lead" id="shopWallet"></p>
+    <div class="shop-grid" id="shopGrid"></div>
+    <p class="shop-msg" id="shopMsg" aria-live="polite"></p>
   </div>
 </div>
 
@@ -267,7 +346,10 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   <div class="card">
     <div class="tagrow"><span class="tag" id="qNum"></span><span class="tag" id="qUnit"></span><span class="tag twin" id="qTwin" hidden>비슷한 문제</span><button type="button" class="ctlbtn mini" data-act="quit">그만하기</button></div>
     <h2 id="qText"></h2>
+    <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
+    <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
+    <div class="qtools"><button type="button" class="hintbtn" id="hintBtn">힌트 쓰기</button></div>
     <div class="explain" id="qExplain" hidden>
       <p class="ex-title">이렇게 풀어요</p>
       <p id="qExText"></p>
@@ -286,20 +368,21 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
 <div class="modal" id="doneModal" role="dialog" aria-modal="true" aria-labelledby="doneTitle" hidden>
   <div class="card">
-    <div class="tagrow"><span class="tag" id="doneTag">단원 완료</span></div>
+    <div class="tagrow"><span class="tag" id="doneTag">단원 완료</span><button type="button" class="xbtn" id="doneClose" aria-label="결과 닫기">닫기 ✕</button></div>
     <h2 id="doneTitle">깃발에 도착했어요!</h2>
     <p class="bigstars" id="doneScore"></p>
     <div class="stats">
       <div><b id="statFirst">0</b><span>한 번에 맞힘</span></div>
       <div><b id="statRetry">0</b><span>다시 도전</span></div>
       <div><b id="statCoin">0</b><span>코인</span></div>
+      <div><b id="statTime">00:00</b><span>걸린 시간</span></div>
     </div>
     <div id="taBox" hidden></div>
     <div id="reviewBox">
       <p class="lead"><b>다시 보면 좋은 단원</b></p>
       <ul class="units" id="reviewList"></ul>
     </div>
-    <div class="btnrow"><button type="button" class="btn ghost" id="mapBackBtn">단원 목록</button><button type="button" class="btn ghost" id="againBtn">다시 도전</button><button type="button" class="btn next" id="nextBtn">다음 단원 ▶</button></div>
+    <div class="btnrow"><button type="button" class="btn ghost" id="mapBackBtn">나가기</button><button type="button" class="btn ghost" id="againBtn">다시 도전</button><button type="button" class="btn next" id="nextBtn">다음 단원 ▶</button></div>
   </div>
 </div>
 
@@ -496,7 +579,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   const $ = id => document.getElementById(id);
 
   let gates, coins, platforms, enemies, player, state, stats, keys, camX, checkpointX, toastTimer, current;
-  let endBanner = '정복 완료!';
+  let endBanner = '정복 완료!', endSub = '수학 탐험가 부기, 메달 획득!';
+  let speedMode = false, clueMode = false, qTimerId = null;
   let runMode = 'normal', taTime = 0, segStart = 0, taSplits = [];
 
   function buildLevel() {
@@ -532,7 +616,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   function resetAll() {
     buildLevel();
     player = { x: 120, y: GROUND - 48, w: 40, h: 48, vx: 0, vy: 0, onGround: true, face: 1, inv: 0, step: 0 };
-    stats = { hearts: 3, coins: 0, first: 0, retries: 0, hits: 0, wrongUnits: [] };
+    stats = { hearts: 3, coins: 0, first: 0, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false };
     keys = { left: false, right: false, jump: false, jumpHeld: false };
     camX = 0;
     checkpointX = 120;
@@ -567,7 +651,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   bindPad('btnJump', 'jump');
 
   // ---------- 모달 ----------
-  function showModal(id) { ['storyModal', 'mapModal', 'startModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
+  function showModal(id) { ['storyModal', 'mapModal', 'startModal', 'shopModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
   function hideModals() { showModal(null); }
 
   function openQuestion(gate) {
@@ -579,12 +663,16 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   }
 
   function renderQuestion() {
+    updateHintBtn();
     const set = QUESTIONS[current.gate.i];
     const item = current.twin ? set.twin : set.main;
     $('qNum').textContent = '문제 ' + (current.gate.i + 1) + ' / ' + TOTAL;
     $('qUnit').textContent = set.unit;
     $('qTwin').hidden = !current.twin;
-    $('qText').innerHTML = fmt(item.q);
+    const qh = fmt(item.q.replace(/\{\{/g, '⟦').replace(/\}\}/g, '⟧'));
+    $('qText').innerHTML = qh.replace(/⟦/g, clueMode ? '<u class="clue">' : '').replace(/⟧/g, clueMode ? '</u>' : '');
+    $('clueNote').hidden = !(clueMode && item.q.includes('{{'));
+    clearInterval(qTimerId); $('qTimer').hidden = !speedMode; $('qTimerBar').style.width = '100%';
     $('qExplain').hidden = true;
     const box = $('qChoices');
     box.innerHTML = '';
@@ -599,13 +687,26 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     // 찍기 방지: 보기는 1.2초 동안 문제를 읽은 뒤에 열려요
     const bs = box.querySelectorAll('button');
     bs.forEach(b => { b.disabled = true; });
-    setTimeout(() => { if (state !== 'question') return; bs.forEach(b => { b.disabled = false; }); if (bs[0]) bs[0].focus({ preventScroll: true }); }, 1200);
+    setTimeout(() => {
+      if (state !== 'question') return;
+      bs.forEach(b => { if (!b.classList.contains('gone')) b.disabled = false; }); if (bs[0]) bs[0].focus({ preventScroll: true });
+      if (speedMode) {
+        const t0 = performance.now(), LIM = 10000;
+        qTimerId = setInterval(() => {
+          if (state === 'paused') return;
+          const left = Math.max(0, 1 - (performance.now() - t0) / LIM);
+          $('qTimerBar').style.width = (left * 100).toFixed(1) + '%';
+          if (left <= 0) { clearInterval(qTimerId); answer(-1); }
+        }, 100);
+      }
+    }, 1200);
   }
 
   function answer(idx) {
     const set = QUESTIONS[current.gate.i];
     const item = current.twin ? set.twin : set.main;
     const btns = $('qChoices').querySelectorAll('button');
+    clearInterval(qTimerId);
     btns.forEach(b => { b.disabled = true; });
     btns[item.a].classList.add('right');
     if (idx === item.a) {
@@ -616,7 +717,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       checkpointX = current.gate.x + 80;
       setTimeout(() => { hideModals(); state = 'play'; showToast(current.attempts === 0 ? '정답! 문이 열려요' : '해냈어요! 문이 열려요'); }, 650);
     } else {
-      btns[idx].classList.add('wrong');
+      if (idx >= 0) btns[idx].classList.add('wrong'); else showToast('시간이 다 됐어요!');
+      if (current.attempts === 0 && !current.twin) recordWrong(set.src);
       current.attempts++;
       stats.retries++;
       if (runMode === 'ta') taTime += 5;
@@ -628,10 +730,19 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   }
 
   $('twinBtn').addEventListener('click', () => { current.twin = !current.twin; renderQuestion(); });
-  $('startBtn').addEventListener('click', () => { hideModals(); state = 'play'; canvas.focus && canvas.focus(); });
+  $('startBtn').addEventListener('click', () => {
+    if (useHeart && M.items.heart > 0) { M.items.heart--; stats.hearts = 4; }
+    if (useShield && M.items.shield > 0) { M.items.shield--; stats.shield = true; }
+    if (useHeart || useShield) { saveM(); showToast(useHeart && useShield ? '하트 +1, 보호막 장착!' : useHeart ? '하트 4개로 출발!' : '보호막 장착!'); }
+    useHeart = useShield = false;
+    hideModals(); state = 'play'; canvas.focus && canvas.focus();
+  });
   $('retryBtn').addEventListener('click', () => { stats.hearts = 3; respawn(); hideModals(); state = 'play'; });
   $('againBtn').addEventListener('click', () => { resetAll(); hideModals(); state = 'play'; });
   $('skipBtn').addEventListener('click', () => { if (state === 'ending') showResults(); });
+  $('doneClose').addEventListener('click', () => { hideModals(); $('reopenResult').focus({ preventScroll: true }); });
+  $('reopenResult').addEventListener('click', () => { showModal('doneModal'); $('doneClose').focus({ preventScroll: true }); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape' && state === 'done' && !$('doneModal').hidden) hideModals(); });
 
   function showToast(text) {
     const t = $('toast');
@@ -647,6 +758,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   function hurt(dir) {
     if (player.inv > 0) return;
+    if (stats.shield) { stats.shield = false; player.inv = 1.5; player.vy = -420; player.vx = dir * 260; showToast('보호막이 지켜 줬어요'); return; }
     stats.hearts--; stats.hits++;
     player.inv = 1.5;
     player.vy = -420;
@@ -655,29 +767,39 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   }
 
   function finish() {
-    scoreUnit();
-    if (M.gradeJustDone) startEnding(); else showResults();
+    scoreStage();
+    if (M.justBadge || M.justCompass) startEnding(); else showResults();
   }
   function showResults() {
     state = 'done';
     $('skipBtn').hidden = true;
-    const R = M.last, g = pick.g, c = pick.c, ch = CH[g - 1];
-    $('doneTag').textContent = `${ZL(g)} · ${UNITS[g][c]}`;
-    $('doneTitle').textContent = M.gradeJustDone ? `황금 나침반 조각 획득! (${compass()}/7)` : R.stars === 3 ? '별 3개! 완벽해요' : '깃발에 도착했어요!';
+    const R = M.last, G = GUARD[pick.i];
+    $('doneTag').textContent = `${gsLabel(pick.gs)} · ${unitName(pick.gs, pick.u)} · ${pick.i < 7 ? (pick.i + 1) + '단계 ' + G.step : '단원 최종평가'}`;
+    $('doneTitle').textContent = M.justBadge ? '보물 상자를 열었어요!' : R.stars === 3 ? '별 3개! 완벽해요' : `${G.name}의 관문을 통과했어요!`;
     $('doneScore').innerHTML = [0, 1, 2].map(i => i < R.stars ? '<i>★</i>' : '☆').join('');
     $('statFirst').textContent = stats.first;
     $('statRetry').textContent = stats.retries;
     $('statCoin').textContent = stats.coins;
+    $('statTime').textContent = fmtTime(stats.time);
     $('reviewBox').hidden = true;
     $('taBox').hidden = false;
-    const chk = [['깃발까지 완주', R.s1], ['문제를 한 번에 모두 맞히기', R.s2], ['하트 지키기 (한 번도 다치지 않기)', R.s3]];
-    const msg = R.newPiece ? `<p class="piece-msg">${ch.place} 퍼즐 조각 ${c + 1}번을 얻었어요! (${countPieces(g)}/10)${countPieces(g) === 10 ? ' 구역 퍼즐 완성 → 황금 나침반 조각!' : ''}</p>`
-      : R.best === 3 ? `<p class="piece-msg no">이 단원 퍼즐 조각은 이미 얻었어요. 다음 단원으로 가 볼까요?</p>`
-      : `<p class="piece-msg no">별 3개를 모으면 퍼즐 조각을 얻어요. 지금 최고 기록: 별 ${R.best}개</p>`;
-    $('taBox').innerHTML = `<ul class="checks">${chk.map(([t, ok]) => `<li class="${ok ? 'ok' : ''}"><b>★</b>${t}</li>`).join('')}</ul>${msg}`;
-    const nx = nextUnit();
-    $('nextBtn').hidden = !nx;
-    if (nx) $('nextBtn').textContent = nx.g !== g ? `${ZL(nx.g)}으로 ▶` : '다음 단원 ▶';
+    const chk = pick.i === 7
+      ? [[`${TOTAL}문제 중 ${R.first}문제를 한 번에 맞힘`, true], [`${TOTAL - 1}문제 이상 한 번에 맞히면 별 3개`, R.stars === 3], ['별 3개면 단원 배지 획득', R.stars === 3]]
+      : [['깃발까지 완주', R.s1], ['문제를 한 번에 모두 맞히기', R.s2], ['하트 지키기 (한 번도 다치지 않기)', R.s3]];
+    let msg = '';
+    const pmsg = R.newPiece ? `<p class="piece-msg">황금 나침반 조각 ${pick.i + 1}번을 얻었어요! (${pieceCount(pick.key)}/8)${M.justCompass ? ' 나침반 완성! 시계탑이 다시 움직여요.' : ''}</p>`
+      : R.best < 3 ? `<p class="piece-msg no">별 3개로 통과하면 이 관문의 나침반 조각을 얻어요. (지금 최고 별 ${R.best}개)</p>` : '';
+    if (M.justBadge) msg = `<p class="piece-msg">${M.justBadge}를 얻었어요! 다른 단원의 섬도 탐험해 볼까요?</p>`;
+    else if (R.opened.length) msg = `<p class="piece-msg">${G.name}의 열쇠를 얻었어요! ${R.opened.map(i => GUARD[i].name).join('·')}${R.opened.includes(7) ? '가' : '의 연구소가'} 열렸어요.</p>`;
+    else if (pick.i < 7) msg = `<p class="piece-msg no">${G.name}의 열쇠는 이미 가지고 있어요. 별 3개에 다시 도전해 보세요.</p>`;
+    else msg = `<p class="piece-msg no">별 3개를 받으면 보물 상자가 열려요. 지금 최고 기록: 별 ${R.best}개</p>`;
+    $('taBox').innerHTML = `<ul class="checks">${chk.map(([t, ok]) => `<li class="${ok ? 'ok' : ''}"><b>★</b>${t}</li>`).join('')}</ul>${pmsg}${msg}`;
+    M.justCompass = false;
+    const nx = nextStage();
+    $('nextBtn').hidden = nx === null;
+    if (nx !== null) $('nextBtn').textContent = nx === 7 ? '보물지도로 ▶' : `${GUARD[nx].name}에게 ▶`;
+    M.justBadge = '';
+    saveM();
     showModal('doneModal');
     $('nextBtn').hidden ? $('againBtn').focus({ preventScroll: true }) : $('nextBtn').focus({ preventScroll: true });
   }
@@ -905,6 +1027,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     const bob = p.onGround ? Math.abs(Math.sin(p.step)) * 2.5 : 0;
     const s = p.onGround ? Math.sin(p.step) * 4 : 0;
     drawBoogi(p.x - camX, p.y, p.face, bob, s, !p.onGround, false);
+    if (stats.shield) { ctx.strokeStyle = 'rgba(138,162,216,0.85)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(p.x - camX + 20, p.y + 22, 40, 0, Math.PI * 2); ctx.stroke(); }
   }
 
   // ---------- 엔딩 영상 ----------
@@ -1033,7 +1156,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     if (t > 5.2) {
       const k = ease((t - 5.2) / 0.5);
       ctx.globalAlpha = k; ctx.fillStyle = '#003a5c'; ctx.font = '32px Jua, sans-serif';
-      ctx.fillText('수학 탐험가 부기, 메달 획득!', W / 2, 210);
+      ctx.fillText(endSub, W / 2, 210);
       ctx.globalAlpha = 1;
     }
     // 마지막 페이드
@@ -1050,26 +1173,37 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     ctx.fill();
   }
 
+  const fmtTime = sec => String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(Math.floor(sec % 60)).padStart(2, '0');
   function drawHUD() {
-    ctx.fillStyle = 'rgba(252,252,253,0.9)'; rr(14, 14, 300, 46, 23); ctx.fill();
-    for (let i = 0; i < 3; i++) heart(42 + i * 32, 25, i < stats.hearts);
-    ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.arc(160, 37, 11, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#003a5c'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'left'; ctx.fillText('× ' + stats.coins, 178, 45);
+    // 왼쪽: 하트 · 코인 · 진행 시간
+    const hn = Math.max(3, stats.hearts), extra = (hn - 3) * 32, cxC = 160 + extra;
+    ctx.fillStyle = 'rgba(252,252,253,0.9)'; rr(14, 14, 412 + extra, 46, 23); ctx.fill();
+    for (let i = 0; i < hn; i++) heart(42 + i * 32, 25, i < stats.hearts);
+    ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.arc(cxC, 37, 11, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#003a5c'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'left'; ctx.fillText('× ' + stats.coins, cxC + 18, 45);
+    const tx = 290 + extra;
+    ctx.strokeStyle = '#003a5c'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(tx, 37, 11, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(tx, 37); ctx.lineTo(tx, 30); ctx.moveTo(tx, 37); ctx.lineTo(tx + 6, 40); ctx.stroke();
+    ctx.fillStyle = stats.freeze > 0 ? '#0090ff' : '#003a5c'; ctx.fillText(fmtTime(stats.time), tx + 20, 45);
+    if (stats.freeze > 0) {
+      ctx.fillStyle = '#0090ff'; rr(14, 66, 190, 34, 17); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '20px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('시간 멈춤 ' + Math.ceil(stats.freeze) + '초', 109, 90);
+    }
     const solved = gates.filter(g => g.solved).length;
     ctx.fillStyle = 'rgba(252,252,253,0.9)'; rr(W - 230, 14, 216, 46, 23); ctx.fill();
     ctx.fillStyle = '#003a5c'; ctx.textAlign = 'center'; ctx.fillText('문제 문 ' + solved + ' / ' + TOTAL, W - 122, 45);
     // 진행 막대
-    const prog = Math.min(1, (player.x) / FLAG_X);
-    ctx.fillStyle = 'rgba(0,58,92,0.2)'; rr(W / 2 - 160, 30, 320, 10, 5); ctx.fill();
-    ctx.fillStyle = '#00abff'; rr(W / 2 - 160, 30, Math.max(10, 320 * prog), 10, 5); ctx.fill();
+    const prog = Math.min(1, (player.x) / FLAG_X), px = 474, pw = 236;
+    ctx.fillStyle = 'rgba(0,58,92,0.2)'; rr(px, 32, pw, 10, 5); ctx.fill();
+    ctx.fillStyle = '#00abff'; rr(px, 32, Math.max(10, pw * prog), 10, 5); ctx.fill();
     for (const g of gates) {
       ctx.fillStyle = g.solved ? '#ffc53d' : '#003a5c';
-      ctx.beginPath(); ctx.arc(W / 2 - 160 + 320 * (g.x / FLAG_X), 35, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(px + pw * (g.x / FLAG_X), 37, 4, 0, Math.PI * 2); ctx.fill();
     }
     if (runMode === 'ta') {
-      ctx.fillStyle = '#e5484d'; rr(W / 2 - 86, 50, 172, 38, 19); ctx.fill();
+      ctx.fillStyle = '#e5484d'; rr(W / 2 - 86, 68, 172, 38, 19); ctx.fill();
       ctx.fillStyle = '#fff'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('기록 ' + taTime.toFixed(1) + '초', W / 2, 78);
+      ctx.fillText('기록 ' + taTime.toFixed(1) + '초', W / 2, 96);
     }
   }
 
@@ -1077,7 +1211,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   // 취소·재시작: 실수로 누르지 않게 두 번 눌러야 실행돼요
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
-    if (!b.dataset.now && !b.classList.contains('armed')) {
+    if (!b.dataset.now && state !== 'done' && !b.classList.contains('armed')) {
       document.querySelectorAll('.ctlbtn.armed').forEach(x => { x.classList.remove('armed'); x.textContent = x.dataset.label; });
       b.dataset.label = b.textContent; b.classList.add('armed');
       b.textContent = b.dataset.act === 'restart' ? '한 번 더 누르면 처음부터' : '한 번 더 누르면 그만하기';
@@ -1091,10 +1225,17 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   });
 
   function frame(now) {
-    $('ctl').hidden = !(state === 'play' || state === 'question' || state === 'over' || state === 'ending');
+    $('ctl').hidden = !(state === 'play' || state === 'question' || state === 'over' || state === 'ending' || state === 'done');
+    $('reopenResult').hidden = state !== 'done' || !$('doneModal').hidden;
     const dt = Math.min(1 / 30, (now - last) / 1000);
     last = now; clock += dt;
-    if (runMode === 'ta' && (state === 'play' || state === 'question')) taTime += dt;
+    if (state === 'play' || state === 'question') {
+      if (stats.freeze > 0) stats.freeze = Math.max(0, stats.freeze - dt);
+      else { stats.time += dt; if (runMode === 'ta') taTime += dt; }
+    }
+    const fz = (state === 'play' || state === 'question') && (M.items.freeze || 0) > 0 && stats.freeze <= 0;
+    if ($('freezeBtn').hidden === fz) $('freezeBtn').hidden = !fz;
+    if (fz) { const ft = '시간 멈추기 (' + M.items.freeze + ')'; if ($('freezeBtn').textContent !== ft) $('freezeBtn').textContent = ft; }
     if (state === 'ending') {
       updateEnding(dt);
       if (state === 'ending') drawEnding();
@@ -1115,34 +1256,54 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   resetAll();
   requestAnimationFrame(frame);
-  // ---------- 홈: 학년 캐릭터 + 학년 퍼즐 ----------
-  // 구조: 학년(캐릭터) 6개 > 학년마다 단원 10개(1학기 5 + 2학기 5) > 단원 하나 = 문제 2개 스테이지.
-  // 단원에서 별 3개(완주 · 한 번에 모두 정답 · 하트 지키기)를 받으면 그 학년 퍼즐 조각 1개. 10조각이면 학년 퍼즐 완성 → 다음 학년 열림.
-  const MY_GRADE = 3;
-  const CH = [
-    { g: 1, name: '송이', place: '송이네 숫자 교실', line: '내 교실 숫자들이 뒤죽박죽이 됐어! 단원 미션을 풀어서 숫자를 제자리에 돌려줘.', bg: '#ffd9b8', floor: '#5f8a4e', bar: '#f6c945' },
-    { g: 2, name: '루미', place: '루미네 구구단 가게', line: '가게 저울이 엉망이야. 구구단으로 손님 주문을 맞춰 줄래?', bg: '#fff6a0', floor: '#d6cf55', bar: '#74d36b' },
-    { g: 3, name: '부기', place: '부기네 계산 수리점', line: '시계탑 부품이 고장 났어! 계산을 바로잡아서 같이 고치자.', bg: '#fdf0dc', floor: '#8aa2d8', bar: '#8aa2d8' },
-    { g: 4, name: '로키', place: '로키네 도형 퀴즈쇼', line: '무대의 도형들이 제멋대로 움직여! 퀴즈를 풀어 질서를 되찾아 줘.', bg: '#c9c8ff', floor: '#3b3f8f', bar: '#7b74e8' },
-    { g: 5, name: '달이', place: '달이의 분수 탐정 사무소', line: '사라진 나침반 조각의 단서가 분수 속에 숨어 있어. 함께 수사하자!', bg: '#ead9ff', floor: '#b67cf2', bar: '#b67cf2' },
-    { g: 6, name: '토리', place: '토리의 비율 열기구', line: '열기구가 비율이 틀려서 기울었어! 균형을 맞춰 하늘 위 조각을 찾자.', bg: '#c9f3f7', floor: '#6fcfd6', bar: '#ff9eb3' },
-    { g: 7, name: '샌디', place: '샌디의 비밀기지', line: '마지막 조각은 내 비밀기지에 있어. 지금까지 배운 걸 모두 보여 줘!', bg: '#fff3b0', floor: '#efd94d', bar: '#ffa45c' }
-  ];
-  const ZL = g => g <= 6 ? `${g}학년 구역` : '마지막 구역';
+  // ---------- 매스 랜드: 단원별 탐험 일지 ----------
+  // 단원 하나 = 미지의 섬. 7명의 수호자 연구소(관문)를 차례로 통과하며 열쇠를 모으고, 보물지도(단원평가)에서 보물 상자를 열어요.
   const UNITS = {
     1: ['9까지의 수', '여러 가지 모양', '덧셈', '뺄셈', '50까지의 수', '100까지의 수', '덧셈(받아올림)', '뺄셈(받아내림)', '시각', '규칙 찾기'],
     2: ['세 자리 수', '여러 가지 도형', '덧셈과 뺄셈', '길이 재기(cm)', '곱셈', '네 자리 수', '곱셈구구', '길이 재기(m)', '시각과 시간', '규칙 찾기'],
     3: ['덧셈과 뺄셈', '평면도형', '나눗셈', '곱셈', '분수와 소수', '곱셈(세 자리)', '나눗셈(몫)', '원', '분수', '들이와 무게'],
     4: ['큰 수', '각도', '곱셈', '나눗셈', '규칙 찾기', '분수의 덧셈', '분수의 뺄셈', '소수의 덧셈', '삼각형', '사각형'],
-    5: ['혼합 계산', '약수와 배수', '약분과 통분', '분수의 덧셈', '넓이', '어림하기', '분수의 곱셈', '합동과 대칭', '소수의 곱셈', '평균'],
-    7: ['1학년 복습', '2학년 복습', '3학년 복습', '4학년 복습', '5학년 복습', '6학년 복습', '섞어 풀기 1', '섞어 풀기 2', '섞어 풀기 3', '시계탑 최종 미션'],
+    5: ['자연수의 혼합 계산', '약수와 배수', '규칙과 대응', '약분과 통분', '다각형의 둘레와 넓이', '어림하기', '분수의 곱셈', '합동과 대칭', '소수의 곱셈', '평균'],
     6: ['분수의 나눗셈', '각기둥과 각뿔', '소수의 나눗셈', '비와 비율', '부피', '분수의 나눗셈(2)', '소수의 나눗셈(2)', '비례식', '비례배분', '원의 넓이']
   };
-  // 학년 캐릭터 (첨부 캐릭터를 참고해 단순하게 그린 시제품용 그림. 정식 그림 파일로 바꿀 수 있어요)
+  const GS_LIST = ['1-1', '1-2', '2-1', '2-2', '3-1', '3-2', '4-1', '4-2', '5-1', '5-2', '6-1', '6-2'];
+  const gsLabel = gs => `${gs[0]}학년 ${gs[2]}학기`;
+  const unitsOf = gs => UNITS[+gs[0]].slice((+gs[2] - 1) * 5, +gs[2] * 5);
+  const unitName = (gs, u) => unitsOf(gs)[u];
+  // 7명의 수호자 + 보물지도 (art: 캐릭터 그림 번호)
+  const GUARD = [
+    { name: '송이', art: 1, short: '그림·블록으로 개념 이해', role: '원리 발견', step: '개념 열기', lab: '개념 블록 연구소', bg: '#ffd9b8', floor: '#5f8a4e',
+      line: '안녕! 이번 단원에선 어떤 숫자의 비밀이 숨겨져 있을까? 나와 함께 기초 블록부터 맞춰보자!', rule: '그림과 블록으로 개념을 눈으로 확인하는 문제예요.' },
+    { name: '루미', art: 2, short: '수학 용어·단위 익히기', role: '수학 어휘', step: '어휘/단위', lab: '수학 마켓 & 용어 정리', bg: '#fff6a0', floor: '#d6cf55',
+      line: '새로운 재료(용어/단위)가 입고됐어! 올바른 수학 용어를 골라 선반에 정리해 줄래?', rule: '수학 용어, 기호, 단위를 알맞게 골라요.' },
+    { name: '로키', art: 4, short: '10초 스피드 계산', role: '기초 드릴', step: '기초 연산', lab: '스피드 연산 퀴즈쇼', bg: '#c9c8ff', floor: '#3b3f8f',
+      line: '제1라운드! 이번 단원의 필수 계산 퀴즈! 머뭇거릴 틈이 없어, 번개처럼 빠르게 풀어봐!', rule: '스피드 퀴즈! 문제마다 10초 안에 골라야 해요. 시간이 지나면 틀린 것으로 쳐요.' },
+    { name: '부기', art: 3, short: '대표 유형 공식 조립', role: '유형 조립', step: '개념 적용', lab: '문제 해결 공방', bg: '#fdf0dc', floor: '#8aa2d8',
+      line: '기계가 제대로 작동하려면 공식을 딱 맞게 조립해야 해. 이번 유형 문제는 이렇게 풀어보는 거야!', rule: '대표 유형 문제를 공식에 맞춰 단계별로 풀어요.' },
+    { name: '달이', art: 5, short: '단서 2개로 서술형 풀기', role: '심화 추론', step: '서술·응용', lab: '미스터리 서술형 탐정', bg: '#ead9ff', floor: '#b67cf2',
+      line: '사건 발생! 문제 속에 숨겨진 단서 2개를 찾아내야 해. 식을 바르게 세워 범인(정답)을 밝혀내자!', rule: '문장제 문제예요. 밑줄 친 단서 2개로 식을 세워요.' },
+    { name: '토리', art: 6, short: '생활 속 수학 찾기', role: '스토리텔링', step: '실생활 연계', lab: '열기구 실생활 탐험', bg: '#c9f3f7', floor: '#6fcfd6',
+      line: '열기구를 타고 마을로 나가볼까? 시장에서 물건을 살 때나 시계를 볼 때 이 수학이 어떻게 쓰이는지 보여줄게!', rule: '생활 속 장면에서 이 단원의 수학을 찾아요.' },
+    { name: '샌디', art: 7, short: '틀린 문제 다시 풀기', role: '점검 & 비밀기지', step: '오답 정리', lab: '데이터 오답 클리닉', bg: '#f3e2c4', floor: '#c79a5b',
+      line: '잠깐! 비밀기지 레이더에 실수한 문제들이 포착됐어. 완벽하게 복습하고 최종 테스트로 넘어가자!', rule: '1~6단계에서 틀린 문제와 비슷한 문제를 다시 풀어요.' },
+    { name: '보물지도', art: 0, short: '모든 유형 최종 평가', role: '단원평가', step: '단원 최종평가', lab: '최종 관문 (보스전)', bg: '#ffe9a8', floor: '#c98d5a',
+      line: '지도에 표시된 깃발에 도착했어! 단원 보물을 열기 위한 마지막 마스터 시험을 시작한다!', rule: '모든 유형이 섞인 10문제! 9문제 이상 한 번에 맞히면 별 3개와 단원 배지를 받아요.' }
+  ];
+  // 수호자 캐릭터 (첨부 캐릭터를 참고해 단순하게 그린 시제품용 그림. 정식 그림 파일로 바꿀 수 있어요)
   function charSVG(g) {
     const eye = (x, y, r = 4) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#1f1a17"/><circle cx="${x + 1.3}" cy="${y - 1.3}" r="${r * 0.35}" fill="#fff"/>`;
     const smile = (x, y, w = 6) => `<path d="M${x - w} ${y}q${w} ${w * 0.8} ${w * 2} 0" stroke="#1f1a17" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
     const art = {
+      7: `<ellipse cx="50" cy="76" rx="18" ry="20" fill="#d9ad6f"/><ellipse cx="50" cy="80" rx="11" ry="14" fill="#f6e3c3"/>
+          <path d="M66 82 q18 -4 16 -24" stroke="#d9ad6f" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="31" cy="36" r="5" fill="#b5895a"/><circle cx="69" cy="36" r="5" fill="#b5895a"/><ellipse cx="50" cy="42" rx="20" ry="18" fill="#e3c08d"/>
+          <ellipse cx="42" cy="44" rx="6" ry="7" fill="#7a5535"/><ellipse cx="58" cy="44" rx="6" ry="7" fill="#7a5535"/>${eye(42, 44, 3)}${eye(58, 44, 3)}
+          <ellipse cx="50" cy="51" rx="3" ry="2.2" fill="#1f1a17"/>${smile(50, 54, 3)}
+          <rect x="32" y="25" width="36" height="8" rx="4" fill="#4f8de0"/><circle cx="41" cy="29" r="5" fill="#bfe4ff" stroke="#2f5fa8" stroke-width="2"/><circle cx="59" cy="29" r="5" fill="#bfe4ff" stroke="#2f5fa8" stroke-width="2"/>
+          <path d="M50 25 v-10" stroke="#2f5fa8" stroke-width="2.5"/><path d="M42 13 a10 10 0 0 1 16 0" stroke="#30a46c" stroke-width="3" fill="none"/><circle cx="50" cy="13" r="3" fill="#30a46c"/>`,
+      0: `<rect x="12" y="20" width="76" height="52" rx="6" fill="#f6e3b0" stroke="#c49a4a" stroke-width="3"/><path d="M22 60 q14 -20 28 -6 t28 -20" stroke="#c0392b" stroke-width="3" stroke-dasharray="5 4" fill="none"/>
+          <path d="M70 26 l10 10 M80 26 l-10 10" stroke="#c0392b" stroke-width="4" stroke-linecap="round"/>
+          <rect x="30" y="64" width="40" height="24" rx="4" fill="#b5703a"/><rect x="30" y="64" width="40" height="9" rx="3" fill="#8a4f25"/><rect x="46" y="69" width="8" height="11" rx="2" fill="#ffc53d"/>`,
       1: `<path d="M18 62 l-8 -6 l8 -4 l-10 -10 l11 -1 l-6 -12 l12 4 l0 -13 l10 9 l5 -13 l7 11 l8 -11 l3 13 l11 -7 l-1 13 l12 -3 l-6 11 l10 3 l-8 8 l8 6 l-9 3 z" fill="#8a5a3b"/>
           <ellipse cx="50" cy="66" rx="24" ry="22" fill="#d99a6c"/><ellipse cx="50" cy="70" rx="15" ry="13" fill="#f3c9a0"/>
           <path d="M24 52 a26 26 0 0 1 52 0" stroke="#c9c24a" stroke-width="6" fill="none"/><rect x="18" y="48" width="10" height="16" rx="5" fill="#d7d05a"/><rect x="72" y="48" width="10" height="16" rx="5" fill="#d7d05a"/>
@@ -1170,214 +1331,359 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
           <ellipse cx="48" cy="72" rx="20" ry="20" fill="#f08a3c"/><ellipse cx="48" cy="76" rx="12" ry="13" fill="#ffe2bf"/>
           <ellipse cx="48" cy="44" rx="20" ry="17" fill="#f08a3c"/><ellipse cx="48" cy="50" rx="10" ry="7" fill="#ffe2bf"/>
           ${eye(41, 44, 3.2)}${eye(55, 44, 3.2)}<ellipse cx="48" cy="49" rx="2.5" ry="1.8" fill="#1f1a17"/>${smile(48, 53, 3)}
-          <path d="M28 36 q20 -24 40 0 z" fill="#4f8de0"/><circle cx="48" cy="14" r="4" fill="#4f8de0"/><rect x="27" y="33" width="42" height="6" rx="3" fill="#3a6fc0"/>`,
-      7: `<circle cx="28" cy="34" r="9" fill="#e9a861"/><circle cx="72" cy="34" r="9" fill="#e9a861"/><circle cx="28" cy="34" r="5" fill="#f7b3a7"/><circle cx="72" cy="34" r="5" fill="#f7b3a7"/>
-          <ellipse cx="50" cy="66" rx="30" ry="28" fill="#f3c58a"/><ellipse cx="50" cy="74" rx="18" ry="16" fill="#ffe6c4"/>
-          <circle cx="34" cy="60" r="7" fill="#f7a3a3" opacity=".8"/><circle cx="66" cy="60" r="7" fill="#f7a3a3" opacity=".8"/>
-          ${eye(42, 52, 3.4)}${eye(58, 52, 3.4)}<ellipse cx="50" cy="58" rx="2.6" ry="2" fill="#1f1a17"/>${smile(50, 62, 3)}
-          <path d="M20 46 a30 30 0 0 1 60 0" stroke="#3b3f5c" stroke-width="6" fill="none"/><rect x="13" y="40" width="12" height="18" rx="6" fill="#3b3f5c"/><rect x="75" y="40" width="12" height="18" rx="6" fill="#3b3f5c"/>`
+          <path d="M28 36 q20 -24 40 0 z" fill="#4f8de0"/><circle cx="48" cy="14" r="4" fill="#4f8de0"/><rect x="27" y="33" width="42" height="6" rx="3" fill="#3a6fc0"/>`
     };
     return `<svg viewBox="0 0 100 100" aria-hidden="true">${art[g]}</svg>`;
   }
-  // 학년 퍼즐 그림: 배경 + 캐릭터 (500 × 200, 5 × 2 조각)
-  function sceneSVG(g) {
-    const ch = CH[g - 1];
-    const dots = [[40, 40], [120, 150], [430, 40], [460, 140], [300, 30], [210, 170]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${6 + (i % 3) * 3}" fill="#fff" opacity=".55"/>`).join('');
-    return `<rect width="500" height="200" fill="${ch.bg}"/>${dots}<rect y="168" width="500" height="32" fill="${ch.floor}"/>
-      <g transform="translate(170,-10) scale(1.85)">${charSVG(g).replace(/<\/?svg[^>]*>/g, '')}</g>
-      <text x="26" y="40" font-family="Jua" font-size="26" fill="#1f2a40" opacity=".85">${ZL(g)}</text><text x="26" y="66" font-family="Jua" font-size="17" fill="#1f2a40" opacity=".6">${ch.place}</text>`;
-  }
-  // 조각 모양: 5 × 2 칸, 이웃 칸과 볼록·오목이 맞물리게
-  function edge(x0, y0, x1, y1, d) {
-    if (!d) return `L${x1} ${y1}`;
-    const dx = x1 - x0, dy = y1 - y0, nx = -dy / 100 * d, ny = dx / 100 * d;
-    const P = (t, o) => `${(x0 + dx * t + nx * o).toFixed(1)} ${(y0 + dy * t + ny * o).toFixed(1)}`;
-    return `L${P(0.36, 0)}C${P(0.42, 4)} ${P(0.3, 22)} ${P(0.5, 22)}C${P(0.7, 22)} ${P(0.58, 4)} ${P(0.64, 0)}L${x1} ${y1}`;
-  }
-  function piecePath(c) {
-    const col = c % 5, row = Math.floor(c / 5), x = col * 100, y = row * 100;
-    const h = (r, cc) => ((r + cc) % 2 ? 1 : -1);           // 가로 경계(위아래 칸 사이)
-    const v = (r, cc) => ((r * 3 + cc) % 2 ? 1 : -1);       // 세로 경계(좌우 칸 사이)
-    const top = row === 0 ? 0 : -h(0, col), bottom = row === 1 ? 0 : h(0, col);
-    const left = col === 0 ? 0 : v(row, col - 1), right = col === 4 ? 0 : -v(row, col);
-    return `M${x} ${y}` + edge(x, y, x + 100, y, top) + edge(x + 100, y, x + 100, y + 100, right) + edge(x + 100, y + 100, x, y + 100, bottom) + edge(x, y + 100, x, y, left) + 'Z';
-  }
-  function puzzleSVG(g, popC) {
-    const pieces = [];
-    for (let c = 0; c < 10; c++) {
-      const got = (M.stars[sid(g, c)] || 0) >= 3, d = piecePath(c);
-      pieces.push(got
-        ? `<g class="${popC === c ? 'pc-got' : ''}"><clipPath id="pc${c}"><path d="${d}"/></clipPath><g clip-path="url(#pc${c})"><use href="#scene"/></g><path d="${d}" fill="none" stroke="#fff" stroke-width="2.5"/></g>`
-        : `<path d="${d}" fill="#f1f3f6" stroke="#c4cad3" stroke-width="2" stroke-dasharray="6 4"/><text x="${(c % 5) * 100 + 50}" y="${Math.floor(c / 5) * 100 + 56}" text-anchor="middle" font-family="Jua" font-size="18" fill="#a9b1bd">${c + 1}</text>`);
+  // ---------- 단원 콘텐츠: 1~6단계 문제 (기본 + 비슷한 문제). {{ }} 는 달이 단계의 단서 밑줄 ----------
+  const QQ = (q, c, a, e, tq, tc, ta, te) => ({ main: { q, c, a, e }, twin: { q: tq, c: tc, a: ta, e: te } });
+  const CONTENT = {
+    '3-1-4': { badge: '분수 마스터 배지', stages: [
+      [QQ('피자를 똑같이 4조각으로 나눴어요. 1조각은 전체의 얼마일까요?', ['[1/4]', '[4/1]', '[1/3]', '[3/4]'], 0, '전체를 똑같이 4로 나눈 것 중의 1이므로 [1/4]이에요.',
+          '케이크를 똑같이 3조각으로 나눈 것 중 2조각은 전체의 얼마일까요?', ['[2/3]', '[3/2]', '[1/3]', '[2/5]'], 0, '똑같이 3으로 나눈 것 중의 2이므로 [2/3]이에요.'),
+       QQ('똑같이 나누지 않은 조각도 분수로 나타낼 수 있을까요?', ['네, 언제나 돼요', '아니요, 똑같이 나눠야 해요', '반으로 나눌 때만 돼요', '세 조각일 때만 돼요'], 1, '분수는 전체를 똑같이 나눈 것 중의 부분이에요. 똑같지 않게 나누면 분수로 나타낼 수 없어요.',
+          '[1/5]은 전체를 똑같이 몇으로 나눈 것 중의 1일까요?', ['1', '5', '4', '6'], 1, '분모 5는 똑같이 나눈 수, 분자 1은 그중의 부분이에요.')],
+      [QQ('[3/5]에서 5를 무엇이라고 할까요?', ['분자', '분모', '단위분수', '소수점'], 1, '가로선 아래의 수를 분모, 위의 수를 분자라고 해요.',
+          '[3/5]에서 3을 무엇이라고 할까요?', ['분모', '분자', '소수', '자연수'], 1, '가로선 위의 수 3은 분자예요.'),
+       QQ('분자가 1인 분수를 무엇이라고 할까요?', ['단위분수', '진분수', '소수', '대분수'], 0, '[1/2], [1/3]처럼 분자가 1인 분수를 단위분수라고 해요.',
+          '0.1, 0.2처럼 점을 찍어 나타낸 수를 무엇이라고 할까요?', ['분수', '소수', '자연수', '분모'], 1, '0.1처럼 소수점을 사용해 나타낸 수를 소수라고 해요.')],
+      [QQ('[2/5] 와 [3/5] 중 더 큰 수는?', ['[2/5]', '[3/5]', '두 수가 같아요'], 1, '분모가 같으면 분자가 큰 쪽이 더 커요. 3이 2보다 커요.',
+          '[1/3] 과 [1/4] 중 더 큰 수는?', ['[1/3]', '[1/4]', '두 수가 같아요'], 0, '단위분수는 분모가 작을수록 더 커요. 3으로 나눈 한 조각이 4로 나눈 한 조각보다 커요.'),
+       QQ('0.6과 0.4 중 더 큰 수는?', ['0.6', '0.4', '두 수가 같아요'], 0, '0.1이 6개인 0.6이 0.1이 4개인 0.4보다 커요.',
+          '0.1이 8개인 수는?', ['8', '0.8', '0.08', '80'], 1, '0.1이 8개면 0.8이에요.')],
+      [QQ('0과 1 사이를 똑같이 10칸으로 나눈 수직선에서 7번째 눈금이 나타내는 수는?', ['0.7', '7', '0.07', '[1/7]'], 0, '한 칸은 0.1이에요. 7칸이면 0.7이에요.',
+          '0과 1 사이를 똑같이 10칸으로 나눈 수직선에서 3번째 눈금이 나타내는 수는?', ['3', '0.3', '0.03', '[1/3]'], 1, '한 칸이 0.1이니까 3칸은 0.3이에요.'),
+       QQ('[3/10]을 소수로 나타내면?', ['0.3', '3.10', '0.03', '30'], 0, '[1/10] = 0.1이에요. [3/10]은 0.1이 3개라서 0.3이에요.',
+          '[9/10]을 소수로 나타내면?', ['9.1', '0.09', '0.9', '90'], 2, '[1/10]이 9개면 0.9예요.')],
+      [QQ('초콜릿 {{12개}} 중 {{[1/3]}}을 먹었어요. 남은 초콜릿은 몇 개일까요?', ['4개', '8개', '9개', '3개'], 1, '12개를 똑같이 3묶음으로 나누면 한 묶음은 4개예요. 4개를 먹었으니 12 − 4 = 8개가 남아요.',
+          '구슬 {{20개}} 중 {{[1/4]}}을 친구에게 줬어요. 남은 구슬은 몇 개일까요?', ['5개', '15개', '16개', '4개'], 1, '20개를 4묶음으로 나누면 한 묶음은 5개예요. 20 − 5 = 15개가 남아요.'),
+       QQ('리본 {{1 m}}를 {{10도막}}으로 똑같이 잘랐어요. 3도막의 길이는 몇 m일까요?', ['0.3 m', '3 m', '0.03 m', '[1/3] m'], 0, '1 m를 10도막으로 나누면 한 도막은 0.1 m예요. 3도막은 0.3 m예요.',
+          '물 {{1 L}}를 컵 {{10개}}에 똑같이 나눴어요. 컵 4개에 든 물은 몇 L일까요?', ['4 L', '0.4 L', '0.04 L', '[1/4] L'], 1, '한 컵은 0.1 L예요. 4컵은 0.4 L예요.')],
+      [QQ('토리의 열기구 연료 게이지는 0.1씩 10칸이에요. 7칸이 남았다면 남은 연료를 소수로 나타내면?', ['0.7', '7', '0.07', '1.7'], 0, '0.1이 7개이므로 0.7이에요.',
+          '물통 눈금이 0.1씩 10칸이에요. 4칸만큼 물이 있다면 물의 양을 소수로 나타내면?', ['4', '0.4', '0.04', '1.4'], 1, '0.1이 4개이므로 0.4예요.'),
+       QQ('피자 1판을 8조각으로 똑같이 나눠 3조각을 먹었어요. 먹은 양은 피자 전체의 얼마일까요?', ['[3/8]', '[5/8]', '[8/3]', '[3/5]'], 0, '8조각 중 3조각이므로 [3/8]이에요.',
+          '빵 1개를 6조각으로 똑같이 나눴는데 5조각이 남았어요. 남은 양은 전체의 얼마일까요?', ['[1/6]', '[6/5]', '[5/6]', '[5/1]'], 2, '6조각 중 5조각이 남았으니 [5/6]이에요.')]
+    ] },
+    '5-1-4': { badge: '넓이 마스터 배지', stages: [
+      [QQ('1 cm² 모눈 블록을 가로 4개, 세로 3줄로 붙였어요. 넓이는?', ['7 cm²', '12 cm²', '14 cm²', '43 cm²'], 1, '가로 4개씩 3줄이면 4 × 3 = 12개, 그래서 12 cm²예요.',
+          '1 cm² 모눈 블록을 가로 5개, 세로 2줄로 붙였어요. 넓이는?', ['7 cm²', '10 cm²', '14 cm²', '52 cm²'], 1, '5 × 2 = 10개라서 10 cm²예요.'),
+       QQ('직사각형의 넓이를 구하는 식은?', ['가로 + 세로', '가로 × 세로', '(가로 + 세로) × 2', '가로 × 세로 ÷ 2'], 1, '단위넓이가 가로로 몇 개, 세로로 몇 줄인지 곱하면 넓이예요.',
+          '정사각형의 넓이를 구하는 식은?', ['한 변 × 4', '한 변 × 한 변', '한 변 + 한 변', '한 변 × 2'], 1, '정사각형은 가로와 세로가 같아서 한 변 × 한 변이에요.')],
+      [QQ('넓이의 단위 ‘제곱센티미터’를 기호로 쓰면?', ['cm', 'cm²', 'm', 'mm'], 1, '1 cm²는 한 변이 1 cm인 정사각형의 넓이예요.',
+          '1 m²는 몇 cm²일까요?', ['100 cm²', '1000 cm²', '10000 cm²', '10 cm²'], 2, '1 m = 100 cm이므로 100 × 100 = 10000 cm²예요.'),
+       QQ('도형의 둘레는 무엇일까요?', ['도형 안쪽의 크기', '도형 바깥 선의 길이', '가장 긴 변의 길이', '꼭짓점의 수'], 1, '둘레는 도형을 한 바퀴 둘러싼 선의 길이예요.',
+          '삼각형에서 밑변과 수직인 선분의 길이를 무엇이라고 할까요?', ['둘레', '높이', '대각선', '넓이'], 1, '밑변과 수직으로 그은 선분의 길이를 높이라고 해요.')],
+      [QQ('밑변 6 cm, 높이 4 cm인 삼각형의 넓이는?', ['24 cm²', '12 cm²', '10 cm²', '20 cm²'], 1, '삼각형의 넓이 = 밑변 × 높이 ÷ 2 = 6 × 4 ÷ 2 = 12 cm².',
+          '밑변 8 cm, 높이 5 cm인 삼각형의 넓이는?', ['40 cm²', '20 cm²', '13 cm²', '26 cm²'], 1, '8 × 5 ÷ 2 = 20 cm². ÷ 2를 잊지 마세요.'),
+       QQ('가로 7 cm, 세로 3 cm인 직사각형의 둘레는?', ['21 cm', '10 cm', '20 cm', '14 cm'], 2, '(가로 + 세로) × 2 = (7 + 3) × 2 = 20 cm.',
+          '한 변이 6 cm인 정사각형의 둘레는?', ['36 cm', '24 cm', '12 cm', '18 cm'], 1, '한 변 × 4 = 6 × 4 = 24 cm.')],
+      [QQ('평행사변형을 잘라 직사각형으로 바꿨어요. 직사각형의 가로는 평행사변형의 무엇과 같을까요?', ['높이', '밑변', '둘레', '대각선'], 1, '한쪽 삼각형을 잘라 옮기면 밑변이 가로, 높이가 세로가 돼요. 그래서 넓이 = 밑변 × 높이예요.',
+          '밑변 9 cm, 높이 4 cm인 평행사변형의 넓이는?', ['13 cm²', '26 cm²', '36 cm²', '18 cm²'], 2, '9 × 4 = 36 cm².'),
+       QQ('두 대각선이 6 cm, 8 cm인 마름모의 넓이는?', ['48 cm²', '24 cm²', '14 cm²', '28 cm²'], 1, '마름모의 넓이 = 대각선 × 대각선 ÷ 2 = 6 × 8 ÷ 2 = 24 cm².',
+          '윗변 4 cm, 아랫변 6 cm, 높이 5 cm인 사다리꼴의 넓이는?', ['50 cm²', '25 cm²', '15 cm²', '120 cm²'], 1, '(윗변 + 아랫변) × 높이 ÷ 2 = (4 + 6) × 5 ÷ 2 = 25 cm².')],
+      [QQ('가로 {{10 cm}}, 세로 {{6 cm}}인 직사각형에서 한 변이 {{4 cm}}인 정사각형을 잘라 냈어요. 남은 넓이는?', ['44 cm²', '60 cm²', '16 cm²', '56 cm²'], 0, '처음 넓이 10 × 6 = 60 cm²에서 4 × 4 = 16 cm²를 빼면 44 cm²예요.',
+          '가로 {{8 cm}}, 세로 {{5 cm}}인 직사각형에서 한 변이 {{3 cm}}인 정사각형을 잘라 냈어요. 남은 넓이는?', ['31 cm²', '40 cm²', '9 cm²', '37 cm²'], 0, '8 × 5 = 40 cm²에서 3 × 3 = 9 cm²를 빼면 31 cm²예요.'),
+       QQ('넓이가 {{48 cm²}}이고 가로가 {{8 cm}}인 직사각형의 세로는?', ['6 cm', '40 cm', '56 cm', '5 cm'], 0, '가로 × 세로 = 48이므로 8 × □ = 48, □ = 6 cm예요.',
+          '넓이가 {{30 cm²}}이고 밑변이 {{10 cm}}인 삼각형의 높이는?', ['3 cm', '6 cm', '20 cm', '5 cm'], 1, '10 × □ ÷ 2 = 30이므로 10 × □ = 60, □ = 6 cm예요.')],
+      [QQ('토리의 열기구 착륙장 옆 화단은 가로 5 m, 세로 3 m인 직사각형이에요. 둘레에 울타리를 치려면 철사가 몇 m 필요할까요?', ['15 m', '8 m', '16 m', '30 m'], 2, '(5 + 3) × 2 = 16 m예요.',
+          '한 변이 4 m인 정사각형 착륙장 둘레에 깃발 줄을 둘러요. 줄은 몇 m 필요할까요?', ['16 m', '8 m', '4 m', '12 m'], 0, '4 × 4 = 16 m예요.'),
+       QQ('가로 4 m, 세로 2 m인 바닥에 1 m² 타일을 깔아요. 타일은 몇 장 필요할까요?', ['6장', '8장', '12장', '16장'], 1, '넓이가 4 × 2 = 8 m²라서 타일 8장이 필요해요.',
+          '가로 6 m, 세로 3 m인 텃밭에 1 m²마다 씨앗 한 봉지를 뿌려요. 몇 봉지가 필요할까요?', ['9봉지', '18봉지', '12봉지', '36봉지'], 1, '넓이가 6 × 3 = 18 m²라서 18봉지예요.')]
+    ] }
+  };
+  const ukey = (gs, u) => `${gs}-${u}`;
+  const hasContent = key => !!CONTENT[key];
+  // 단계별 문제 만들기 (기본 문제에는 출처를 붙여 샌디가 오답을 모을 수 있게 해요)
+  function stageQuestions(key, i) {
+    const C = CONTENT[key], G = GUARD[i];
+    const tag = (set, s, k, swap) => ({ unit: GUARD[s].step, src: [s, k], main: swap ? set.twin : set.main, twin: swap ? set.main : set.twin });
+    if (i < 6) return C.stages[i].map((set, k) => ({ ...tag(set, i, k, false), unit: G.step }));
+    if (i === 6) {
+      const wr = prog(key).wrong.slice(-4);
+      const list = (wr.length ? wr : [[3, 0], [4, 0]]).map(([s, k]) => ({ ...tag(C.stages[s][k], s, k, true), unit: '오답 다시 보기 · ' + GUARD[s].step }));
+      return list;
     }
-    return `<svg viewBox="-12 -12 524 224" role="img" aria-label="${g}학년 퍼즐 ${countPieces(g)}/10 조각">
-      <defs><g id="scene">${sceneSVG(g)}</g><filter id="gs"><feColorMatrix type="saturate" values="0"/></filter></defs>
-      <g filter="url(#gs)" opacity=".18"><use href="#scene"/></g>${pieces.join('')}</svg>`;
+    const all = [];
+    C.stages.forEach((st, s) => st.forEach((set, k) => all.push({ ...tag(set, s, k, true), unit: GUARD[s].step })));
+    return all.filter((_, n) => n !== 1 && n !== 3).slice(0, 10);
   }
 
-  const NICKS = ['하늘고래', '번개토끼', '초코펭귄'];
-  const KEY = 'boogi-stars-v1';
-  const sid = (g, c) => g + '-' + c;
-  function cityQuestions(g, c) {
-    if (g === 7) {   // 마지막 구역: 학년별 복습 6개 + 여러 학년 섞어 풀기 4개
-      const pickSet = gg => { const b = BANK[gg + '-' + (Math.random() < .5 ? 1 : 2)]; return b[Math.floor(Math.random() * b.length)]; };
-      const ga = c < 6 ? c + 1 : 1 + Math.floor(Math.random() * 6), gb = c < 6 ? c + 1 : 1 + Math.floor(Math.random() * 6);
-      return [pickSet(ga), pickSet(gb)];
-    }
-    const set = (BANK[g + '-' + (c < 5 ? 1 : 2)] || BANK['3-1'])[c % 5];
-    return [set, { unit: set.unit, main: set.twin, twin: set.main }];
-  }
+  const KEY = 'mathland-v1';
   function defaultsM() {
-    const stars = {};
-    for (let c = 0; c < 10; c++) stars[sid(1, c)] = 3;
-    [3, 3, 2, 3, 1, 3, 0, 0, 3, 2].forEach((v, c) => { if (v) stars[sid(2, c)] = v; });
-    return { stars, last: null, gradeJustDone: 0, popPiece: null,
-      news: { good: false, text: '부기네 계산 수리점에서 퍼즐을 완성하면 황금 나침반 조각을 받을 수 있어요. 루미네 가게도 퍼즐 4조각이 남았어요!' }, seenStory: false };
+    return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0 }, badges: [], sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
+      news: { good: false, text: '3학년 1학기 [분수와 소수] 섬에 도착했어요! 송이의 개념 블록 연구소부터 시작해 황금 나침반 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
   function saveM() { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} }
-
-  let view = 'home', curG = MY_GRADE, pick = { g: MY_GRADE, s: 1, c: 0 };
-  const countPieces = g => { let n = 0; for (let c = 0; c < 10; c++) if ((M.stars[sid(g, c)] || 0) >= 3) n++; return n; };
-  const gradeDone = g => countPieces(g) === 10;
-  const gradeOpen = g => g <= MY_GRADE || gradeDone(g - 1);
-  const compass = () => CH.filter(ch => gradeDone(ch.g)).length;
-  const curCity = () => ({ name: UNITS[pick.g][pick.c], unit: UNITS[pick.g][pick.c] });
-  // 다음 단계: 같은 학년의 다음 단원 → 마지막 단원이면 다음 학년 첫 단원(열려 있을 때)
-  function nextUnit() {
-    if (pick.c < 9) return { g: pick.g, c: pick.c + 1 };
-    if (pick.g < 7 && gradeOpen(pick.g + 1)) return { g: pick.g + 1, c: 0 };
+  function prog(key) { return M.prog[key] || (M.prog[key] = { st: [0, 0, 0, 0, 0, 0, 0, 0], pct: [0, 0, 0, 0, 0, 0, 0, 0], cl: [false, false, false, false, false, false, false, false], wrong: [] }); }
+  // 잠금: 송이 → 루미·로키 → 부기 → 달이 → 토리 → 샌디 → (1~7 모두) 보물지도
+  function unlocked(key, i) {
+    const cl = prog(key).cl;
+    if (i === 0) return true;
+    if (i === 1 || i === 2) return cl[0];
+    if (i === 3) return cl[1] && cl[2];
+    if (i === 7) return cl.slice(0, 7).every(Boolean);
+    return cl[i - 1];
+  }
+  const lockText = i => i === 0 ? '' : i <= 2 ? '송이의 개념 열기를 마치면 열려요' : i === 3 ? '루미와 로키를 마치면 열려요' : i === 7 ? '1~7단계를 모두 마치면 열려요' : `${GUARD[i - 1].name}의 관문을 마치면 열려요`;
+  let pick = { gs: '3-1', u: 4, key: '3-1-4', i: 0 };
+  function nextStage() {
+    const key = pick.key;
+    for (let i = 0; i < 8; i++) if (unlocked(key, i) && !prog(key).cl[i]) return i;
     return null;
   }
-  // 단원 점수: 별 1 완주, 별 2 한 번에 모두 정답, 별 3 하트 지키기
-  function scoreUnit() {
-    const g = pick.g, k = sid(g, pick.c), before = M.stars[k] || 0, wasDone = gradeDone(g), nextWasOpen = g < 6 && gradeOpen(g + 1);
+  // 관문 점수: 1~7단계는 완주 · 한 번에 모두 정답 · 하트 지키기, 보물지도는 정답 수
+  function scoreStage() {
+    const key = pick.key, i = pick.i, P = prog(key);
+    const before = [0, 1, 2, 3, 4, 5, 6, 7].map(k => unlocked(key, k));
     const s1 = true, s2 = stats.retries === 0, s3 = stats.hits === 0;
-    const got = (s1 ? 1 : 0) + (s2 ? 1 : 0) + (s3 ? 1 : 0), best = Math.max(before, got);
-    M.stars[k] = best;
-    const newPiece = before < 3 && best === 3;
-    M.last = { stars: got, best, s1, s2, s3, newPiece };
-    M.popPiece = newPiece ? { g, c: pick.c } : null;
-    M.gradeJustDone = !wasDone && gradeDone(g) ? g : 0;
-    if (M.gradeJustDone) {
-      endBanner = compass() === 7 ? '황금 나침반 완성!' : `나침반 조각 ${compass()}/7 획득!`;
-      M.news = { good: true, text: compass() === 7 ? '황금 나침반 7조각을 모두 되찾았어요! 숫자 시계탑이 다시 움직여요. 매스 랜드의 질서가 돌아왔어요!' : `${CH[g - 1].name}에게서 황금 나침반 조각을 받았어요! (${compass()}/7)` + (g < 7 && !nextWasOpen ? ` ${ZL(g + 1)} ${CH[g].place}로 가는 길이 열렸어요.` : '') };
-    } else if (newPiece) {
-      M.news = { good: true, text: `${UNITS[g][pick.c]}에서 별 3개! ${CH[g - 1].place} 퍼즐 ${countPieces(g)}/10` };
+    const got = i === 7 ? (stats.first >= TOTAL - 1 ? 3 : stats.first >= Math.ceil(TOTAL * 0.7) ? 2 : 1) : (s1 ? 1 : 0) + (s2 ? 1 : 0) + (s3 ? 1 : 0);
+    const wasCleared = P.cl[i], hadPiece = P.st[i] >= 3, piecesBefore = pieceCount(key);
+    P.st[i] = Math.max(P.st[i], got);
+    P.pct[i] = Math.max(P.pct[i], Math.round(stats.first / TOTAL * 100));
+    P.cl[i] = true;
+    if (i === 6) P.wrong = [];
+    const opened = [0, 1, 2, 3, 4, 5, 6, 7].filter(k => !before[k] && unlocked(key, k));
+    const newPiece = !hadPiece && P.st[i] >= 3;
+    M.last = { stars: got, best: P.st[i], s1, s2, s3, first: stats.first, opened: wasCleared ? [] : opened, newPiece };
+    M.popPiece = newPiece ? i : null;
+    M.justCompass = newPiece && piecesBefore === 7;
+    M.coins = (M.coins || 0) + stats.coins;
+    const badge = CONTENT[key].badge;
+    M.justBadge = i === 7 && got === 3 && !M.badges.includes(badge) ? badge : '';
+    if (M.justBadge) { M.badges.push(badge); endBanner = '보물 상자 열기 성공!'; endSub = `${badge} 획득!`; }
+    if (M.justCompass) { endBanner = '황금 나침반 완성!'; endSub = M.justBadge ? `시계탑이 다시 움직여요! ${badge} 획득!` : '숫자 시계탑이 다시 움직여요!'; }
+    M.news = M.justCompass ? { good: true, text: `${unitName(pick.gs, pick.u)} 섬의 황금 나침반 8조각을 모두 맞췄어요! 숫자 시계탑이 다시 움직여요.` }
+      : newPiece ? { good: true, text: `${GUARD[i].name}의 관문을 별 3개로 통과! 황금 나침반 조각 ${pieceCount(key)}/8을 얻었어요.` }
+      : M.justBadge ? { good: true, text: `${unitName(pick.gs, pick.u)} 섬의 보물 상자를 열고 ${badge}를 얻었어요!` }
+      : opened.length && !wasCleared ? { good: true, text: `${GUARD[i].name}의 열쇠 획득! ${opened.map(k => GUARD[k].name).join('·')}의 관문이 열렸어요.` }
+      : { good: true, text: `${GUARD[i].name}의 관문에서 별 ${got}개를 받았어요.` };
+    saveM();
+  }
+  // 황금 나침반 퍼즐: 1~7단계 = 나침반 바깥 조각 7개, 보물지도 = 가운데 바늘 조각. 별 3개로 통과하면 그 조각을 얻어요.
+  const hasPiece = (key, i) => !!key && prog(key).st[i] >= 3;
+  const pieceCount = key => [0, 1, 2, 3, 4, 5, 6, 7].filter(i => hasPiece(key, i)).length;
+  function compassSVG(key, popI, size) {
+    const cx = 120, cy = 120, R = 96, r0 = 40, parts = [];
+    for (let i = 0; i < 7; i++) {
+      const a0 = -Math.PI / 2 + i * 2 * Math.PI / 7 + 0.035, a1 = a0 + 2 * Math.PI / 7 - 0.07, am = (a0 + a1) / 2;
+      const P = (a, r) => `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
+      const d = `M${P(a0, r0)}L${P(a0, R)}A${R} ${R} 0 0 1 ${P(a1, R)}L${P(a1, r0)}A${r0} ${r0} 0 0 0 ${P(a0, r0)}Z`;
+      const got = hasPiece(key, i), G = GUARD[i];
+      const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
+      const [tx, ty] = P(am, (R + r0) / 2).split(' ').map(Number);
+      parts.push(got
+        ? `<g class="${popI === i ? 'cmp-new' : ''}"><path d="${d}" fill="${G.bg}" stroke="#b07800" stroke-width="3"/><g transform="translate(${tx - 17},${ty - 17}) scale(.34)">${art}</g></g>`
+        : `<path d="${d}" fill="#f1f3f6" stroke="#c4cad3" stroke-width="2" stroke-dasharray="5 4"/><text x="${tx}" y="${ty + 6}" text-anchor="middle" font-family="Jua" font-size="17" fill="#a9b1bd">${i + 1}</text>`);
     }
+    const hub = hasPiece(key, 7);
+    const needle = `<g class="${pieceCount(key) === 8 ? 'hands spin' : ''}" style="transform-origin:${cx}px ${cy}px"><path d="M${cx} ${cy - 34} L${cx + 9} ${cy} L${cx} ${cy + 34} L${cx - 9} ${cy} Z" fill="${hub ? '#e5484d' : '#d7dbe2'}" stroke="${hub ? '#7a1f22' : '#c4cad3'}" stroke-width="2"/></g>`;
+    return `<svg viewBox="0 0 240 240" role="img" aria-label="황금 나침반 퍼즐 ${pieceCount(key)}/8조각" ${size ? `width="${size}"` : ''}>
+      <circle cx="${cx}" cy="${cy}" r="${R + 10}" fill="${pieceCount(key) === 8 ? '#ffd34d' : '#fff8e1'}" stroke="#2b3a55" stroke-width="3"/>${parts.join('')}
+      <circle class="${popI === 7 ? 'cmp-new' : ''}" cx="${cx}" cy="${cy}" r="${r0 - 4}" fill="${hub ? '#ffd34d' : '#f1f3f6'}" stroke="${hub ? '#b07800' : '#c4cad3'}" stroke-width="2.5" ${hub ? '' : 'stroke-dasharray="5 4"'}/>${needle}
+      <text x="${cx}" y="16" text-anchor="middle" font-family="Jua" font-size="14" fill="#2b3a55">N</text></svg>`;
+  }
+  // 숫자 시계탑 (이야기·완성 연출용)
+  function towerSVG(done) {
+    return `<svg viewBox="0 0 120 170" aria-hidden="true"><ellipse cx="60" cy="160" rx="50" ry="9" fill="#bfe09a"/>
+      <rect x="34" y="62" width="52" height="96" rx="4" fill="#f6e7c8" stroke="#2b3a55" stroke-width="2.5"/>
+      <path d="M24 64 L60 18 L96 64 Z" fill="#e5484d" stroke="#2b3a55" stroke-width="2.5"/><rect x="57" y="6" width="6" height="14" fill="#2b3a55"/>
+      <circle cx="60" cy="88" r="20" fill="${done ? '#ffd34d' : '#fff'}" stroke="#2b3a55" stroke-width="2.5"/>
+      <g class="${done ? 'hands spin' : ''}" style="transform-origin:60px 88px"><path d="M60 88 L60 74 M60 88 L70 94" stroke="#2b3a55" stroke-width="3" stroke-linecap="round"/></g>
+      <path d="M52 158 v-22 a8 8 0 0 1 16 0 v22 z" fill="#c98b4a" stroke="#2b3a55" stroke-width="2"/></svg>`;
+  }
+  function recordWrong(src) {
+    if (!src || src[0] > 5) return;
+    const P = prog(pick.key);
+    if (!P.wrong.some(([s, k]) => s === src[0] && k === src[1])) P.wrong.push(src);
     saveM();
   }
 
-  // ---------- 화면 ----------
+  // ---------- 코인 상점 ----------
+  const ITEMS = [
+    { id: 'hint', name: '힌트 받기', price: 30, desc: '문제에서 틀린 보기 1개를 지워 줘요. 문제 화면에서 써요.',
+      icon: '<circle cx="26" cy="22" r="14" fill="#ffd34d"/><rect x="19" y="34" width="14" height="8" rx="2" fill="#9aa4b1"/><rect x="21" y="43" width="10" height="4" rx="2" fill="#7d8794"/><path d="M26 14v10M21 20l5 4 5-4" stroke="#b07a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
+    { id: 'freeze', name: '시간 멈추기', price: 40, desc: '진행 시간이 20초 동안 멈춰요. 게임 중 위쪽 버튼으로 써요.',
+      icon: '<circle cx="26" cy="27" r="18" fill="#d5efff" stroke="#0090ff" stroke-width="4"/><rect x="19" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="28" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="21" y="3" width="10" height="5" rx="2" fill="#0090ff"/>' },
+    { id: 'heart', name: '하트 +1', price: 50, desc: '다음 판을 하트 4개로 시작해요. 시작 화면에서 골라요.',
+      icon: '<path d="M26 44C12 34 6 26 6 18a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 16-20 26z" fill="#e5484d"/><path d="M26 18v14M19 25h14" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' },
+    { id: 'shield', name: '보호막', price: 60, desc: '헷갈이에 한 번 부딪혀도 다치지 않아요. 시작 화면에서 골라요.',
+      icon: '<path d="M26 4l18 7v13c0 12-8 20-18 24C16 44 8 36 8 24V11z" fill="#8aa2d8"/><path d="M18 25l6 6 11-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' }
+  ];
+  const itemIcon = it => `<svg viewBox="0 0 52 52" aria-hidden="true">${it.icon}</svg>`;
+  let shopReturn = 'mapModal';
+  function renderShop(msg) {
+    $('shopWallet').innerHTML = `내 코인 <b>${M.coins}</b> · 게임에서 모은 코인이 쌓여요`;
+    $('shopGrid').innerHTML = ITEMS.map(it => `<div class="item">${itemIcon(it)}<div><b>${it.name}</b><p>${it.desc}</p>
+      <div class="row"><small>가진 개수 ${M.items[it.id] || 0}</small><button type="button" class="buy" data-buy="${it.id}" ${M.coins < it.price ? 'disabled' : ''}>코인 ${it.price}</button></div></div></div>`).join('');
+    $('shopMsg').textContent = msg || '';
+  }
+  function openShop(from) { shopReturn = from; renderShop(); showModal('shopModal'); $('shopClose').focus({ preventScroll: true }); }
+  $('shopModal').addEventListener('click', e => {
+    const b = e.target.closest('[data-buy]');
+    if (b) {
+      const it = ITEMS.find(x => x.id === b.dataset.buy);
+      if (M.coins < it.price) { renderShop('코인이 모자라요. 게임에서 코인을 더 모아 볼까요?'); return; }
+      M.coins -= it.price; M.items[it.id] = (M.items[it.id] || 0) + 1; saveM();
+      renderShop(`${it.name}을(를) 샀어요! (가진 개수 ${M.items[it.id]})`);
+      const nb = $('shopGrid').querySelector(`[data-buy="${it.id}"]`); if (nb && !nb.disabled) nb.focus({ preventScroll: true });
+      return;
+    }
+    if (e.target.closest('#shopClose')) closeShop();
+  });
+  function closeShop() {
+    if (shopReturn === 'startModal') { renderUseItems(); showModal('startModal'); $('startBtn').focus({ preventScroll: true }); }
+    else { render(); showModal('mapModal'); }
+  }
+  // 시작 화면: 이번 판에 쓸 아이템
+  let useHeart = false, useShield = false;
+  function renderUseItems() {
+    useHeart = useHeart && M.items.heart > 0; useShield = useShield && M.items.shield > 0;
+    $('useItems').innerHTML = `<button type="button" class="useitem" data-use="heart" aria-pressed="${useHeart}" ${M.items.heart ? '' : 'disabled'}>하트 +1 쓰기 (${M.items.heart})</button>
+      <button type="button" class="useitem" data-use="shield" aria-pressed="${useShield}" ${M.items.shield ? '' : 'disabled'}>보호막 쓰기 (${M.items.shield})</button>
+      <button type="button" class="useitem shopgo" id="startShop">코인 상점</button>
+      <span class="note">게임 중에 쓰는 아이템: 힌트 ${M.items.hint}개, 시간 멈추기 ${M.items.freeze}개</span>`;
+  }
+  $('useItems').addEventListener('click', e => {
+    if (e.target.closest('#startShop')) { openShop('startModal'); return; }
+    const b = e.target.closest('[data-use]'); if (!b || b.disabled) return;
+    if (b.dataset.use === 'heart') useHeart = !useHeart; else useShield = !useShield;
+    renderUseItems();
+  });
+  // 게임 중: 힌트 · 시간 멈추기
+  function updateHintBtn() {
+    const n = M.items.hint || 0;
+    $('hintBtn').textContent = `힌트 쓰기 (${n})`;
+    $('hintBtn').disabled = n <= 0;
+  }
+  $('hintBtn').addEventListener('click', () => {
+    if (state !== 'question' || (M.items.hint || 0) <= 0) return;
+    const set = QUESTIONS[current.gate.i], item = current.twin ? set.twin : set.main;
+    const btns = [...$('qChoices').querySelectorAll('button')];
+    const wrong = btns.filter((b, i) => i !== item.a && !b.classList.contains('gone') && !b.classList.contains('wrong'));
+    if (wrong.length <= 1) { showToast('더 지울 보기가 없어요'); return; }
+    const pickB = wrong[Math.floor(Math.random() * wrong.length)];
+    pickB.classList.add('gone'); pickB.disabled = true;
+    M.items.hint--; saveM(); updateHintBtn();
+  });
+  $('freezeBtn').addEventListener('click', () => {
+    if (!(state === 'play' || state === 'question') || (M.items.freeze || 0) <= 0 || stats.freeze > 0) return;
+    M.items.freeze--; saveM(); stats.freeze = 20; showToast('시간 멈춤! 20초');
+  });
+  // ---------- 화면: 상단 바 · 섬 지도 · 수호자 카드 ----------
   function renderNews() {
     const n = $('news');
     n.className = 'news' + (M.news.good ? ' good' : '');
     n.innerHTML = `<span class="ic">${M.news.good ? '✓' : 'i'}</span><span>${esc(M.news.text)}</span>`;
   }
-  // 매스 랜드 지도: 가운데 숫자 시계탑, 둘레에 7개 구역이 길로 이어져요 (직접 그린 단순 그림)
-  const ZP = { 1: [170, 425], 2: [110, 262], 3: [215, 112], 4: [410, 72], 5: [605, 112], 6: [690, 262], 7: [630, 425] };
-  function towerSVG(big) {
-    const n = compass(), wedges = [];
-    for (let i = 0; i < 7; i++) {
-      const a0 = -Math.PI / 2 + i * 2 * Math.PI / 7 + 0.04, a1 = a0 + 2 * Math.PI / 7 - 0.08, R = 27, r0 = 11;
-      const P = (a, r) => `${(400 + r * Math.cos(a)).toFixed(1)} ${(222 + r * Math.sin(a)).toFixed(1)}`;
-      wedges.push(`<path d="M${P(a0, r0)}L${P(a0, R)}A${R} ${R} 0 0 1 ${P(a1, R)}L${P(a1, r0)}A${r0} ${r0} 0 0 0 ${P(a0, r0)}Z" fill="${gradeDone(i + 1) ? '#f2b705' : '#e3e6ea'}" stroke="#2b3a55" stroke-width="1"/>`);
-    }
-    return `<g class="tower"><ellipse cx="400" cy="342" rx="78" ry="20" fill="#bfe09a"/>
-      <rect x="366" y="190" width="68" height="148" rx="4" fill="#f6e7c8" stroke="#2b3a55" stroke-width="2.5"/>
-      <path d="M352 192 L400 128 L448 192 Z" fill="#e5484d" stroke="#2b3a55" stroke-width="2.5"/><rect x="396" y="112" width="8" height="18" fill="#2b3a55"/>
-      <circle cx="400" cy="222" r="31" fill="#fff" stroke="#2b3a55" stroke-width="2.5"/>${wedges.join('')}
-      <g class="${n === 7 ? 'hands spin' : 'hands'}"><path d="M400 222 L400 202 M400 222 L414 230" stroke="#2b3a55" stroke-width="3" stroke-linecap="round"/></g><circle cx="400" cy="222" r="3" fill="#2b3a55"/>
-      <path d="M388 338 v-30 a12 12 0 0 1 24 0 v30 z" fill="#c98b4a" stroke="#2b3a55" stroke-width="2"/>
-      <rect x="372" y="268" width="14" height="16" rx="3" fill="#bfe6ff" stroke="#2b3a55" stroke-width="1.5"/><rect x="414" y="268" width="14" height="16" rx="3" fill="#bfe6ff" stroke="#2b3a55" stroke-width="1.5"/>
-      <rect x="326" y="352" width="148" height="26" rx="13" fill="#fff" stroke="#2b3a55" stroke-width="2"/>
-      <text x="400" y="370" text-anchor="middle" class="mtxt">숫자 시계탑 · 나침반 ${n}/7</text>
-      ${n === 7 ? '<text x="400" y="406" text-anchor="middle" class="mtxt big">시계탑이 다시 움직여요!</text>' : ''}</g>`;
+  function renderBar() {
+    const gs = M.sel.gs, us = unitsOf(gs);
+    $('mapBar').innerHTML = `<div class="selrow">
+        <label class="sel"><span class="vh">학년 학기</span><select id="gsSel">${GS_LIST.map(x => `<option value="${x}" ${x === gs ? 'selected' : ''}>${gsLabel(x)}</option>`).join('')}</select></label>
+        <label class="sel"><span class="vh">단원</span><select id="unitSel">${us.map((u, i) => `<option value="${i}" ${i === M.sel.u ? 'selected' : ''}>${i + 1}단원. ${u}${hasContent(ukey(gs, i)) ? '' : ' (준비 중)'}</option>`).join('')}</select></label>
+      </div>
+      <div class="wallet"><span class="chip">배지 ${M.badges.length}</span><span class="chip">코인 ${M.coins}</span><button type="button" class="shopbtn" id="openShop">코인 상점</button></div>`;
   }
-  function zoneSVG(ch, pop) {
-    const [x, y] = ZP[ch.g], open = gradeOpen(ch.g), done = gradeDone(ch.g), n = countPieces(ch.g);
-    const goal = nextGoal() === ch.g;
-    const status = done ? '나침반 조각 ✓' : open ? `퍼즐 ${n}/10` : '잠김';
-    const fog = open ? '' : `<path d="M${x - 58} ${y + 2}a16 16 0 0 1 26 -14a20 20 0 0 1 36 2a16 16 0 0 1 30 8a12 12 0 0 1 -4 22h-82a12 12 0 0 1 -6 -18z" fill="#fff" opacity=".9"/>
-      <g transform="translate(${x - 8},${y - 6})"><rect x="0" y="7" width="16" height="13" rx="2.5" fill="#5b6672"/><path d="M3.5 8v-2.5a4.5 4.5 0 0 1 9 0v2.5" stroke="#5b6672" stroke-width="2.6" fill="none"/></g>`;
-    return `<g class="zone${open ? '' : ' locked'}${pop === ch.g ? ' won' : ''}" data-g="${ch.g}" tabindex="0" role="button" aria-label="${ZL(ch.g)} ${ch.place}, ${status}">
-      ${goal ? `<ellipse class="ring" cx="${x}" cy="${y + 20}" rx="80" ry="40" fill="none" stroke="#f2b705" stroke-width="4" stroke-dasharray="10 7"/>` : ''}
-      <g ${open ? '' : 'filter="url(#zg)" opacity=".75"'}>
-        <ellipse cx="${x}" cy="${y + 22}" rx="70" ry="34" fill="${ch.bg}" stroke="#2b3a55" stroke-width="2"/>
-        <ellipse cx="${x}" cy="${y + 34}" rx="54" ry="14" fill="${ch.floor}" opacity=".55"/>
-        <g transform="translate(${x - 36},${y - 52}) scale(.72)">${charSVG(ch.g).replace(/<\/?svg[^>]*>/g, '')}</g>
-      </g>${fog}
-      <rect x="${x - 70}" y="${y + 44}" width="140" height="36" rx="12" fill="#fff" stroke="#2b3a55" stroke-width="2"/>
-      <text x="${x}" y="${y + 59}" text-anchor="middle" class="mtxt">${ch.place}</text>
-      <text x="${x}" y="${y + 74}" text-anchor="middle" class="mtxt sm${done ? ' gold' : ''}">${ZL(ch.g)} · ${status}</text>
-      ${done ? `<g transform="translate(${x + 52},${y - 40})"><circle r="15" fill="#f2b705" stroke="#2b3a55" stroke-width="2"/><path d="M0 -9 L4 0 L0 9 L-4 0 Z" fill="#fff" stroke="#2b3a55" stroke-width="1.2"/></g>` : ''}</g>`;
+  function islandSVG(key, popI) {
+    // 2줄로 이어진 길: 1~4단계 → 5~8단계(보물지도) → 끝에 숫자 시계탑
+    const P = [[110, 150], [330, 128], [550, 150], [770, 128], [880, 372], [660, 394], [440, 372], [220, 394]];
+    let road = `M${P[0][0]} ${P[0][1]}`;
+    for (let i = 1; i < 4; i++) road += ` C${P[i - 1][0] + 80} ${P[i - 1][1]} ${P[i][0] - 80} ${P[i][1]} ${P[i][0]} ${P[i][1]}`;
+    road += ` C${P[3][0] + 190} ${P[3][1]} ${P[4][0] + 120} ${P[4][1] - 60} ${P[4][0]} ${P[4][1]}`;
+    for (let i = 5; i < 8; i++) road += ` C${P[i - 1][0] - 80} ${P[i - 1][1]} ${P[i][0] + 80} ${P[i][1]} ${P[i][0]} ${P[i][1]}`;
+    road += ` C${P[7][0] - 70} ${P[7][1]} 120 ${P[7][1]} 92 ${P[7][1] - 10}`;
+    const ready = hasContent(key), pr = prog(key), cur = ready ? nextStage() : null, n = pieceCount(key);
+    const nodes = GUARD.map((G, i) => {
+      const [x, y] = P[i], open = ready && unlocked(key, i), done = pr.cl[i], st = pr.st[i], got = hasPiece(key, i);
+      const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
+      const title = i < 7 ? `${i + 1}단계 · ${G.step}` : '최종 · 단원평가';
+      return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}, ${G.name}: ${G.short}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 나침반 조각 획득' : ''}">
+        <circle class="ring" cx="${x}" cy="${y}" r="50" fill="${G.bg}" stroke="${open ? '#ffffff' : '#cfd6de'}" stroke-width="6"/>
+        <g transform="translate(${x - 38},${y - 40}) scale(0.76)" ${open ? '' : 'filter="url(#jgs)" opacity=".5"'}>${art}</g>
+        ${done ? `<circle cx="${x + 37}" cy="${y - 37}" r="13" fill="#30a46c"/><path d="M${x + 31} ${y - 37}l5 5 8-9" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>` : ''}
+        ${got ? `<g class="${popI === i ? 'piece-got' : ''}"><circle cx="${x - 37}" cy="${y - 37}" r="15" fill="#ffd34d" stroke="#b07800" stroke-width="2.5"/><path d="M${x - 37} ${y - 47} L${x - 32} ${y - 37} L${x - 37} ${y - 27} L${x - 42} ${y - 37} Z" fill="#e5484d"/></g>` : ''}
+        <rect x="${x - 106}" y="${y + 56}" width="212" height="76" rx="16" fill="#fff" stroke="${open ? '#2b3a55' : '#cfd6de'}" stroke-width="2"/>
+        <text x="${x}" y="${y + 81}" text-anchor="middle" font-family="Jua" font-size="21" fill="${open ? '#1f2a40' : '#8b95a3'}">${title}</text>
+        <text x="${x}" y="${y + 102}" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-weight="700" font-size="14.5" fill="${open ? '#4a5563' : '#a3acb8'}">${i < 7 ? G.name + ' · ' : ''}${G.short}</text>
+        <text x="${x}" y="${y + 123}" text-anchor="middle" font-family="Jua" font-size="17" fill="${open ? '#b07800' : '#a3acb8'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : '🔒 잠김'}</text></g>`;
+    }).join('');
+    const pin = cur === null ? '' : (() => { const [px, py] = P[cur]; return `<g pointer-events="none"><path d="M${px} ${py - 54} c-13 -16 -16 -24 -16 -31 a16 16 0 0 1 32 0 c0 7 -3 15 -16 31z" fill="#e5484d"/><circle cx="${px}" cy="${py - 85}" r="6" fill="#fff"/>
+      <rect x="${px + 18}" y="${py - 104}" width="78" height="26" rx="13" fill="#1f2a40"/><text x="${px + 57}" y="${py - 86}" text-anchor="middle" font-family="Jua" font-size="15" fill="#fff">지금 여기</text></g>`; })();
+    return `<svg viewBox="0 0 1000 540" role="group" aria-label="${unitName(M.sel.gs, M.sel.u)} 섬 지도, 황금 나침반 ${n}/8조각">
+      <defs><filter id="jgs"><feColorMatrix type="saturate" values="0"/></filter></defs>
+      <rect width="1000" height="540" rx="22" fill="#bfe6ff"/>
+      <path d="M30 470 C10 300 40 60 200 40 C380 18 560 60 700 34 C860 10 990 50 985 230 C980 420 900 505 720 498 C540 490 380 510 220 504 C110 500 40 505 30 470Z" fill="#f6e3c3"/>
+      <path d="M50 452 C34 300 64 80 205 60 C380 38 560 80 700 54 C850 30 965 70 962 230 C958 400 885 482 720 476 C540 468 380 488 222 482 C120 478 62 484 50 452Z" fill="#e9f6e3"/>
+      <text x="26" y="36" font-family="Jua" font-size="22" fill="#0077b3">${esc(unitName(M.sel.gs, M.sel.u))} 섬</text>
+      <text x="974" y="36" text-anchor="end" font-family="Jua" font-size="20" fill="#b07800">황금 나침반 ${n} / 8</text>
+      <path d="${road}" fill="none" stroke="#f3e3c3" stroke-width="26" stroke-linecap="round"/>
+      <path d="${road}" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="12 12" stroke-linecap="round"/>
+      <g transform="translate(36,330) scale(.62)" aria-hidden="true">${towerSVG(n === 8).replace(/<\/?svg[^>]*>/g, '')}</g>
+      <text x="74" y="452" text-anchor="middle" font-family="Jua" font-size="13" fill="#2b3a55">숫자 시계탑</text>
+      ${nodes}${pin}</svg>`;
   }
-  function landSVG(pop) {
-    const trees = [[60, 120], [300, 30], [520, 40], [760, 150], [760, 380], [470, 470], [300, 480], [40, 380], [520, 260], [270, 300]]
-      .map(([x, y]) => `<g><rect x="${x - 3}" y="${y}" width="6" height="12" fill="#8a5a3b"/><circle cx="${x}" cy="${y - 4}" r="13" fill="#7cc46a" stroke="#2b3a55" stroke-width="1.5"/></g>`).join('');
-    const trail = `<path d="M170 430 C 90 380, 70 320, 110 262 S 150 140, 215 112 S 340 55, 410 72 S 545 60, 605 112 S 730 200, 690 262 S 700 400, 630 430" fill="none" stroke="#e8d3a3" stroke-width="16" stroke-linecap="round"/>
-      <path d="M170 430 C 90 380, 70 320, 110 262 S 150 140, 215 112 S 340 55, 410 72 S 545 60, 605 112 S 730 200, 690 262 S 700 400, 630 430" fill="none" stroke="#c9a46a" stroke-width="2" stroke-dasharray="6 8"/>`;
-    const river = `<path d="M0 470 C 160 440, 260 520, 420 500 S 680 470, 800 500 L800 520 L0 520 Z" fill="#9fd7f5"/>`;
-    return `<svg viewBox="0 0 800 520" role="group" aria-label="매스 랜드 지도"><defs><filter id="zg"><feColorMatrix type="saturate" values="0"/></filter></defs>
-      <rect width="800" height="520" fill="#d6edb5"/>${river}${trail}${trees}${towerSVG()}${CH.map(ch => zoneSVG(ch, pop)).join('')}
-      <text x="24" y="40" class="mtxt title">매스 랜드</text></svg>`;
+  function stageCard(key, i) {
+    const G = GUARD[i], ready = hasContent(key), P = prog(key), open = ready && unlocked(key, i), pct = P.pct[i], done = P.cl[i];
+    const bar = done && pct === 100 ? '#30a46c' : '#f59e2b';
+    return `<li><button type="button" class="gcard${open ? '' : ' locked'}" data-stage="${i}" ${open ? '' : 'aria-disabled="true"'}>
+      <span class="banner" style="background:${G.bg}">${charSVG(G.art)}<span class="floor" style="background:${G.floor}"></span>
+        ${open ? '' : `<span class="lockb">${ready ? lockText(i) : '콘텐츠 준비 중'}</span>`}<span class="stepb">${i < 7 ? (i + 1) + '. ' + G.step : '★ ' + G.step}</span></span>
+      <span class="gtitle"><span><b>${i < 7 ? G.name : '보물지도'}</b> <span>(${G.role})</span></span><span class="arrow">→</span></span>
+      <span class="gsub">${G.lab} · ${'★'.repeat(P.st[i])}${'☆'.repeat(3 - P.st[i])}</span>
+      <span class="gbar"><i style="width:${pct}%;background:${bar}"></i></span><span class="gpct">달성률 ${pct}%</span></button></li>`;
   }
-  const nextGoal = () => { const c = CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g) && ch.g >= MY_GRADE) || CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g)); return c ? c.g : 0; };
-  function renderHome(pop) {
-    $('mapTitle').innerHTML = `매스 랜드: 숫자 시계탑의 비밀 <button type="button" class="back" id="storyBtn">이야기 보기</button>`;
-    $('mapDesc').textContent = `친구들을 만나 수학 미션을 해결하고 황금 나침반 조각을 되찾아요. (${compass()}/7)`;
-    $('homeBody').innerHTML = `<div class="landbox">${landSVG(pop)}</div>
-      <div class="zchips">${CH.map(ch => `<button type="button" class="zchip${gradeOpen(ch.g) ? '' : ' locked'}" data-g="${ch.g}">${ZL(ch.g)} · ${ch.name} ${gradeDone(ch.g) ? '✓' : gradeOpen(ch.g) ? countPieces(ch.g) + '/10' : '🔒'}</button>`).join('')}</div>`;
-  }
-  function unitCard(g, c) {
-    const st = M.stars[sid(g, c)] || 0, got = st >= 3, ch = CH[g - 1];
-    return `<div class="ucard${got ? ' got' : ''}"><span class="no" style="background:${got ? ch.bg : '#f1f3f6'}">${c + 1}</span>
-      <span class="ut"><b>${UNITS[g][c]}</b><span class="stars">${[0, 1, 2].map(i => i < st ? '<i>★</i>' : '★').join('')}</span><small>${got ? '퍼즐 조각 획득' : st ? `별 ${3 - st}개 더 모으면 조각 획득` : '아직 도전 전'}</small></span>
-      <button type="button" class="sbtn${st ? ' again' : ''}" data-play="${c}">${got ? '복습' : st ? '별 3개 도전' : '도전'}</button></div>`;
-  }
-  function renderGrade(popC) {
-    const g = curG, ch = CH[g - 1];
-    $('mapTitle').innerHTML = `<button type="button" class="back" id="backHome">← 매스 랜드 지도</button>${ZL(g)} · ${ch.place}`;
-    $('mapDesc').textContent = '단원마다 별 3개를 모으면 구역 퍼즐 조각 1개. 퍼즐 10조각을 완성하면 황금 나침반 조각을 받아요.';
-    $('homeBody').innerHTML = `<div class="gview">
-      <div class="pzbox"><div class="pzhead"><span class="pic" style="background:${ch.bg}">${charSVG(g)}</span><span><b>${ch.name}</b><span class="say">"${ch.line}"</span><span>퍼즐 ${countPieces(g)}/10${gradeDone(g) ? ' · 황금 나침반 조각 획득!' : ''}</span></span></div>
-        ${puzzleSVG(g, popC)}
-        <ul class="rules"><li>★ 깃발까지 완주</li><li>★ 문제를 한 번에 모두 맞히기</li><li>★ 하트 지키기 (한 번도 다치지 않기)</li></ul></div>
-      <div class="units2">${[1, 2].map(s => `<div class="semgrp"><h4>${s}학기</h4>${[0, 1, 2, 3, 4].map(i => unitCard(g, (s - 1) * 5 + i)).join('')}</div>`).join('')}</div></div>`;
-  }
-  function render(popC) {
+  function render() {
+    const key = ukey(M.sel.gs, M.sel.u), ready = hasContent(key);
+    $('mapTitle').innerHTML = '매스 랜드: 숫자 시계탑의 비밀 <button type="button" class="storybtn" id="storyBtn">이야기 보기</button>';
+    $('mapDesc').textContent = '학년·단원마다 섬이 있어요. 7명의 수호자 관문을 통과해 황금 나침반 조각을 되찾아요!';
+    renderBar();
+    if (!ready) M.news = { good: false, text: `${gsLabel(M.sel.gs)} [${unitName(M.sel.gs, M.sel.u)}] 섬은 아직 준비 중이에요. 시제품에서는 3학년 1학기 [분수와 소수], 5학년 1학기 [다각형의 둘레와 넓이] 섬을 탐험할 수 있어요.` };
     renderNews();
-    if (view === 'home') renderHome(popC); else renderGrade(popC);
+    const P = prog(key), doneN = P.cl.filter(Boolean).length;
+    const popI = M.popPiece != null && pick.key === key ? M.popPiece : null; M.popPiece = null;
+    const n = pieceCount(key), badge = (CONTENT[key] || {}).badge;
+    $('homeBody').innerHTML = `<div class="home2"><div class="journey">${islandSVG(key, popI)}</div>
+      <aside class="pzside" aria-label="황금 나침반 퍼즐 현황">
+        <div class="cmpbox">${compassSVG(key, popI)}</div>
+        <h3>황금 나침반 퍼즐</h3>
+        <div class="pzcount"><span>${gsLabel(M.sel.gs)} · ${esc(unitName(M.sel.gs, M.sel.u))}</span><b>${n} / 8</b></div>
+        <p class="sub">관문을 <b>별 3개</b>로 통과하면 그 수호자의 나침반 조각을 얻어요. 8조각을 모두 맞추면 숫자 시계탑이 다시 움직여요!${n === 8 ? ' <b>완성!</b>' : ''}</p>
+        <ul class="pzlist">${GUARD.map((G, i) => `<li class="${hasPiece(key, i) ? 'got' : ''}"><i>${hasPiece(key, i) ? '✓' : i + 1}</i>${i < 7 ? G.name : '바늘'} · ${i < 7 ? G.step : '보물지도'}</li>`).join('')}</ul>
+        <p class="sub">관문 완료 ${doneN} / 8${badge && M.badges.includes(badge) ? ` · <b>${badge}</b>` : ''}</p>
+      </aside></div>`;
     saveM();
   }
-
-  function enterGrade(g) {
-    if (!gradeOpen(g)) { M.news = { good: false, text: `${ZL(g)} ${CH[g - 1].place}는 아직 안개에 덮여 있어요. ${CH[g - 2].place} 퍼즐을 완성하면 길이 열려요.` }; render(); return; }
-    view = 'grade'; curG = g; render();
-  }
-  function startUnit(g, c) {
-    const ch = CH[g - 1];
-    pick = { g, s: c < 5 ? 1 : 2, c };
+  function startStage(i) {
+    const key = ukey(M.sel.gs, M.sel.u);
+    if (!hasContent(key) || !unlocked(key, i)) {
+      M.news = { good: false, text: hasContent(key) ? `${GUARD[i].name}의 관문은 아직 잠겨 있어요. ${lockText(i)}.` : '이 단원은 아직 준비 중이에요.' };
+      renderNews(); return;
+    }
+    const G = GUARD[i];
+    pick = { gs: M.sel.gs, u: M.sel.u, key, i };
     runMode = 'normal';
-    QUESTIONS = cityQuestions(g, c);
-    $('startStage').textContent = g <= 6 ? `${g}학년 ${pick.s}학기` : '마지막 구역';
-    $('startMode').textContent = `단원 ${c + 1}`;
-    $('taRule').hidden = true;
-    $('startChar').style.background = ch.bg;
-    $('startChar').innerHTML = `${charSVG(g)}<span><b>${ch.name}</b>: "${UNITS[g][c]} 단원이야! 별 3개를 모으면 퍼즐 조각을 줄게."</span>`;
-    $('startTitle').textContent = `${UNITS[g][c]}`;
-    $('subline').textContent = `${ZL(g)} · ${ch.place} › ${UNITS[g][c]} · 문제 문 2개`;
+    speedMode = i === 2; clueMode = i === 4;
+    QUESTIONS = stageQuestions(key, i);
+    $('startStage').textContent = `${gsLabel(pick.gs)} · ${unitName(pick.gs, pick.u)}`;
+    $('startMode').textContent = i < 7 ? `${i + 1}단계 ${G.step}` : '단원 최종평가';
+    $('taRule').hidden = false;
+    $('taRule').innerHTML = `<b>${G.lab}</b>: ${G.rule}${i === 6 && !prog(key).wrong.length ? ' (틀린 문제가 없어서 헷갈리기 쉬운 문제를 골랐어요.)' : ''}`;
+    $('starRule').innerHTML = i === 7 ? `<b>별 기준</b>: ${QUESTIONS.length}문제 중 ${QUESTIONS.length - 1}문제 이상 한 번에 정답이면 별 3개, 70% 이상이면 별 2개. 별 3개면 <b>${CONTENT[key].badge}</b>!`
+      : '<b>별 3개 조건</b>: ① 깃발까지 완주 ② 문제를 한 번에 모두 맞히기 ③ 하트 지키기(한 번도 다치지 않기). 관문을 마치면 수호자의 열쇠를 얻어요.';
+    $('startChar').style.background = G.bg;
+    $('startChar').innerHTML = `${charSVG(G.art)}<span><b>${i < 7 ? G.name : '보물지도'}</b>: "${G.line}"</span>`;
+    $('startTitle').textContent = i < 7 ? `${G.name}의 ${G.lab}` : '보물지도: 최종 관문';
+    $('subline').textContent = `매스 랜드 › ${gsLabel(pick.gs)} › ${unitName(pick.gs, pick.u)} › ${i < 7 ? (i + 1) + '단계 ' + G.step : '단원 최종평가'} · 문제 문 ${QUESTIONS.length}개`;
     resetAll();
+    useHeart = useShield = false; renderUseItems();
     showModal('startModal');
     $('startBtn').focus({ preventScroll: true });
   }
-  $('mapModal').addEventListener('keydown', e => { const z = e.target.closest('.zone'); if (z && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); enterGrade(Number(z.dataset.g)); } });
-  // ---------- 이야기 ----------
   const STORY = [
     ['평화로운 동물 마을, 매스 랜드', '매스 랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
-    ['황금 나침반이 부서졌어요!', '어느 날 갑작스러운 오류로 시계탑의 핵심 부품인 황금 나침반이 7개의 조각으로 쪼개져 흩어졌어요. 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
-    ['수학 탐험가의 모험', '지도 한 장을 들고 7개 구역을 지키는 친구들을 차례로 만나요. 단원 미션에서 별 3개를 모아 구역 퍼즐을 완성하면 나침반 조각을 되찾을 수 있어요!']
+    ['황금 나침반이 부서졌어요!', '어느 날 갑작스러운 오류로 시계탑의 핵심 부품인 황금 나침반이 조각나 흩어졌어요. 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
+    ['수학 탐험가의 모험', '지도 한 장을 들고 섬마다 7명의 수호자를 차례로 만나요. 관문을 별 3개로 통과하면 나침반 조각을, 보물지도에서는 가운데 바늘을 되찾아요. 8조각을 모두 맞추면 시계탑이 다시 움직여요!']
   ];
   let storyI = 0;
   function drawStory() {
@@ -1385,48 +1691,55 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     $('storyStep').textContent = `${storyI + 1} / ${STORY.length}`;
     $('storyTitle').textContent = t;
     $('storyText').textContent = d;
-    $('storyArt').innerHTML = storyI === 0 ? `<svg viewBox="300 100 200 290">${towerSVG()}</svg>`
-      : storyI === 1 ? `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="44" fill="#f2b705" stroke="#2b3a55" stroke-width="3"/>${[0, 1, 2, 3, 4, 5, 6].map(i => { const a = i * 2 * Math.PI / 7; return `<path d="M60 60 L${60 + 44 * Math.cos(a)} ${60 + 44 * Math.sin(a)}" stroke="#2b3a55" stroke-width="3"/>`; }).join('')}<path d="M60 28 L68 60 L60 92 L52 60 Z" fill="#fff" stroke="#2b3a55" stroke-width="2"/></svg>`
-      : `<div class="crew">${CH.map(ch => `<span style="background:${ch.bg}">${charSVG(ch.g)}</span>`).join('')}</div>`;
+    $('storyArt').innerHTML = storyI === 0 ? towerSVG(true)
+      : storyI === 1 ? compassSVG(null, null)
+      : `<div class="crew">${GUARD.map(G => `<span style="background:${G.bg}">${charSVG(G.art)}</span>`).join('')}</div>`;
     $('storyNext').textContent = storyI < STORY.length - 1 ? '다음 ▶' : '모험 시작!';
   }
   function openStory() { storyI = 0; drawStory(); showModal('storyModal'); $('storyNext').focus({ preventScroll: true }); }
-  $('storyNext').addEventListener('click', () => { if (storyI < STORY.length - 1) { storyI++; drawStory(); } else { M.seenStory = true; saveM(); render(); showModal('mapModal'); } });
-  $('storySkip').addEventListener('click', () => { M.seenStory = true; saveM(); render(); showModal('mapModal'); });
+  const closeStory = () => { M.seenStory = true; saveM(); render(); showModal('mapModal'); };
+  $('storyNext').addEventListener('click', () => { if (storyI < STORY.length - 1) { storyI++; drawStory(); } else closeStory(); });
+  $('storySkip').addEventListener('click', closeStory);
+  $('tStory').addEventListener('click', () => { M.seenStory = false; saveM(); openMap(); });
   $('mapModal').addEventListener('click', e => {
-    if (e.target.closest('#backHome')) { view = 'home'; render(); return; }
     if (e.target.closest('#storyBtn')) { openStory(); return; }
-    const gc = e.target.closest('.zone, .zchip'); if (gc) { enterGrade(Number(gc.dataset.g)); return; }
-    const b = e.target.closest('[data-play]'); if (b) startUnit(curG, Number(b.dataset.play));
+    if (e.target.closest('#openShop')) { openShop('mapModal'); return; }
+    const st = e.target.closest('[data-stage]'); if (st) startStage(Number(st.dataset.stage));
   });
-  $('nextBtn').addEventListener('click', () => { const nx = nextUnit(); if (!nx) return; curG = nx.g; startUnit(nx.g, nx.c); });
+  $('mapModal').addEventListener('change', e => {
+    if (e.target.id === 'gsSel') { M.sel.gs = e.target.value; M.sel.u = 0; M.news = { good: false, text: `${gsLabel(M.sel.gs)}로 이동했어요. 탐험할 단원(섬)을 골라 보세요.` }; render(); $('gsSel').focus(); }
+    if (e.target.id === 'unitSel') { M.sel.u = Number(e.target.value); M.news = { good: false, text: `[${unitName(M.sel.gs, M.sel.u)}] 섬에 도착했어요! 송이의 개념 블록 연구소부터 시작해요.` }; render(); $('unitSel').focus(); }
+  });
+  $('mapModal').addEventListener('keydown', e => {
+    const jn = e.target.closest && e.target.closest('.jnode');
+    if (jn && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); startStage(Number(jn.dataset.stage)); }
+  });
+  $('nextBtn').addEventListener('click', () => { const nx = nextStage(); if (nx === null) return; startStage(nx); });
 
   function onGateSolved() {}
   function showTaResults() { showResults(); }
 
   $('tClear').addEventListener('click', () => {
-    const g = view === 'grade' ? curG : nextGoal();
-    if (!g) { M.news = { good: true, text: '황금 나침반을 이미 모두 되찾았어요.' }; render(); return; }
-    let c = 0; while (c < 10 && (M.stars[sid(g, c)] || 0) >= 3) c++;
-    pick = { g, s: c < 5 ? 1 : 2, c };
-    stats = { hearts: 3, coins: 0, first: 2, retries: 0, hits: 0, wrongUnits: [] };
-    scoreUnit();
-    const pop = M.popPiece, done = M.gradeJustDone; M.popPiece = null; M.gradeJustDone = 0;
-    if (done) { view = 'home'; render(done); } else { view = 'grade'; curG = g; render(pop ? pop.c : null); }
+    const key = ukey(M.sel.gs, M.sel.u);
+    if (!hasContent(key)) return;
+    pick = { gs: M.sel.gs, u: M.sel.u, key, i: 0 };
+    const i = nextStage(); if (i === null) { M.news = { good: true, text: '이 섬의 모든 관문을 마쳤어요.' }; render(); return; }
+    pick.i = i; QUESTIONS = stageQuestions(key, i); TOTAL = QUESTIONS.length;
+    stats = { hearts: 3, coins: 0, first: TOTAL, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false };
+    scoreStage(); M.justBadge = '';
+    render();
   });
-  $('tStory').addEventListener('click', () => { M.seenStory = false; saveM(); openMap(); });
-  $('tReset').addEventListener('click', () => { M = defaultsM(); view = 'home'; curG = MY_GRADE; render(); });
+  $('tReset').addEventListener('click', () => { M = defaultsM(); render(); });
 
   function openMap() {
-    state = 'start'; runMode = 'normal';
-    const pop = M.popPiece, done = M.gradeJustDone; M.popPiece = null; M.gradeJustDone = 0;
-    if (done) { view = 'home'; render(done); }
-    else { if (pop) { view = 'grade'; curG = pop.g; } render(pop ? pop.c : null); }
+    state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
+    $('subline').textContent = '숫자 시계탑의 황금 나침반 조각을 되찾는 모험';
+    render();
     if (!M.seenStory) { openStory(); return; }
     showModal('mapModal');
   }
   $('toMapBtn').addEventListener('click', openMap);
-  $('mapBackBtn').addEventListener('click', () => { resetAll(); if (view === 'home') { view = 'grade'; curG = pick.g; } openMap(); });
+  $('mapBackBtn').addEventListener('click', () => { resetAll(); openMap(); });
 
   openMap();
 })();
