@@ -188,6 +188,41 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .qtimer i { display: block; height: 100%; width: 100%; background: #e5484d; transition: width .1s linear; }
 .clue { text-decoration: none; background: linear-gradient(transparent 60%, #ffe27a 60%); border-bottom: 3px solid #e0a800; padding: 0 2px; }
 .cluenote { margin: 0; font-size: 0.9rem; color: #8a5a00; background: #fff7c2; border-radius: 10px; padding: 6px 12px; }
+/* 전체화면 스토리 모드: 게임 화면·조작 버튼을 완전히 가리는 불투명 동화책 화면 */
+body.story-on .wrap { visibility: hidden; }
+body.story-on { overflow: hidden; }
+.storyfs, .storyfs * { box-sizing: border-box; }
+.storyfs .sf-box { margin-bottom: 8px; }
+.storyfs { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 9999; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 12px; overflow: hidden;
+  padding: max(18px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(18px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  background: linear-gradient(180deg, #ffe7c2 0%, #fff6e3 55%, #d9f0c4 100%); }
+.storyfs[data-page="1"] { background: linear-gradient(180deg, #3a2f6b 0%, #6a4fa0 55%, #c7a9e6 100%); }
+.storyfs[data-page="2"] { background: linear-gradient(180deg, #9fdcff 0%, #e6f7ff 55%, #c6ecaa 100%); }
+.sf-sky { position: absolute; inset: 0; pointer-events: none; }
+.sf-cloud { position: absolute; background: #fff; border-radius: 999px; opacity: .8; animation: drift 14s ease-in-out infinite alternate; }
+.sf-cloud.c1 { width: 22vmin; height: 8vmin; left: 6%; top: 12%; } .sf-cloud.c2 { width: 30vmin; height: 10vmin; right: 4%; top: 22%; animation-delay: -5s; } .sf-cloud.c3 { width: 16vmin; height: 6vmin; left: 38%; top: 6%; animation-delay: -9s; }
+.storyfs[data-page="1"] .sf-cloud { background: #8f7cc4; opacity: .55; }
+@keyframes drift { to { transform: translateX(6vw); } }
+.sf-hill { position: absolute; left: -10%; right: -10%; bottom: -22vh; height: 46vh; background: #9fd27f; border-radius: 50%; opacity: .7; }
+.storyfs[data-page="1"] .sf-hill { background: #4a3a7a; }
+.sf-top { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.sf-tag { font-family: var(--display); font-size: clamp(1rem, 2.4vw, 1.3rem); color: var(--deep); background: rgba(255,255,255,.9); border: 2px solid var(--deep); border-radius: 999px; padding: 4px 16px; }
+.sf-dots { display: flex; gap: 8px; align-items: center; }
+.sf-dots i { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,.7); border: 2px solid var(--deep); }
+.sf-dots i.on { background: var(--sun); width: 28px; border-radius: 999px; }
+.sf-art { position: relative; display: grid; place-items: center; min-height: 0; animation: artin .5s ease-out both; }
+@keyframes artin { from { opacity: 0; transform: translateY(18px) scale(.96); } }
+.sf-art > svg { width: auto; height: min(100%, 56vh); max-width: min(78vw, 520px); filter: drop-shadow(0 10px 0 rgba(0,0,0,.08)); }
+.sf-art .crew { gap: clamp(6px, 2vw, 18px); max-width: 900px; }
+.sf-art .crew span { width: clamp(70px, 13vw, 130px); height: clamp(70px, 13vw, 130px); border-radius: 26px; border: 3px solid #fff; box-shadow: 0 6px 0 rgba(0,58,92,.25); animation: hop .6s ease-in-out infinite alternate; }
+.sf-art .crew span:nth-child(2n) { animation-delay: .2s; }
+.sf-art .crew svg { width: 86%; }
+.sf-box { position: relative; width: min(900px, 100%); justify-self: center; background: #fff; border: 4px solid var(--deep); border-radius: 28px; box-shadow: 0 8px 0 var(--deep); padding: 20px clamp(18px, 4vw, 34px); display: flex; flex-direction: column; gap: 10px; }
+.sf-box h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.4rem, 3.6vw, 2rem); color: var(--deep); text-wrap: balance; }
+.sf-box p { margin: 0; word-break: keep-all; font-family: var(--display); font-size: clamp(1.05rem, 2.4vw, 1.35rem); line-height: 1.7; color: #1f2a40; }
+.sf-btns { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.sf-btns .btn { min-width: 140px; }
+@media (prefers-reduced-motion: reduce) { .sf-cloud, .sf-art, .sf-art .crew span { animation: none !important; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -453,13 +488,14 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   </div>
 </div>
 
-<div class="modal" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
-  <div class="card story">
-    <div class="tagrow"><span class="tag">매스 랜드 이야기</span><span class="tag" id="storyStep"></span></div>
-    <div class="storyart" id="storyArt"></div>
+<div class="storyfs" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
+  <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
+  <div class="sf-top"><span class="sf-tag">매스 랜드 이야기</span><span class="sf-dots" id="storyStep"></span></div>
+  <div class="sf-art" id="storyArt"></div>
+  <div class="sf-box">
     <h2 id="storyTitle"></h2>
-    <p class="lead" id="storyText"></p>
-    <div class="btnrow"><button type="button" class="btn ghost" id="storySkip">건너뛰기</button><button type="button" class="btn" id="storyNext">다음 ▶</button></div>
+    <p id="storyText"></p>
+    <div class="sf-btns"><button type="button" class="btn ghost" id="storySkip">건너뛰기</button><button type="button" class="btn" id="storyNext">다음 ▶</button></div>
   </div>
 </div>
 
@@ -2044,7 +2080,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   let storyI = 0;
   function drawStory() {
     const [t, d] = STORY[storyI];
-    $('storyStep').textContent = `${storyI + 1} / ${STORY.length}`;
+    $('storyStep').innerHTML = STORY.map((_, k) => `<i class="${k === storyI ? 'on' : ''}"></i>`).join('') + `<span class="vh">${storyI + 1} / ${STORY.length}</span>`;
+    $('storyModal').dataset.page = storyI;
     $('storyTitle').textContent = t;
     $('storyText').textContent = d;
     $('storyArt').innerHTML = storyI === 0 ? towerSVG(true)
@@ -2052,8 +2089,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       : `<div class="crew">${GUARD.map(G => `<span style="background:${G.bg}">${charSVG(G.art)}</span>`).join('')}</div>`;
     $('storyNext').textContent = storyI < STORY.length - 1 ? '다음 ▶' : '모험 시작!';
   }
-  function openStory() { storyI = 0; drawStory(); showModal('storyModal'); $('storyNext').focus({ preventScroll: true }); }
-  const closeStory = () => { M.seenStory = true; saveM(); render(); showModal('mapModal'); };
+  function openStory() { storyI = 0; drawStory(); showModal('storyModal'); document.body.classList.add('story-on'); $('storyNext').focus({ preventScroll: true }); }
+  const closeStory = () => { M.seenStory = true; saveM(); document.body.classList.remove('story-on'); render(); showModal('mapModal'); };
   $('storyNext').addEventListener('click', () => { if (storyI < STORY.length - 1) { storyI++; drawStory(); } else closeStory(); });
   $('storySkip').addEventListener('click', closeStory);
   $('tStory').addEventListener('click', () => { M.seenStory = false; saveM(); openMap(); });
