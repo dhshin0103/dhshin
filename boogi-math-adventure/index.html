@@ -99,8 +99,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .ctlbtn.armed { background: var(--sun); color: var(--deep); }
 .ctlbtn.mini { margin-left: auto; font-size: 0.85rem; padding: 4px 12px; box-shadow: none; }
 .ctlbtn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
-/* 홈: 호랑이 한반도 지도 (학년 = 지역) > 지역 안 도시 (단원) */
-.map-card { width: min(1080px, 100%); gap: 14px; background: linear-gradient(180deg, #e3f6ff, #c8ecff); }
+/* 홈: 학년 카드 > 학년 퍼즐(단원 10조각) */
+.map-card { width: min(1080px, 100%); gap: 14px; background: #e6f4ef; }
 .map-card > * { flex-shrink: 0; }
 .map-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 6px 16px; }
 .map-head h2 { margin: 0; display: flex; align-items: center; gap: 10px; }
@@ -109,77 +109,66 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .news { display: flex; gap: 10px; align-items: flex-start; background: #fff7c2; border: 2px solid #f3d27a; border-radius: 14px; padding: 10px 14px; font-size: 0.92rem; line-height: 1.55; }
 .news .ic { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--sky); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
 .news.good .ic { background: var(--good); }
-.mv-body { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 16px; align-items: start; }
-.mapbox { background: #fbfdff; border: 3px solid var(--deep); border-radius: 20px; overflow: hidden; position: relative; }
-.mapbox svg { display: block; width: 100%; height: auto; max-height: 78vh; }
-.rg { cursor: pointer; outline: none; }
-.rg .land { stroke: #fff; stroke-width: 3; stroke-linejoin: round; transition: fill .5s; }
-.rg:hover .land, .rg:focus-visible .land { stroke: #ffc53d; stroke-width: 5; }
-.rg.locked { cursor: not-allowed; }
-.rg.won { animation: won 1.1s cubic-bezier(.2,1.4,.4,1) both; transform-box: fill-box; transform-origin: center; }
-@keyframes won { from { transform: translateY(-40px) scale(1.15); opacity: .3; } to { transform: none; opacity: 1; } }
-.cname2 { font-family: var(--body); font-weight: 700; font-size: 7.5px; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(255,255,255,.9); stroke-width: 2.5px; }
-.pname { font-family: var(--display); font-size: 12px; paint-order: stroke; stroke: rgba(255,255,255,.85); stroke-width: 3px; text-anchor: middle; pointer-events: none; }
-.psub { font-family: var(--body); font-weight: 700; font-size: 8.5px; text-anchor: middle; pointer-events: none; }
-.sea { font-family: var(--display); font-size: 18px; fill: #2f7fd0; text-anchor: middle; letter-spacing: 2px; }
-.sea.big { font-size: 24px; fill: #e5484d; }
-.rg:hover .edge, .rg:focus-visible .edge { stroke: #e5484d; stroke-width: 2.5; }
-.tiger { fill: none; stroke: #3a2a1a; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
-.rname { font-family: var(--display); font-size: 19px; fill: #1c2024; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #fff; stroke-width: 5px; }
-.rsub { font-family: var(--body); font-weight: 700; font-size: 12.5px; fill: #003a5c; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #fff; stroke-width: 4px; }
-.rsub.lock { fill: #5b6672; }
-.mapcount { position: absolute; left: 12px; top: 12px; background: var(--card); border: 2px solid var(--deep); border-radius: 999px; padding: 4px 12px; font-family: var(--display); color: var(--deep); }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.82rem; color: var(--muted); }
-.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 2px solid var(--deep); vertical-align: -2px; margin-right: 4px; }
-.rlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.ritem { width: 100%; display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 14px; border: 3px solid var(--deep); border-radius: 16px; background: var(--card); text-align: left; cursor: pointer; font: inherit; color: var(--ink); }
-.ritem.locked { border-color: #9fb1c2; background: #eef3f7; cursor: not-allowed; }
-.ritem:focus-visible, .back:focus-visible, .sbtn:focus-visible, .tools button:focus-visible, .city:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
-.rnum { width: 46px; height: 46px; border-radius: 12px; border: 2px solid var(--deep); display: grid; place-items: center; font-family: var(--display); font-size: 1.05rem; line-height: 1.1; text-align: center; color: var(--deep); }
-.ritem.locked .rnum { border-color: #9fb1c2; color: #7a8a99; background: #dde5ec !important; }
-.rinfo { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.rinfo b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); }
-.ritem.locked .rinfo b { color: #6b7b8a; }
-.rinfo span { font-size: 0.8rem; color: var(--muted); }
-.bar2 { height: 8px; border-radius: 4px; background: #dbe7ef; overflow: hidden; }
-.bar2 i { display: block; height: 100%; background: var(--good); }
-.rst { font-size: 0.78rem; font-weight: 700; border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
-.rst.done { background: var(--good-bg); color: var(--good); }
-.rst.now { background: #fff1c2; color: #ab6400; }
-.rst.open { background: #d5efff; color: var(--deep); }
-.rst.lock { background: #dde5ec; color: #6b7b8a; }
-.city { cursor: pointer; outline: none; }
-.city circle.dot { stroke: #003a5c; }
-.city.sel circle.dot { stroke: #ffc53d; }
-.cname { font-family: var(--display); fill: #1c2024; paint-order: stroke; stroke: #fff; }
+.grades { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.gcard { width: 100%; display: flex; flex-direction: column; gap: 10px; padding: 12px 12px 16px; border: 0; border-radius: 22px; background: #fff; text-align: left; cursor: pointer; font: inherit; color: var(--ink); box-shadow: 0 2px 0 rgba(0,0,0,.04); }
+.gcard:focus-visible, .back:focus-visible, .sbtn:focus-visible, .tools button:focus-visible, .ucard:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.gcard .banner { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 9; display: grid; place-items: center; }
+.gcard .banner svg { width: 62%; height: auto; }
+.gcard .banner .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 14%; }
+.gcard.locked .banner { filter: grayscale(1) opacity(.6); }
+.gcard .lockb { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,.55); color: #fff; font-size: 0.78rem; font-weight: 700; border-radius: 999px; padding: 3px 10px; }
+.gtitle { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 0 4px; }
+.gtitle b { font-family: var(--display); font-weight: 400; font-size: 1.35rem; color: #1f2a40; }
+.gtitle span { font-size: 0.82rem; color: var(--muted); }
+.gtitle .arrow { flex: none; width: 34px; height: 34px; border-radius: 50%; background: #f1f3f6; display: grid; place-items: center; font-size: 1.1rem; color: #1f2a40; }
+.gsub { font-size: 0.86rem; color: var(--muted); padding: 0 4px; }
+.gbar { height: 7px; border-radius: 4px; background: #eceef2; overflow: hidden; margin: 0 4px; }
+.gbar i { display: block; height: 100%; border-radius: 4px; }
+.gview { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 16px; align-items: start; }
+.pzbox { background: #fff; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.pzbox svg { display: block; width: 100%; height: auto; }
+.pzhead { display: flex; align-items: center; gap: 12px; }
+.pzhead .pic { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; flex: none; }
+.pzhead .pic svg { width: 46px; }
+.pzhead b { font-family: var(--display); font-weight: 400; font-size: 1.25rem; color: #1f2a40; display: block; }
+.pzhead span { font-size: 0.85rem; color: var(--muted); }
+.rules { margin: 0; padding: 10px 12px; list-style: none; background: #fff8e1; border-radius: 12px; font-size: 0.85rem; line-height: 1.7; }
+.units2 { display: flex; flex-direction: column; gap: 12px; }
 .semgrp { display: flex; flex-direction: column; gap: 8px; }
 .semgrp h4 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--deep); }
-.crow { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 12px; border-radius: 14px; background: var(--card); border: 2px solid var(--line); }
-.crow.sel { border-color: #f2b705; box-shadow: 0 0 0 3px #fff1c2; }
-.crow .cdot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--deep); display: grid; place-items: center; font-size: 0.8rem; font-weight: 700; color: #fff; }
-.crow .ct { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.crow .ct b { font-size: 0.98rem; }
-.crow .ct span { font-size: 0.8rem; color: var(--muted); }
-.crow .ct em { font-style: normal; font-size: 0.75rem; color: var(--good); font-weight: 700; }
-.acts { display: flex; gap: 6px; }
-.sbtn { font-family: var(--display); font-size: 0.98rem; border: 2px solid var(--deep); border-radius: 12px; padding: 6px 11px; background: var(--card); color: var(--deep); cursor: pointer; box-shadow: 0 3px 0 var(--deep); white-space: nowrap; }
-.sbtn.go { background: var(--sky); color: #fff; }
-.sbtn.ta { background: #e5484d; color: #fff; }
-.sbtn:disabled { background: #e8edf2; color: #8a96a3; border-color: #b9c4d0; box-shadow: none; cursor: default; }
-.sbtn:not(:disabled):active { transform: translateY(2px); box-shadow: 0 1px 0 var(--deep); }
+.ucard { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: #fff; border: 2px solid transparent; }
+.ucard.got { border-color: #ffd36b; }
+.ucard .no { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; font-family: var(--display); font-size: 1rem; color: #1f2a40; }
+.ucard .ut { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ucard .ut b { font-size: 0.98rem; }
+.stars { letter-spacing: 1px; font-size: 1.05rem; color: #d7dbe2; }
+.stars i { font-style: normal; color: #f2b705; }
+.ucard .ut small { font-size: 0.76rem; color: var(--muted); }
+.sbtn { font-family: var(--display); font-size: 0.98rem; border: 2px solid var(--deep); border-radius: 12px; padding: 6px 12px; background: var(--sky); color: #fff; cursor: pointer; box-shadow: 0 3px 0 var(--deep); white-space: nowrap; }
+.sbtn.again { background: var(--card); color: var(--deep); }
+.sbtn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--deep); }
 .note { margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
 .tools { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; align-items: center; }
 .tools button { font-size: 0.8rem; border: 1px solid #9fb6c6; background: rgba(255,255,255,.75); border-radius: 999px; padding: 5px 11px; cursor: pointer; color: var(--deep); }
-.board { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.board li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 8px; font-size: 0.9rem; padding: 6px 10px; border-radius: 10px; background: var(--paper); font-variant-numeric: tabular-nums; }
-.board li.me { background: #d5efff; font-weight: 700; }
-.board li b { font-family: var(--display); font-weight: 400; color: #ab6400; }
-.ta-msg { margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--good-bg); color: var(--good); font-weight: 700; line-height: 1.6; }
-.ta-msg.lose { background: #fff1e6; color: #b45309; }
+.pc-got { animation: pop .9s cubic-bezier(.2,1.5,.4,1) both; transform-box: fill-box; transform-origin: center; }
+@keyframes pop { from { transform: translateY(-30px) scale(1.3); opacity: 0; } to { transform: none; opacity: 1; } }
+.bigstars { font-size: clamp(2.4rem, 8vw, 3.2rem); letter-spacing: 6px; color: #d7dbe2; margin: 0; line-height: 1.1; }
+.bigstars i { font-style: normal; color: #f2b705; display: inline-block; animation: pop .6s cubic-bezier(.2,1.5,.4,1) both; }
+.bigstars i:nth-child(2) { animation-delay: .25s; } .bigstars i:nth-child(3) { animation-delay: .5s; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.checks li { display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 12px; background: var(--paper); font-size: 0.92rem; }
+.checks li b { font-size: 1.1rem; color: #d7dbe2; }
+.checks li.ok b { color: #f2b705; }
+.piece-msg { margin: 0; padding: 12px 14px; border-radius: 14px; background: #fff3c4; color: #8a5a00; font-weight: 700; line-height: 1.6; }
+.piece-msg.no { background: #eef3f7; color: var(--muted); font-weight: 500; }
+.schar { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; }
+.schar svg { width: 64px; flex: none; }
+.schar span { font-size: 0.92rem; line-height: 1.5; color: #1f2a40; }
 .btnrow { display: flex; flex-wrap: wrap; gap: 10px; }
 .btnrow .btn { flex: 1; }
-@media (max-width: 860px) { .mv-body { grid-template-columns: minmax(0, 1fr); } .mapbox svg { max-height: 60vh; } }
-@media (max-width: 460px) { .crow { grid-template-columns: 30px minmax(0, 1fr); } .crow .acts { grid-column: 1 / -1; } .crow .acts .sbtn { flex: 1; } }
+.btn.next { background: #30a46c; }
+@media (max-width: 900px) { .grades { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gview { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { .grades { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 520px) {
   .choices { grid-template-columns: minmax(0, 1fr); }
   .pad button { min-width: 72px; min-height: 60px; padding: 0 10px; font-size: 1.1rem; white-space: nowrap; }
@@ -191,7 +180,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 <div class="wrap">
   <div class="top">
     <h1>부기의 수학 모험</h1>
-    <p id="subline">학년·학기 맵을 고르고, 문제 문 5개를 열어 깃발까지 가요</p>
+    <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
     <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
   <div class="stage" id="stage">
@@ -216,28 +205,24 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       <p id="mapDesc"></p>
     </div>
     <div class="news" id="news"></div>
-    <div class="mv-body">
-      <div>
-        <div class="mapbox" id="mapbox"></div>
-        <div class="legend" id="legend"><span><i style="background:#ffc4d8"></i>맞춘 조각 (컬러 3D)</span><span><i style="background:#d6d6d6"></i>아직 못 맞춘 조각 (흑백)</span><span>🔒 잠긴 조각</span></div>
-      </div>
-      <div id="side"></div>
-    </div>
-    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">지금 지역의 도시 하나 바로 정복</button><button type="button" id="tReset">처음 상태로</button></div>
+    <div id="homeBody"></div>
+    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">다음 단원 별 3개로 바로 클리어</button><button type="button" id="tReset">처음 상태로</button></div>
   </div>
 </div>
 
 <div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startTitle" hidden>
   <div class="card">
     <div class="tagrow"><span class="tag" id="startStage">초등 3-1</span><span class="tag" id="startMode">5문제</span><span class="tag">스쿨플랫 시제품</span></div>
+    <div class="schar" id="startChar"></div>
     <h2 id="startTitle">부기와 함께 문제 문을 열어 볼까요?</h2>
     <ul class="how">
       <li>길을 막은 <b>문제 문</b>에 닿으면 문제가 나와요. 맞히면 문이 열려요.</li>
       <li>틀려도 괜찮아요. 풀이를 보고 <b>비슷한 문제</b>로 다시 도전해요.</li>
       <li>헷갈이를 위에서 밟으면 코인을 얻고, 옆에서 부딪히면 하트가 줄어요.</li>
+      <li id="starRule"><b>별 3개 조건</b>: ① 깃발까지 완주 ② 문제를 한 번에 모두 맞히기 ③ 하트 지키기(한 번도 다치지 않기). 별 3개를 모으면 퍼즐 조각 1개!</li>
       <li id="taRule" hidden><b>타임어택</b>: 출발부터 깃발까지 걸린 시간이 기록이에요. 틀리면 +5초, 보기는 1.2초 뒤에 열려요. 반 1등이 지역 깃발을 가져가요.</li>
     </ul>
-    <div class="btnrow"><button type="button" class="btn ghost" id="toMapBtn">맵 다시 고르기</button><button type="button" class="btn" id="startBtn">모험 시작</button></div>
+    <div class="btnrow"><button type="button" class="btn ghost" id="toMapBtn">단원 목록</button><button type="button" class="btn" id="startBtn">모험 시작</button></div>
   </div>
 </div>
 
@@ -264,9 +249,9 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
 <div class="modal" id="doneModal" role="dialog" aria-modal="true" aria-labelledby="doneTitle" hidden>
   <div class="card">
-    <div class="tagrow"><span class="tag">모험 완료</span></div>
+    <div class="tagrow"><span class="tag" id="doneTag">단원 완료</span></div>
     <h2 id="doneTitle">깃발에 도착했어요!</h2>
-    <p class="big" id="doneScore"></p>
+    <p class="bigstars" id="doneScore"></p>
     <div class="stats">
       <div><b id="statFirst">0</b><span>한 번에 맞힘</span></div>
       <div><b id="statRetry">0</b><span>다시 도전</span></div>
@@ -277,7 +262,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       <p class="lead"><b>다시 보면 좋은 단원</b></p>
       <ul class="units" id="reviewList"></ul>
     </div>
-    <div class="btnrow"><button type="button" class="btn ghost" id="mapBackBtn">맵으로 돌아가기</button><button type="button" class="btn" id="againBtn">이 맵 다시 하기</button></div>
+    <div class="btnrow"><button type="button" class="btn ghost" id="mapBackBtn">단원 목록</button><button type="button" class="btn ghost" id="againBtn">다시 도전</button><button type="button" class="btn next" id="nextBtn">다음 단원 ▶</button></div>
   </div>
 </div>
 
@@ -510,7 +495,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   function resetAll() {
     buildLevel();
     player = { x: 120, y: GROUND - 48, w: 40, h: 48, vx: 0, vy: 0, onGround: true, face: 1, inv: 0, step: 0 };
-    stats = { hearts: 3, coins: 0, first: 0, retries: 0, wrongUnits: [] };
+    stats = { hearts: 3, coins: 0, first: 0, retries: 0, hits: 0, wrongUnits: [] };
     keys = { left: false, right: false, jump: false, jumpHeld: false };
     camX = 0;
     checkpointX = 120;
@@ -625,7 +610,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   function hurt(dir) {
     if (player.inv > 0) return;
-    stats.hearts--;
+    stats.hearts--; stats.hits++;
     player.inv = 1.5;
     player.vy = -420;
     player.vx = dir * 260;
@@ -633,33 +618,33 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   }
 
   function finish() {
-    if (runMode === 'ta') { showResults(); return; }
-    conquerCity();
-    if (M.newRegion) startEnding(); else showResults();
+    scoreUnit();
+    if (M.gradeJustDone) startEnding(); else showResults();
   }
-
   function showResults() {
     state = 'done';
     $('skipBtn').hidden = true;
-    if (runMode === 'ta') { showTaResults(); return; }
-    saveM();
-    $('doneTitle').textContent = M.lastRegionDone ? `${REG[pick.g - 1].name} 퍼즐 조각 완성!` : `${curCity().name} 정복!`;
-    $('taBox').hidden = true;
-    $('reviewBox').hidden = false;
-    $('doneScore').textContent = stats.first + ' / ' + TOTAL;
+    const R = M.last, g = pick.g, c = pick.c, ch = CH[g - 1];
+    $('doneTag').textContent = `${g}학년 · ${UNITS[g][c]}`;
+    $('doneTitle').textContent = M.gradeJustDone ? `${g}학년 퍼즐 완성!` : R.stars === 3 ? '별 3개! 완벽해요' : '깃발에 도착했어요!';
+    $('doneScore').innerHTML = [0, 1, 2].map(i => i < R.stars ? '<i>★</i>' : '☆').join('');
     $('statFirst').textContent = stats.first;
     $('statRetry').textContent = stats.retries;
     $('statCoin').textContent = stats.coins;
-    const list = $('reviewList');
-    list.innerHTML = '';
-    if (stats.wrongUnits.length === 0) {
-      const li = document.createElement('li'); li.textContent = '모든 문제를 한 번에 맞혔어요. 다음 단원으로 가도 좋아요.'; list.appendChild(li);
-    } else {
-      stats.wrongUnits.forEach(u => { const li = document.createElement('li'); li.textContent = u; list.appendChild(li); });
-    }
+    $('reviewBox').hidden = true;
+    $('taBox').hidden = false;
+    const chk = [['깃발까지 완주', R.s1], ['문제를 한 번에 모두 맞히기', R.s2], ['하트 지키기 (한 번도 다치지 않기)', R.s3]];
+    const msg = R.newPiece ? `<p class="piece-msg">${ch.name}의 퍼즐 조각 ${c + 1}번을 얻었어요! (${countPieces(g)}/10)</p>`
+      : R.best === 3 ? `<p class="piece-msg no">이 단원 퍼즐 조각은 이미 얻었어요. 다음 단원으로 가 볼까요?</p>`
+      : `<p class="piece-msg no">별 3개를 모으면 퍼즐 조각을 얻어요. 지금 최고 기록: 별 ${R.best}개</p>`;
+    $('taBox').innerHTML = `<ul class="checks">${chk.map(([t, ok]) => `<li class="${ok ? 'ok' : ''}"><b>★</b>${t}</li>`).join('')}</ul>${msg}`;
+    const nx = nextUnit();
+    $('nextBtn').hidden = !nx;
+    if (nx) $('nextBtn').textContent = nx.g !== g ? `${nx.g}학년으로 ▶` : '다음 단원 ▶';
     showModal('doneModal');
-    $('againBtn').focus({ preventScroll: true });
+    $('nextBtn').hidden ? $('againBtn').focus({ preventScroll: true }) : $('nextBtn').focus({ preventScroll: true });
   }
+
 
   // ---------- 물리 ----------
   const GRAV = 2200, SPEED = 270, JUMP = 830;
@@ -699,7 +684,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
         if (prevBottom <= pl.y + 1 && bottom >= pl.y && footR > pl.x && footL < pl.x + pl.w) { p.y = pl.y - p.h; p.vy = 0; p.onGround = true; }
       }
     }
-    if (p.y > H + 80) { stats.hearts--; if (stats.hearts <= 0) { state = 'over'; showModal('overModal'); $('retryBtn').focus({ preventScroll: true }); } respawn(); }
+    if (p.y > H + 80) { stats.hearts--; stats.hits++; if (stats.hearts <= 0) { state = 'over'; showModal('overModal'); $('retryBtn').focus({ preventScroll: true }); } respawn(); }
     if (p.inv > 0) p.inv -= dt;
     if (p.onGround && Math.abs(p.vx) > 20) p.step += dt * 12;
 
@@ -1093,43 +1078,17 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 
   resetAll();
   requestAnimationFrame(frame);
-  // ---------- 홈: 호랑이 한반도 지도 ----------
-  // 구조: 한반도(전체) > 지역 6개(= 1~6학년) > 지역마다 도시 10개(= 그 학년 단원 10개, 1학기 5 + 2학기 5)
-  //       > 도시 하나 = 단원 학습 스테이지(문제 2개: 기본 + 응용). 도시를 모두 정복하면 그 지역 정복, 6개 지역을 모두 정복하면 한반도 정복.
-  // 지도는 위도·경도를 따라 단순화한 외곽선에 호랑이 얼굴·꼬리·발만 얹은 시제품용 그림이에요. 반 친구 기록은 예시 데이터예요.
+  // ---------- 홈: 학년 캐릭터 + 학년 퍼즐 ----------
+  // 구조: 학년(캐릭터) 6개 > 학년마다 단원 10개(1학기 5 + 2학기 5) > 단원 하나 = 문제 2개 스테이지.
+  // 단원에서 별 3개(완주 · 한 번에 모두 정답 · 하트 지키기)를 받으면 그 학년 퍼즐 조각 1개. 10조각이면 학년 퍼즐 완성 → 다음 학년 열림.
   const MY_GRADE = 3;
-  const XY = ([lon, lat]) => [+((lon - 124) * 72 + 20).toFixed(1), +((43.2 - lat) * 84 + 16).toFixed(1)];
-  const P = {
-    gunsan: [126.55, 35.95], yeonggwang: [126.35, 35.3], mokpo: [126.35, 34.8], jindo: [126.2, 34.45], haenam: [126.5, 34.3], wando: [126.8, 34.32], goheung: [127.3, 34.5], yeosu: [127.72, 34.62],
-    namhae: [127.95, 34.75], tongyeong: [128.4, 34.85], geoje: [128.66, 34.9], busan: [129.1, 35.1], ulsan: [129.42, 35.5], pohang: [129.57, 36.05], yeongdeok: [129.42, 36.4], uljin: [129.42, 37.0],
-    jg: [127.6, 35.9], gy: [128.4, 37.15], cn: [127.55, 37.2], asan: [126.85, 36.95], boryeong: [126.5, 36.35], taean: [126.15, 36.75], seosan: [126.45, 37.0],
-    incheon: [126.6, 37.45], ganghwa: [126.4, 37.72], dmz1: [127.0, 38.0], dmz2: [127.5, 38.3], dmz3: [128.0, 38.3], goseong: [128.4, 38.6], sokcho: [128.6, 38.2], gangneung: [128.9, 37.75], samcheok: [129.17, 37.45],
-    haeju: [125.7, 38.0], ongjin: [125.2, 37.85], changsan: [124.8, 38.1], nampo: [125.3, 38.7], cc: [125.4, 39.6], hamhung: [127.6, 39.8], wonsan: [127.45, 39.15], tongcheon: [127.9, 38.95],
-    cheolsan: [124.6, 39.6], yalu: [124.3, 39.9], b1: [125.0, 40.4], b2: [125.8, 40.7], b3: [126.6, 41.4], b4: [127.2, 41.5], b5: [128.1, 41.6], baekdu: [128.08, 42.0], b6: [129.0, 42.3], b7: [129.9, 42.95], b8: [130.4, 42.6], tumen: [130.7, 42.3], dmzK: [127.2, 38.12], gw1: [127.5, 37.75],
-    bu1: [126.45, 35.6], gc1: [126.6, 35.48], jw1: [126.45, 35.05], jh1: [127.0, 34.58], bs1: [127.45, 34.78], sc2: [128.15, 34.95], mz: [128.5, 35.0], gm1: [128.85, 35.12], sc1: [126.62, 36.15], tn2: [126.38, 36.58], tn1: [126.3, 36.95], hw1: [126.68, 37.2],
-    chongjin: [129.8, 41.8], kimchaek: [129.2, 40.7], tanchon: [128.9, 40.45], sinpo: [128.2, 40.05]
-  };
-  // 실제 시·도 경계: 통계청(KOSTAT) 2018 시·도 경계 공개 자료(southkorea-maps)를 단순화한 SVG 경로
-  const PROV = [{"code":"11","name":"서울특별시","d":"M237.6 478.0L238.3 478.7L239.5 478.5L239.7 479.2L240.6 478.4L242.9 478.9L242.7 482.3L244.0 482.8L243.5 484.6L244.4 484.8L244.5 485.9L243.3 488.4L243.6 490.1L248.8 488.0L249.2 491.0L247.7 491.0L246.1 494.1L247.4 494.6L247.5 495.4L246.3 497.0L241.2 499.7L240.7 500.8L238.6 499.9L238.5 497.8L237.0 498.6L236.3 497.5L233.0 499.9L231.7 500.2L230.8 499.0L229.5 500.4L228.7 500.0L226.6 495.3L224.8 497.0L222.7 496.9L223.3 495.8L222.5 495.1L223.5 494.1L223.2 491.4L222.1 491.1L221.2 491.8L219.0 490.1L221.7 487.4L221.8 486.0L225.5 488.8L227.1 488.2L227.7 486.9L228.8 487.3L229.7 482.7L229.1 482.3L230.5 482.5L232.2 481.4L232.9 482.0L233.0 483.9L234.9 483.3L234.5 481.7L235.6 480.8L235.4 479.7L237.6 478.0Z","far":"","bb":[219.0,478.0,249.2,500.8],"c":[234.4,491.2]},{"code":"21","name":"부산광역시","d":"M367.7 697.2L368.0 699.9L368.9 699.8L369.3 701.3L368.1 703.5L368.5 705.0L367.6 705.7L366.9 704.4L367.5 703.9L366.0 703.0L366.7 702.6L366.1 702.1L366.5 701.5L364.9 699.6L367.9 698.8L367.9 698.3L366.4 698.3L367.7 697.2ZM377.1 700.6L376.4 697.9L376.8 695.9L376.3 695.8L375.1 698.6L375.2 695.5L375.0 697.0L373.8 697.4L373.6 698.2L372.5 698.2L373.2 694.9L372.6 694.7L371.7 698.1L370.6 698.0L370.7 697.4L368.4 697.9L367.1 696.7L368.6 695.9L368.3 694.4L365.8 692.9L365.2 691.5L367.6 691.7L370.5 690.7L370.3 691.5L371.1 692.1L371.5 691.2L370.8 690.3L371.4 690.4L371.5 689.5L370.7 687.9L371.3 687.2L373.5 686.1L374.2 686.6L376.0 685.6L379.6 685.1L381.0 681.8L383.4 681.8L384.2 680.0L385.3 680.4L388.0 679.0L389.7 675.3L388.5 673.8L392.8 675.3L394.3 674.0L394.4 672.1L395.7 673.0L399.1 672.3L400.3 674.1L400.1 676.1L401.9 677.1L401.5 678.1L400.3 677.4L399.1 678.0L398.4 681.7L397.6 682.2L396.9 683.0L398.2 682.9L398.2 684.1L397.6 684.3L397.2 686.2L396.4 686.0L396.1 689.3L394.5 689.7L394.0 691.3L393.1 691.8L391.8 691.4L390.8 692.1L391.0 691.5L390.5 691.9L389.6 691.2L389.7 691.8L388.4 692.2L387.8 693.6L388.5 693.7L388.1 694.3L388.7 693.6L389.3 694.9L388.9 696.5L388.1 696.2L387.9 697.1L388.0 696.3L387.2 697.1L386.7 695.6L385.4 696.1L384.7 695.6L385.3 694.5L384.7 694.0L384.0 694.9L383.8 694.2L384.0 695.1L381.8 696.9L381.1 700.3L380.2 697.6L379.5 698.1L380.5 700.7L379.5 701.0L379.2 699.9L378.0 700.0L378.8 700.5L377.8 700.8L378.4 701.4L377.5 702.1L377.1 700.6Z","far":"","bb":[364.9,672.1,401.9,705.7],"c":[385.9,689.9]},{"code":"22","name":"대구광역시","d":"M358.1 619.5L360.3 620.5L360.6 622.0L361.7 623.1L361.0 626.7L362.5 628.1L362.8 630.2L362.1 632.8L361.1 633.3L360.0 632.8L360.2 634.6L359.0 635.4L359.7 637.0L357.1 638.4L358.1 641.3L357.7 643.4L357.2 644.2L352.9 645.8L352.2 645.2L352.1 642.8L350.5 643.4L348.7 642.9L346.0 644.9L346.3 647.4L344.5 648.3L344.4 651.1L340.1 651.2L337.9 652.7L334.7 653.6L336.0 652.9L336.9 651.1L333.8 647.6L333.3 645.7L333.8 645.3L337.7 646.3L339.1 645.6L339.1 643.8L335.6 641.0L338.3 636.8L341.9 637.1L342.8 635.7L340.4 633.7L335.6 633.2L336.7 629.2L338.6 626.8L340.7 625.6L342.3 626.3L341.7 629.2L343.3 629.4L344.1 630.3L344.6 628.6L346.5 626.2L346.1 622.4L347.8 624.1L348.1 623.1L351.4 622.0L352.5 620.3L358.1 619.5Z","far":"","bb":[333.3,619.5,362.8,653.6],"c":[347.8,636.3]},{"code":"23","name":"인천광역시","d":"M171.8 513.9L172.5 516.0L173.2 515.6L174.1 516.8L175.9 517.3L174.3 518.1L174.7 518.8L172.4 519.2L171.4 517.5L170.1 518.2L171.2 513.9L171.8 513.9ZM198.7 516.3L197.0 518.0L195.1 517.3L194.9 514.7L195.4 513.8L196.3 513.9L197.9 512.6L199.8 513.5L200.1 515.2L198.3 515.5L198.7 516.3ZM200.2 492.2L201.1 491.9L204.7 493.6L205.9 495.7L200.5 497.7L195.8 501.5L194.2 501.4L192.5 499.3L191.4 500.3L191.1 499.7L190.2 499.7L190.8 499.2L189.6 497.9L189.9 497.0L190.9 497.2L194.1 495.1L198.3 494.8L199.6 494.1L200.2 492.2ZM211.2 483.2L214.0 484.7L214.7 486.2L217.6 487.0L218.2 488.1L219.3 487.4L221.1 487.9L219.0 490.1L218.7 493.3L217.4 494.1L217.5 495.9L220.1 497.5L219.4 500.9L218.2 501.3L218.1 502.3L215.9 504.7L213.2 504.4L214.1 504.6L211.9 507.4L210.2 507.6L211.1 507.9L208.2 507.6L207.9 508.5L207.9 507.9L205.8 508.5L206.9 507.6L206.0 507.6L206.0 507.0L210.0 507.0L208.8 507.0L208.7 507.6L210.5 507.5L210.9 507.2L210.3 507.0L211.1 506.9L208.4 504.9L207.9 501.8L207.1 501.8L207.8 500.9L209.6 500.9L209.7 501.7L209.7 500.7L207.9 500.7L207.8 499.8L208.5 499.4L208.0 498.6L206.8 500.0L206.7 498.6L207.4 498.4L206.5 498.0L208.9 498.4L208.1 496.7L207.5 497.7L206.9 497.1L209.0 495.4L209.9 496.3L209.2 495.4L210.1 495.1L210.0 494.4L207.5 495.1L207.0 490.7L207.7 490.2L206.4 489.4L205.4 487.4L208.2 485.9L209.1 486.2L209.9 484.2L211.2 483.2ZM143.0 479.8L143.6 480.2L141.9 482.0L141.2 481.3L140.8 479.7L143.0 479.8ZM187.7 474.1L187.0 476.9L191.3 479.5L190.9 480.9L189.2 482.0L188.3 482.6L187.0 479.5L183.4 477.1L184.7 476.8L185.1 474.2L186.9 473.6L187.7 474.1ZM75.5 471.4L75.1 472.4L74.1 472.0L72.6 473.0L72.9 472.4L73.3 471.4L75.5 471.4ZM183.2 468.3L185.2 469.5L187.3 468.9L187.9 470.5L184.9 472.7L183.6 472.2L181.3 472.8L180.7 473.7L178.7 472.0L181.2 468.2L183.2 468.3ZM195.6 467.5L200.4 471.0L201.9 474.0L200.9 476.6L201.8 477.8L201.2 480.1L202.3 480.9L201.6 482.5L203.2 484.9L201.5 485.5L201.1 486.7L201.7 486.6L201.3 487.1L201.9 487.5L201.2 488.1L200.2 487.2L201.0 486.5L198.8 486.1L197.3 487.3L193.0 486.9L190.7 485.4L191.2 484.8L190.3 483.5L192.6 483.0L193.6 482.0L192.2 478.4L189.9 477.7L189.3 476.7L189.7 474.5L189.2 470.4L191.9 469.0L192.3 467.6L193.8 467.8L194.7 466.9L195.6 467.5ZM71.6 467.4L71.7 468.4L70.6 469.2L69.7 468.9L69.3 469.6L69.2 468.4L67.8 467.7L68.7 467.9L70.6 465.4L72.4 466.2L71.6 467.4ZM69.5 454.4L72.0 454.4L73.7 456.1L72.6 456.1L73.2 456.7L71.0 457.5L70.5 458.7L69.8 459.8L66.0 459.2L65.1 456.6L64.0 456.0L64.4 454.5L66.1 455.4L69.5 454.4Z","far":"","bb":[170.1,466.9,221.1,519.2],"c":[211.7,497.4]},{"code":"24","name":"광주광역시","d":"M219.0 683.3L218.4 685.1L222.0 686.5L223.4 685.3L224.1 685.6L226.1 684.2L229.9 683.1L232.3 685.6L233.7 689.6L236.0 688.9L237.6 690.4L236.6 691.7L236.8 694.4L235.2 695.6L235.2 696.8L233.3 697.5L232.7 698.6L231.1 698.6L230.1 697.1L228.2 698.3L225.6 698.2L224.8 699.3L223.2 699.8L222.1 700.5L221.3 699.7L219.8 700.4L219.1 699.4L218.5 699.9L218.3 699.2L219.5 698.9L218.9 697.2L216.8 695.3L212.2 696.0L210.9 694.7L211.0 692.7L210.4 692.5L211.1 691.0L212.4 690.3L211.0 688.6L212.8 688.8L213.5 686.7L214.6 687.4L215.7 687.0L217.1 683.6L219.0 683.3Z","far":"","bb":[210.4,683.1,237.6,700.5],"c":[222.6,691.7]},{"code":"25","name":"대전광역시","d":"M264.7 579.7L264.8 582.3L265.3 582.6L268.5 583.1L269.9 581.0L270.9 580.8L270.4 582.4L272.3 582.8L271.3 584.3L272.1 586.5L273.8 585.2L275.0 585.6L276.3 587.3L274.8 587.4L273.8 588.2L273.6 591.0L272.0 592.3L271.4 595.9L271.9 597.0L271.0 598.9L271.3 601.2L269.7 602.1L269.8 602.7L267.9 604.4L265.4 602.9L265.0 601.7L263.9 601.1L264.1 598.8L263.2 598.0L262.1 598.2L262.2 602.3L260.0 605.4L260.0 603.9L258.7 602.2L257.9 601.5L257.4 602.2L256.3 601.0L256.1 599.6L257.0 598.6L254.6 597.6L253.8 596.4L254.7 596.0L254.7 593.3L256.1 591.8L255.5 590.5L256.2 589.3L256.3 586.0L260.6 584.6L261.8 582.5L261.9 579.8L263.6 578.8L264.7 579.7Z","far":"","bb":[253.8,578.8,276.3,605.4],"c":[264.8,592.4]},{"code":"26","name":"울산광역시","d":"M391.5 644.7L392.7 644.7L393.1 644.0L394.3 644.8L394.9 644.2L396.8 645.7L398.5 645.9L398.4 649.3L401.3 650.7L401.9 649.6L403.6 649.5L405.5 647.7L412.0 649.9L411.8 651.9L413.4 654.2L413.5 655.5L412.6 656.2L413.0 657.9L412.6 660.5L411.6 660.4L411.6 661.1L412.4 660.8L412.2 662.0L411.2 661.9L411.9 662.6L411.1 663.4L412.0 663.5L411.1 664.6L410.6 664.1L409.2 665.1L409.4 663.4L407.1 659.6L406.8 660.8L407.8 661.4L407.9 662.6L406.2 662.4L407.3 662.8L408.2 664.6L407.8 664.1L407.0 666.0L406.1 666.1L406.5 666.6L403.8 664.0L405.2 667.1L405.9 667.2L405.6 668.0L406.9 667.2L406.4 668.1L406.9 668.6L405.4 668.9L406.2 669.1L405.7 670.1L406.1 670.7L404.8 673.0L406.0 674.7L404.1 674.9L402.2 677.2L400.2 676.2L400.3 674.1L399.1 672.3L395.7 673.0L394.5 672.2L395.8 670.6L394.2 667.9L391.9 668.5L388.8 665.9L387.6 663.1L383.8 661.6L384.0 660.1L380.9 660.9L379.7 660.5L379.9 659.3L379.2 658.5L378.6 658.9L377.9 657.7L381.4 655.7L381.7 653.3L380.2 652.7L381.5 651.5L382.7 651.7L383.4 650.2L385.8 650.8L384.8 648.4L385.8 646.3L389.8 644.9L390.2 644.0L391.5 644.7Z","far":"","bb":[377.9,644.0,413.5,677.2],"c":[408.3,658.8]},{"code":"29","name":"세종특별자치시","d":"M248.4 559.4L250.6 559.8L253.7 562.3L255.7 562.4L258.1 563.5L258.0 564.7L255.8 567.1L257.0 567.4L258.1 570.3L257.6 571.5L259.1 571.8L260.3 573.6L263.2 573.1L262.8 573.8L263.6 575.3L264.9 575.3L265.4 576.5L264.6 577.1L265.5 579.2L264.5 579.5L263.6 578.8L262.5 579.8L261.9 580.0L261.6 583.0L259.5 585.3L255.0 585.8L254.1 586.6L250.3 583.8L250.7 582.2L249.8 580.9L250.0 579.7L248.7 579.4L248.2 578.0L249.1 577.0L248.5 575.3L249.8 574.9L249.4 574.4L251.0 572.3L249.9 572.0L249.8 570.9L247.2 569.9L246.8 568.8L247.6 568.3L247.0 566.6L247.6 562.8L247.3 562.4L246.2 562.8L245.2 561.3L247.5 559.2L248.4 559.4Z","far":"","bb":[245.2,559.2,265.5,586.6],"c":[255.0,572.5]},{"code":"31","name":"경기도","d":"M217.5 533.6L218.5 532.1L212.5 527.0L213.3 526.8L212.9 524.8L211.5 525.2L214.1 524.1L213.1 523.3L210.8 523.8L211.6 523.1L211.1 521.6L211.5 522.0L212.2 520.9L210.8 521.4L211.6 518.2L210.6 516.3L211.1 514.2L209.6 512.7L210.5 513.4L211.6 512.3L209.3 512.9L211.6 512.2L211.6 513.5L213.3 513.2L212.4 513.9L212.9 515.2L214.3 514.9L216.8 515.9L218.5 515.4L219.1 516.2L219.8 516.0L220.4 517.5L220.0 516.2L220.8 516.3L220.9 514.4L222.4 514.3L221.9 512.1L223.0 512.4L224.6 514.3L224.3 513.6L222.8 511.8L219.3 512.2L212.7 509.9L212.3 509.2L208.4 510.4L205.6 512.2L208.9 514.6L209.8 513.9L210.2 514.7L209.4 513.2L210.2 513.9L209.9 515.5L211.1 517.9L211.0 520.0L210.4 520.7L210.6 519.1L209.3 518.5L209.1 519.8L208.8 517.0L208.6 517.5L206.4 517.2L208.3 519.2L207.6 519.0L206.9 520.1L207.3 518.2L206.5 518.9L205.5 518.3L204.5 520.6L203.2 519.5L203.2 518.7L204.1 518.5L202.9 517.6L205.0 516.9L204.2 514.4L202.4 512.5L204.4 513.5L205.6 512.4L205.2 511.8L205.6 512.2L207.7 510.5L213.7 508.6L213.6 507.5L214.6 507.3L216.6 504.3L217.4 504.7L216.8 504.1L217.6 503.3L221.0 503.8L220.7 502.5L220.5 503.9L217.9 502.9L218.2 501.3L219.4 500.9L219.5 499.1L220.2 498.6L220.0 497.2L217.5 495.9L217.4 494.1L218.7 493.3L219.2 490.2L221.2 491.8L222.1 491.1L223.2 491.4L223.5 494.1L222.5 495.1L223.3 495.8L222.7 496.9L224.8 497.0L226.6 495.3L229.0 500.3L230.8 499.0L231.7 500.2L233.3 499.8L236.3 497.5L237.0 498.6L238.5 497.8L238.6 499.9L239.8 500.8L241.0 500.6L241.2 499.7L242.3 499.4L243.5 498.0L244.4 498.3L245.6 496.9L246.3 497.0L247.6 494.8L246.2 494.3L246.5 493.0L247.7 491.0L249.2 491.0L248.8 488.0L244.3 490.0L243.3 489.8L244.4 485.0L243.5 484.6L244.0 482.8L242.7 482.3L242.9 478.9L241.8 478.3L239.7 479.2L239.5 478.5L238.3 478.7L238.0 477.9L237.1 477.9L236.6 479.3L235.4 479.7L235.6 480.8L234.5 481.7L235.0 483.0L234.2 483.7L233.0 483.9L232.9 482.0L232.2 481.4L230.5 482.5L229.2 482.3L229.7 482.7L228.8 487.3L227.7 486.9L227.1 488.2L225.5 488.8L221.8 486.0L221.1 487.9L219.3 487.4L218.2 488.1L217.6 487.0L214.7 486.2L214.0 484.7L211.3 483.2L209.9 484.2L209.1 486.2L208.2 485.9L206.6 487.0L205.6 486.0L204.3 486.3L202.3 481.8L203.2 481.1L201.9 480.2L202.4 478.5L201.6 476.6L202.2 473.9L201.3 471.5L201.6 470.4L205.4 472.7L206.8 472.9L209.0 471.4L211.7 471.2L212.3 466.7L211.5 466.2L212.9 465.7L213.8 463.8L212.4 463.7L212.4 463.0L213.1 462.9L212.2 462.2L213.2 460.1L212.0 459.6L212.3 456.6L213.5 456.4L214.7 454.9L215.8 455.7L217.1 455.7L218.6 454.2L220.4 454.3L220.9 452.9L223.0 452.4L223.5 450.8L225.6 450.1L225.4 448.3L226.6 446.3L225.8 445.3L226.0 443.8L229.1 441.2L230.8 442.1L233.6 441.3L233.7 440.4L232.4 439.2L233.5 438.4L233.6 436.1L234.8 435.1L234.7 433.7L236.3 434.2L237.5 432.2L242.7 429.1L244.0 430.0L244.2 432.9L247.8 432.8L247.5 434.4L248.3 434.9L248.9 437.0L249.6 437.0L249.6 439.2L251.8 441.1L254.5 439.1L255.2 437.6L256.4 437.4L257.5 438.1L256.5 439.4L255.9 442.4L256.6 443.2L258.3 442.9L259.1 444.8L260.3 445.3L260.5 444.3L263.3 442.9L265.0 443.3L265.8 444.2L267.0 443.1L268.1 444.6L268.0 448.0L269.2 451.7L272.3 453.0L274.9 452.8L275.3 455.5L279.4 456.6L280.4 458.8L279.6 463.2L277.6 463.4L273.8 467.1L274.7 468.7L273.5 470.2L275.2 473.0L272.8 474.9L272.5 476.3L272.8 476.7L274.0 475.7L275.1 476.3L276.1 475.5L276.5 476.3L275.8 481.2L274.6 482.1L274.7 482.9L276.3 484.0L279.6 482.1L282.6 483.7L282.9 484.5L283.8 484.4L287.0 487.5L290.3 487.1L292.5 488.2L293.2 487.6L294.6 489.4L297.1 490.6L296.6 491.5L294.3 491.6L292.6 493.7L290.7 494.5L290.7 495.4L291.8 495.5L293.6 497.2L293.9 500.8L291.9 504.6L292.1 505.7L290.7 505.9L291.3 511.0L290.0 511.8L290.8 513.9L289.8 516.6L289.9 518.5L288.9 519.3L288.3 521.5L287.6 521.4L286.9 522.5L286.1 525.0L284.3 525.4L281.2 523.8L281.9 524.9L281.7 528.4L280.1 529.5L278.8 529.4L279.5 531.0L277.6 530.5L276.7 531.7L277.0 532.8L276.1 533.3L273.3 531.9L272.0 532.8L269.7 532.3L268.2 535.9L264.3 537.1L263.7 538.2L264.9 539.5L263.9 539.8L263.0 541.1L261.2 540.8L259.5 542.2L257.3 542.6L257.8 543.8L256.9 545.7L254.2 543.3L253.6 543.7L251.2 542.6L250.6 540.9L246.4 539.2L244.0 539.2L242.9 540.2L243.4 540.7L242.9 541.6L242.2 541.2L238.2 542.8L235.7 542.2L229.5 545.1L228.7 542.7L226.5 542.4L225.8 540.9L225.8 541.7L225.2 541.3L223.5 538.0L222.5 537.9L223.3 537.5L220.8 537.2L220.1 536.2L221.4 535.6L221.2 534.6L218.0 534.3L217.5 533.6Z","far":"","bb":[201.3,429.1,297.1,545.7],"c":[233.6,497.2]},{"code":"32","name":"강원도","d":"M360.2 450.8L361.0 450.9L360.6 452.2L363.0 454.5L363.0 455.6L364.8 457.4L364.9 458.4L367.9 460.9L367.8 462.5L371.2 466.2L371.3 467.1L376.9 472.0L376.5 472.3L384.0 480.1L383.3 483.4L388.3 488.2L388.8 489.9L388.7 491.5L388.1 490.7L388.3 491.8L390.7 495.0L389.8 494.5L389.0 495.6L390.4 495.1L393.5 498.5L394.2 501.9L398.5 504.9L398.1 506.3L399.2 508.0L399.5 509.8L401.4 510.7L401.6 512.2L403.7 513.2L403.6 514.7L405.7 517.0L404.6 517.8L404.7 522.1L405.8 522.8L405.3 523.0L406.2 524.5L403.4 524.8L401.2 527.2L399.5 527.0L399.2 528.2L396.2 530.6L397.1 533.6L393.3 533.3L392.0 531.0L386.9 528.4L385.1 529.4L384.1 531.3L379.2 529.7L377.1 530.3L376.1 528.9L374.5 529.1L372.5 533.1L371.3 532.3L370.8 533.1L369.0 532.5L367.7 530.2L366.2 530.4L364.2 529.0L363.1 531.4L362.5 531.0L362.2 532.1L362.9 533.6L362.3 534.5L360.9 533.4L358.4 533.4L357.6 532.3L353.3 530.6L352.8 529.5L351.7 530.4L346.7 529.3L343.8 526.2L342.4 527.5L339.3 527.5L338.6 528.2L338.1 526.7L336.5 526.0L336.9 524.5L335.7 523.5L333.9 524.2L332.3 523.5L329.3 525.5L327.0 523.3L328.2 522.2L329.5 522.4L329.3 521.4L331.6 520.1L331.9 518.8L330.8 518.0L327.3 519.3L326.1 517.5L324.5 517.7L323.5 516.1L322.5 515.9L320.5 517.3L319.8 518.9L317.0 517.1L316.0 519.3L314.4 520.0L310.6 520.9L310.0 519.7L310.8 518.7L309.7 517.8L309.3 516.2L306.6 515.1L302.4 517.9L303.2 522.0L302.6 523.0L301.4 522.8L300.7 524.2L298.8 523.0L298.0 523.8L297.4 523.3L297.0 524.0L292.8 524.8L291.1 523.4L289.6 519.2L290.7 514.3L290.0 511.8L291.3 511.0L290.7 505.9L292.1 505.7L291.9 504.6L293.9 500.8L293.6 497.2L291.8 495.5L290.7 495.4L290.7 494.5L292.6 493.7L294.3 491.6L296.6 491.5L297.1 490.4L294.6 489.4L293.2 487.6L292.5 488.2L290.3 487.1L287.0 487.5L283.8 484.4L282.9 484.5L282.6 483.7L279.6 482.1L276.3 484.0L274.7 482.9L274.6 482.1L275.8 481.2L276.5 476.3L276.1 475.5L275.1 476.3L274.0 475.7L272.8 476.7L272.5 476.3L272.8 474.9L275.2 473.0L273.5 470.2L274.7 468.7L273.8 467.1L277.6 463.4L279.6 463.2L280.4 458.8L279.4 456.6L275.3 455.5L274.9 452.8L272.3 453.0L269.2 451.7L268.0 448.0L268.1 444.6L267.0 443.1L265.8 444.2L265.0 443.3L263.3 442.9L260.5 444.3L260.3 445.3L259.1 444.8L258.3 442.9L256.6 443.2L255.9 442.4L256.5 439.4L257.5 438.1L256.4 437.4L255.2 437.6L254.5 439.1L251.8 441.1L249.6 439.2L249.6 437.0L248.9 437.0L248.3 434.9L247.5 434.4L247.8 432.8L244.2 432.9L244.0 430.0L242.9 429.0L245.2 427.7L245.5 426.5L247.2 427.3L253.5 424.8L256.6 425.4L257.6 426.5L260.8 425.2L262.1 425.6L263.5 424.5L268.1 426.2L269.0 425.4L271.8 427.6L277.6 424.5L279.9 424.5L281.6 425.7L285.2 425.6L286.4 424.6L287.5 425.1L289.7 424.0L290.1 424.8L291.4 424.6L292.3 423.5L295.2 427.3L299.0 426.2L300.0 426.9L302.7 426.8L305.0 427.6L307.0 429.8L308.2 429.7L309.1 428.4L309.3 426.4L313.0 426.8L316.3 424.5L317.8 424.8L319.4 424.0L321.8 421.5L323.3 421.7L325.7 418.0L328.4 416.2L330.1 412.6L329.7 411.6L330.6 409.8L330.3 403.0L333.7 401.2L337.6 406.1L337.2 407.1L338.5 408.9L338.3 410.3L341.6 415.0L340.8 415.4L340.9 416.5L344.8 421.5L344.9 423.6L347.7 427.3L347.4 428.3L348.3 431.1L351.3 434.8L349.9 436.6L350.7 436.7L351.2 435.8L352.3 437.6L351.6 438.2L352.0 440.5L356.1 445.3L357.3 447.9L360.2 450.8Z","far":"","bb":[242.9,401.2,406.2,534.5],"c":[337.0,472.3]},{"code":"33","name":"충청북도","d":"M258.4 560.0L259.6 559.1L260.4 559.5L260.1 557.6L261.8 556.9L263.8 557.0L265.1 558.1L266.3 556.9L264.5 555.1L264.9 553.7L261.5 551.1L260.1 551.0L260.1 548.9L258.1 548.6L258.2 546.4L256.7 545.7L257.8 543.8L257.3 542.6L259.5 542.2L261.2 540.8L263.0 541.1L263.9 539.8L264.9 539.5L263.7 538.2L264.3 537.1L268.2 535.9L269.7 532.3L272.0 532.8L273.3 531.9L276.1 533.3L277.0 532.8L276.7 531.7L277.6 530.5L279.5 531.0L278.8 529.4L280.1 529.5L281.7 528.4L281.9 524.9L281.2 523.8L285.6 525.4L289.6 518.8L290.4 522.4L292.8 524.8L297.0 524.0L297.4 523.3L298.0 523.8L298.8 523.0L300.7 524.2L301.4 522.8L302.6 523.0L303.2 522.0L302.4 517.9L306.6 515.1L309.3 516.2L309.7 517.8L310.8 518.7L310.0 519.8L310.8 520.9L315.8 519.5L317.0 517.1L319.8 518.9L320.5 517.3L322.5 515.9L323.5 516.1L324.5 517.7L326.1 517.5L327.3 519.3L330.8 518.0L331.9 518.8L331.6 520.1L329.3 521.4L329.5 522.4L328.2 522.2L327.0 523.3L329.3 525.5L332.3 523.5L333.9 524.2L335.7 523.5L336.9 524.5L336.5 526.0L338.1 526.7L338.6 528.2L339.3 527.5L342.4 527.5L343.8 526.2L346.7 529.3L351.7 530.4L352.8 529.5L353.2 530.5L355.0 531.3L353.6 533.4L351.8 532.4L351.7 533.2L350.0 533.1L348.9 533.9L349.1 535.5L347.9 536.9L345.1 537.9L344.5 539.3L341.6 540.9L341.1 542.3L339.8 542.9L340.0 544.0L338.5 547.2L340.3 548.2L340.3 549.6L338.3 552.6L335.6 552.4L334.2 553.4L333.4 552.6L330.8 552.2L328.3 548.9L325.3 547.5L325.1 549.8L323.2 549.7L323.5 552.6L317.6 550.8L315.9 551.8L315.7 553.0L314.5 553.9L312.3 552.2L310.3 558.0L312.5 559.8L313.1 561.3L311.6 561.3L309.1 559.5L308.1 560.6L307.1 560.5L305.0 558.9L304.4 561.3L303.2 561.5L302.9 562.8L300.4 562.5L298.9 563.5L300.8 563.5L302.1 564.7L302.9 564.6L303.6 566.4L302.6 570.2L301.3 568.2L300.1 567.9L299.3 565.6L298.0 567.4L297.0 567.5L297.8 569.3L295.1 569.3L293.3 570.8L295.4 572.8L298.0 573.1L299.1 575.7L301.0 576.4L301.3 578.2L299.1 579.8L299.5 582.0L298.9 585.2L299.6 585.3L298.1 587.8L299.1 588.0L300.2 590.6L297.4 593.1L296.6 594.8L297.4 597.8L299.5 597.8L301.1 595.5L301.4 596.8L303.0 597.4L305.1 599.6L305.9 599.8L306.6 598.7L308.7 598.0L309.9 598.3L311.4 599.2L310.2 600.6L312.2 603.9L310.8 604.5L308.7 603.2L306.4 604.2L306.7 606.5L307.8 607.7L307.1 608.4L307.1 610.0L305.6 610.9L305.2 614.9L304.2 616.0L303.0 616.6L302.0 616.2L299.1 618.9L297.1 617.5L291.2 619.8L290.8 618.7L286.5 617.8L285.6 615.5L283.5 617.6L283.1 616.1L280.4 612.9L280.6 611.7L278.4 609.5L279.3 607.4L278.7 605.9L279.2 603.6L278.0 601.4L275.3 601.9L275.6 600.8L274.6 599.7L271.5 600.8L271.0 598.9L271.9 597.0L271.4 595.9L272.0 592.3L273.6 591.0L273.8 588.2L274.8 587.4L276.3 587.3L275.0 585.6L273.8 585.2L272.1 586.5L271.3 584.3L272.3 582.8L270.4 582.4L270.9 580.8L269.9 581.0L268.5 583.1L265.0 582.5L264.5 579.5L265.6 579.1L264.6 577.1L265.4 576.8L265.2 575.7L263.6 575.3L262.8 573.8L263.2 573.1L260.3 573.6L259.1 571.8L257.6 571.6L258.1 570.3L257.0 567.4L255.8 567.1L258.0 564.7L258.1 563.5L256.5 562.8L258.2 561.6L258.4 560.0Z","far":"","bb":[255.8,515.1,355.0,619.8],"c":[295.8,561.7]},{"code":"34","name":"충청남도","d":"M191.0 570.7L191.0 572.2L189.8 572.7L191.0 573.4L191.0 575.3L191.8 576.8L191.2 577.2L192.9 578.3L192.7 579.8L193.5 579.5L194.1 581.8L193.3 582.7L195.1 584.1L195.3 585.6L194.4 586.4L194.8 587.1L192.1 585.4L191.1 586.2L190.1 585.9L189.3 585.1L190.2 583.8L187.8 583.7L187.3 581.5L188.4 578.4L187.6 577.8L187.6 574.2L186.4 571.6L187.3 571.8L187.2 570.5L189.9 569.4L191.0 570.7ZM214.0 536.8L220.4 538.9L221.0 542.1L221.8 543.1L222.1 542.6L222.4 543.0L222.8 545.5L226.1 546.9L229.2 546.2L230.0 544.7L235.7 542.2L238.2 542.8L242.2 541.2L242.9 541.6L243.4 540.7L242.9 540.2L244.0 539.2L247.5 539.3L247.2 539.8L250.6 540.9L251.2 542.6L255.7 544.2L256.5 545.6L258.2 546.4L258.1 548.6L260.2 549.0L260.1 551.0L261.5 551.1L264.9 553.7L264.5 555.1L265.7 555.8L266.2 557.2L265.1 558.1L262.5 556.8L260.2 557.6L260.7 559.2L258.4 560.0L258.2 561.6L256.5 562.8L253.7 562.3L250.6 559.8L247.9 559.2L245.2 561.3L246.2 562.8L247.3 562.4L247.6 562.8L247.0 566.6L247.6 568.3L246.8 568.8L247.2 569.9L249.8 570.9L249.9 572.0L251.0 572.3L249.4 574.4L249.8 574.9L248.5 575.3L249.1 577.0L248.2 578.0L248.7 579.4L250.0 579.7L249.8 580.9L250.7 582.2L250.3 583.8L254.1 586.6L254.9 585.8L256.3 585.9L256.2 589.3L255.5 590.5L256.1 591.8L254.7 593.3L254.7 596.0L253.8 596.4L254.6 597.6L257.0 598.6L256.1 599.6L256.3 601.0L257.4 602.2L257.9 601.5L258.7 602.2L260.0 603.9L259.9 605.3L262.2 602.4L261.9 598.8L262.8 597.9L264.1 598.8L263.9 601.1L264.7 601.3L265.4 602.9L267.8 604.4L270.4 601.5L274.3 599.7L275.6 600.7L275.3 601.9L277.7 601.2L279.0 602.5L278.7 605.9L279.3 607.4L278.4 609.5L280.6 611.7L280.4 612.9L282.0 615.1L280.7 615.4L280.6 617.5L281.4 617.3L282.1 618.1L280.0 618.7L280.3 620.7L278.5 618.6L277.4 618.8L274.4 617.4L274.6 621.1L272.6 622.5L272.0 621.9L271.1 622.6L269.7 621.8L268.8 622.2L267.3 618.3L264.6 619.9L263.1 618.9L261.9 616.2L261.9 613.3L261.0 612.5L261.6 611.7L260.4 609.8L259.2 609.8L258.7 610.8L257.7 610.3L257.2 611.3L255.8 611.8L254.2 611.3L253.9 613.8L252.5 612.6L250.8 612.4L250.3 613.6L249.1 612.8L248.2 613.7L246.1 613.4L244.8 615.5L240.4 613.3L240.5 610.3L239.3 609.4L239.2 608.5L237.7 609.3L237.1 608.3L232.9 607.6L230.2 609.4L227.9 609.2L226.3 615.7L223.1 616.6L222.0 617.9L217.9 618.6L217.0 620.8L212.0 620.4L211.6 618.4L212.1 618.2L210.4 616.0L209.4 616.2L209.4 614.3L208.6 614.3L210.6 613.4L210.4 612.9L209.4 613.1L209.5 612.5L208.6 612.2L208.0 612.8L206.7 610.1L205.0 609.0L204.0 610.0L203.2 608.7L201.4 608.0L200.1 608.9L200.6 609.9L199.5 609.3L199.5 607.5L201.2 607.4L201.9 606.6L201.7 605.2L202.7 603.9L202.1 600.8L203.5 598.5L202.0 595.8L201.2 595.7L200.3 593.1L201.1 593.3L204.3 591.3L200.1 588.9L200.6 588.3L198.5 588.5L199.7 585.0L202.3 583.8L201.8 583.4L199.8 584.4L200.0 583.4L199.0 582.6L198.5 579.5L199.1 576.6L198.2 575.6L197.6 575.9L197.9 573.8L197.3 571.6L196.8 570.8L193.6 570.1L193.8 569.1L190.3 568.1L188.1 568.8L186.8 571.2L186.1 570.8L185.7 571.4L185.0 571.7L184.4 570.9L184.4 568.5L184.8 569.1L185.7 568.2L185.2 565.5L184.5 564.4L183.0 564.2L182.8 562.4L183.7 561.7L183.9 559.3L182.1 560.8L180.9 560.5L181.2 561.8L179.1 562.6L178.1 564.2L175.0 563.7L174.6 561.8L176.0 560.6L178.9 561.6L180.1 560.5L179.5 559.7L178.3 560.2L179.3 558.7L178.1 558.8L177.1 558.1L177.3 557.5L174.1 557.5L174.8 559.4L172.6 561.3L173.7 557.9L172.0 555.9L173.7 555.7L173.4 554.7L174.5 554.3L174.3 552.9L175.1 552.7L174.8 552.2L175.6 551.4L174.5 550.4L175.2 550.4L174.7 549.8L176.3 550.2L176.4 552.6L177.4 552.4L177.5 551.3L176.6 550.9L178.3 548.9L177.2 548.0L177.8 547.1L176.8 546.4L178.2 546.2L178.6 544.8L179.3 545.2L181.8 544.0L183.9 545.4L185.1 545.1L184.5 544.6L185.2 542.7L184.5 539.9L185.9 538.6L185.9 539.5L185.0 539.9L186.3 540.5L185.7 541.6L186.3 542.7L185.6 543.6L187.0 544.9L187.0 545.9L187.8 545.9L186.6 546.6L185.3 549.2L185.1 550.0L186.7 550.8L184.4 551.5L185.1 553.8L185.9 552.4L188.3 552.2L186.9 550.0L187.7 548.5L189.0 548.5L188.7 549.7L190.3 551.1L189.8 549.5L190.8 547.9L190.2 547.2L192.6 546.8L192.5 545.8L193.2 545.9L193.3 545.1L193.8 545.7L195.1 545.1L193.6 544.5L193.1 543.6L194.1 543.2L194.2 542.1L194.0 542.6L192.5 542.2L192.0 543.0L191.4 541.4L189.9 541.9L190.1 541.0L189.2 540.0L188.0 540.1L188.1 539.0L190.7 540.1L192.0 539.3L191.0 538.3L187.8 538.0L187.6 536.8L189.8 535.8L190.0 536.3L194.1 535.8L194.3 535.1L196.7 536.9L197.9 536.2L197.1 535.1L199.9 531.3L201.4 531.8L203.0 533.9L204.4 533.7L204.5 534.4L209.5 536.6L214.0 536.8Z","far":"","bb":[172.0,531.3,282.1,622.6],"c":[206.9,568.5]},{"code":"35","name":"전라북도","d":"M214.4 621.2L212.5 622.0L211.4 621.6L214.4 621.2ZM235.7 608.5L237.1 608.3L237.7 609.3L239.2 608.5L239.3 609.4L240.5 610.3L240.4 613.3L244.8 615.5L246.1 613.4L248.2 613.7L249.1 612.8L250.3 613.6L250.8 612.4L252.5 612.6L253.9 613.8L254.2 611.3L255.8 611.8L257.2 611.3L257.7 610.3L258.7 610.8L259.2 609.8L260.4 609.8L261.6 611.7L261.0 612.5L261.9 613.3L261.9 616.2L263.1 618.9L264.9 620.1L267.3 618.3L268.8 622.2L269.7 621.8L271.1 622.6L272.0 621.9L272.5 622.5L273.8 622.1L274.6 621.2L274.3 617.4L277.4 618.8L278.5 618.6L280.2 620.7L280.0 618.7L282.1 618.1L281.4 617.3L280.6 617.5L280.9 615.1L282.4 615.2L283.8 617.6L284.4 617.3L284.2 616.5L285.6 615.5L286.5 617.8L290.8 618.7L291.0 619.8L297.1 617.5L299.1 618.9L299.0 621.1L300.4 622.0L301.4 625.6L299.5 626.8L299.7 628.4L297.9 628.7L296.6 632.0L295.5 631.9L294.6 633.1L293.9 632.7L291.4 634.4L289.6 633.9L287.8 637.9L284.9 640.2L283.9 640.2L283.6 645.2L282.2 646.6L282.1 648.3L280.6 650.5L281.7 652.8L280.1 653.7L280.0 655.8L278.4 657.4L278.1 658.3L280.1 659.8L281.3 659.8L281.1 660.7L282.8 663.0L283.0 663.9L281.8 664.6L281.8 666.2L282.5 667.1L284.5 667.4L283.6 670.0L279.9 674.1L280.7 676.9L277.6 678.9L272.0 674.6L267.8 674.2L263.7 679.4L261.5 677.7L258.3 679.2L256.6 678.4L254.5 678.6L252.0 676.7L250.7 678.3L249.3 677.4L249.4 676.5L247.6 677.3L246.5 678.8L243.6 679.7L239.1 677.8L239.8 676.2L241.1 676.3L241.1 674.1L240.1 672.7L238.8 672.9L238.0 671.6L239.4 671.0L239.8 669.0L238.7 668.4L238.5 665.6L237.0 666.3L236.0 665.9L235.6 667.9L234.7 669.0L233.9 668.9L234.3 671.2L231.3 671.7L231.2 670.7L230.1 671.0L230.0 669.9L229.0 669.5L228.6 668.3L229.2 667.8L228.6 667.2L226.6 666.0L224.4 666.0L224.7 664.6L223.3 663.9L222.6 664.1L222.6 665.4L219.1 665.6L217.1 667.0L218.1 668.2L218.3 669.8L216.0 671.2L216.7 673.1L215.8 674.1L214.7 674.1L214.4 675.4L213.4 675.9L212.0 675.3L210.4 677.9L207.5 676.6L206.1 677.1L206.1 679.5L203.7 678.5L202.3 679.0L201.0 677.3L201.5 675.5L200.9 674.4L199.5 675.4L199.8 673.5L198.4 672.4L199.3 671.6L199.4 670.3L198.3 668.7L194.9 668.4L195.4 667.1L194.9 667.0L195.6 667.0L198.9 660.9L199.8 662.0L200.2 660.7L201.9 659.9L203.2 660.5L204.3 659.2L206.8 659.4L206.9 660.3L208.2 656.9L209.6 656.5L212.5 658.5L211.8 657.3L212.5 656.9L211.3 655.5L210.9 656.0L205.4 655.2L202.0 656.1L201.1 655.4L200.6 656.1L198.4 654.2L197.6 654.5L197.1 653.5L197.8 652.0L197.0 651.2L204.1 646.2L201.5 643.3L198.7 636.3L201.4 642.8L205.0 647.1L209.3 641.9L208.7 638.7L209.5 637.6L211.0 638.3L214.9 637.9L213.2 634.1L212.6 630.1L208.1 630.4L208.5 625.9L206.7 625.1L206.4 629.0L205.4 628.9L206.3 629.0L206.3 627.5L205.1 627.5L204.7 628.8L204.7 626.2L202.5 626.3L199.9 634.6L198.0 636.7L197.3 636.0L196.4 637.0L195.9 636.5L196.6 636.0L195.8 635.2L198.2 635.7L199.3 634.4L198.9 633.8L199.8 633.6L202.3 626.5L201.5 623.1L200.9 622.9L201.7 623.6L201.9 623.0L208.1 622.6L209.0 623.2L208.8 622.7L213.2 622.1L214.8 621.2L217.0 622.0L218.4 619.9L217.4 619.8L217.9 618.6L222.0 617.9L223.1 616.6L226.5 615.6L226.9 611.5L228.1 609.1L230.2 609.4L232.9 607.6L235.7 608.5Z","far":"","bb":[194.9,607.6,301.4,679.7],"c":[225.9,643.4]},{"code":"36","name":"전라남도","d":"M203.6 773.9L205.2 775.3L206.0 774.5L208.7 775.0L208.4 776.3L207.4 775.3L207.4 776.5L206.5 775.2L205.3 776.4L203.3 778.2L200.9 778.5L200.3 775.4L202.8 773.5L203.6 773.9ZM211.1 772.1L213.3 773.5L211.2 774.4L212.2 776.4L213.2 776.3L213.0 777.1L212.1 776.8L211.8 779.4L211.2 779.1L210.8 777.8L209.9 778.5L209.2 776.6L211.0 774.5L209.6 773.0L210.3 773.1L211.1 772.1ZM228.1 770.5L229.6 770.9L229.4 773.4L230.8 772.9L230.1 775.5L227.5 776.2L226.7 774.9L225.9 775.4L225.6 776.1L225.1 775.1L225.9 774.5L225.0 774.2L225.7 773.9L225.7 772.1L228.1 770.5ZM204.9 769.2L205.2 770.1L206.9 769.7L208.3 770.7L209.0 771.8L207.4 772.0L208.4 773.4L206.2 772.8L206.3 774.3L204.4 773.8L204.5 772.9L203.4 772.7L204.1 772.5L203.8 771.5L204.7 771.0L203.9 770.9L204.8 770.0L203.8 769.2L204.9 769.2ZM224.4 762.6L223.7 761.4L221.9 761.4L221.2 762.3L220.2 761.2L218.1 760.6L220.0 760.9L220.7 759.7L221.7 760.8L222.7 760.5L224.1 758.7L225.9 759.9L226.8 759.4L227.5 760.6L228.5 759.8L228.6 760.9L227.4 761.0L227.4 762.7L226.8 762.8L226.3 761.7L226.4 762.4L224.6 763.7L224.4 762.6ZM238.2 760.3L237.4 759.1L236.5 759.5L235.0 758.6L236.5 758.8L237.0 757.1L238.1 757.5L238.1 756.8L239.3 757.9L239.2 759.3L241.5 758.4L242.3 759.4L243.3 760.4L240.9 759.6L240.5 760.2L241.6 760.9L240.1 761.1L239.0 762.9L238.6 761.5L239.9 760.5L239.0 760.1L238.4 760.9L238.2 760.3ZM214.0 755.3L216.5 756.9L216.7 759.3L217.9 761.8L219.6 762.6L218.8 763.6L220.0 764.6L217.9 764.3L216.9 763.2L217.0 764.7L215.6 763.8L214.0 764.2L212.2 761.7L210.4 761.1L210.0 756.7L212.3 755.1L214.0 755.3ZM231.9 755.8L231.3 756.6L232.2 757.1L232.2 757.9L230.9 757.7L229.3 759.1L226.2 757.4L226.8 755.7L226.2 754.3L226.8 755.1L227.7 754.8L228.4 755.5L228.6 754.9L229.7 755.9L231.0 756.0L231.9 754.1L232.5 754.9L231.9 755.8ZM224.0 752.1L224.8 752.6L224.7 753.5L223.3 753.6L224.5 754.3L225.2 753.7L225.1 754.7L225.7 754.5L226.3 756.0L225.0 756.0L223.8 757.0L223.3 756.3L221.8 756.4L220.3 758.1L220.1 759.2L219.1 758.6L220.1 756.7L218.0 756.9L219.3 755.3L219.0 754.4L220.8 752.5L222.8 752.4L224.1 751.5L224.0 752.1ZM270.5 749.8L271.3 749.7L270.8 750.2L271.5 750.3L271.9 749.5L272.4 749.8L272.3 749.1L274.7 751.2L274.2 753.3L273.5 753.0L271.4 754.2L271.0 753.9L271.5 752.5L270.2 752.4L269.3 751.5L270.9 751.2L268.4 751.1L269.0 750.8L268.7 748.8L270.5 749.8ZM251.7 747.2L252.9 748.8L251.0 752.7L248.0 752.2L247.3 753.0L246.4 752.8L246.2 753.5L244.4 752.0L244.2 751.1L243.1 751.6L243.7 750.6L242.7 749.3L244.1 748.8L244.0 748.0L244.9 747.6L246.2 749.1L249.6 747.3L250.3 747.8L251.7 747.2ZM269.6 743.1L270.5 743.8L269.0 744.6L270.2 745.5L269.0 745.6L271.4 746.1L272.5 747.5L270.3 748.2L268.6 748.6L267.7 747.4L269.0 746.6L268.8 745.9L267.2 745.2L268.6 743.1L269.6 743.1ZM291.4 744.2L292.3 745.8L291.2 745.9L292.6 746.1L293.5 747.1L292.9 747.9L291.5 747.9L290.9 747.6L291.6 746.9L288.9 746.5L289.3 745.9L288.2 745.5L288.7 744.5L287.8 744.9L286.1 743.5L290.6 742.5L291.4 744.2ZM182.2 739.7L184.1 739.7L185.9 740.8L186.3 741.5L185.7 742.0L186.7 743.1L187.4 743.4L188.4 742.5L189.3 744.5L191.6 746.4L190.8 746.7L191.7 748.5L189.8 748.4L190.8 749.3L189.8 750.4L190.3 751.6L188.1 754.0L188.2 755.1L187.5 755.6L187.1 753.1L186.4 753.9L186.6 755.2L185.8 754.0L186.1 755.0L185.1 754.5L185.4 755.4L184.8 755.7L185.8 755.6L185.4 756.5L186.3 756.7L186.2 757.4L185.2 757.5L184.8 758.2L184.1 757.8L184.9 755.8L183.1 755.4L182.7 756.3L183.2 757.1L181.7 756.9L179.8 758.0L178.6 757.6L179.4 758.5L177.0 759.5L177.1 758.6L176.4 759.2L175.3 758.8L175.6 758.1L174.6 758.1L174.0 758.8L173.4 758.1L174.3 756.4L172.3 756.8L170.4 753.6L171.3 751.7L172.5 751.1L173.2 751.6L172.4 750.2L176.4 748.1L177.7 745.6L177.6 747.1L178.8 747.2L178.3 746.0L180.1 745.4L179.2 744.5L180.2 744.3L180.2 743.3L181.0 743.7L182.1 741.5L181.3 741.3L181.2 739.8L182.2 739.7ZM168.2 736.0L171.2 737.7L171.1 738.7L172.0 739.4L170.6 741.0L171.2 742.4L170.0 742.1L170.2 742.9L169.5 743.4L168.5 743.4L168.0 744.2L166.9 743.9L166.2 744.2L166.0 743.2L167.2 743.6L168.3 742.2L166.0 742.4L166.2 741.7L168.6 741.8L170.3 739.7L169.4 739.7L168.3 737.4L167.4 737.5L167.6 736.0L168.2 736.0ZM165.3 735.4L166.8 735.9L166.4 737.5L168.0 738.0L168.6 739.8L168.0 741.1L166.4 740.7L165.4 741.4L165.1 739.5L165.9 739.1L165.4 738.4L164.8 738.7L165.2 736.9L164.7 735.8L165.3 735.4ZM175.5 732.6L177.5 734.0L177.3 735.2L178.4 734.8L178.5 735.4L173.4 737.3L172.8 737.1L173.3 736.7L172.9 736.2L173.5 734.9L171.9 734.3L173.2 734.0L174.8 732.4L175.5 732.6ZM122.6 730.3L122.9 731.3L123.8 731.4L124.0 730.5L124.5 730.9L124.7 730.4L125.4 731.1L125.0 731.6L124.7 731.2L124.0 731.6L123.5 733.3L122.4 733.3L122.8 734.5L121.6 734.8L121.6 736.3L120.9 736.3L119.7 734.8L120.7 734.3L119.8 733.6L120.6 733.2L121.7 730.3L122.6 730.3ZM292.6 729.0L292.8 730.0L291.9 729.8L292.1 729.0L291.7 729.6L291.0 729.2L291.5 729.8L290.7 729.7L291.1 730.5L292.1 730.3L292.4 732.4L294.1 733.3L293.2 734.8L293.6 735.9L293.0 735.9L292.7 737.8L294.2 738.7L293.7 739.5L290.0 739.0L289.1 737.5L287.2 736.6L288.2 735.2L287.3 734.8L290.9 731.0L289.1 727.4L290.4 727.4L292.6 729.0ZM161.8 727.9L165.0 729.9L164.5 731.3L161.5 733.6L160.7 733.5L160.7 732.3L159.6 732.9L159.2 731.7L158.3 732.4L157.8 730.3L157.9 729.1L160.2 728.8L161.2 726.9L161.8 727.9ZM171.5 724.4L173.0 724.0L174.4 725.6L175.3 725.1L176.5 725.5L176.1 726.0L177.2 728.0L176.8 729.5L174.5 729.9L174.8 728.8L173.9 727.6L172.5 728.8L171.0 728.3L169.4 729.3L169.9 728.3L169.1 726.5L169.9 725.7L168.6 724.2L170.0 724.7L170.4 723.7L171.5 724.4ZM189.8 723.3L191.0 724.1L190.8 725.0L190.2 725.0L189.9 726.2L189.3 725.8L189.4 724.0L189.8 723.3ZM163.5 721.0L164.0 722.5L162.9 723.7L163.9 723.8L163.9 724.8L162.3 725.5L161.7 725.1L161.2 726.0L161.3 724.8L160.7 724.4L160.8 725.5L160.3 725.2L159.5 725.9L159.0 725.5L160.4 727.2L159.6 727.4L159.7 728.2L157.8 728.5L156.0 726.8L156.7 724.9L156.0 724.4L157.0 724.0L156.8 723.3L159.5 723.5L163.5 721.0ZM172.3 714.7L173.9 715.3L174.3 714.8L175.1 715.8L175.3 716.5L173.6 716.6L174.8 718.0L174.2 719.3L172.7 718.7L172.5 721.6L170.8 721.8L170.2 720.2L169.1 720.5L169.5 722.1L167.1 719.4L168.8 720.5L169.8 720.0L168.3 717.6L169.9 716.6L172.3 717.3L172.7 716.7L171.8 714.9L172.3 714.7ZM185.2 717.4L183.9 716.9L182.9 718.3L180.3 717.5L180.8 716.2L182.7 716.7L183.4 715.5L184.1 716.3L184.2 714.3L185.1 714.8L185.8 714.3L184.3 712.1L185.4 711.3L186.5 712.5L188.2 712.4L189.3 713.9L188.3 713.7L188.1 714.3L187.5 713.9L187.7 714.9L186.5 715.0L187.5 715.5L186.6 716.0L190.5 716.8L190.4 719.6L189.2 720.5L188.3 720.2L187.5 719.5L188.9 718.7L188.8 718.1L188.3 718.3L187.7 717.3L185.2 717.4ZM168.5 710.4L169.4 710.4L169.5 711.4L170.6 711.4L170.0 712.2L171.1 712.4L170.0 713.6L171.1 714.1L170.9 715.2L169.7 714.8L170.1 716.2L167.6 717.0L167.3 717.8L165.5 716.4L165.8 715.5L164.3 716.3L162.4 716.2L162.5 715.5L161.6 715.3L163.3 715.2L165.0 712.2L166.3 712.4L166.5 711.6L166.9 712.3L167.9 712.2L168.4 711.4L168.1 710.0L168.5 710.4ZM289.1 709.8L289.1 710.5L291.1 710.5L292.5 712.4L292.5 714.3L289.4 712.7L290.7 713.0L290.8 712.5L289.1 712.6L286.7 712.1L286.7 710.9L288.6 708.8L289.1 709.8ZM173.7 702.6L175.9 703.1L175.7 703.9L176.8 705.1L177.0 706.9L175.8 707.9L175.7 707.2L174.4 707.4L174.4 708.5L172.9 709.2L173.8 707.6L173.7 705.5L174.5 705.8L173.6 704.7L171.6 705.1L171.1 704.6L173.7 702.6ZM168.0 698.5L167.0 697.7L168.0 696.8L167.5 696.2L169.8 695.8L172.2 692.8L175.8 692.6L173.0 693.4L172.4 696.6L172.9 698.0L171.4 697.4L172.8 698.3L171.8 699.0L172.5 699.7L171.4 700.0L171.3 700.8L169.3 699.8L169.6 698.9L168.3 699.1L168.5 700.1L168.1 699.5L166.7 699.3L168.0 699.1L168.0 698.5ZM228.1 750.5L226.7 750.6L227.9 752.4L227.6 753.4L224.8 750.9L222.1 750.6L222.2 749.5L220.8 750.1L220.6 748.8L221.4 748.5L220.6 745.7L221.4 742.8L220.1 737.3L219.1 741.5L219.4 744.6L218.6 744.6L219.1 746.9L217.2 747.9L218.3 749.2L216.2 751.6L212.5 752.9L212.8 753.8L211.8 752.9L210.8 753.2L210.6 754.4L209.7 754.2L209.2 755.0L208.4 755.0L208.8 755.8L208.0 756.4L208.7 757.0L208.7 758.6L207.3 759.5L207.9 760.0L207.2 760.6L207.6 762.3L204.2 761.8L203.2 763.3L201.6 764.2L200.9 762.0L201.9 760.7L201.1 760.3L201.4 758.5L200.2 758.2L198.2 759.6L197.5 758.4L198.3 758.9L198.3 758.2L199.1 758.2L198.1 757.0L198.6 756.7L198.0 756.5L199.8 756.4L199.1 754.5L200.4 754.8L201.2 754.0L200.5 751.8L199.8 752.5L198.9 752.3L198.7 753.0L196.8 751.2L198.4 751.0L197.7 750.4L198.0 749.4L196.8 748.7L197.6 748.0L196.9 746.7L197.9 746.2L196.9 744.8L195.8 744.9L197.2 744.1L195.3 743.8L195.4 742.6L193.9 741.9L194.1 742.8L193.0 742.9L193.0 743.5L191.8 744.1L191.2 743.5L192.0 742.5L191.6 741.6L190.1 741.7L188.1 740.6L186.6 741.1L185.9 740.3L186.5 739.4L185.5 739.2L185.3 738.3L185.0 739.1L184.2 738.8L184.7 738.0L184.2 737.4L182.6 737.4L184.2 737.4L185.2 735.9L182.8 735.0L183.3 734.4L182.4 733.0L182.6 729.9L182.9 729.3L183.5 729.7L184.2 728.5L183.8 727.7L184.6 725.1L185.5 724.8L186.1 726.0L186.9 725.7L187.9 726.6L187.8 728.2L189.8 730.5L192.0 727.4L190.0 726.5L190.3 725.7L191.4 725.6L190.8 725.5L191.4 724.2L196.4 723.0L195.8 721.7L191.5 723.3L189.2 721.9L190.3 721.3L192.0 718.5L193.7 718.0L192.4 715.8L192.9 714.8L191.8 715.0L192.2 713.2L193.2 712.2L192.0 710.8L192.7 710.2L191.9 709.3L192.3 707.7L191.3 707.2L190.9 704.9L190.6 706.9L189.9 707.4L190.9 708.4L190.5 711.5L187.7 711.8L187.5 710.6L186.1 710.8L187.1 709.6L185.2 707.7L186.6 705.8L187.6 707.6L189.8 706.1L189.8 705.4L187.9 705.4L192.1 702.8L191.5 700.7L189.4 701.6L189.1 700.0L187.9 699.6L188.8 698.9L188.2 697.8L187.0 697.4L186.8 698.9L185.6 699.6L186.6 700.2L185.9 701.0L185.3 701.3L185.7 700.9L184.6 699.6L182.8 700.3L183.8 701.9L182.0 703.8L181.6 702.5L181.2 703.3L180.4 703.1L180.8 700.4L179.1 700.3L178.3 699.5L177.1 699.9L176.1 698.7L175.6 699.2L175.5 696.5L177.7 695.3L180.7 696.5L182.5 696.3L182.7 696.9L182.7 696.0L181.5 695.4L182.7 692.8L183.7 692.2L184.1 693.4L186.1 693.2L186.2 694.1L187.1 694.1L187.8 692.9L187.5 692.2L188.9 691.4L187.9 697.0L189.4 696.4L188.8 698.4L190.4 698.2L190.6 699.6L192.2 697.6L191.7 699.2L192.6 698.4L193.4 699.6L192.1 701.2L192.9 701.3L193.1 702.5L194.8 702.5L194.2 701.1L196.9 698.6L195.4 697.5L196.9 697.3L197.5 696.4L194.4 695.8L191.6 691.5L189.9 690.6L189.5 689.3L190.8 688.8L191.1 687.0L188.4 688.8L188.6 686.8L187.1 687.7L186.7 686.5L186.6 687.2L185.6 687.1L185.4 686.1L186.2 683.7L187.6 684.3L187.2 682.7L189.0 681.8L187.9 682.3L187.4 682.0L187.7 681.3L190.7 680.9L190.3 680.2L191.2 679.1L192.6 673.8L195.9 674.8L196.3 675.5L193.3 672.7L192.9 671.5L193.6 670.7L193.0 670.8L194.2 669.0L193.5 668.5L198.5 669.0L199.5 670.4L198.4 672.4L199.8 673.5L199.5 675.4L200.9 674.4L201.5 675.5L201.0 677.3L202.3 679.0L203.7 678.5L206.1 679.5L206.1 677.1L207.5 676.6L210.4 677.9L212.0 675.3L213.5 675.7L214.4 675.4L214.7 674.1L216.0 674.0L216.7 672.6L216.0 671.2L218.3 669.8L217.3 666.8L218.0 666.9L219.1 665.6L222.6 665.4L222.6 664.1L223.3 663.9L224.7 664.6L224.4 666.0L226.6 666.0L228.6 667.2L229.2 667.8L228.6 668.3L229.0 669.5L230.0 669.9L230.1 671.0L231.2 670.7L231.3 671.7L234.3 671.2L233.9 668.9L234.7 669.0L235.6 667.9L236.0 665.9L237.0 666.3L238.5 665.6L238.7 668.4L239.8 669.0L239.4 671.0L238.0 671.6L238.8 672.9L240.1 672.7L241.1 674.1L241.1 676.3L239.8 676.2L239.1 677.8L243.6 679.7L246.5 678.8L247.6 677.3L249.4 676.5L249.3 677.4L250.7 678.3L252.0 676.7L254.5 678.6L256.6 678.4L258.3 679.2L261.5 677.7L263.7 679.4L267.5 674.3L272.0 674.6L277.6 678.9L277.6 680.0L280.3 683.8L280.5 688.8L285.6 693.4L286.2 696.3L289.5 699.7L291.1 700.3L292.6 703.4L292.2 705.7L290.2 708.0L291.3 708.7L291.3 710.4L289.6 710.3L289.3 709.1L290.1 708.0L288.6 708.6L286.1 711.6L284.4 710.6L283.7 712.2L284.3 712.9L282.0 714.6L281.0 713.0L283.3 712.4L280.8 712.8L279.1 711.0L277.7 711.6L278.5 711.6L280.2 713.6L278.5 715.3L279.5 717.0L280.1 716.7L279.8 717.3L281.8 717.7L281.1 718.6L281.8 719.2L283.6 717.9L284.3 718.5L286.0 716.2L288.4 716.4L289.5 717.3L289.3 716.4L291.0 716.3L291.9 716.9L291.4 721.4L289.7 723.5L290.3 726.8L288.8 726.7L288.7 727.5L286.3 728.2L283.7 725.2L282.1 728.0L282.3 729.5L281.0 728.5L280.2 729.4L281.2 730.3L280.9 731.1L282.0 731.4L280.4 731.4L281.6 732.5L281.3 734.2L282.3 734.2L281.6 735.4L282.4 736.1L281.0 735.9L280.3 734.8L278.4 734.0L277.4 734.4L277.8 735.8L275.9 733.5L275.8 732.6L276.6 732.1L275.6 731.5L275.8 730.5L276.3 730.0L277.9 730.5L276.6 729.3L275.8 729.9L276.1 728.8L275.5 728.9L276.6 728.0L276.4 727.3L277.5 727.4L277.9 726.2L278.8 725.9L278.2 725.7L278.1 724.3L277.2 724.9L277.2 723.7L276.3 723.5L277.1 723.1L276.1 721.0L273.7 720.8L275.1 717.9L273.9 717.8L273.3 715.0L271.5 715.3L271.0 718.1L267.7 718.5L267.6 717.7L266.7 718.9L265.6 718.4L266.1 719.2L264.9 719.5L263.5 718.5L261.5 718.3L264.2 720.4L266.7 720.3L264.1 722.3L263.8 723.7L265.0 724.4L262.9 726.5L264.1 729.1L267.2 731.7L266.8 732.2L267.7 731.9L268.3 732.4L268.1 733.2L269.9 733.0L271.2 734.3L271.3 734.9L269.0 734.6L271.7 735.7L272.6 739.0L271.8 739.2L271.1 740.6L269.2 740.0L269.0 739.1L268.0 740.3L267.2 739.4L264.5 739.5L264.7 740.4L265.4 740.2L264.5 741.8L267.6 742.7L266.5 744.4L267.0 745.7L265.8 745.0L265.1 746.3L263.1 746.5L264.2 747.8L263.9 748.2L263.2 747.8L262.7 748.5L261.8 747.5L261.1 748.7L260.5 747.8L260.6 748.4L259.4 748.8L260.3 749.5L259.3 749.3L258.9 749.9L260.3 750.4L260.3 751.4L259.2 751.7L258.0 751.1L258.8 750.6L258.3 750.0L257.8 750.4L257.7 749.3L255.4 748.3L256.4 747.0L254.4 745.1L252.7 745.3L251.9 743.9L251.0 744.6L251.3 745.4L250.0 744.1L248.8 744.2L248.4 745.2L248.0 744.6L246.5 745.0L244.9 744.4L244.1 742.8L246.7 738.4L247.5 739.2L248.3 738.9L248.4 736.1L250.1 734.1L252.4 733.8L252.7 731.7L253.5 731.4L253.0 730.6L254.1 729.0L256.2 728.5L256.6 730.3L256.0 732.1L256.5 732.8L258.6 733.0L259.9 729.5L260.8 729.2L260.0 728.8L259.5 725.6L257.9 725.8L257.1 727.4L255.6 726.5L255.0 727.3L253.4 725.0L251.0 726.8L250.8 728.4L249.3 730.5L246.3 730.6L244.9 729.9L243.7 731.9L240.8 733.1L239.3 735.5L237.0 736.3L232.9 735.8L233.6 736.5L235.6 736.4L235.6 737.2L236.7 737.8L235.8 738.1L235.5 739.8L234.5 740.6L236.5 740.9L236.2 742.2L235.2 741.6L235.2 743.5L233.4 747.1L234.4 747.8L234.5 749.2L233.7 748.7L232.8 749.5L232.0 748.2L231.5 748.8L232.2 750.4L231.6 751.2L228.1 750.5Z","far":"","bb":[119.7,663.9,294.2,779.4],"c":[228.8,721.5]},{"code":"37","name":"경상북도","d":"M410.2 545.8L410.5 548.6L414.4 556.3L413.7 557.2L414.3 559.7L413.5 563.7L411.6 564.4L409.7 568.5L409.7 571.6L411.7 574.4L412.0 577.8L412.6 578.1L411.2 580.4L411.4 585.1L407.9 590.9L407.0 596.6L407.5 597.7L406.8 599.4L407.8 600.7L407.8 602.5L406.8 604.3L408.3 605.6L408.7 609.5L411.7 611.4L411.0 611.4L411.7 611.5L411.6 612.6L411.0 612.4L410.1 614.6L407.6 615.5L407.6 616.8L406.8 616.6L407.8 618.4L408.9 617.5L409.7 617.8L408.9 617.5L411.1 618.2L409.3 618.3L408.5 619.3L409.3 620.1L409.5 619.5L410.4 619.7L410.5 618.9L409.8 620.4L410.5 619.9L410.3 620.7L412.4 621.5L416.2 618.6L419.4 613.7L421.1 614.3L422.0 616.9L421.6 618.7L422.1 619.4L420.8 621.6L419.8 621.9L420.2 622.1L419.3 624.7L417.4 626.8L418.5 629.2L417.4 631.4L418.5 631.9L416.7 635.4L416.9 637.1L416.3 637.0L415.4 638.6L415.6 641.6L414.8 642.4L414.7 645.4L414.5 645.0L414.1 645.5L413.5 648.8L412.7 649.0L412.4 650.1L411.3 650.0L405.5 647.7L403.6 649.5L401.9 649.6L401.3 650.7L398.4 649.3L398.5 645.9L396.8 645.7L395.0 644.2L394.3 644.8L393.1 644.0L392.7 644.7L391.5 644.8L390.4 643.9L389.8 644.9L385.6 646.6L384.8 648.4L385.8 650.5L385.4 651.0L383.4 650.2L382.7 651.7L381.5 651.5L378.8 653.7L377.2 653.1L375.8 651.5L373.9 651.0L372.0 652.0L371.5 651.4L368.8 655.3L368.0 654.6L365.9 655.3L364.6 657.2L362.5 657.1L360.1 655.9L358.6 656.2L357.6 654.9L355.3 654.6L353.8 655.7L351.4 656.1L349.3 655.0L348.2 653.2L346.6 652.3L346.0 644.9L349.8 642.8L350.5 643.4L352.1 642.8L352.6 645.8L357.2 644.2L358.1 641.3L357.1 638.4L359.7 637.0L359.0 635.4L360.2 634.6L360.0 632.8L361.2 633.3L362.7 632.0L362.7 628.6L361.0 626.7L361.7 623.1L360.6 622.0L360.3 620.5L358.1 619.4L352.5 620.3L351.4 622.0L348.1 623.1L347.8 624.1L346.1 622.4L346.5 626.2L344.6 628.6L344.1 630.3L343.3 629.4L341.7 629.2L342.3 626.3L340.7 625.6L338.6 626.8L336.7 629.2L335.6 633.2L340.4 633.7L342.6 635.1L342.8 636.1L341.9 637.1L338.3 636.8L335.6 641.0L339.1 643.8L339.1 645.6L337.7 646.3L333.8 645.3L333.3 645.7L333.8 647.6L336.9 651.1L336.0 652.9L334.8 653.5L333.4 650.7L330.0 649.7L326.9 650.8L325.4 649.8L324.5 651.1L322.5 650.7L321.3 649.6L319.6 649.9L319.8 648.3L322.7 647.4L322.5 644.4L321.6 641.7L319.9 640.7L319.5 639.0L317.3 638.5L316.9 635.7L313.0 634.1L311.7 635.1L310.1 634.6L308.8 635.2L306.7 632.7L306.1 633.2L304.5 632.4L302.7 632.9L303.2 632.2L302.3 629.8L300.3 630.3L299.7 629.8L299.5 626.8L301.6 625.1L300.1 622.5L300.3 621.9L299.0 621.1L299.1 618.9L302.0 616.2L303.4 616.5L305.2 614.9L305.6 610.9L307.1 610.0L307.1 608.4L307.8 607.7L306.7 606.5L306.4 604.2L308.7 603.2L310.8 604.5L312.2 603.9L310.2 600.6L311.4 599.2L309.9 598.3L308.7 598.0L306.6 598.7L305.9 599.8L305.1 599.6L303.0 597.4L301.4 596.8L301.1 595.5L299.5 597.8L297.4 597.8L296.6 594.8L297.4 593.1L300.2 590.6L299.1 588.0L298.1 587.8L299.6 585.3L298.9 585.2L299.5 582.0L299.1 579.8L301.3 578.2L301.0 576.4L299.1 575.7L298.0 573.1L295.4 572.8L293.5 571.5L293.4 570.3L295.1 569.3L297.8 569.3L297.0 567.5L298.0 567.4L299.3 565.6L300.1 567.9L301.3 568.2L302.6 570.2L303.6 566.4L302.9 564.6L302.1 564.7L300.8 563.5L298.9 563.5L300.4 562.5L302.9 562.8L303.2 561.5L304.4 561.3L305.0 558.9L307.1 560.5L308.1 560.6L309.1 559.5L311.5 561.3L313.1 561.4L312.9 560.1L310.3 558.0L312.3 552.2L314.5 553.9L315.7 553.0L315.9 551.8L317.6 550.8L323.5 552.6L323.2 549.7L325.1 549.8L325.4 547.5L328.3 548.9L330.8 552.2L333.4 552.6L334.2 553.4L335.6 552.4L338.3 552.6L340.3 549.6L340.3 548.2L338.5 547.2L340.0 544.0L339.8 542.9L341.1 542.3L341.6 540.9L344.5 539.3L345.1 537.9L347.9 536.9L349.1 535.5L348.9 534.0L350.0 533.1L351.7 533.2L351.8 532.4L353.6 533.4L355.0 531.3L357.6 532.3L358.4 533.4L360.9 533.4L362.3 534.5L362.9 533.6L362.2 532.1L362.5 531.0L363.1 531.4L364.2 529.0L366.2 530.4L367.7 530.2L369.0 532.5L370.8 533.1L371.3 532.3L372.5 533.1L374.5 529.1L376.1 528.9L377.1 530.3L379.2 529.7L384.1 531.3L385.1 529.4L386.9 528.4L392.0 531.0L393.3 533.3L397.1 533.6L396.2 530.6L399.2 528.2L399.5 527.0L401.2 527.2L403.4 524.8L406.2 524.5L407.0 525.4L407.0 527.5L407.8 528.4L407.3 528.5L411.0 531.9L409.9 532.3L409.5 534.5L410.1 536.8L409.4 538.5L410.3 541.8L410.2 545.8Z","far":"M586.7 516.6L586.5 516.8L586.7 516.6ZM586.4 516.4L586.3 516.4L586.4 516.4ZM517.6 491.3L518.2 491.4L517.4 492.4L518.1 493.7L517.5 495.2L518.2 496.1L515.7 497.3L514.9 498.7L511.8 497.4L509.8 496.1L510.0 494.5L509.1 492.9L509.8 493.2L517.0 490.7L517.6 491.3Z","bb":[293.4,524.5,422.1,657.2],"c":[377.1,601.1]},{"code":"38","name":"경상남도","d":"M333.5 718.3L333.6 718.9L335.2 719.1L335.7 720.5L335.6 719.1L336.3 719.6L338.3 718.6L339.7 719.2L339.8 721.3L339.2 720.8L339.0 721.4L339.7 722.0L338.2 722.2L339.4 723.2L338.5 724.8L336.6 724.5L336.5 723.2L335.8 723.3L336.2 722.7L335.5 721.8L335.0 722.5L334.2 721.9L335.2 721.7L335.3 720.3L333.7 719.5L332.1 720.1L331.7 719.1L332.5 719.2L332.3 718.0L332.8 719.0L333.1 718.1L333.5 718.3ZM310.4 711.5L308.7 715.9L309.7 716.1L309.6 714.7L310.6 713.4L310.8 713.9L311.4 713.5L310.9 714.1L312.8 715.4L311.8 717.2L312.5 716.9L312.4 717.9L314.1 718.6L314.3 719.2L313.6 719.2L309.7 717.6L309.7 718.3L308.1 718.6L305.8 718.0L305.4 715.6L308.2 711.9L310.4 711.5ZM301.1 716.5L302.0 718.6L303.7 719.3L303.9 720.8L304.7 721.2L307.3 718.9L310.2 718.7L311.0 719.7L312.8 720.1L312.5 721.6L311.7 721.9L312.3 722.0L311.5 723.2L312.1 726.2L310.4 728.0L312.3 729.2L309.4 729.8L309.9 728.5L309.1 728.0L308.5 729.1L307.2 728.3L306.9 729.2L304.9 729.2L304.0 726.1L304.7 723.8L304.0 723.4L301.1 724.5L301.7 726.9L300.2 728.1L297.7 727.7L297.4 726.0L296.2 725.8L296.6 724.4L297.8 723.6L296.8 723.4L294.2 717.1L294.9 715.3L295.6 715.2L296.0 713.8L295.3 713.7L295.8 713.6L295.5 713.0L298.1 713.1L297.3 712.3L297.5 710.9L300.2 709.3L302.6 709.8L302.3 710.4L303.0 711.1L302.5 710.9L302.6 713.9L300.9 714.5L301.1 716.5ZM356.5 722.7L355.4 723.8L354.5 723.4L353.9 724.6L355.0 726.4L357.0 726.6L356.7 727.6L356.4 726.7L353.3 727.4L353.2 726.9L352.6 727.4L354.2 728.7L353.9 729.4L353.1 728.8L351.9 729.8L350.5 729.3L349.5 729.8L350.1 728.1L351.7 727.3L349.4 726.7L349.7 724.8L351.3 724.6L350.6 724.1L351.0 723.5L349.4 723.4L348.0 724.4L347.8 723.6L348.9 722.7L348.1 722.5L347.1 723.7L346.8 722.7L350.1 721.8L350.1 720.1L350.9 719.3L349.7 718.0L350.4 717.7L349.3 717.0L348.6 718.8L345.7 718.9L346.0 719.8L345.4 719.7L345.2 720.9L344.1 719.6L344.3 718.6L342.6 718.1L342.3 714.6L344.2 713.0L343.8 712.6L344.5 712.8L344.0 712.3L345.1 712.4L346.0 711.2L349.0 713.3L349.9 712.1L349.5 711.7L350.6 712.7L350.9 712.1L351.0 713.0L351.2 712.0L351.7 713.4L352.0 713.0L353.0 713.8L352.4 712.0L351.8 712.0L352.0 711.2L350.2 709.6L350.3 708.8L351.0 708.9L351.6 707.3L351.6 708.3L353.5 707.6L354.8 708.4L354.8 706.5L355.5 706.4L355.1 705.7L356.0 705.8L355.5 705.0L357.0 705.7L356.5 704.9L357.1 704.2L356.1 704.2L356.6 702.1L357.3 701.9L356.6 701.4L359.8 702.8L359.7 704.0L358.5 704.3L358.9 705.1L357.9 705.2L358.5 705.6L358.2 707.1L359.6 707.8L360.3 709.3L360.3 710.1L359.5 710.1L360.1 711.9L359.2 712.2L359.6 713.2L358.2 713.9L358.0 715.0L358.5 714.4L358.2 715.3L358.9 714.8L359.1 715.8L360.3 714.2L359.8 713.7L361.3 714.5L362.2 713.6L361.2 715.0L361.6 715.9L360.1 716.2L360.9 718.0L359.7 717.4L358.5 718.3L359.1 719.2L359.9 718.4L360.0 720.4L361.3 722.7L359.1 722.0L359.1 720.6L357.7 721.9L357.8 721.0L356.5 720.4L356.0 722.2L356.5 722.7ZM341.2 697.3L342.5 697.9L342.3 698.4L341.7 697.9L341.2 698.8L339.6 698.7L338.8 700.2L337.7 699.6L335.6 700.9L334.2 700.9L335.5 701.8L334.6 702.2L335.0 702.8L334.5 703.4L336.0 703.4L335.6 701.8L339.5 701.0L340.4 700.4L340.1 699.2L340.6 698.8L341.1 699.5L341.8 698.4L342.7 699.3L342.2 700.2L342.7 700.4L341.1 700.9L342.1 701.9L342.3 701.3L343.0 701.6L342.7 702.4L344.1 703.5L343.4 704.3L342.9 703.8L342.4 705.4L341.4 705.0L341.6 705.8L337.3 705.3L337.5 706.2L339.3 706.1L339.9 706.7L338.6 709.8L339.4 710.6L338.1 712.3L338.7 712.9L338.3 715.5L339.1 715.1L339.1 714.2L340.1 714.2L339.6 713.8L340.5 713.0L339.7 712.1L340.6 712.0L341.2 712.8L340.7 713.1L342.2 714.0L341.6 715.6L340.8 714.8L340.9 716.2L340.2 716.1L340.6 717.7L339.2 717.8L339.3 718.4L338.6 717.9L336.4 719.1L335.6 718.6L335.9 718.0L335.1 718.2L334.6 717.4L336.0 716.3L338.1 716.6L338.2 716.1L335.8 715.9L336.1 715.4L335.4 715.5L335.1 713.9L335.3 714.6L334.6 714.4L335.0 715.8L333.6 715.6L333.1 714.3L333.1 715.5L332.5 714.7L331.6 715.2L331.6 714.4L330.8 714.9L329.4 713.2L330.2 712.5L333.5 712.5L333.2 711.2L332.2 711.4L333.0 710.4L332.8 709.8L332.1 710.1L332.6 709.6L331.8 709.2L331.9 708.4L330.8 708.1L331.0 709.5L329.6 710.2L329.6 712.1L328.2 711.8L328.4 712.8L327.6 713.2L327.9 712.4L326.5 710.7L327.3 710.7L327.3 709.9L325.7 710.2L325.8 709.6L324.0 709.3L323.1 710.2L322.2 710.1L322.7 710.5L322.1 712.2L322.6 713.7L321.5 713.7L321.4 712.7L321.2 713.6L320.6 712.7L320.7 713.6L320.0 713.0L320.0 713.5L319.3 712.4L317.6 714.2L316.7 712.8L315.4 713.2L316.0 713.0L315.4 711.6L316.8 711.3L315.1 711.5L314.9 711.0L314.0 711.8L314.3 711.0L312.0 710.9L310.2 708.4L311.7 707.3L310.8 705.1L311.6 703.4L310.5 702.8L310.8 700.0L312.4 698.2L310.5 698.3L311.0 698.7L309.9 700.0L310.2 700.6L309.4 702.4L308.4 702.0L309.4 701.4L308.7 700.6L309.0 701.5L307.1 700.9L306.8 701.5L306.3 702.1L307.7 701.6L308.6 703.7L309.3 704.0L308.6 706.3L307.8 705.1L306.8 706.8L305.4 705.2L304.2 706.2L304.6 706.8L303.8 706.6L303.1 705.5L303.7 704.4L302.4 703.6L301.8 705.4L302.5 705.7L302.2 706.4L301.3 706.2L301.7 707.1L300.9 707.1L300.6 708.5L297.0 709.3L296.5 707.9L296.3 709.1L295.2 708.5L295.7 709.2L294.7 709.1L295.0 709.7L293.8 710.3L293.6 711.3L293.8 710.5L292.3 709.5L291.4 707.6L290.7 707.6L292.6 703.9L291.3 700.6L287.6 697.8L286.1 695.9L285.6 693.4L280.8 689.3L280.3 683.8L277.5 679.3L280.7 676.9L279.9 674.1L283.6 670.0L284.5 667.4L282.5 667.1L281.8 666.2L281.8 664.6L283.0 663.9L281.1 660.7L281.3 659.8L280.1 659.8L278.1 658.3L280.0 655.8L280.1 653.7L281.7 652.8L280.6 650.5L282.1 648.3L282.2 646.6L283.6 645.2L283.9 640.2L284.9 640.2L287.8 637.9L289.6 633.9L291.4 634.4L293.9 632.7L294.6 633.1L295.5 631.9L296.6 632.0L297.9 628.7L299.3 628.4L300.3 630.3L302.3 629.8L303.2 632.2L302.7 632.9L304.5 632.4L306.1 633.2L306.7 632.7L308.8 635.2L310.1 634.6L311.7 635.1L313.0 634.1L316.9 635.7L317.3 638.5L319.5 639.0L319.9 640.7L321.6 641.7L322.5 644.4L322.7 647.4L319.8 648.3L319.6 649.9L321.3 649.6L322.5 650.7L324.5 651.1L325.5 649.7L326.9 650.8L329.5 649.7L333.1 650.5L334.3 653.3L335.5 653.9L339.1 652.4L340.1 651.2L344.4 651.1L344.5 648.3L346.2 647.4L346.6 652.4L348.2 653.2L348.4 654.1L350.1 655.5L351.6 656.1L353.8 655.7L355.3 654.6L357.5 654.8L358.6 656.2L360.2 656.0L362.6 657.1L364.7 657.1L365.7 655.4L367.5 654.7L368.8 655.3L371.5 651.4L372.0 652.0L373.9 651.0L375.8 651.5L377.2 653.1L378.8 653.7L380.2 652.7L381.7 653.3L381.4 655.8L377.9 657.7L378.6 658.9L379.2 658.5L379.9 659.3L379.6 660.4L380.9 660.9L384.0 660.1L383.8 661.6L387.6 663.1L387.8 664.4L390.1 667.2L392.1 668.5L394.2 667.9L394.6 669.4L395.7 670.2L393.9 672.7L394.3 674.0L392.8 675.3L388.5 673.8L389.7 675.3L388.0 679.0L385.3 680.4L384.2 680.0L383.4 681.8L381.0 681.8L379.6 685.1L376.0 685.6L374.2 686.6L373.5 686.1L371.3 687.2L370.7 687.9L371.5 689.5L371.4 690.4L370.8 690.3L371.5 691.2L371.1 692.1L370.3 691.5L370.5 690.7L367.6 691.7L365.2 691.5L365.8 692.9L368.0 693.9L368.7 695.3L368.2 696.2L367.3 696.3L366.6 697.2L367.7 697.2L366.4 698.3L364.5 698.3L364.9 696.9L365.8 696.5L364.8 696.5L364.8 695.3L363.6 696.5L362.9 696.0L363.1 696.6L364.5 696.6L363.0 699.8L363.0 698.3L361.4 698.3L361.7 697.6L361.0 697.3L361.5 696.4L360.5 697.2L359.4 696.8L359.4 695.8L358.0 696.6L357.4 695.8L358.5 695.0L357.7 692.4L356.3 692.8L356.8 694.2L356.0 694.8L355.4 693.3L354.4 693.4L354.6 692.2L353.1 692.3L352.6 693.4L353.3 693.7L351.7 693.2L352.3 692.6L352.0 691.2L350.7 690.2L350.4 688.1L353.5 686.3L350.2 687.1L348.6 689.1L350.5 691.5L350.1 692.5L351.0 692.8L350.3 693.8L349.7 693.1L349.2 693.7L351.2 693.7L350.2 694.7L351.2 694.8L351.4 696.2L353.2 697.8L351.4 698.5L353.7 699.0L349.3 700.3L351.0 698.9L348.5 699.1L348.6 697.9L350.0 697.1L347.3 697.0L347.0 696.3L347.5 695.8L346.7 695.7L346.7 694.7L345.3 696.6L342.9 695.7L343.0 696.3L341.9 696.6L340.5 696.0L340.2 696.6L341.2 697.3Z","far":"","bb":[277.5,628.4,395.7,729.8],"c":[331.2,697.1]},{"code":"39","name":"제주특별자치도","d":"M228.9 829.5L229.8 830.5L228.9 832.3L230.6 833.1L230.5 834.5L231.4 832.6L232.1 834.5L231.2 834.1L230.4 835.0L230.4 835.9L231.4 836.7L230.9 837.3L230.0 836.3L229.3 839.9L226.7 841.5L226.5 843.1L224.8 844.8L225.1 846.0L224.2 846.9L222.2 847.4L220.0 847.0L217.5 849.5L216.8 849.1L212.8 850.4L211.4 849.8L207.2 853.1L205.6 852.2L204.9 853.3L204.4 852.4L204.6 853.1L201.5 852.6L200.8 853.4L199.4 853.3L198.0 854.1L196.9 852.5L194.9 853.0L193.5 852.2L190.4 853.6L190.0 852.9L187.6 853.3L188.2 853.1L187.6 852.6L186.0 853.8L185.1 855.0L185.2 856.3L183.0 856.3L183.0 855.2L182.5 855.4L180.8 853.1L178.6 852.2L176.2 849.7L175.6 844.7L180.1 840.0L182.0 839.1L182.6 838.4L182.2 837.9L182.9 837.8L182.8 837.3L182.2 837.8L183.0 837.2L182.9 836.1L185.6 835.2L186.5 833.3L188.3 833.6L191.8 831.7L192.8 832.2L196.5 831.0L199.6 829.0L202.3 829.3L203.0 828.3L203.6 829.1L206.1 828.7L207.0 827.6L209.7 827.8L210.4 826.1L212.0 827.2L212.8 826.4L218.5 826.0L219.1 825.3L221.5 826.2L223.6 825.8L223.7 827.2L224.5 828.0L226.0 828.7L228.3 828.5L229.2 829.1L228.9 829.5Z","far":"","bb":[175.6,825.3,232.1,856.3],"c":[204.4,841.1]}];
-  const PV = Object.fromEntries(PROV.map(v => [v.code, v]));
-  // 지도에 쓰는 이름표 위치(경도·위도)와 짧은 이름
-  const PLAB = { '11': ['서울', 126.99, 37.56], '23': ['인천', 126.55, 37.47], '31': ['경기도', 127.35, 37.36], '32': ['강원도', 128.3, 37.77], '33': ['충청북도', 127.75, 36.78],
-    '34': ['충청남도', 126.85, 36.52], '25': ['대전', 127.39, 36.34], '29': ['세종', 127.26, 36.56], '35': ['전라북도', 127.1, 35.74], '36': ['전라남도', 126.9, 34.86], '24': ['광주', 126.85, 35.15],
-    '37': ['경상북도', 128.75, 36.36], '38': ['경상남도', 128.25, 35.3], '22': ['대구', 128.58, 35.85], '26': ['울산', 129.22, 35.55], '21': ['부산', 129.05, 35.18], '39': ['제주도', 126.55, 33.38] };
-  // 남한 6조각 = 1~6학년. 나무 퍼즐처럼 조각마다 다른 원목 색
-  const REG = [
-    { g: 1, name: '제주도', wood: '#ffd6a8', codes: ['39'], main: '39', chip: [127.62, 33.38],
-      cities: [['제주시', 126.53, 33.50], ['애월', 126.33, 33.46], ['한림', 126.3, 33.4], ['대정', 126.32, 33.26], ['서귀포', 126.56, 33.25], ['남원', 126.72, 33.28], ['표선', 126.83, 33.33], ['성산', 126.93, 33.46], ['구좌', 126.8, 33.5], ['한라산', 126.53, 33.36]] },
-    { g: 2, name: '전라도', wood: '#ffbf8f', codes: ['36', '35', '24'], main: '36', chip: [126.9, 34.72],
-      cities: [['군산', 126.71, 35.97], ['익산', 126.95, 35.93], ['전주', 127.15, 35.82], ['정읍', 126.86, 35.57], ['남원', 127.39, 35.42], ['광주', 126.85, 35.16], ['나주', 126.71, 35.02], ['목포', 126.45, 34.81], ['순천', 127.45, 34.95], ['여수', 127.62, 34.76]] },
-    { g: 3, name: '경상도', wood: '#ffc4d8', codes: ['37', '38', '22', '26', '21'], main: '37', chip: [128.75, 36.22],
-      cities: [['대구', 128.6, 35.87], ['부산', 129.0, 35.2], ['울산', 129.28, 35.54], ['포항', 129.33, 36.02], ['경주', 129.15, 35.82], ['안동', 128.73, 36.57], ['창원', 128.62, 35.25], ['진주', 128.11, 35.18], ['구미', 128.34, 36.12], ['울릉도·독도', 130.87, 37.5]] },
-    { g: 4, name: '충청도', wood: '#b9dcff', codes: ['34', '33', '25', '29'], main: '34', chip: [126.85, 36.3],
-      cities: [['대전', 127.38, 36.35], ['세종', 127.27, 36.5], ['청주', 127.49, 36.64], ['천안', 127.15, 36.81], ['아산', 126.98, 36.77], ['공주', 127.1, 36.45], ['서산', 126.5, 36.78], ['보령', 126.62, 36.33], ['충주', 127.93, 36.99], ['제천', 128.19, 37.1]] },
-    { g: 5, name: '강원도', wood: '#fff09a', codes: ['32'], main: '32', chip: [128.3, 37.62],
-      cities: [['춘천', 127.73, 37.88], ['원주', 127.95, 37.34], ['강릉', 128.8, 37.75], ['속초', 128.48, 38.18], ['동해', 129.05, 37.5], ['삼척', 129.08, 37.3], ['태백', 128.95, 37.16], ['홍천', 127.95, 37.69], ['평창', 128.39, 37.45], ['철원', 127.38, 38.05]] },
-    { g: 6, name: '경기도', wood: '#c6eaa0', codes: ['31', '11', '23'], main: '31', chip: [127.35, 37.21],
-      cities: [['서울', 127.0, 37.56], ['인천', 126.68, 37.45], ['수원', 127.02, 37.26], ['고양', 126.8, 37.68], ['성남', 127.18, 37.42], ['파주', 126.82, 37.86], ['용인', 127.22, 37.23], ['안산', 126.78, 37.33], ['의정부', 127.06, 37.76], ['가평', 127.35, 37.82]] }
+  const CH = [
+    { g: 1, name: '송이', place: '송이네 숫자 교실', bg: '#ffd9b8', floor: '#5f8a4e', bar: '#f6c945' },
+    { g: 2, name: '루미', place: '루미네 구구단 가게', bg: '#fff6a0', floor: '#d6cf55', bar: '#74d36b' },
+    { g: 3, name: '부기', place: '부기네 계산 수리점', bg: '#fdf0dc', floor: '#8aa2d8', bar: '#8aa2d8' },
+    { g: 4, name: '로키', place: '로키네 도형 퀴즈쇼', bg: '#c9c8ff', floor: '#3b3f8f', bar: '#7b74e8' },
+    { g: 5, name: '달이', place: '달이의 분수 탐정 사무소', bg: '#ead9ff', floor: '#b67cf2', bar: '#b67cf2' },
+    { g: 6, name: '토리', place: '토리의 비율 열기구', bg: '#c9f3f7', floor: '#6fcfd6', bar: '#ff9eb3' }
   ];
   const UNITS = {
     1: ['9까지의 수', '여러 가지 모양', '덧셈', '뺄셈', '50까지의 수', '100까지의 수', '덧셈(받아올림)', '뺄셈(받아내림)', '시각', '규칙 찾기'],
@@ -1139,131 +1098,124 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     5: ['혼합 계산', '약수와 배수', '약분과 통분', '분수의 덧셈', '넓이', '어림하기', '분수의 곱셈', '합동과 대칭', '소수의 곱셈', '평균'],
     6: ['분수의 나눗셈', '각기둥과 각뿔', '소수의 나눗셈', '비와 비율', '부피', '분수의 나눗셈(2)', '소수의 나눗셈(2)', '비례식', '비례배분', '원의 넓이']
   };
-  // 지역 상세 지도에서 이름표를 왼쪽에 붙일 도시 (겹침 방지)
-  const LEFT = { '대구': 1, '구미': 1, '진주': 1, '창원': 1, '목포': 1, '나주': 1, '정읍': 1, '군산': 1, '공주': 1, '보령': 1, '서산': 1, '아산': 1, '인천': 1, '고양': 1, '파주': 1, '애월': 1, '한림': 1, '대정': 1, '해주': 1, '남포': 1, '신의주': 1, '평양': 1, '울릉도·독도': 1, '안산': 1, '수원': 1 };
-  const NICKS = ['하늘고래', '번개토끼', '초코펭귄', '구름여우', '파도곰', '달빛다람쥐'];
-  const KEY = 'boogi-tiger-v1';
-  const cid = (g, c) => g + '-' + c;
-  // 도시 c의 학습 스테이지: 그 단원의 기본 문제와 응용 문제 2개
+  // 학년 캐릭터 (첨부 캐릭터를 참고해 단순하게 그린 시제품용 그림. 정식 그림 파일로 바꿀 수 있어요)
+  function charSVG(g) {
+    const eye = (x, y, r = 4) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#1f1a17"/><circle cx="${x + 1.3}" cy="${y - 1.3}" r="${r * 0.35}" fill="#fff"/>`;
+    const smile = (x, y, w = 6) => `<path d="M${x - w} ${y}q${w} ${w * 0.8} ${w * 2} 0" stroke="#1f1a17" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+    const art = {
+      1: `<path d="M18 62 l-8 -6 l8 -4 l-10 -10 l11 -1 l-6 -12 l12 4 l0 -13 l10 9 l5 -13 l7 11 l8 -11 l3 13 l11 -7 l-1 13 l12 -3 l-6 11 l10 3 l-8 8 l8 6 l-9 3 z" fill="#8a5a3b"/>
+          <ellipse cx="50" cy="66" rx="24" ry="22" fill="#d99a6c"/><ellipse cx="50" cy="70" rx="15" ry="13" fill="#f3c9a0"/>
+          <path d="M24 52 a26 26 0 0 1 52 0" stroke="#c9c24a" stroke-width="6" fill="none"/><rect x="18" y="48" width="10" height="16" rx="5" fill="#d7d05a"/><rect x="72" y="48" width="10" height="16" rx="5" fill="#d7d05a"/>
+          ${eye(42, 60)}${eye(58, 60)}<ellipse cx="50" cy="67" rx="3.5" ry="2.5" fill="#1f1a17"/>${smile(50, 71, 4)}`,
+      2: `<path d="M20 86 q-6 -30 6 -46 q10 -14 24 -14 q14 0 24 14 q12 16 6 46 z" fill="#c9a3ff"/>
+          <path d="M28 34 l-6 -12 l12 6 z M72 34 l6 -12 l-12 6 z" fill="#9c74e6"/>
+          <rect x="36" y="6" width="28" height="22" rx="4" fill="#fff" stroke="#d9d9d9" stroke-width="1.5"/><path d="M42 8v18 M50 8v18 M58 8v18" stroke="#e3e3e3" stroke-width="1.5"/><rect x="33" y="24" width="34" height="7" rx="3.5" fill="#f2f2f2"/>
+          ${eye(41, 56, 4.5)}${eye(59, 56, 4.5)}${smile(50, 66, 6)}<path d="M76 70 q10 -2 10 -12" stroke="#c9a3ff" stroke-width="7" stroke-linecap="round" fill="none"/>`,
+      3: `<ellipse cx="50" cy="70" rx="28" ry="24" fill="#4d6b2e"/><ellipse cx="50" cy="73" rx="19" ry="17" fill="#f2d977"/>
+          <path d="M34 66h32 M33 74h34 M35 82h30" stroke="#c9a94a" stroke-width="2"/>
+          <circle cx="50" cy="34" r="20" fill="#b5cf5f"/><circle cx="42" cy="22" r="2" fill="#93ad45"/>
+          <circle cx="42" cy="34" r="7" fill="#fff" stroke="#e0602b" stroke-width="2.5"/><circle cx="58" cy="34" r="7" fill="#fff" stroke="#e0602b" stroke-width="2.5"/><path d="M49 34h2" stroke="#e0602b" stroke-width="2.5"/>
+          ${eye(43, 34, 3)}${eye(59, 34, 3)}${smile(50, 44, 4)}<ellipse cx="24" cy="62" rx="6" ry="10" fill="#b5cf5f" transform="rotate(-25 24 62)"/><ellipse cx="78" cy="58" rx="6" ry="10" fill="#b5cf5f" transform="rotate(30 78 58)"/>`,
+      4: `<ellipse cx="50" cy="76" rx="22" ry="18" fill="#a9a9b3"/><ellipse cx="50" cy="80" rx="13" ry="11" fill="#e2e2e8"/>
+          <path d="M70 80 q22 -2 18 -22" stroke="#7d7d88" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M80 70l6 4 M84 63l7 2" stroke="#3a3a44" stroke-width="3"/>
+          <path d="M28 30 l-2 -14 l14 8 z M72 30 l2 -14 l-14 8 z" fill="#8f8f9a"/><ellipse cx="50" cy="44" rx="24" ry="20" fill="#b9b9c2"/>
+          <path d="M28 44 q10 -10 20 0 q-10 8 -20 0 z M72 44 q-10 -10 -20 0 q10 8 20 0 z" fill="#3a3a44"/>${eye(39, 43, 3.5)}${eye(61, 43, 3.5)}<ellipse cx="50" cy="53" rx="5" ry="4" fill="#e2e2e8"/><ellipse cx="50" cy="51" rx="2.5" ry="2" fill="#1f1a17"/>
+          <ellipse cx="50" cy="24" rx="20" ry="7" fill="#9b7cf0"/><circle cx="50" cy="16" r="3" fill="#9b7cf0"/>`,
+      5: `<ellipse cx="50" cy="74" rx="22" ry="22" fill="#8c5a3c"/><ellipse cx="50" cy="78" rx="13" ry="15" fill="#e7c9a3"/>
+          <circle cx="30" cy="32" r="6" fill="#7a4b30"/><circle cx="70" cy="32" r="6" fill="#7a4b30"/><ellipse cx="50" cy="42" rx="22" ry="19" fill="#8c5a3c"/><ellipse cx="50" cy="50" rx="11" ry="8" fill="#e7c9a3"/>
+          <circle cx="41" cy="40" r="7" fill="#fff" stroke="#1f1a17" stroke-width="2.5"/><circle cx="59" cy="40" r="7" fill="#fff" stroke="#1f1a17" stroke-width="2.5"/><path d="M48 40h4" stroke="#1f1a17" stroke-width="2.5"/>
+          ${eye(41, 40, 3)}${eye(59, 40, 3)}<ellipse cx="50" cy="48" rx="3" ry="2.2" fill="#1f1a17"/>
+          <path d="M30 26 q20 -16 40 0 z" fill="#b5462e"/><rect x="28" y="24" width="44" height="5" rx="2.5" fill="#7a2f22"/>`,
+      6: `<path d="M68 82 q30 -6 22 -38 q-6 -18 -20 -10 q12 10 4 24 q-4 10 -12 12 z" fill="#d86a2a"/>
+          <ellipse cx="48" cy="72" rx="20" ry="20" fill="#f08a3c"/><ellipse cx="48" cy="76" rx="12" ry="13" fill="#ffe2bf"/>
+          <ellipse cx="48" cy="44" rx="20" ry="17" fill="#f08a3c"/><ellipse cx="48" cy="50" rx="10" ry="7" fill="#ffe2bf"/>
+          ${eye(41, 44, 3.2)}${eye(55, 44, 3.2)}<ellipse cx="48" cy="49" rx="2.5" ry="1.8" fill="#1f1a17"/>${smile(48, 53, 3)}
+          <path d="M28 36 q20 -24 40 0 z" fill="#4f8de0"/><circle cx="48" cy="14" r="4" fill="#4f8de0"/><rect x="27" y="33" width="42" height="6" rx="3" fill="#3a6fc0"/>`
+    };
+    return `<svg viewBox="0 0 100 100" aria-hidden="true">${art[g]}</svg>`;
+  }
+  // 학년 퍼즐 그림: 배경 + 캐릭터 (500 × 200, 5 × 2 조각)
+  function sceneSVG(g) {
+    const ch = CH[g - 1];
+    const dots = [[40, 40], [120, 150], [430, 40], [460, 140], [300, 30], [210, 170]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${6 + (i % 3) * 3}" fill="#fff" opacity=".55"/>`).join('');
+    return `<rect width="500" height="200" fill="${ch.bg}"/>${dots}<rect y="168" width="500" height="32" fill="${ch.floor}"/>
+      <g transform="translate(170,-10) scale(1.85)">${charSVG(g).replace(/<\/?svg[^>]*>/g, '')}</g>
+      <text x="26" y="40" font-family="Jua" font-size="26" fill="#1f2a40" opacity=".85">${g}학년</text><text x="26" y="66" font-family="Jua" font-size="17" fill="#1f2a40" opacity=".6">${ch.place}</text>`;
+  }
+  // 조각 모양: 5 × 2 칸, 이웃 칸과 볼록·오목이 맞물리게
+  function edge(x0, y0, x1, y1, d) {
+    if (!d) return `L${x1} ${y1}`;
+    const dx = x1 - x0, dy = y1 - y0, nx = -dy / 100 * d, ny = dx / 100 * d;
+    const P = (t, o) => `${(x0 + dx * t + nx * o).toFixed(1)} ${(y0 + dy * t + ny * o).toFixed(1)}`;
+    return `L${P(0.36, 0)}C${P(0.42, 4)} ${P(0.3, 22)} ${P(0.5, 22)}C${P(0.7, 22)} ${P(0.58, 4)} ${P(0.64, 0)}L${x1} ${y1}`;
+  }
+  function piecePath(c) {
+    const col = c % 5, row = Math.floor(c / 5), x = col * 100, y = row * 100;
+    const h = (r, cc) => ((r + cc) % 2 ? 1 : -1);           // 가로 경계(위아래 칸 사이)
+    const v = (r, cc) => ((r * 3 + cc) % 2 ? 1 : -1);       // 세로 경계(좌우 칸 사이)
+    const top = row === 0 ? 0 : -h(0, col), bottom = row === 1 ? 0 : h(0, col);
+    const left = col === 0 ? 0 : v(row, col - 1), right = col === 4 ? 0 : -v(row, col);
+    return `M${x} ${y}` + edge(x, y, x + 100, y, top) + edge(x + 100, y, x + 100, y + 100, right) + edge(x + 100, y + 100, x, y + 100, bottom) + edge(x, y + 100, x, y, left) + 'Z';
+  }
+  function puzzleSVG(g, popC) {
+    const pieces = [];
+    for (let c = 0; c < 10; c++) {
+      const got = (M.stars[sid(g, c)] || 0) >= 3, d = piecePath(c);
+      pieces.push(got
+        ? `<g class="${popC === c ? 'pc-got' : ''}"><clipPath id="pc${c}"><path d="${d}"/></clipPath><g clip-path="url(#pc${c})"><use href="#scene"/></g><path d="${d}" fill="none" stroke="#fff" stroke-width="2.5"/></g>`
+        : `<path d="${d}" fill="#f1f3f6" stroke="#c4cad3" stroke-width="2" stroke-dasharray="6 4"/><text x="${(c % 5) * 100 + 50}" y="${Math.floor(c / 5) * 100 + 56}" text-anchor="middle" font-family="Jua" font-size="18" fill="#a9b1bd">${c + 1}</text>`);
+    }
+    return `<svg viewBox="-12 -12 524 224" role="img" aria-label="${g}학년 퍼즐 ${countPieces(g)}/10 조각">
+      <defs><g id="scene">${sceneSVG(g)}</g><filter id="gs"><feColorMatrix type="saturate" values="0"/></filter></defs>
+      <g filter="url(#gs)" opacity=".18"><use href="#scene"/></g>${pieces.join('')}</svg>`;
+  }
+
+  const NICKS = ['하늘고래', '번개토끼', '초코펭귄'];
+  const KEY = 'boogi-stars-v1';
+  const sid = (g, c) => g + '-' + c;
   function cityQuestions(g, c) {
     const set = (BANK[g + '-' + (c < 5 ? 1 : 2)] || BANK['3-1'])[c % 5];
     return [set, { unit: set.unit, main: set.twin, twin: set.main }];
   }
-
   function defaultsM() {
-    const con = {}, rec = {};
-    for (let c = 0; c < 10; c++) con[cid(1, c)] = 1;
-    [0, 1, 2, 5, 6, 7].forEach(c => { con[cid(2, c)] = 1; });
-    REG.forEach(r => { for (let c = 0; c < 10; c++) rec[cid(r.g, c)] = [0, 1, 2].map(i => ({ n: NICKS[(r.g + c + i) % NICKS.length], t: +(22 + r.g * 1.5 + (c % 5) * 0.8 + i * 3.4 + ((r.g * 7 + c * 3 + i) % 5) * 0.6).toFixed(1) })); });
-    return { con, ta: { '1-0': 24.1 }, rec, newRegion: 0, lastRegionDone: 0,
-      news: { good: false, text: '1학년 제주도 조각은 맞췄어요! 3학년 경상도 단원을 정복해서 다음 조각을 맞춰 볼까요? 2학년 전라도도 단원 4개가 남았어요.' } };
+    const stars = {};
+    for (let c = 0; c < 10; c++) stars[sid(1, c)] = 3;
+    [3, 3, 2, 3, 1, 3, 0, 0, 3, 2].forEach((v, c) => { if (v) stars[sid(2, c)] = v; });
+    return { stars, last: null, gradeJustDone: 0, popPiece: null,
+      news: { good: false, text: '3학년 부기네 계산 수리점에서 단원마다 별 3개를 모아 퍼즐 조각을 맞춰 볼까요? 2학년 퍼즐도 4조각이 남았어요.' } };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
   function saveM() { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} }
 
-  let view = 'world', curG = MY_GRADE, selCity = -1, pick = { g: MY_GRADE, s: 1, c: 0 };
-  const conqCount = g => { let n = 0; for (let c = 0; c < 10; c++) if (M.con[cid(g, c)]) n++; return n; };
-  const regionDone = g => conqCount(g) === 10;
-  const regionOpen = g => g <= MY_GRADE || regionDone(g - 1);
-  const doneRegions = () => REG.filter(r => regionDone(r.g)).length;
-  const curCity = () => { const r = REG[pick.g - 1]; return { name: r.cities[pick.c][0], unit: UNITS[pick.g][pick.c] }; };
-  function board(k) {
-    const list = (M.rec[k] || []).map(r => ({ n: r.n, t: r.t, me: false }));
-    if (M.ta[k] != null) list.push({ n: '나 (부기)', t: M.ta[k], me: true });
-    return list.sort((a, b) => a.t - b.t);
+  let view = 'home', curG = MY_GRADE, pick = { g: MY_GRADE, s: 1, c: 0 };
+  const countPieces = g => { let n = 0; for (let c = 0; c < 10; c++) if ((M.stars[sid(g, c)] || 0) >= 3) n++; return n; };
+  const gradeDone = g => countPieces(g) === 10;
+  const gradeOpen = g => g <= MY_GRADE || gradeDone(g - 1);
+  const curCity = () => ({ name: UNITS[pick.g][pick.c], unit: UNITS[pick.g][pick.c] });
+  // 다음 단계: 같은 학년의 다음 단원 → 마지막 단원이면 다음 학년 첫 단원(열려 있을 때)
+  function nextUnit() {
+    if (pick.c < 9) return { g: pick.g, c: pick.c + 1 };
+    if (pick.g < 6 && gradeOpen(pick.g + 1)) return { g: pick.g + 1, c: 0 };
+    return null;
   }
-  const tint = (hex, k) => { const n = parseInt(hex.slice(1), 16), f = v => Math.round(v + (255 - v) * k); return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; };
-
-  function conquerCity() {
-    const g = pick.g, k = cid(g, pick.c), was = regionDone(g), nextWasOpen = g < 6 && regionOpen(g + 1);
-    const fresh = !M.con[k];
-    M.con[k] = 1;
-    M.newRegion = 0; M.lastRegionDone = 0;
-    const r = REG[g - 1], city = r.cities[pick.c][0];
-    if (!was && regionDone(g)) {
-      M.newRegion = g; M.lastRegionDone = g;
-      endBanner = doneRegions() === 6 ? '남한 퍼즐 완성!' : `${r.name} 조각 완성!`;
-      const opened = g < 6 && !nextWasOpen && regionOpen(g + 1);
-      M.news = { good: true, text: doneRegions() === 6 ? '6조각을 모두 맞췄어요. 남한 퍼즐 완성!' : `${r.name} 단원 10개를 모두 정복해서 퍼즐 조각을 맞췄어요!` + (opened ? ` ${g + 1}학년 ${REG[g].name}가 열렸어요.` : '') };
-    } else if (fresh) {
-      M.news = { good: true, text: `${city} 정복! (${UNITS[g][pick.c]}) ${r.name} ${conqCount(g)}/10` };
+  // 단원 점수: 별 1 완주, 별 2 한 번에 모두 정답, 별 3 하트 지키기
+  function scoreUnit() {
+    const g = pick.g, k = sid(g, pick.c), before = M.stars[k] || 0, wasDone = gradeDone(g), nextWasOpen = g < 6 && gradeOpen(g + 1);
+    const s1 = true, s2 = stats.retries === 0, s3 = stats.hits === 0;
+    const got = (s1 ? 1 : 0) + (s2 ? 1 : 0) + (s3 ? 1 : 0), best = Math.max(before, got);
+    M.stars[k] = best;
+    const newPiece = before < 3 && best === 3;
+    M.last = { stars: got, best, s1, s2, s3, newPiece };
+    M.popPiece = newPiece ? { g, c: pick.c } : null;
+    M.gradeJustDone = !wasDone && gradeDone(g) ? g : 0;
+    if (M.gradeJustDone) {
+      endBanner = `${g}학년 퍼즐 완성!`;
+      M.news = { good: true, text: `${CH[g - 1].name}의 ${g}학년 퍼즐 10조각을 모두 맞췄어요!` + (g < 6 && !nextWasOpen ? ` ${g + 1}학년 ${CH[g].name}네가 열렸어요.` : g === 6 ? ' 모든 학년 퍼즐 완성!' : '') };
+    } else if (newPiece) {
+      M.news = { good: true, text: `${UNITS[g][pick.c]}에서 별 3개! ${g}학년 퍼즐 조각 ${countPieces(g)}/10` };
     }
     saveM();
-  }
-
-  // ---------- 그리기 ----------
-  const ringPts = r => r.ring.map(n => XY(P[n]).join(',')).join(' ');
-  const shapeOf = (r, noFar) => r.codes.map(c => `<path d="${PV[c].d}${noFar ? '' : PV[c].far}"/>`).join('');
-  // 원목 결 + 3D 두께 필터
-  const DEFS = `<defs>
-    <filter id="gray" x="-5%" y="-5%" width="110%" height="110%"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope=".55" intercept=".4"/><feFuncG type="linear" slope=".55" intercept=".4"/><feFuncB type="linear" slope=".55" intercept=".4"/></feComponentTransfer></filter>
-    <filter id="lift" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="1" dy="5" stdDeviation="3.5" flood-color="#2b3a55" flood-opacity=".35"/></filter>
-    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
-  </defs>`;
-  const shade = (hex, k) => { const n = parseInt(hex.slice(1), 16), f = v => Math.round(v * (1 - k)); return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; };
-  // 조각 하나: 맞춘 조각 = 파스텔 컬러 + 두께 + 그림자(3D), 못 맞춘 조각 = 흑백
-  const provFill = (r, i) => i === 0 ? r.wood : i % 2 ? tint(r.wood, 0.35) : shade(r.wood, 0.08);
-  function pieceArt(r, k, done, noFar) {
-    const sh = shapeOf(r, noFar), id = 'cp' + r.g, lift = done ? ` transform="translate(${(-1 * k).toFixed(1)},${(-2.5 * k).toFixed(1)})"` : '';
-    const d = done ? [2 * k, 6 * k] : [1 * k, 2.5 * k];
-    const faces = r.codes.map((c, i) => `<path d="${PV[c].d}${noFar ? '' : PV[c].far}" fill="${provFill(r, i)}"/>`).join('');
-    return `<g fill="${done ? shade(r.wood, 0.35) : '#9a9a9a'}" transform="translate(${d[0].toFixed(1)},${d[1].toFixed(1)})">${sh}</g>
-      <g class="face" ${done ? `filter="url(#lift)"${lift}` : 'filter="url(#gray)"'}>${faces}
-        ${done ? `<clipPath id="${id}">${sh}</clipPath><rect x="-100" y="-100" width="900" height="1100" fill="url(#gloss)" opacity=".6" clip-path="url(#${id})"/>` : ''}
-      </g>
-      <g class="edge" fill="none" stroke="#2b3a55" stroke-width="${(1.3 * k).toFixed(2)}" stroke-linejoin="round"${lift}>${sh}</g>`;
-  }
-  // 바다 꾸미기: 작은 섬, 물결, 배, 물고기, 구름 (직접 그린 단순 도형)
-  function seaDecor() {
-    const isl = [[126.0, 34.85, 5, 3], [126.1, 34.62, 4, 3], [125.95, 35.05, 3, 2], [126.7, 34.14, 5, 3], [126.98, 34.2, 4, 2.5], [127.42, 34.42, 4, 3], [128.0, 34.6, 4, 2.5], [128.32, 34.68, 3, 2],
-      [126.1, 36.42, 3, 2], [126.18, 37.18, 4, 2.5], [126.32, 37.52, 3, 2], [126.62, 37.78, 4, 2.5], [126.05, 35.35, 3, 2]]
-      .map(([lon, lat, rx, ry]) => { const [x, y] = XY([lon, lat]); return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="#fff" stroke="#2b3a55" stroke-width="1.2"/>`; }).join('');
-    const wave = (x, y) => `<path d="M${x} ${y}q4 -4 8 0t8 0t8 0" fill="none" stroke="#5aa9e6" stroke-width="1.6" stroke-linecap="round"/>`;
-    const waves = [[560, 450], [450, 470], [470, 560], [180, 560], [160, 620], [430, 760], [300, 820], [150, 700], [520, 690]].map(([x, y]) => wave(x, y)).join('');
-    const boat = (x, y, c) => `<g transform="translate(${x},${y})"><path d="M-14 0h28l-5 7h-18z" fill="${c}" stroke="#2b3a55" stroke-width="1.3"/><path d="M0 -1v-20l11 15z" fill="#fff" stroke="#2b3a55" stroke-width="1.3"/><path d="M-1 -2v-14l-8 12z" fill="#ffd166" stroke="#2b3a55" stroke-width="1.1"/></g>`;
-    const fish = (x, y, c) => `<g transform="translate(${x},${y})"><ellipse rx="8" ry="4.5" fill="${c}" stroke="#2b3a55" stroke-width="1.1"/><path d="M7 0l6 -4v8z" fill="${c}" stroke="#2b3a55" stroke-width="1.1"/><circle cx="-4" cy="-1" r="1" fill="#2b3a55"/></g>`;
-    const cloud = (x, y) => `<path d="M${x} ${y}a6 6 0 0 1 10 -4a8 8 0 0 1 14 2a5 5 0 0 1 2 10h-24a5 5 0 0 1 -2 -8z" fill="#fff" stroke="#8cc3ee" stroke-width="1.4"/>`;
-    return waves + boat(480, 640, '#ff8fa3') + boat(405, 806, '#7cc6ff') + boat(520, 800, '#ffd166') + fish(390, 845, '#ffb36b') + fish(560, 760, '#8fd6b6') + cloud(170, 400) + cloud(470, 410) + cloud(540, 600);
-  }
-  // 남한만 보이게 자른 화면 (울릉도·독도 포함)
-  const VB = [128, 372, 474, 516];
-  function worldSVG(wonG) {
-    const pieces = REG.map(r => {
-      const open = regionOpen(r.g), done = regionDone(r.g), n = conqCount(r.g);
-      const names = r.codes.map(c => { const [nm, lon, lat] = PLAB[c], [x, y] = XY([lon, lat]), city = nm.length <= 2;
-        return `<text class="${city ? 'cname2' : 'pname'}" x="${x}" y="${y}" fill="${done ? '#1f2a40' : '#4a4f57'}">${nm}</text>`; }).join('');
-      const [cx, cy] = XY(r.chip), label = `${r.g}학년 · ${done ? '★ 조각 완성' : open ? `단원 ${n}/10` : '잠김'}`, w = label.length * 7.2 + (open ? 14 : 24);
-      const chip = `<g pointer-events="none" transform="translate(${cx},${cy})"><rect x="${-w / 2}" y="-9" width="${w}" height="17" rx="8.5" fill="${done ? '#fff' : open ? '#fff' : '#eef1f4'}" stroke="${done ? '#2b3a55' : '#8a94a3'}" stroke-width="1.2"/>
-        ${open ? '' : `<g transform="translate(${-w / 2 + 6},-6)"><rect x="0" y="5" width="9" height="7" rx="1.5" fill="#5b6672"/><path d="M2 5.5v-1.5a2.5 2.5 0 0 1 5 0v1.5" stroke="#5b6672" stroke-width="1.6" fill="none"/></g>`}
-        <text class="psub" x="${open ? 0 : 6}" y="3.5" fill="${done ? '#2b3a55' : '#5b6672'}">${label}</text></g>`;
-      return `<g class="rg${open ? '' : ' locked'}${wonG === r.g ? ' won' : ''}" data-g="${r.g}" tabindex="0" role="button" aria-label="${r.g}학년 ${r.name} 조각, ${done ? '완성' : open ? `단원 ${n}/10 정복` : '잠김'}">${pieceArt(r, 1, done)}${names}${chip}</g>`;
-    }).join('');
-    const [ux, uy] = XY([130.87, 37.5]), [dx, dy] = XY([131.87, 37.24]);
-    const sea = `<text class="sea" x="${XY([130.3, 36.4])[0]}" y="${XY([130.3, 36.4])[1]}">동해</text><text class="sea" x="${XY([125.6, 35.9])[0] + 24}" y="${XY([125.6, 35.9])[1]}">서해</text><text class="sea" x="${XY([128.6, 34.15])[0]}" y="${XY([128.6, 34.15])[1]}">남해</text>
-      <text class="psub" x="${ux}" y="${uy - 9}" fill="#2b3a55">울릉도</text><circle cx="${dx}" cy="${dy}" r="2.2" fill="${regionDone(3) ? '#ffc4d8' : '#ccc'}" stroke="#2b3a55" stroke-width="1"/><text class="psub" x="${dx}" y="${dy + 13}" fill="#2b3a55">독도</text>`;
-    return `<svg viewBox="${VB.join(' ')}" role="group" aria-label="대한민국 시·도 지도 퍼즐">${DEFS}<rect x="${VB[0]}" y="${VB[1]}" width="${VB[2]}" height="${VB[3]}" fill="#fbfdff"/>${seaDecor()}${sea}${pieces}
-      ${doneRegions() === 6 ? `<text class="sea big" x="${XY([130.3, 34.6])[0]}" y="${XY([130.3, 34.6])[1]}">퍼즐 완성!</text>` : ''}</svg>
-      <span class="mapcount">퍼즐 ${doneRegions()} / 6 조각</span>`;
-  }
-  function regionSVG(r) {
-    const pts = r.codes.flatMap(c => [[PV[c].bb[0], PV[c].bb[1]], [PV[c].bb[2], PV[c].bb[3]]]).concat(r.cities.filter((_, i) => !(r.g === 3 && i === 9)).map(c => XY([c[1], c[2]])));
-    let x0 = Math.min(...pts.map(p => p[0])), x1 = Math.max(...pts.map(p => p[0])), y0 = Math.min(...pts.map(p => p[1])), y1 = Math.max(...pts.map(p => p[1]));
-    const pad = Math.max(x1 - x0, y1 - y0) * 0.12 + 8; x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
-    const k = Math.max(x1 - x0, y1 - y0) / 420, done = regionDone(r.g);
-    const inset = r.g === 3 ? [x1 - 34 * k, y0 + 30 * k] : null;
-    const cities = r.cities.map(([nm, lon, lat], c) => {
-      const [x, y] = inset && c === 9 ? inset : XY([lon, lat]), won = !!M.con[cid(r.g, c)];
-      return `<g class="city${selCity === c ? ' sel' : ''}" data-c="${c}" tabindex="0" role="button" aria-label="${nm}, ${UNITS[r.g][c]}, ${won ? '정복 완료' : '도전 가능'}">
-        <circle class="dot" cx="${x}" cy="${y}" r="${(9 * k).toFixed(1)}" fill="${won ? '#e8b44a' : '#fff'}" stroke-width="${((selCity === c ? 4.5 : 2.5) * k).toFixed(1)}"/>
-        ${won ? `<path d="M${x - 3 * k} ${y + 4 * k}V${y - 5 * k}L${x + 5 * k} ${y - 2.5 * k}L${x - 3 * k} ${y}" fill="#5a3517" stroke="#5a3517" stroke-width="${k}" pointer-events="none"/>` : `<text x="${x}" y="${y + 4 * k}" font-size="${(10 * k).toFixed(1)}" text-anchor="middle" font-family="Jua" fill="#3a2a1a" pointer-events="none">${c + 1}</text>`}
-        <text class="cname" x="${(x + (LEFT[nm] ? -13 : 13) * k).toFixed(1)}" y="${(y + 5 * k).toFixed(1)}" text-anchor="${LEFT[nm] ? 'end' : 'start'}" font-size="${(14 * k).toFixed(1)}" stroke-width="${(4 * k).toFixed(1)}">${nm}</text></g>`;
-    }).join('');
-    return `<svg viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}" role="group" aria-label="${r.name} 퍼즐 조각과 도시">${DEFS}
-      <rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" fill="#fbfdff"/>
-      ${inset ? `<rect x="${inset[0] - 30 * k}" y="${inset[1] - 22 * k}" width="${60 * k}" height="${48 * k}" rx="${6 * k}" fill="none" stroke="#2b3a55" stroke-dasharray="${4 * k} ${3 * k}" stroke-width="${1.5 * k}"/>` : ''}
-      <g pointer-events="none">${pieceArt(r, k, done, r.g === 3)}${r.codes.length > 1 ? r.codes.map(c => { const [nm, lon, lat] = PLAB[c], [x, y] = XY([lon, lat]); return nm.length > 2 ? `<text x="${x}" y="${y}" font-size="${(11 * k).toFixed(1)}" text-anchor="middle" font-family="Jua" fill="#2b3a55" opacity=".45">${nm}</text>` : ''; }).join('') : ''}</g>${cities}</svg>
-      <span class="mapcount">${r.name} 조각 · 단원 ${conqCount(r.g)} / 10</span>`;
   }
 
   // ---------- 화면 ----------
@@ -1272,123 +1224,92 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     n.className = 'news' + (M.news.good ? ' good' : '');
     n.innerHTML = `<span class="ic">${M.news.good ? '✓' : 'i'}</span><span>${esc(M.news.text)}</span>`;
   }
-  function renderWorld(wonG) {
-    $('mapTitle').textContent = '부기의 대한민국 지도 퍼즐';
-    $('mapDesc').textContent = '조각 하나가 한 학년이에요. 조각을 눌러 그 학년 단원(도시)을 모두 정복하면 퍼즐 조각이 맞춰져요.';
-    $('legend').hidden = false;
-    $('mapbox').innerHTML = worldSVG(wonG);
-    $('side').innerHTML = `<ol class="rlist">${REG.map(r => {
-      const open = regionOpen(r.g), done = regionDone(r.g), n = conqCount(r.g);
-      const st = done ? ['done', '조각 완성 ✓'] : !open ? ['lock', '잠김'] : r.g === MY_GRADE ? ['now', '내 학년'] : ['open', '도전 가능'];
-      return `<li><button type="button" class="ritem${open ? '' : ' locked'}" data-g="${r.g}" ${open ? '' : 'aria-disabled="true"'}>
-        <span class="rnum" style="background:${done ? r.wood : '#fff'};color:${done ? '#2b3a55' : ''}">${r.g}<br>학년</span>
-        <span class="rinfo"><b>${r.name}</b><span>${open ? `단원 ${n}/10 정복` : `${r.g - 1}학년 ${REG[r.g - 2].name}를 모두 정복하면 열려요`}</span>${open ? `<span class="bar2"><i style="width:${n * 10}%"></i></span>` : ''}</span>
-        <span class="rst ${st[0]}">${st[1]}</span></button></li>`;
-    }).join('')}</ol>`;
+  function renderHome() {
+    $('mapTitle').textContent = '부기의 수학 퍼즐';
+    $('mapDesc').textContent = '학년마다 친구가 기다려요. 단원에서 별 3개를 모으면 퍼즐 조각 1개, 10조각이면 학년 퍼즐 완성!';
+    $('homeBody').innerHTML = `<ul class="grades">${CH.map(ch => {
+      const open = gradeOpen(ch.g), n = countPieces(ch.g);
+      return `<li><button type="button" class="gcard${open ? '' : ' locked'}" data-g="${ch.g}" ${open ? '' : 'aria-disabled="true"'}>
+        <span class="banner" style="background:${ch.bg}">${charSVG(ch.g)}<span class="floor" style="background:${ch.floor}"></span>${open ? '' : `<span class="lockb">🔒 ${ch.g - 1}학년 퍼즐을 완성하면 열려요</span>`}</span>
+        <span class="gtitle"><span><b>${ch.g}학년</b> <span>${ch.g === MY_GRADE ? '· 내 학년' : ''}</span></span><span class="arrow">→</span></span>
+        <span class="gsub">${ch.place} · 퍼즐 ${n}/10${gradeDone(ch.g) ? ' ✓' : ''}</span>
+        <span class="gbar"><i style="width:${n * 10}%;background:${ch.bar}"></i></span></button></li>`;
+    }).join('')}</ul>`;
   }
-  function cityRow(r, c) {
-    const k = cid(r.g, c), won = !!M.con[k], b = board(k), mine = M.ta[k];
-    const rank = mine != null ? b.findIndex(x => x.me) + 1 : 0;
-    const rec = won ? (mine != null ? `<em>타임어택 ${mine.toFixed(1)}초 · 반 ${rank}위</em>` : `<em>정복 완료 · 타임어택 반 1위 ${b[0].n} ${b[0].t.toFixed(1)}초</em>`) : '';
-    return `<div class="crow${selCity === c ? ' sel' : ''}" id="crow-${c}"><span class="cdot" style="background:${won ? '#c9a227' : '#fff'};color:${won ? '#fff' : '#003a5c'}">${won ? '✓' : c + 1}</span>
-      <span class="ct"><b>${r.cities[c][0]}</b><span>단원: ${UNITS[r.g][c]}</span>${rec}</span>
-      <span class="acts"><button type="button" class="sbtn go" data-play="normal" data-c="${c}">${won ? '복습' : '정복하기'}</button><button type="button" class="sbtn ta" data-play="ta" data-c="${c}" ${won ? '' : 'disabled'}>타임어택</button></span></div>`;
+  function unitCard(g, c) {
+    const st = M.stars[sid(g, c)] || 0, got = st >= 3, ch = CH[g - 1];
+    return `<div class="ucard${got ? ' got' : ''}"><span class="no" style="background:${got ? ch.bg : '#f1f3f6'}">${c + 1}</span>
+      <span class="ut"><b>${UNITS[g][c]}</b><span class="stars">${[0, 1, 2].map(i => i < st ? '<i>★</i>' : '★').join('')}</span><small>${got ? '퍼즐 조각 획득' : st ? `별 ${3 - st}개 더 모으면 조각 획득` : '아직 도전 전'}</small></span>
+      <button type="button" class="sbtn${st ? ' again' : ''}" data-play="${c}">${got ? '복습' : st ? '별 3개 도전' : '도전'}</button></div>`;
   }
-  function renderRegion() {
-    const r = REG[curG - 1];
-    $('mapTitle').innerHTML = `<button type="button" class="back" id="backWorld">← 퍼즐 지도</button>${r.g}학년 · ${r.name}`;
-    $('mapDesc').textContent = '도시 하나 = 단원 하나예요. 도시를 눌러 단원 문제를 풀면 정복! 10곳을 모두 정복하면 이 퍼즐 조각이 맞춰져요.';
-    $('legend').hidden = true;
-    $('mapbox').innerHTML = regionSVG(r);
-    $('side').innerHTML = [1, 2].map(s => `<div class="semgrp"><h4>${s}학기</h4>${[0, 1, 2, 3, 4].map(i => cityRow(r, (s - 1) * 5 + i)).join('')}</div>`).join('');
+  function renderGrade(popC) {
+    const g = curG, ch = CH[g - 1];
+    $('mapTitle').innerHTML = `<button type="button" class="back" id="backHome">← 학년 고르기</button>${g}학년 · ${ch.place}`;
+    $('mapDesc').textContent = '단원 하나마다 별 3개를 모으면 퍼즐 조각 1개를 얻어요.';
+    $('homeBody').innerHTML = `<div class="gview">
+      <div class="pzbox"><div class="pzhead"><span class="pic" style="background:${ch.bg}">${charSVG(g)}</span><span><b>${ch.name}의 ${g}학년 퍼즐</b><span>조각 ${countPieces(g)}/10${gradeDone(g) ? ' · 완성!' : ''}</span></span></div>
+        ${puzzleSVG(g, popC)}
+        <ul class="rules"><li>★ 깃발까지 완주</li><li>★ 문제를 한 번에 모두 맞히기</li><li>★ 하트 지키기 (한 번도 다치지 않기)</li></ul></div>
+      <div class="units2">${[1, 2].map(s => `<div class="semgrp"><h4>${s}학기</h4>${[0, 1, 2, 3, 4].map(i => unitCard(g, (s - 1) * 5 + i)).join('')}</div>`).join('')}</div></div>`;
   }
-  function render(wonG) {
+  function render(popC) {
     renderNews();
-    if (view === 'world') renderWorld(wonG); else renderRegion();
+    if (view === 'home') renderHome(); else renderGrade(popC);
     saveM();
   }
 
-  function enterRegion(g) {
-    if (!regionOpen(g)) { M.news = { good: false, text: `${g}학년 ${REG[g - 1].name}는 아직 잠겨 있어요. ${g - 1}학년 ${REG[g - 2].name}를 모두 정복하면 열려요.` }; render(); return; }
-    view = 'region'; curG = g; selCity = -1; render();
+  function enterGrade(g) {
+    if (!gradeOpen(g)) { M.news = { good: false, text: `${g}학년 ${CH[g - 1].name}네는 아직 잠겨 있어요. ${g - 1}학년 퍼즐을 완성하면 열려요.` }; render(); return; }
+    view = 'grade'; curG = g; render();
   }
-  $('mapbox').addEventListener('click', e => {
-    if (view === 'world') { const rg = e.target.closest('.rg'); if (rg) enterRegion(Number(rg.dataset.g)); return; }
-    const c = e.target.closest('.city'); if (!c) return;
-    selCity = Number(c.dataset.c); render();
-    const row = $('crow-' + selCity); if (row) row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  });
-  $('mapbox').addEventListener('keydown', e => {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    const t = e.target.closest('.rg, .city'); if (!t) return;
-    e.preventDefault(); t.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-  });
-  $('mapModal').addEventListener('click', e => {
-    if (e.target.closest('#backWorld')) { view = 'world'; render(); return; }
-    const ri = e.target.closest('.ritem'); if (ri) { enterRegion(Number(ri.dataset.g)); return; }
-    const b = e.target.closest('[data-play]'); if (!b || b.disabled) return;
-    const c = Number(b.dataset.c), r = REG[curG - 1];
-    pick = { g: curG, s: c < 5 ? 1 : 2, c };
-    runMode = b.dataset.play;
-    QUESTIONS = cityQuestions(curG, c);
-    $('startStage').textContent = `${curG}학년 ${pick.s}학기`;
-    $('startMode').textContent = runMode === 'ta' ? '타임어택' : `단원: ${UNITS[curG][c]}`;
-    $('taRule').hidden = runMode !== 'ta';
-    $('startTitle').textContent = runMode === 'ta' ? `${r.cities[c][0]} 타임어택!` : `${r.cities[c][0]}을(를) 정복하러 가요!`;
-    $('subline').textContent = `${r.name} › ${r.cities[c][0]} · 단원 ${UNITS[curG][c]} · 문제 문 2개`;
+  function startUnit(g, c) {
+    const ch = CH[g - 1];
+    pick = { g, s: c < 5 ? 1 : 2, c };
+    runMode = 'normal';
+    QUESTIONS = cityQuestions(g, c);
+    $('startStage').textContent = `${g}학년 ${pick.s}학기`;
+    $('startMode').textContent = `단원 ${c + 1}`;
+    $('taRule').hidden = true;
+    $('startChar').style.background = ch.bg;
+    $('startChar').innerHTML = `${charSVG(g)}<span><b>${ch.name}</b>: "${UNITS[g][c]} 단원이야! 별 3개를 모으면 퍼즐 조각을 줄게."</span>`;
+    $('startTitle').textContent = `${UNITS[g][c]}`;
+    $('subline').textContent = `${g}학년 · ${ch.place} › ${UNITS[g][c]} · 문제 문 2개`;
     resetAll();
     showModal('startModal');
     $('startBtn').focus({ preventScroll: true });
+  }
+  $('mapModal').addEventListener('click', e => {
+    if (e.target.closest('#backHome')) { view = 'home'; render(); return; }
+    const gc = e.target.closest('.gcard'); if (gc) { enterGrade(Number(gc.dataset.g)); return; }
+    const b = e.target.closest('[data-play]'); if (b) startUnit(curG, Number(b.dataset.play));
   });
+  $('nextBtn').addEventListener('click', () => { const nx = nextUnit(); if (!nx) return; curG = nx.g; startUnit(nx.g, nx.c); });
 
   function onGateSolved() {}
-
-  function showTaResults() {
-    const k = cid(pick.g, pick.c), t = +taTime.toFixed(1);
-    const before = board(k)[0], hadFirst = before && before.me, prev = M.ta[k];
-    const best = prev == null || t < prev;
-    if (best) M.ta[k] = t;
-    const b = board(k), rank = b.findIndex(x => x.me) + 1, city = curCity().name;
-    let msg, lose = false;
-    if (rank === 1 && !hadFirst) { msg = `반 1등! ${city} 최고 기록이에요.`; M.news = { good: true, text: `${city} 타임어택에서 ${t.toFixed(1)}초로 반 1등을 했어요.` }; }
-    else if (rank === 1) msg = best ? `1등을 지켰어요! 내 기록을 ${t.toFixed(1)}초로 줄였어요.` : `여전히 반 1등이에요. 내 최고 기록은 ${M.ta[k].toFixed(1)}초예요.`;
-    else { lose = true; msg = `반 ${rank}위예요. 1위 ${b[0].n} 님과 ${(M.ta[k] - b[0].t).toFixed(1)}초 차이예요.${best ? ' 내 최고 기록을 새로 세웠어요!' : ''}`; }
-    saveM();
-    $('doneTitle').textContent = `${city} 타임어택 완주!`;
-    $('doneScore').textContent = t.toFixed(1) + '초';
-    $('statFirst').textContent = stats.first;
-    $('statRetry').textContent = stats.retries + ' (+' + stats.retries * 5 + '초)';
-    $('statCoin').textContent = stats.coins;
-    $('reviewBox').hidden = true;
-    $('taBox').hidden = false;
-    $('taBox').innerHTML = `<p class="ta-msg${lose ? ' lose' : ''}">${esc(msg)}</p><p class="lead"><b>${city} 반 기록</b></p>
-      <ol class="board">${b.slice(0, 5).map((x, i) => `<li class="${x.me ? 'me' : ''}"><b>${i + 1}</b><span>${esc(x.n)}</span><span>${x.t.toFixed(1)}초</span></li>`).join('')}</ol>`;
-    showModal('doneModal');
-    $('againBtn').focus({ preventScroll: true });
-  }
+  function showTaResults() { showResults(); }
 
   $('tClear').addEventListener('click', () => {
-    const g = view === 'region' ? curG : (REG.find(r => regionOpen(r.g) && !regionDone(r.g) && r.g >= MY_GRADE) || REG.find(r => regionOpen(r.g) && !regionDone(r.g)) || {}).g;
-    if (!g) { M.news = { good: true, text: '이미 모든 지역을 정복했어요.' }; render(); return; }
-    let c = 0; while (c < 10 && M.con[cid(g, c)]) c++;
+    const g = view === 'grade' ? curG : (CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g) && ch.g >= MY_GRADE) || CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g)) || {}).g;
+    if (!g) { M.news = { good: true, text: '모든 학년 퍼즐을 완성했어요.' }; render(); return; }
+    let c = 0; while (c < 10 && (M.stars[sid(g, c)] || 0) >= 3) c++;
     pick = { g, s: c < 5 ? 1 : 2, c };
-    conquerCity();
-    const won = M.newRegion; M.newRegion = 0;
-    if (won) view = 'world';
-    else { view = 'region'; curG = g; }
-    render(won);
+    stats = { hearts: 3, coins: 0, first: 2, retries: 0, hits: 0, wrongUnits: [] };
+    scoreUnit();
+    view = 'grade'; curG = g;
+    const pop = M.popPiece; M.popPiece = null; M.gradeJustDone = 0;
+    render(pop ? pop.c : null);
   });
-  $('tReset').addEventListener('click', () => { M = defaultsM(); view = 'world'; curG = MY_GRADE; render(); });
+  $('tReset').addEventListener('click', () => { M = defaultsM(); view = 'home'; curG = MY_GRADE; render(); });
 
   function openMap() {
     state = 'start'; runMode = 'normal';
-    const won = M.newRegion; M.newRegion = 0; M.lastRegionDone = 0;
-    if (won) view = 'world';
-    render(won);
+    const pop = M.popPiece; M.popPiece = null; M.gradeJustDone = 0;
+    if (pop) { view = 'grade'; curG = pop.g; }
+    render(pop ? pop.c : null);
     showModal('mapModal');
   }
   $('toMapBtn').addEventListener('click', openMap);
-  $('mapBackBtn').addEventListener('click', () => { resetAll(); openMap(); });
+  $('mapBackBtn').addEventListener('click', () => { resetAll(); if (view === 'home') { view = 'grade'; curG = pick.g; } openMap(); });
 
   openMap();
 })();
