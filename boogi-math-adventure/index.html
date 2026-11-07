@@ -99,13 +99,40 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .ctlbtn.armed { background: var(--sun); color: var(--deep); }
 .ctlbtn.mini { margin-left: auto; font-size: 0.85rem; padding: 4px 12px; box-shadow: none; }
 .ctlbtn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+/* 홈: 매스 랜드 지도 > 구역 퍼즐(단원 10조각) */
+.landbox { border: 3px solid var(--deep); border-radius: 22px; overflow: hidden; background: #d6edb5; }
+.landbox svg { display: block; width: 100%; height: auto; }
+.zone { cursor: pointer; outline: none; }
+.zone:hover > g:first-of-type, .zone:focus-visible > g:first-of-type { filter: drop-shadow(0 0 6px #f2b705); }
+.zone.locked { cursor: not-allowed; }
+.zone .ring { animation: dash 1.2s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -34; } }
+.zone.won { animation: pop 1s cubic-bezier(.2,1.5,.4,1) both; transform-box: fill-box; transform-origin: center; }
+.mtxt { font-family: var(--display); font-size: 14px; fill: #1f2a40; }
+.mtxt.sm { font-family: var(--body); font-weight: 700; font-size: 10.5px; fill: #5b6672; }
+.mtxt.gold { fill: #b07800; }
+.mtxt.title { font-size: 26px; fill: #2b3a55; }
+.mtxt.big { font-size: 20px; fill: #e5484d; }
+.hands.spin { animation: spin 3s linear infinite; transform-origin: 400px 222px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.zchips { display: none; flex-wrap: wrap; gap: 6px; }
+.zchip { font-family: var(--display); font-size: 0.92rem; border: 2px solid var(--deep); border-radius: 999px; background: #fff; color: var(--deep); padding: 5px 12px; cursor: pointer; }
+.zchip.locked { border-color: #b9c4d0; color: #8a96a3; }
+@media (max-width: 640px) { .zchips { display: flex; } }
+.pzhead .say { display: block; font-size: 0.86rem; color: #1f2a40; background: #fff8e1; border-radius: 10px; padding: 6px 10px; margin: 4px 0; line-height: 1.5; }
+.story { width: min(560px, 100%); text-align: center; }
+.storyart { display: grid; place-items: center; min-height: 150px; }
+.storyart svg { width: 150px; height: auto; }
+.crew { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.crew span { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; }
+.crew svg { width: 48px; }
 /* 홈: 학년 카드 > 학년 퍼즐(단원 10조각) */
 .map-card { width: min(1080px, 100%); gap: 14px; background: #e6f4ef; }
 .map-card > * { flex-shrink: 0; }
 .map-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 6px 16px; }
-.map-head h2 { margin: 0; display: flex; align-items: center; gap: 10px; }
+.map-head h2 { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
 .map-head p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-.back { font-family: var(--display); font-size: 1rem; border: 2px solid var(--deep); border-radius: 999px; background: var(--card); color: var(--deep); padding: 5px 14px; cursor: pointer; box-shadow: 0 3px 0 var(--deep); }
+.back { white-space: nowrap; font-family: var(--display); font-size: 1rem; border: 2px solid var(--deep); border-radius: 999px; background: var(--card); color: var(--deep); padding: 5px 14px; cursor: pointer; box-shadow: 0 3px 0 var(--deep); }
 .news { display: flex; gap: 10px; align-items: flex-start; background: #fff7c2; border: 2px solid #f3d27a; border-radius: 14px; padding: 10px 14px; font-size: 0.92rem; line-height: 1.55; }
 .news .ic { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--sky); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
 .news.good .ic { background: var(--good); }
@@ -180,7 +207,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 <div class="wrap">
   <div class="top">
     <h1>부기의 수학 모험</h1>
-    <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
+    <p id="subline">매스 랜드: 숫자 시계탑의 비밀</p>
     <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
   <div class="stage" id="stage">
@@ -206,7 +233,17 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     </div>
     <div class="news" id="news"></div>
     <div id="homeBody"></div>
-    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">다음 단원 별 3개로 바로 클리어</button><button type="button" id="tReset">처음 상태로</button></div>
+    <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">다음 단원 별 3개로 바로 클리어</button><button type="button" id="tStory">이야기 처음부터</button><button type="button" id="tReset">처음 상태로</button></div>
+  </div>
+</div>
+
+<div class="modal" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
+  <div class="card story">
+    <div class="tagrow"><span class="tag">매스 랜드 이야기</span><span class="tag" id="storyStep"></span></div>
+    <div class="storyart" id="storyArt"></div>
+    <h2 id="storyTitle"></h2>
+    <p class="lead" id="storyText"></p>
+    <div class="btnrow"><button type="button" class="btn ghost" id="storySkip">건너뛰기</button><button type="button" class="btn" id="storyNext">다음 ▶</button></div>
   </div>
 </div>
 
@@ -530,7 +567,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   bindPad('btnJump', 'jump');
 
   // ---------- 모달 ----------
-  function showModal(id) { ['mapModal', 'startModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
+  function showModal(id) { ['storyModal', 'mapModal', 'startModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
   function hideModals() { showModal(null); }
 
   function openQuestion(gate) {
@@ -625,8 +662,8 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     state = 'done';
     $('skipBtn').hidden = true;
     const R = M.last, g = pick.g, c = pick.c, ch = CH[g - 1];
-    $('doneTag').textContent = `${g}학년 · ${UNITS[g][c]}`;
-    $('doneTitle').textContent = M.gradeJustDone ? `${g}학년 퍼즐 완성!` : R.stars === 3 ? '별 3개! 완벽해요' : '깃발에 도착했어요!';
+    $('doneTag').textContent = `${ZL(g)} · ${UNITS[g][c]}`;
+    $('doneTitle').textContent = M.gradeJustDone ? `황금 나침반 조각 획득! (${compass()}/7)` : R.stars === 3 ? '별 3개! 완벽해요' : '깃발에 도착했어요!';
     $('doneScore').innerHTML = [0, 1, 2].map(i => i < R.stars ? '<i>★</i>' : '☆').join('');
     $('statFirst').textContent = stats.first;
     $('statRetry').textContent = stats.retries;
@@ -634,13 +671,13 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     $('reviewBox').hidden = true;
     $('taBox').hidden = false;
     const chk = [['깃발까지 완주', R.s1], ['문제를 한 번에 모두 맞히기', R.s2], ['하트 지키기 (한 번도 다치지 않기)', R.s3]];
-    const msg = R.newPiece ? `<p class="piece-msg">${ch.name}의 퍼즐 조각 ${c + 1}번을 얻었어요! (${countPieces(g)}/10)</p>`
+    const msg = R.newPiece ? `<p class="piece-msg">${ch.place} 퍼즐 조각 ${c + 1}번을 얻었어요! (${countPieces(g)}/10)${countPieces(g) === 10 ? ' 구역 퍼즐 완성 → 황금 나침반 조각!' : ''}</p>`
       : R.best === 3 ? `<p class="piece-msg no">이 단원 퍼즐 조각은 이미 얻었어요. 다음 단원으로 가 볼까요?</p>`
       : `<p class="piece-msg no">별 3개를 모으면 퍼즐 조각을 얻어요. 지금 최고 기록: 별 ${R.best}개</p>`;
     $('taBox').innerHTML = `<ul class="checks">${chk.map(([t, ok]) => `<li class="${ok ? 'ok' : ''}"><b>★</b>${t}</li>`).join('')}</ul>${msg}`;
     const nx = nextUnit();
     $('nextBtn').hidden = !nx;
-    if (nx) $('nextBtn').textContent = nx.g !== g ? `${nx.g}학년으로 ▶` : '다음 단원 ▶';
+    if (nx) $('nextBtn').textContent = nx.g !== g ? `${ZL(nx.g)}으로 ▶` : '다음 단원 ▶';
     showModal('doneModal');
     $('nextBtn').hidden ? $('againBtn').focus({ preventScroll: true }) : $('nextBtn').focus({ preventScroll: true });
   }
@@ -1083,19 +1120,22 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   // 단원에서 별 3개(완주 · 한 번에 모두 정답 · 하트 지키기)를 받으면 그 학년 퍼즐 조각 1개. 10조각이면 학년 퍼즐 완성 → 다음 학년 열림.
   const MY_GRADE = 3;
   const CH = [
-    { g: 1, name: '송이', place: '송이네 숫자 교실', bg: '#ffd9b8', floor: '#5f8a4e', bar: '#f6c945' },
-    { g: 2, name: '루미', place: '루미네 구구단 가게', bg: '#fff6a0', floor: '#d6cf55', bar: '#74d36b' },
-    { g: 3, name: '부기', place: '부기네 계산 수리점', bg: '#fdf0dc', floor: '#8aa2d8', bar: '#8aa2d8' },
-    { g: 4, name: '로키', place: '로키네 도형 퀴즈쇼', bg: '#c9c8ff', floor: '#3b3f8f', bar: '#7b74e8' },
-    { g: 5, name: '달이', place: '달이의 분수 탐정 사무소', bg: '#ead9ff', floor: '#b67cf2', bar: '#b67cf2' },
-    { g: 6, name: '토리', place: '토리의 비율 열기구', bg: '#c9f3f7', floor: '#6fcfd6', bar: '#ff9eb3' }
+    { g: 1, name: '송이', place: '송이네 숫자 교실', line: '내 교실 숫자들이 뒤죽박죽이 됐어! 단원 미션을 풀어서 숫자를 제자리에 돌려줘.', bg: '#ffd9b8', floor: '#5f8a4e', bar: '#f6c945' },
+    { g: 2, name: '루미', place: '루미네 구구단 가게', line: '가게 저울이 엉망이야. 구구단으로 손님 주문을 맞춰 줄래?', bg: '#fff6a0', floor: '#d6cf55', bar: '#74d36b' },
+    { g: 3, name: '부기', place: '부기네 계산 수리점', line: '시계탑 부품이 고장 났어! 계산을 바로잡아서 같이 고치자.', bg: '#fdf0dc', floor: '#8aa2d8', bar: '#8aa2d8' },
+    { g: 4, name: '로키', place: '로키네 도형 퀴즈쇼', line: '무대의 도형들이 제멋대로 움직여! 퀴즈를 풀어 질서를 되찾아 줘.', bg: '#c9c8ff', floor: '#3b3f8f', bar: '#7b74e8' },
+    { g: 5, name: '달이', place: '달이의 분수 탐정 사무소', line: '사라진 나침반 조각의 단서가 분수 속에 숨어 있어. 함께 수사하자!', bg: '#ead9ff', floor: '#b67cf2', bar: '#b67cf2' },
+    { g: 6, name: '토리', place: '토리의 비율 열기구', line: '열기구가 비율이 틀려서 기울었어! 균형을 맞춰 하늘 위 조각을 찾자.', bg: '#c9f3f7', floor: '#6fcfd6', bar: '#ff9eb3' },
+    { g: 7, name: '샌디', place: '샌디의 비밀기지', line: '마지막 조각은 내 비밀기지에 있어. 지금까지 배운 걸 모두 보여 줘!', bg: '#fff3b0', floor: '#efd94d', bar: '#ffa45c' }
   ];
+  const ZL = g => g <= 6 ? `${g}학년 구역` : '마지막 구역';
   const UNITS = {
     1: ['9까지의 수', '여러 가지 모양', '덧셈', '뺄셈', '50까지의 수', '100까지의 수', '덧셈(받아올림)', '뺄셈(받아내림)', '시각', '규칙 찾기'],
     2: ['세 자리 수', '여러 가지 도형', '덧셈과 뺄셈', '길이 재기(cm)', '곱셈', '네 자리 수', '곱셈구구', '길이 재기(m)', '시각과 시간', '규칙 찾기'],
     3: ['덧셈과 뺄셈', '평면도형', '나눗셈', '곱셈', '분수와 소수', '곱셈(세 자리)', '나눗셈(몫)', '원', '분수', '들이와 무게'],
     4: ['큰 수', '각도', '곱셈', '나눗셈', '규칙 찾기', '분수의 덧셈', '분수의 뺄셈', '소수의 덧셈', '삼각형', '사각형'],
     5: ['혼합 계산', '약수와 배수', '약분과 통분', '분수의 덧셈', '넓이', '어림하기', '분수의 곱셈', '합동과 대칭', '소수의 곱셈', '평균'],
+    7: ['1학년 복습', '2학년 복습', '3학년 복습', '4학년 복습', '5학년 복습', '6학년 복습', '섞어 풀기 1', '섞어 풀기 2', '섞어 풀기 3', '시계탑 최종 미션'],
     6: ['분수의 나눗셈', '각기둥과 각뿔', '소수의 나눗셈', '비와 비율', '부피', '분수의 나눗셈(2)', '소수의 나눗셈(2)', '비례식', '비례배분', '원의 넓이']
   };
   // 학년 캐릭터 (첨부 캐릭터를 참고해 단순하게 그린 시제품용 그림. 정식 그림 파일로 바꿀 수 있어요)
@@ -1130,7 +1170,12 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
           <ellipse cx="48" cy="72" rx="20" ry="20" fill="#f08a3c"/><ellipse cx="48" cy="76" rx="12" ry="13" fill="#ffe2bf"/>
           <ellipse cx="48" cy="44" rx="20" ry="17" fill="#f08a3c"/><ellipse cx="48" cy="50" rx="10" ry="7" fill="#ffe2bf"/>
           ${eye(41, 44, 3.2)}${eye(55, 44, 3.2)}<ellipse cx="48" cy="49" rx="2.5" ry="1.8" fill="#1f1a17"/>${smile(48, 53, 3)}
-          <path d="M28 36 q20 -24 40 0 z" fill="#4f8de0"/><circle cx="48" cy="14" r="4" fill="#4f8de0"/><rect x="27" y="33" width="42" height="6" rx="3" fill="#3a6fc0"/>`
+          <path d="M28 36 q20 -24 40 0 z" fill="#4f8de0"/><circle cx="48" cy="14" r="4" fill="#4f8de0"/><rect x="27" y="33" width="42" height="6" rx="3" fill="#3a6fc0"/>`,
+      7: `<circle cx="28" cy="34" r="9" fill="#e9a861"/><circle cx="72" cy="34" r="9" fill="#e9a861"/><circle cx="28" cy="34" r="5" fill="#f7b3a7"/><circle cx="72" cy="34" r="5" fill="#f7b3a7"/>
+          <ellipse cx="50" cy="66" rx="30" ry="28" fill="#f3c58a"/><ellipse cx="50" cy="74" rx="18" ry="16" fill="#ffe6c4"/>
+          <circle cx="34" cy="60" r="7" fill="#f7a3a3" opacity=".8"/><circle cx="66" cy="60" r="7" fill="#f7a3a3" opacity=".8"/>
+          ${eye(42, 52, 3.4)}${eye(58, 52, 3.4)}<ellipse cx="50" cy="58" rx="2.6" ry="2" fill="#1f1a17"/>${smile(50, 62, 3)}
+          <path d="M20 46 a30 30 0 0 1 60 0" stroke="#3b3f5c" stroke-width="6" fill="none"/><rect x="13" y="40" width="12" height="18" rx="6" fill="#3b3f5c"/><rect x="75" y="40" width="12" height="18" rx="6" fill="#3b3f5c"/>`
     };
     return `<svg viewBox="0 0 100 100" aria-hidden="true">${art[g]}</svg>`;
   }
@@ -1140,7 +1185,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     const dots = [[40, 40], [120, 150], [430, 40], [460, 140], [300, 30], [210, 170]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${6 + (i % 3) * 3}" fill="#fff" opacity=".55"/>`).join('');
     return `<rect width="500" height="200" fill="${ch.bg}"/>${dots}<rect y="168" width="500" height="32" fill="${ch.floor}"/>
       <g transform="translate(170,-10) scale(1.85)">${charSVG(g).replace(/<\/?svg[^>]*>/g, '')}</g>
-      <text x="26" y="40" font-family="Jua" font-size="26" fill="#1f2a40" opacity=".85">${g}학년</text><text x="26" y="66" font-family="Jua" font-size="17" fill="#1f2a40" opacity=".6">${ch.place}</text>`;
+      <text x="26" y="40" font-family="Jua" font-size="26" fill="#1f2a40" opacity=".85">${ZL(g)}</text><text x="26" y="66" font-family="Jua" font-size="17" fill="#1f2a40" opacity=".6">${ch.place}</text>`;
   }
   // 조각 모양: 5 × 2 칸, 이웃 칸과 볼록·오목이 맞물리게
   function edge(x0, y0, x1, y1, d) {
@@ -1174,6 +1219,11 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   const KEY = 'boogi-stars-v1';
   const sid = (g, c) => g + '-' + c;
   function cityQuestions(g, c) {
+    if (g === 7) {   // 마지막 구역: 학년별 복습 6개 + 여러 학년 섞어 풀기 4개
+      const pickSet = gg => { const b = BANK[gg + '-' + (Math.random() < .5 ? 1 : 2)]; return b[Math.floor(Math.random() * b.length)]; };
+      const ga = c < 6 ? c + 1 : 1 + Math.floor(Math.random() * 6), gb = c < 6 ? c + 1 : 1 + Math.floor(Math.random() * 6);
+      return [pickSet(ga), pickSet(gb)];
+    }
     const set = (BANK[g + '-' + (c < 5 ? 1 : 2)] || BANK['3-1'])[c % 5];
     return [set, { unit: set.unit, main: set.twin, twin: set.main }];
   }
@@ -1182,7 +1232,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     for (let c = 0; c < 10; c++) stars[sid(1, c)] = 3;
     [3, 3, 2, 3, 1, 3, 0, 0, 3, 2].forEach((v, c) => { if (v) stars[sid(2, c)] = v; });
     return { stars, last: null, gradeJustDone: 0, popPiece: null,
-      news: { good: false, text: '3학년 부기네 계산 수리점에서 단원마다 별 3개를 모아 퍼즐 조각을 맞춰 볼까요? 2학년 퍼즐도 4조각이 남았어요.' } };
+      news: { good: false, text: '부기네 계산 수리점에서 퍼즐을 완성하면 황금 나침반 조각을 받을 수 있어요. 루미네 가게도 퍼즐 4조각이 남았어요!' }, seenStory: false };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
@@ -1192,11 +1242,12 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   const countPieces = g => { let n = 0; for (let c = 0; c < 10; c++) if ((M.stars[sid(g, c)] || 0) >= 3) n++; return n; };
   const gradeDone = g => countPieces(g) === 10;
   const gradeOpen = g => g <= MY_GRADE || gradeDone(g - 1);
+  const compass = () => CH.filter(ch => gradeDone(ch.g)).length;
   const curCity = () => ({ name: UNITS[pick.g][pick.c], unit: UNITS[pick.g][pick.c] });
   // 다음 단계: 같은 학년의 다음 단원 → 마지막 단원이면 다음 학년 첫 단원(열려 있을 때)
   function nextUnit() {
     if (pick.c < 9) return { g: pick.g, c: pick.c + 1 };
-    if (pick.g < 6 && gradeOpen(pick.g + 1)) return { g: pick.g + 1, c: 0 };
+    if (pick.g < 7 && gradeOpen(pick.g + 1)) return { g: pick.g + 1, c: 0 };
     return null;
   }
   // 단원 점수: 별 1 완주, 별 2 한 번에 모두 정답, 별 3 하트 지키기
@@ -1210,10 +1261,10 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     M.popPiece = newPiece ? { g, c: pick.c } : null;
     M.gradeJustDone = !wasDone && gradeDone(g) ? g : 0;
     if (M.gradeJustDone) {
-      endBanner = `${g}학년 퍼즐 완성!`;
-      M.news = { good: true, text: `${CH[g - 1].name}의 ${g}학년 퍼즐 10조각을 모두 맞췄어요!` + (g < 6 && !nextWasOpen ? ` ${g + 1}학년 ${CH[g].name}네가 열렸어요.` : g === 6 ? ' 모든 학년 퍼즐 완성!' : '') };
+      endBanner = compass() === 7 ? '황금 나침반 완성!' : `나침반 조각 ${compass()}/7 획득!`;
+      M.news = { good: true, text: compass() === 7 ? '황금 나침반 7조각을 모두 되찾았어요! 숫자 시계탑이 다시 움직여요. 매스 랜드의 질서가 돌아왔어요!' : `${CH[g - 1].name}에게서 황금 나침반 조각을 받았어요! (${compass()}/7)` + (g < 7 && !nextWasOpen ? ` ${ZL(g + 1)} ${CH[g].place}로 가는 길이 열렸어요.` : '') };
     } else if (newPiece) {
-      M.news = { good: true, text: `${UNITS[g][pick.c]}에서 별 3개! ${g}학년 퍼즐 조각 ${countPieces(g)}/10` };
+      M.news = { good: true, text: `${UNITS[g][pick.c]}에서 별 3개! ${CH[g - 1].place} 퍼즐 ${countPieces(g)}/10` };
     }
     saveM();
   }
@@ -1224,17 +1275,60 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     n.className = 'news' + (M.news.good ? ' good' : '');
     n.innerHTML = `<span class="ic">${M.news.good ? '✓' : 'i'}</span><span>${esc(M.news.text)}</span>`;
   }
-  function renderHome() {
-    $('mapTitle').textContent = '부기의 수학 퍼즐';
-    $('mapDesc').textContent = '학년마다 친구가 기다려요. 단원에서 별 3개를 모으면 퍼즐 조각 1개, 10조각이면 학년 퍼즐 완성!';
-    $('homeBody').innerHTML = `<ul class="grades">${CH.map(ch => {
-      const open = gradeOpen(ch.g), n = countPieces(ch.g);
-      return `<li><button type="button" class="gcard${open ? '' : ' locked'}" data-g="${ch.g}" ${open ? '' : 'aria-disabled="true"'}>
-        <span class="banner" style="background:${ch.bg}">${charSVG(ch.g)}<span class="floor" style="background:${ch.floor}"></span>${open ? '' : `<span class="lockb">🔒 ${ch.g - 1}학년 퍼즐을 완성하면 열려요</span>`}</span>
-        <span class="gtitle"><span><b>${ch.g}학년</b> <span>${ch.g === MY_GRADE ? '· 내 학년' : ''}</span></span><span class="arrow">→</span></span>
-        <span class="gsub">${ch.place} · 퍼즐 ${n}/10${gradeDone(ch.g) ? ' ✓' : ''}</span>
-        <span class="gbar"><i style="width:${n * 10}%;background:${ch.bar}"></i></span></button></li>`;
-    }).join('')}</ul>`;
+  // 매스 랜드 지도: 가운데 숫자 시계탑, 둘레에 7개 구역이 길로 이어져요 (직접 그린 단순 그림)
+  const ZP = { 1: [170, 425], 2: [110, 262], 3: [215, 112], 4: [410, 72], 5: [605, 112], 6: [690, 262], 7: [630, 425] };
+  function towerSVG(big) {
+    const n = compass(), wedges = [];
+    for (let i = 0; i < 7; i++) {
+      const a0 = -Math.PI / 2 + i * 2 * Math.PI / 7 + 0.04, a1 = a0 + 2 * Math.PI / 7 - 0.08, R = 27, r0 = 11;
+      const P = (a, r) => `${(400 + r * Math.cos(a)).toFixed(1)} ${(222 + r * Math.sin(a)).toFixed(1)}`;
+      wedges.push(`<path d="M${P(a0, r0)}L${P(a0, R)}A${R} ${R} 0 0 1 ${P(a1, R)}L${P(a1, r0)}A${r0} ${r0} 0 0 0 ${P(a0, r0)}Z" fill="${gradeDone(i + 1) ? '#f2b705' : '#e3e6ea'}" stroke="#2b3a55" stroke-width="1"/>`);
+    }
+    return `<g class="tower"><ellipse cx="400" cy="342" rx="78" ry="20" fill="#bfe09a"/>
+      <rect x="366" y="190" width="68" height="148" rx="4" fill="#f6e7c8" stroke="#2b3a55" stroke-width="2.5"/>
+      <path d="M352 192 L400 128 L448 192 Z" fill="#e5484d" stroke="#2b3a55" stroke-width="2.5"/><rect x="396" y="112" width="8" height="18" fill="#2b3a55"/>
+      <circle cx="400" cy="222" r="31" fill="#fff" stroke="#2b3a55" stroke-width="2.5"/>${wedges.join('')}
+      <g class="${n === 7 ? 'hands spin' : 'hands'}"><path d="M400 222 L400 202 M400 222 L414 230" stroke="#2b3a55" stroke-width="3" stroke-linecap="round"/></g><circle cx="400" cy="222" r="3" fill="#2b3a55"/>
+      <path d="M388 338 v-30 a12 12 0 0 1 24 0 v30 z" fill="#c98b4a" stroke="#2b3a55" stroke-width="2"/>
+      <rect x="372" y="268" width="14" height="16" rx="3" fill="#bfe6ff" stroke="#2b3a55" stroke-width="1.5"/><rect x="414" y="268" width="14" height="16" rx="3" fill="#bfe6ff" stroke="#2b3a55" stroke-width="1.5"/>
+      <rect x="326" y="352" width="148" height="26" rx="13" fill="#fff" stroke="#2b3a55" stroke-width="2"/>
+      <text x="400" y="370" text-anchor="middle" class="mtxt">숫자 시계탑 · 나침반 ${n}/7</text>
+      ${n === 7 ? '<text x="400" y="406" text-anchor="middle" class="mtxt big">시계탑이 다시 움직여요!</text>' : ''}</g>`;
+  }
+  function zoneSVG(ch, pop) {
+    const [x, y] = ZP[ch.g], open = gradeOpen(ch.g), done = gradeDone(ch.g), n = countPieces(ch.g);
+    const goal = nextGoal() === ch.g;
+    const status = done ? '나침반 조각 ✓' : open ? `퍼즐 ${n}/10` : '잠김';
+    const fog = open ? '' : `<path d="M${x - 58} ${y + 2}a16 16 0 0 1 26 -14a20 20 0 0 1 36 2a16 16 0 0 1 30 8a12 12 0 0 1 -4 22h-82a12 12 0 0 1 -6 -18z" fill="#fff" opacity=".9"/>
+      <g transform="translate(${x - 8},${y - 6})"><rect x="0" y="7" width="16" height="13" rx="2.5" fill="#5b6672"/><path d="M3.5 8v-2.5a4.5 4.5 0 0 1 9 0v2.5" stroke="#5b6672" stroke-width="2.6" fill="none"/></g>`;
+    return `<g class="zone${open ? '' : ' locked'}${pop === ch.g ? ' won' : ''}" data-g="${ch.g}" tabindex="0" role="button" aria-label="${ZL(ch.g)} ${ch.place}, ${status}">
+      ${goal ? `<ellipse class="ring" cx="${x}" cy="${y + 20}" rx="80" ry="40" fill="none" stroke="#f2b705" stroke-width="4" stroke-dasharray="10 7"/>` : ''}
+      <g ${open ? '' : 'filter="url(#zg)" opacity=".75"'}>
+        <ellipse cx="${x}" cy="${y + 22}" rx="70" ry="34" fill="${ch.bg}" stroke="#2b3a55" stroke-width="2"/>
+        <ellipse cx="${x}" cy="${y + 34}" rx="54" ry="14" fill="${ch.floor}" opacity=".55"/>
+        <g transform="translate(${x - 36},${y - 52}) scale(.72)">${charSVG(ch.g).replace(/<\/?svg[^>]*>/g, '')}</g>
+      </g>${fog}
+      <rect x="${x - 70}" y="${y + 44}" width="140" height="36" rx="12" fill="#fff" stroke="#2b3a55" stroke-width="2"/>
+      <text x="${x}" y="${y + 59}" text-anchor="middle" class="mtxt">${ch.place}</text>
+      <text x="${x}" y="${y + 74}" text-anchor="middle" class="mtxt sm${done ? ' gold' : ''}">${ZL(ch.g)} · ${status}</text>
+      ${done ? `<g transform="translate(${x + 52},${y - 40})"><circle r="15" fill="#f2b705" stroke="#2b3a55" stroke-width="2"/><path d="M0 -9 L4 0 L0 9 L-4 0 Z" fill="#fff" stroke="#2b3a55" stroke-width="1.2"/></g>` : ''}</g>`;
+  }
+  function landSVG(pop) {
+    const trees = [[60, 120], [300, 30], [520, 40], [760, 150], [760, 380], [470, 470], [300, 480], [40, 380], [520, 260], [270, 300]]
+      .map(([x, y]) => `<g><rect x="${x - 3}" y="${y}" width="6" height="12" fill="#8a5a3b"/><circle cx="${x}" cy="${y - 4}" r="13" fill="#7cc46a" stroke="#2b3a55" stroke-width="1.5"/></g>`).join('');
+    const trail = `<path d="M170 430 C 90 380, 70 320, 110 262 S 150 140, 215 112 S 340 55, 410 72 S 545 60, 605 112 S 730 200, 690 262 S 700 400, 630 430" fill="none" stroke="#e8d3a3" stroke-width="16" stroke-linecap="round"/>
+      <path d="M170 430 C 90 380, 70 320, 110 262 S 150 140, 215 112 S 340 55, 410 72 S 545 60, 605 112 S 730 200, 690 262 S 700 400, 630 430" fill="none" stroke="#c9a46a" stroke-width="2" stroke-dasharray="6 8"/>`;
+    const river = `<path d="M0 470 C 160 440, 260 520, 420 500 S 680 470, 800 500 L800 520 L0 520 Z" fill="#9fd7f5"/>`;
+    return `<svg viewBox="0 0 800 520" role="group" aria-label="매스 랜드 지도"><defs><filter id="zg"><feColorMatrix type="saturate" values="0"/></filter></defs>
+      <rect width="800" height="520" fill="#d6edb5"/>${river}${trail}${trees}${towerSVG()}${CH.map(ch => zoneSVG(ch, pop)).join('')}
+      <text x="24" y="40" class="mtxt title">매스 랜드</text></svg>`;
+  }
+  const nextGoal = () => { const c = CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g) && ch.g >= MY_GRADE) || CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g)); return c ? c.g : 0; };
+  function renderHome(pop) {
+    $('mapTitle').innerHTML = `매스 랜드: 숫자 시계탑의 비밀 <button type="button" class="back" id="storyBtn">이야기 보기</button>`;
+    $('mapDesc').textContent = `친구들을 만나 수학 미션을 해결하고 황금 나침반 조각을 되찾아요. (${compass()}/7)`;
+    $('homeBody').innerHTML = `<div class="landbox">${landSVG(pop)}</div>
+      <div class="zchips">${CH.map(ch => `<button type="button" class="zchip${gradeOpen(ch.g) ? '' : ' locked'}" data-g="${ch.g}">${ZL(ch.g)} · ${ch.name} ${gradeDone(ch.g) ? '✓' : gradeOpen(ch.g) ? countPieces(ch.g) + '/10' : '🔒'}</button>`).join('')}</div>`;
   }
   function unitCard(g, c) {
     const st = M.stars[sid(g, c)] || 0, got = st >= 3, ch = CH[g - 1];
@@ -1244,22 +1338,22 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   }
   function renderGrade(popC) {
     const g = curG, ch = CH[g - 1];
-    $('mapTitle').innerHTML = `<button type="button" class="back" id="backHome">← 학년 고르기</button>${g}학년 · ${ch.place}`;
-    $('mapDesc').textContent = '단원 하나마다 별 3개를 모으면 퍼즐 조각 1개를 얻어요.';
+    $('mapTitle').innerHTML = `<button type="button" class="back" id="backHome">← 매스 랜드 지도</button>${ZL(g)} · ${ch.place}`;
+    $('mapDesc').textContent = '단원마다 별 3개를 모으면 구역 퍼즐 조각 1개. 퍼즐 10조각을 완성하면 황금 나침반 조각을 받아요.';
     $('homeBody').innerHTML = `<div class="gview">
-      <div class="pzbox"><div class="pzhead"><span class="pic" style="background:${ch.bg}">${charSVG(g)}</span><span><b>${ch.name}의 ${g}학년 퍼즐</b><span>조각 ${countPieces(g)}/10${gradeDone(g) ? ' · 완성!' : ''}</span></span></div>
+      <div class="pzbox"><div class="pzhead"><span class="pic" style="background:${ch.bg}">${charSVG(g)}</span><span><b>${ch.name}</b><span class="say">"${ch.line}"</span><span>퍼즐 ${countPieces(g)}/10${gradeDone(g) ? ' · 황금 나침반 조각 획득!' : ''}</span></span></div>
         ${puzzleSVG(g, popC)}
         <ul class="rules"><li>★ 깃발까지 완주</li><li>★ 문제를 한 번에 모두 맞히기</li><li>★ 하트 지키기 (한 번도 다치지 않기)</li></ul></div>
       <div class="units2">${[1, 2].map(s => `<div class="semgrp"><h4>${s}학기</h4>${[0, 1, 2, 3, 4].map(i => unitCard(g, (s - 1) * 5 + i)).join('')}</div>`).join('')}</div></div>`;
   }
   function render(popC) {
     renderNews();
-    if (view === 'home') renderHome(); else renderGrade(popC);
+    if (view === 'home') renderHome(popC); else renderGrade(popC);
     saveM();
   }
 
   function enterGrade(g) {
-    if (!gradeOpen(g)) { M.news = { good: false, text: `${g}학년 ${CH[g - 1].name}네는 아직 잠겨 있어요. ${g - 1}학년 퍼즐을 완성하면 열려요.` }; render(); return; }
+    if (!gradeOpen(g)) { M.news = { good: false, text: `${ZL(g)} ${CH[g - 1].place}는 아직 안개에 덮여 있어요. ${CH[g - 2].place} 퍼즐을 완성하면 길이 열려요.` }; render(); return; }
     view = 'grade'; curG = g; render();
   }
   function startUnit(g, c) {
@@ -1267,20 +1361,42 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     pick = { g, s: c < 5 ? 1 : 2, c };
     runMode = 'normal';
     QUESTIONS = cityQuestions(g, c);
-    $('startStage').textContent = `${g}학년 ${pick.s}학기`;
+    $('startStage').textContent = g <= 6 ? `${g}학년 ${pick.s}학기` : '마지막 구역';
     $('startMode').textContent = `단원 ${c + 1}`;
     $('taRule').hidden = true;
     $('startChar').style.background = ch.bg;
     $('startChar').innerHTML = `${charSVG(g)}<span><b>${ch.name}</b>: "${UNITS[g][c]} 단원이야! 별 3개를 모으면 퍼즐 조각을 줄게."</span>`;
     $('startTitle').textContent = `${UNITS[g][c]}`;
-    $('subline').textContent = `${g}학년 · ${ch.place} › ${UNITS[g][c]} · 문제 문 2개`;
+    $('subline').textContent = `${ZL(g)} · ${ch.place} › ${UNITS[g][c]} · 문제 문 2개`;
     resetAll();
     showModal('startModal');
     $('startBtn').focus({ preventScroll: true });
   }
+  $('mapModal').addEventListener('keydown', e => { const z = e.target.closest('.zone'); if (z && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); enterGrade(Number(z.dataset.g)); } });
+  // ---------- 이야기 ----------
+  const STORY = [
+    ['평화로운 동물 마을, 매스 랜드', '매스 랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
+    ['황금 나침반이 부서졌어요!', '어느 날 갑작스러운 오류로 시계탑의 핵심 부품인 황금 나침반이 7개의 조각으로 쪼개져 흩어졌어요. 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
+    ['수학 탐험가의 모험', '지도 한 장을 들고 7개 구역을 지키는 친구들을 차례로 만나요. 단원 미션에서 별 3개를 모아 구역 퍼즐을 완성하면 나침반 조각을 되찾을 수 있어요!']
+  ];
+  let storyI = 0;
+  function drawStory() {
+    const [t, d] = STORY[storyI];
+    $('storyStep').textContent = `${storyI + 1} / ${STORY.length}`;
+    $('storyTitle').textContent = t;
+    $('storyText').textContent = d;
+    $('storyArt').innerHTML = storyI === 0 ? `<svg viewBox="300 100 200 290">${towerSVG()}</svg>`
+      : storyI === 1 ? `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="44" fill="#f2b705" stroke="#2b3a55" stroke-width="3"/>${[0, 1, 2, 3, 4, 5, 6].map(i => { const a = i * 2 * Math.PI / 7; return `<path d="M60 60 L${60 + 44 * Math.cos(a)} ${60 + 44 * Math.sin(a)}" stroke="#2b3a55" stroke-width="3"/>`; }).join('')}<path d="M60 28 L68 60 L60 92 L52 60 Z" fill="#fff" stroke="#2b3a55" stroke-width="2"/></svg>`
+      : `<div class="crew">${CH.map(ch => `<span style="background:${ch.bg}">${charSVG(ch.g)}</span>`).join('')}</div>`;
+    $('storyNext').textContent = storyI < STORY.length - 1 ? '다음 ▶' : '모험 시작!';
+  }
+  function openStory() { storyI = 0; drawStory(); showModal('storyModal'); $('storyNext').focus({ preventScroll: true }); }
+  $('storyNext').addEventListener('click', () => { if (storyI < STORY.length - 1) { storyI++; drawStory(); } else { M.seenStory = true; saveM(); render(); showModal('mapModal'); } });
+  $('storySkip').addEventListener('click', () => { M.seenStory = true; saveM(); render(); showModal('mapModal'); });
   $('mapModal').addEventListener('click', e => {
     if (e.target.closest('#backHome')) { view = 'home'; render(); return; }
-    const gc = e.target.closest('.gcard'); if (gc) { enterGrade(Number(gc.dataset.g)); return; }
+    if (e.target.closest('#storyBtn')) { openStory(); return; }
+    const gc = e.target.closest('.zone, .zchip'); if (gc) { enterGrade(Number(gc.dataset.g)); return; }
     const b = e.target.closest('[data-play]'); if (b) startUnit(curG, Number(b.dataset.play));
   });
   $('nextBtn').addEventListener('click', () => { const nx = nextUnit(); if (!nx) return; curG = nx.g; startUnit(nx.g, nx.c); });
@@ -1289,23 +1405,24 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
   function showTaResults() { showResults(); }
 
   $('tClear').addEventListener('click', () => {
-    const g = view === 'grade' ? curG : (CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g) && ch.g >= MY_GRADE) || CH.find(ch => gradeOpen(ch.g) && !gradeDone(ch.g)) || {}).g;
-    if (!g) { M.news = { good: true, text: '모든 학년 퍼즐을 완성했어요.' }; render(); return; }
+    const g = view === 'grade' ? curG : nextGoal();
+    if (!g) { M.news = { good: true, text: '황금 나침반을 이미 모두 되찾았어요.' }; render(); return; }
     let c = 0; while (c < 10 && (M.stars[sid(g, c)] || 0) >= 3) c++;
     pick = { g, s: c < 5 ? 1 : 2, c };
     stats = { hearts: 3, coins: 0, first: 2, retries: 0, hits: 0, wrongUnits: [] };
     scoreUnit();
-    view = 'grade'; curG = g;
-    const pop = M.popPiece; M.popPiece = null; M.gradeJustDone = 0;
-    render(pop ? pop.c : null);
+    const pop = M.popPiece, done = M.gradeJustDone; M.popPiece = null; M.gradeJustDone = 0;
+    if (done) { view = 'home'; render(done); } else { view = 'grade'; curG = g; render(pop ? pop.c : null); }
   });
+  $('tStory').addEventListener('click', () => { M.seenStory = false; saveM(); openMap(); });
   $('tReset').addEventListener('click', () => { M = defaultsM(); view = 'home'; curG = MY_GRADE; render(); });
 
   function openMap() {
     state = 'start'; runMode = 'normal';
-    const pop = M.popPiece; M.popPiece = null; M.gradeJustDone = 0;
-    if (pop) { view = 'grade'; curG = pop.g; }
-    render(pop ? pop.c : null);
+    const pop = M.popPiece, done = M.gradeJustDone; M.popPiece = null; M.gradeJustDone = 0;
+    if (done) { view = 'home'; render(done); }
+    else { if (pop) { view = 'grade'; curG = pop.g; } render(pop ? pop.c : null); }
+    if (!M.seenStory) { openStory(); return; }
     showModal('mapModal');
   }
   $('toMapBtn').addEventListener('click', openMap);
