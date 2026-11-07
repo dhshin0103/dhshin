@@ -1802,7 +1802,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       <div class="zone"><b>[${floorOf(M.sel.gs)}학년]</b> 시계탑 ${floorOf(M.sel.gs)}층 : ${esc(unitName(M.sel.gs, M.sel.u))}의 방</div>
       <button type="button" class="hud${popI != null ? ' pulse' : ''}" id="hudBtn" aria-label="황금 나침반 ${n}/${NSTG}조각. 눌러서 수집 현황 보기">${hudSVG(key)}<span>황금 나침반</span></button>
       <button type="button" class="quizbtn" id="quizBtn">⚡ 로키의 돌발 퀴즈 <small>30초 보너스</small></button>
-      ${n === NSTG ? '<button type="button" class="cinebtn mapcine" id="cineBtn">시계탑 가동 영상 보기 ▶</button>' : ''}</div>`;
+      </div>`;
     saveM();
   }
   // 나침반 위젯을 누르면: 상세 수집 현황
@@ -2010,7 +2010,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
       <h2>${gs[0]}학년 ${esc(unit)} 완벽 마스터</h2>
       <p class="lead">황금 나침반이 다시 돌고, 시계탑 ${fl}층의 시간이 움직이기 시작했어요!</p>
       <div class="rewards"><span>수학 코인 +100</span><span>황금 나침반 수료증</span>${CONTENT[key] ? `<span>${CONTENT[key].badge}</span>` : ''}</div>
-      <div class="btnrow"><button type="button" class="btn ghost" id="cineReplay">다시 보기</button><button type="button" class="btn ghost" id="cineClose">${opt.fromGame ? '결과 보기' : '닫기'}</button><button type="button" class="btn next" id="cineNext">다음 층으로 ▶</button></div></div>`;
+      <div class="btnrow"><button type="button" class="btn ghost" id="cineReplay">다시 보기</button><button type="button" class="btn ghost" id="cineClose">${opt.fromGame || opt.keepClose ? '결과 보기' : '닫기'}</button><button type="button" class="btn next" id="cineNext">다음 층으로 ▶</button></div></div>`;
     $('cine').hidden = false; $('cine').className = 'cine s0';
     hideModals();
     cineTimers.forEach(clearTimeout); cineTimers = [];
@@ -2018,6 +2018,24 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     const t = opt.fromGame ? 500 : 0;
     cineTimers.push(setTimeout(() => cineScene(1), t), setTimeout(() => cineScene(2), t + 2600), setTimeout(() => cineScene(3), t + 4600), setTimeout(() => cineScene(4), t + 7600));
   }
+  function closeCine() { cineTimers.forEach(clearTimeout); cineTimers = []; confettiRun(false); $('cine').hidden = true; }
+  $('cine').addEventListener('click', e => {
+    if (e.target.closest('#cineSkip')) { cineTimers.forEach(clearTimeout); cineTimers = []; cineScene(4); return; }
+    if (e.target.closest('#cineReplay')) { playCine(Object.assign({}, cineCtx, { fromGame: false, keepClose: cineCtx.fromGame })); return; }
+    if (e.target.closest('#cineClose')) {
+      closeCine();
+      if (cineCtx.fromGame || cineCtx.keepClose) { cineCtx.keepClose = false; showResults(); } else { render(); showModal('mapModal'); }
+      return;
+    }
+    if (e.target.closest('#cineNext')) {
+      closeCine();
+      M.justCompass = false;
+      const nk = nextContentKey(cineCtx.key);
+      if (nk) { M.sel = { gs: nk.slice(0, 3), u: +nk.slice(4) }; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 새 황금 나침반 조각을 모아 볼까요?` }; }
+      resetAll(); openMap();
+    }
+  });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('cine').hidden && !$('cine').classList.contains('s4')) { cineTimers.forEach(clearTimeout); cineTimers = []; cineScene(4); } });
   const STORY = [
     ['평화로운 동물 마을, 매스 랜드', '매스 랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
     ['황금 나침반이 부서졌어요!', '어느 날 갑작스러운 오류로 시계탑의 핵심 부품인 황금 나침반이 조각나 흩어졌어요. 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
@@ -2068,6 +2086,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
     pick.i = i; QUESTIONS = stageQuestions(key, i); TOTAL = QUESTIONS.length;
     stats = { hearts: 3, coins: 0, first: TOTAL, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false };
     scoreStage(); M.justBadge = '';
+    if (M.justCompass) { M.justCompass = false; render(); playCine({ key, fromGame: false, lastI: i }); return; }
     render();
   });
   $('tReset').addEventListener('click', () => { M = defaultsM(); render(); });
