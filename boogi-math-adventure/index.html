@@ -226,18 +226,13 @@ body.story-on { overflow: hidden; }
 /* 메인(타이틀) 화면 */
 .homefs { background: linear-gradient(180deg, #8fd6ff 0%, #dff4ff 50%, #fff3d6 100%); }
 .homefs .sf-top .wallet .chip { border-color: var(--deep); }
-.home-mid { position: relative; display: flex; align-items: center; justify-content: center; gap: clamp(12px, 4vw, 48px); min-height: 0; }
-.home-tower { height: 100%; max-height: 46vh; display: grid; place-items: center; }
-.home-tower svg { height: 100%; width: auto; max-height: 46vh; animation: artin .6s ease-out both; }
-.home-info { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
-.home-info h1 { margin: 0; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1.1; text-shadow: 0 4px 0 #fff, 0 6px 0 rgba(0,58,92,.18); display: flex; flex-direction: column; gap: 8px; }
-.home-info h1 small { font-size: clamp(1rem, 2.6vw, 1.3rem); color: #fff; background: var(--deep); border-radius: 999px; padding: 4px 14px; align-self: center; text-shadow: none; }
-.home-info h1 span { font-size: clamp(1.3rem, 3.6vw, 2rem); color: #b07800; }
-.home-info .crew { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.home-info .crew span { width: clamp(48px, 8vw, 72px); height: clamp(48px, 8vw, 72px); border-radius: 18px; border: 3px solid #fff; box-shadow: 0 4px 0 rgba(0,58,92,.2); display: grid; place-items: center; animation: hopS .6s ease-in-out infinite alternate; }
-@keyframes hopS { to { transform: translateY(-8px); } }
-.home-info .crew span:nth-child(2n) { animation-delay: .25s; }
-.home-info .crew svg { width: 86%; }
+.home-mid { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 0; }
+.home-title { margin: 0; flex: none; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: clamp(2rem, 5.6vw, 3.4rem); line-height: 1.1; text-align: center; text-shadow: 0 3px 0 #fff, 0 5px 0 rgba(0,58,92,.18); display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 14px; }
+.home-title span { font-size: clamp(1.1rem, 2.8vw, 1.6rem); color: #b07800; }
+.home-map { flex: 1; min-height: 0; width: 100%; display: grid; place-items: center; cursor: pointer; }
+.home-map svg { width: auto; height: 100%; max-width: 100%; max-height: 100%; display: block; filter: drop-shadow(0 8px 0 rgba(0,58,92,.18)); animation: artin .6s ease-out both; }
+.vg-cur { animation: vgpulse 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes vgpulse { 50% { opacity: .35; transform: scale(1.08); } }
 .home-box { gap: 14px; }
 .home-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
 .home-prog { display: flex; align-items: center; gap: 10px; font-size: .95rem; color: #1f2a40; line-height: 1.4; }
@@ -247,8 +242,8 @@ body.story-on { overflow: hidden; }
 .home-sub { display: flex; gap: 10px; }
 .home-sub .btn { flex: 1; min-height: 48px; font-size: 1.1rem; }
 .homeback { font-size: .95rem; padding: 4px 12px; }
-@media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-tower, .home-tower svg { max-height: 22vh; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
-@media (prefers-reduced-motion: reduce) { .home-info .crew span, .home-tower svg { animation: none !important; } }
+@media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .home-map svg, .vg-cur { animation: none !important; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -467,10 +462,10 @@ body.story-on { overflow: hidden; }
 
 <div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
-  <div class="sf-top"><span class="sf-tag">스쿨플랫 수학 모험</span><div class="wallet" id="homeWallet"></div></div>
+  <div class="sf-top"><span class="sf-tag">부기의 수학 모험</span><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
-    <div class="home-tower" id="homeTower"></div>
-    <div class="home-info"><h1 id="homeTitle"><small>부기의 수학 모험</small>매스 랜드<span>숫자 시계탑의 비밀</span></h1><div class="crew" id="homeCrew"></div></div>
+    <h1 id="homeTitle" class="home-title">매스 랜드<span>숫자 시계탑의 비밀</span></h1>
+    <div class="home-map" id="homeMap"></div>
   </div>
   <div class="sf-box home-box">
     <div class="home-row"><div class="selrow" id="homeSel"></div><div class="home-prog" id="homeProg"></div></div>
@@ -2165,12 +2160,72 @@ body.story-on { overflow: hidden; }
   });
   $('tReset').addEventListener('click', () => { M = defaultsM(); openHome(); });
 
+  // 메인 화면의 매스 랜드 섬 지도 (선택한 단원의 진행 상황이 집마다 표시됨)
+  function villageSVG(key) {
+    const P = key ? prog(key) : null, n = key ? pieceCount(key) : 0, nx = key ? GUARD.findIndex((_, i) => unlocked(key, i) && !P.cl[i]) : -1;
+    const H = [[190, 400], [340, 490], [570, 480], [800, 420], [770, 235]], T = [450, 268];
+    const tree = (x, y, r = 22, c = '#4fae5a') => `<g><rect x="${x - 4}" y="${y}" width="8" height="${r * 0.9}" rx="3" fill="#8a5a33"/><circle cx="${x}" cy="${y - r * 0.2}" r="${r}" fill="${c}"/><circle cx="${x - r * 0.35}" cy="${y - r * 0.5}" r="${r * 0.45}" fill="#fff" opacity=".18"/></g>`;
+    const trees = [[150, 280, 24], [215, 255, 18], [118, 360, 18], [260, 545, 20], [440, 555, 18], [880, 470, 22], [905, 330, 18], [610, 215, 20], [330, 205, 22], [855, 205, 16], [640, 545, 16], [255, 330, 15]]
+      .map(([x, y, r], k) => tree(x, y, r, k % 3 ? '#4fae5a' : '#3f9a52')).join('');
+    const flowers = [[300, 380], [600, 390], [420, 420], [700, 330], [230, 470], [860, 400]].map(([x, y]) => `<g><circle cx="${x}" cy="${y}" r="5" fill="#ff8fab"/><circle cx="${x + 12}" cy="${y + 6}" r="4" fill="#ffd34d"/><circle cx="${x - 8}" cy="${y + 8}" r="4" fill="#fff"/></g>`).join('');
+    const pts = [...H, T];
+    let road = `M${pts[0][0]} ${pts[0][1] + 10}`;
+    for (let k = 1; k < pts.length; k++) { const [ax, ay] = pts[k - 1], [bx, by] = pts[k]; road += ` Q${(ax + bx) / 2} ${Math.max(ay, by) + 40} ${bx} ${by + 10}`; }
+    const houses = H.map(([x, y], i) => {
+      const G = GUARD[i], open = key && unlocked(key, i), got = key && hasPiece(key, i), cur = nx === i;
+      const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
+      return `<g ${open ? '' : 'filter="url(#vgGray)" opacity=".75"'}>
+        <ellipse cx="${x}" cy="${y + 24}" rx="52" ry="11" fill="#2f7d3c" opacity=".25"/>
+        ${cur ? `<circle class="vg-cur" cx="${x}" cy="${y - 4}" r="62" fill="none" stroke="#ffd34d" stroke-width="6"/>` : ''}
+        <rect x="${x - 36}" y="${y - 20}" width="72" height="44" rx="6" fill="#fff7e6" stroke="#2b3a55" stroke-width="3"/>
+        <path d="M${x - 46} ${y - 18} L${x} ${y - 58} L${x + 46} ${y - 18} Z" fill="${G.floor}" stroke="#2b3a55" stroke-width="3" stroke-linejoin="round"/>
+        <rect x="${x - 9}" y="${y}" width="18" height="24" rx="4" fill="#c98b4a" stroke="#2b3a55" stroke-width="2"/>
+        <rect x="${x + 16}" y="${y - 10}" width="13" height="12" rx="2" fill="#bfe6ff" stroke="#2b3a55" stroke-width="2"/>
+        <rect x="${x - 29}" y="${y - 10}" width="13" height="12" rx="2" fill="#bfe6ff" stroke="#2b3a55" stroke-width="2"/>
+        <circle cx="${x}" cy="${y - 92}" r="31" fill="${G.bg}" stroke="#fff" stroke-width="5"/>
+        <g transform="translate(${x - 28},${y - 120}) scale(.56)">${art}</g>
+        <circle cx="${x - 30}" cy="${y - 116}" r="14" fill="#2b3a55"/><text x="${x - 30}" y="${y - 111}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text>
+        ${got ? `<g><path d="M${x + 30} ${y - 140} v34" stroke="#2b3a55" stroke-width="3"/><path d="M${x + 31} ${y - 140} h26 l-6 8 6 8 h-26 z" fill="#ffd34d" stroke="#2b3a55" stroke-width="2"/><text x="${x + 42}" y="${y - 127}" text-anchor="middle" font-size="11" fill="#b07800">★</text></g>` : ''}
+        ${open ? '' : `<g transform="translate(${x - 13},${y - 34})"><rect x="0" y="11" width="26" height="20" rx="5" fill="#5b6672"/><path d="M5 12v-4a8 8 0 0 1 16 0v4" stroke="#5b6672" stroke-width="4.5" fill="none"/></g>`}
+      </g>`;
+    }).join('');
+    const [tx, ty] = T, done = n === NSTG;
+    const tower = `<g>
+      <ellipse cx="${tx}" cy="${ty + 30}" rx="78" ry="16" fill="#2f7d3c" opacity=".25"/>
+      <rect x="${tx - 42}" y="${ty - 120}" width="84" height="150" rx="6" fill="#f6e7c8" stroke="#2b3a55" stroke-width="4"/>
+      <path d="M${tx - 58} ${ty - 116} L${tx} ${ty - 196} L${tx + 58} ${ty - 116} Z" fill="#e5484d" stroke="#2b3a55" stroke-width="4" stroke-linejoin="round"/>
+      <rect x="${tx - 4}" y="${ty - 222}" width="8" height="28" fill="#2b3a55"/><path d="M${tx + 4} ${ty - 222} h24 l-6 7 6 7 h-24 z" fill="#ffd34d" stroke="#2b3a55" stroke-width="2"/>
+      <circle cx="${tx}" cy="${ty - 74}" r="30" fill="${done ? '#ffd34d' : '#fff'}" stroke="#2b3a55" stroke-width="4"/>
+      <g class="${done ? 'hands spin' : ''}" style="transform-origin:${tx}px ${ty - 74}px"><path d="M${tx} ${ty - 74} V${ty - 94} M${tx} ${ty - 74} L${tx + 14} ${ty - 66}" stroke="#2b3a55" stroke-width="4" stroke-linecap="round"/></g>
+      <path d="M${tx - 14} ${ty + 30} v-30 a14 14 0 0 1 28 0 v30 z" fill="#c98b4a" stroke="#2b3a55" stroke-width="3"/>
+      <rect x="${tx - 62}" y="${ty + 38}" width="124" height="30" rx="15" fill="#2b3a55"/><text x="${tx}" y="${ty + 59}" text-anchor="middle" font-family="Jua" font-size="17" fill="#fff">숫자 시계탑 ${n}/${NSTG}</text>
+    </g>`;
+    const waves = [[60, 90], [900, 80], [70, 560], [930, 560], [520, 40], [960, 260]].map(([x, y]) => `<path d="M${x - 18} ${y} q9 -8 18 0 t18 0" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/>`).join('');
+    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 랜드 섬 지도. 숫자 시계탑과 친구 5명의 집${key ? `, 황금 나침반 ${n}/${NSTG}` : ''}">
+      <defs><filter id="vgGray"><feColorMatrix type="saturate" values="0"/></filter>
+        <linearGradient id="vgSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd0f5"/><stop offset="1" stop-color="#4fb3e8"/></linearGradient></defs>
+      <rect x="2" y="2" width="996" height="596" rx="34" fill="url(#vgSea)" stroke="#2b3a55" stroke-width="4"/>
+      ${waves}
+      <path d="M95 345 C70 195 225 85 430 95 C580 70 790 80 900 185 C985 265 975 445 870 515 C745 590 520 580 350 565 C185 555 110 480 95 345 Z" fill="#f3dfa8"/>
+      <path d="M125 345 C108 215 240 118 432 126 C578 104 772 114 870 205 C945 275 935 430 845 490 C730 556 520 548 358 536 C210 526 138 462 125 345 Z" fill="#9ad37a"/>
+      <path d="M200 200 l50 -78 l50 78 z" fill="#8bb174" stroke="#5f8a4e" stroke-width="3" stroke-linejoin="round"/><path d="M233 148 l17 -26 l17 26 l-9 -4 l-8 6 l-8 -6 z" fill="#fff"/>
+      <path d="M268 205 l38 -60 l38 60 z" fill="#79a463" stroke="#5f8a4e" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M640 112 C660 200 600 260 655 330 C705 395 660 450 690 545" stroke="#6ec3ef" stroke-width="30" fill="none" stroke-linecap="round"/>
+      <path d="M640 112 C660 200 600 260 655 330 C705 395 660 450 690 545" stroke="#bfe9ff" stroke-width="6" fill="none" stroke-dasharray="14 18" stroke-linecap="round"/>
+      ${trees}${flowers}
+      <path d="${road}" stroke="#e9c98f" stroke-width="22" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${road}" stroke="#fff" stroke-width="4" fill="none" stroke-dasharray="4 14" stroke-linecap="round" opacity=".9"/>
+      <g transform="translate(670,452) rotate(-12)"><rect x="-36" y="-14" width="72" height="28" rx="5" fill="#c98b4a" stroke="#2b3a55" stroke-width="3"/><path d="M-26 -14 v28 M-12 -14 v28 M2 -14 v28 M16 -14 v28" stroke="#8a5a33" stroke-width="2"/></g>
+      ${tower}${houses}
+      <g transform="translate(925,525)"><circle r="40" fill="#fff" opacity=".9" stroke="#2b3a55" stroke-width="3"/><path d="M0 -32 L8 0 L0 32 L-8 0 Z" fill="#e5484d"/><path d="M0 0 L8 0 L0 32 L-8 0 Z" fill="#2b3a55"/><text y="-44" text-anchor="middle" font-family="Jua" font-size="16" fill="#2b3a55">N</text></g>
+      <g transform="translate(70,470) rotate(-8)"><path d="M-28 0 h56 l-10 16 h-36 z" fill="#c98b4a" stroke="#2b3a55" stroke-width="3"/><path d="M0 0 v-40" stroke="#2b3a55" stroke-width="3"/><path d="M2 -38 l24 30 h-24 z" fill="#fff" stroke="#2b3a55" stroke-width="2"/></g>
+    </svg>`;
+  }
   // 메인(타이틀) 화면
   function renderHome() {
     const key = ukey(M.sel.gs, M.sel.u), ready = hasContent(key), n = pieceCount(key), P = prog(key);
     renderBar();
-    $('homeTower').innerHTML = towerSVG(n === NSTG);
-    $('homeCrew').innerHTML = GUARD.map(G => `<span style="background:${G.bg}">${charSVG(G.art)}</span>`).join('');
+    $('homeMap').innerHTML = villageSVG(ready ? key : null);
     const begun = P.st.some(v => v > 0);
     $('homeProg').innerHTML = ready
       ? `<span class="hp-ic">${hudSVG(key)}</span><span><b>${floorOf(M.sel.gs)}층 · ${esc(unitName(M.sel.gs, M.sel.u))}</b><br>황금 나침반 ${n} / ${NSTG}</span>`
@@ -2191,6 +2246,7 @@ body.story-on { overflow: hidden; }
     if (e.target.id === 'unitSel') { M.sel.u = Number(e.target.value); M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); $('unitSel').focus(); }
   });
   $('homeStart').addEventListener('click', () => { if (!$('homeStart').disabled) openMap(); });
+  $('homeMap').addEventListener('click', () => { if (!$('homeStart').disabled) openMap(); });
   $('homeStory').addEventListener('click', () => { storyBack = 'home'; openStory(); });
   $('homeShop').addEventListener('click', () => openShop('homeModal'));
   function openMap() {
