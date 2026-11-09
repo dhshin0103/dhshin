@@ -223,6 +223,32 @@ body.story-on { overflow: hidden; }
 .sf-btns { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .sf-btns .btn { min-width: 140px; }
 @media (prefers-reduced-motion: reduce) { .sf-cloud, .sf-art, .sf-art .crew span { animation: none !important; } }
+/* 메인(타이틀) 화면 */
+.homefs { background: linear-gradient(180deg, #8fd6ff 0%, #dff4ff 50%, #fff3d6 100%); }
+.homefs .sf-top .wallet .chip { border-color: var(--deep); }
+.home-mid { position: relative; display: flex; align-items: center; justify-content: center; gap: clamp(12px, 4vw, 48px); min-height: 0; }
+.home-tower { height: 100%; max-height: 46vh; display: grid; place-items: center; }
+.home-tower svg { height: 100%; width: auto; max-height: 46vh; animation: artin .6s ease-out both; }
+.home-info { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+.home-info h1 { margin: 0; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1.1; text-shadow: 0 4px 0 #fff, 0 6px 0 rgba(0,58,92,.18); display: flex; flex-direction: column; gap: 8px; }
+.home-info h1 small { font-size: clamp(1rem, 2.6vw, 1.3rem); color: #fff; background: var(--deep); border-radius: 999px; padding: 4px 14px; align-self: center; text-shadow: none; }
+.home-info h1 span { font-size: clamp(1.3rem, 3.6vw, 2rem); color: #b07800; }
+.home-info .crew { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.home-info .crew span { width: clamp(48px, 8vw, 72px); height: clamp(48px, 8vw, 72px); border-radius: 18px; border: 3px solid #fff; box-shadow: 0 4px 0 rgba(0,58,92,.2); display: grid; place-items: center; animation: hopS .6s ease-in-out infinite alternate; }
+@keyframes hopS { to { transform: translateY(-8px); } }
+.home-info .crew span:nth-child(2n) { animation-delay: .25s; }
+.home-info .crew svg { width: 86%; }
+.home-box { gap: 14px; }
+.home-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.home-prog { display: flex; align-items: center; gap: 10px; font-size: .95rem; color: #1f2a40; line-height: 1.4; }
+.home-prog .hp-ic svg { width: 52px; height: 52px; display: block; }
+.home-start { width: 100%; min-height: 66px; font-size: clamp(1.4rem, 3.6vw, 1.8rem); background: var(--sun); color: var(--deep); }
+.home-start:disabled { background: #dfe4ea; color: #6b7684; cursor: not-allowed; }
+.home-sub { display: flex; gap: 10px; }
+.home-sub .btn { flex: 1; min-height: 48px; font-size: 1.1rem; }
+.homeback { font-size: .95rem; padding: 4px 12px; }
+@media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-tower, .home-tower svg { max-height: 22vh; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .home-info .crew span, .home-tower svg { animation: none !important; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -439,13 +465,26 @@ body.story-on { overflow: hidden; }
   <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동, <kbd>스페이스</kbd> 점프, 문제는 <kbd>1</kbd>~<kbd>4</kbd> 숫자로도 고를 수 있어요.</p>
 </div>
 
+<div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
+  <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
+  <div class="sf-top"><span class="sf-tag">스쿨플랫 수학 모험</span><div class="wallet" id="homeWallet"></div></div>
+  <div class="home-mid">
+    <div class="home-tower" id="homeTower"></div>
+    <div class="home-info"><h1 id="homeTitle"><small>부기의 수학 모험</small>매스 랜드<span>숫자 시계탑의 비밀</span></h1><div class="crew" id="homeCrew"></div></div>
+  </div>
+  <div class="sf-box home-box">
+    <div class="home-row"><div class="selrow" id="homeSel"></div><div class="home-prog" id="homeProg"></div></div>
+    <button type="button" class="btn home-start" id="homeStart">모험 시작 ▶</button>
+    <div class="home-sub"><button type="button" class="btn ghost" id="homeStory">이야기 보기</button><button type="button" class="btn ghost" id="homeShop">코인 상점</button></div>
+  </div>
+</div>
+
 <div class="modal" id="mapModal" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
   <div class="card map-card">
     <div class="map-head">
       <h2 id="mapTitle"></h2>
       <p id="mapDesc"></p>
     </div>
-    <div class="mapbar" id="mapBar"></div>
     <div class="news" id="news"></div>
     <div id="homeBody"></div>
     <div class="tools"><span class="note">테스트 도구:</span><button type="button" id="tClear">다음 관문 바로 클리어</button><button type="button" id="tStory">이야기 처음부터</button><button type="button" id="tReset">처음 상태로</button></div>
@@ -834,7 +873,7 @@ body.story-on { overflow: hidden; }
   bindPad('btnJump', 'jump');
 
   // ---------- 모달 ----------
-  function showModal(id) { ['storyModal', 'compassModal', 'quizModal', 'mapModal', 'startModal', 'shopModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
+  function showModal(id) { document.body.classList.toggle('story-on', id === 'storyModal' || id === 'homeModal' || (id === 'shopModal' && shopReturn === 'homeModal')); ['homeModal', 'storyModal', 'compassModal', 'quizModal', 'mapModal', 'startModal', 'shopModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
   function hideModals() { showModal(null); }
 
   function openQuestion(gate) {
@@ -1713,6 +1752,7 @@ body.story-on { overflow: hidden; }
   });
   function closeShop() {
     if (shopReturn === 'startModal') { renderUseItems(); showModal('startModal'); $('startBtn').focus({ preventScroll: true }); }
+    else if (shopReturn === 'homeModal') openHome();
     else { render(); showModal('mapModal'); }
   }
   // 시작 화면: 이번 판에 쓸 아이템
@@ -1758,11 +1798,11 @@ body.story-on { overflow: hidden; }
   }
   function renderBar() {
     const gs = M.sel.gs, us = unitsOf(gs);
-    $('mapBar').innerHTML = `<div class="selrow">
+    $('homeSel').innerHTML = `
         <label class="sel"><span class="vh">학년 학기</span><select id="gsSel">${GS_LIST.map(x => `<option value="${x}" ${x === gs ? 'selected' : ''}>${gsLabel(x)}</option>`).join('')}</select></label>
         <label class="sel"><span class="vh">단원</span><select id="unitSel">${us.map((u, i) => `<option value="${i}" ${i === M.sel.u ? 'selected' : ''}>${i + 1}단원. ${u}${hasContent(ukey(gs, i)) ? '' : ' (준비 중)'}</option>`).join('')}</select></label>
-      </div>
-      <div class="wallet"><span class="chip">배지 ${M.badges.length}</span><span class="chip">코인 ${M.coins}</span><button type="button" class="shopbtn" id="openShop">코인 상점</button></div>`;
+`;
+    $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip">코인 ${M.coins}</span>`;
   }
   // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
   const QUEST = {
@@ -1824,8 +1864,8 @@ body.story-on { overflow: hidden; }
   }
   function render() {
     const key = ukey(M.sel.gs, M.sel.u), ready = hasContent(key);
-    $('mapTitle').innerHTML = '매스 랜드: 숫자 시계탑의 비밀 <button type="button" class="storybtn" id="storyBtn">이야기 보기</button>';
-    $('mapDesc').textContent = '층마다 단원의 방이 있어요. 5개 관문을 별 3개로 통과해 황금 나침반을 복원해요!';
+    $('mapTitle').innerHTML = '<button type="button" class="shopbtn homeback" id="toHome">← 메인</button> 탐험 지도';
+    $('mapDesc').innerHTML = `<span class="chip">코인 ${M.coins}</span>`;
     renderBar();
     if (!ready) M.news = { good: false, text: `${gsLabel(M.sel.gs)} [${unitName(M.sel.gs, M.sel.u)}]의 방은 아직 준비 중이에요. 시제품에서는 3학년 1학기 [분수와 소수], 5학년 1학기 [다각형의 둘레와 넓이]를 탐험할 수 있어요.` };
     renderNews();
@@ -2087,12 +2127,12 @@ body.story-on { overflow: hidden; }
     $('storyNext').textContent = storyI < STORY.length - 1 ? '다음 ▶' : '모험 시작!';
   }
   function openStory() { storyI = 0; drawStory(); showModal('storyModal'); document.body.classList.add('story-on'); $('storyNext').focus({ preventScroll: true }); }
-  const closeStory = () => { M.seenStory = true; saveM(); document.body.classList.remove('story-on'); render(); showModal('mapModal'); };
+  const closeStory = () => { M.seenStory = true; saveM(); if (storyBack === 'home') { storyBack = 'map'; openHome(); return; } render(); showModal('mapModal'); };
   $('storyNext').addEventListener('click', () => { if (storyI < STORY.length - 1) { storyI++; drawStory(); } else closeStory(); });
   $('storySkip').addEventListener('click', closeStory);
   $('tStory').addEventListener('click', () => { M.seenStory = false; saveM(); openMap(); });
   $('mapModal').addEventListener('click', e => {
-    if (e.target.closest('#storyBtn')) { openStory(); return; }
+    if (e.target.closest('#toHome')) { openHome(); return; }
     if (e.target.closest('#cineBtn')) { playCine({ key: ukey(M.sel.gs, M.sel.u), fromGame: false }); return; }
     if (e.target.closest('#hudBtn')) { openCompass(); return; }
     if (e.target.closest('#quizBtn')) { openQuiz(); return; }
@@ -2123,8 +2163,36 @@ body.story-on { overflow: hidden; }
     if (M.justCompass) { M.justCompass = false; render(); playCine({ key, fromGame: false, lastI: i }); return; }
     render();
   });
-  $('tReset').addEventListener('click', () => { M = defaultsM(); render(); });
+  $('tReset').addEventListener('click', () => { M = defaultsM(); openHome(); });
 
+  // 메인(타이틀) 화면
+  function renderHome() {
+    const key = ukey(M.sel.gs, M.sel.u), ready = hasContent(key), n = pieceCount(key), P = prog(key);
+    renderBar();
+    $('homeTower').innerHTML = towerSVG(n === NSTG);
+    $('homeCrew').innerHTML = GUARD.map(G => `<span style="background:${G.bg}">${charSVG(G.art)}</span>`).join('');
+    const begun = P.st.some(v => v > 0);
+    $('homeProg').innerHTML = ready
+      ? `<span class="hp-ic">${hudSVG(key)}</span><span><b>${floorOf(M.sel.gs)}층 · ${esc(unitName(M.sel.gs, M.sel.u))}</b><br>황금 나침반 ${n} / ${NSTG}</span>`
+      : `<span><b>${esc(unitName(M.sel.gs, M.sel.u))}</b><br>이 방은 아직 준비 중이에요</span>`;
+    const b = $('homeStart');
+    b.disabled = !ready;
+    b.textContent = !ready ? '준비 중인 단원이에요' : n === NSTG ? '다시 탐험하기 ▶' : begun ? '이어하기 ▶' : '모험 시작 ▶';
+    saveM();
+  }
+  function openHome() {
+    state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
+    storyBack = 'map';
+    renderHome(); showModal('homeModal');
+  }
+  let storyBack = 'map';
+  $('homeModal').addEventListener('change', e => {
+    if (e.target.id === 'gsSel') { M.sel.gs = e.target.value; M.sel.u = 0; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층(${gsLabel(M.sel.gs)})으로 올라왔어요.` }; renderHome(); $('gsSel').focus(); }
+    if (e.target.id === 'unitSel') { M.sel.u = Number(e.target.value); M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); $('unitSel').focus(); }
+  });
+  $('homeStart').addEventListener('click', () => { if (!$('homeStart').disabled) openMap(); });
+  $('homeStory').addEventListener('click', () => { storyBack = 'home'; openStory(); });
+  $('homeShop').addEventListener('click', () => openShop('homeModal'));
   function openMap() {
     state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
     $('subline').textContent = '숫자 시계탑의 황금 나침반 조각을 되찾는 모험';
@@ -2135,7 +2203,7 @@ body.story-on { overflow: hidden; }
   $('toMapBtn').addEventListener('click', openMap);
   $('mapBackBtn').addEventListener('click', () => { resetAll(); openMap(); });
 
-  openMap();
+  openHome();
 })();
 </script>
 
