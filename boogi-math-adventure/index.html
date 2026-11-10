@@ -229,7 +229,41 @@ body.story-on { overflow: hidden; }
 .home-mid { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 0; }
 .home-title { margin: 0; flex: none; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: clamp(2rem, 5.6vw, 3.4rem); line-height: 1.1; text-align: center; text-shadow: 0 3px 0 #fff, 0 5px 0 rgba(0,58,92,.18); display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 14px; }
 .home-title span { font-size: clamp(1.1rem, 2.8vw, 1.6rem); color: #b07800; }
-.home-map { flex: 1; min-height: 0; width: 100%; display: grid; place-items: center; cursor: pointer; }
+.home-body { flex: 1; min-height: 0; width: min(1240px, 100%); display: flex; gap: 14px; align-items: stretch; }
+.home-map { flex: 1; min-height: 0; min-width: 0; display: grid; place-items: center; cursor: pointer; }
+.home-title, .home-map { position: relative; }
+.home-chap { position: relative; flex: none; width: 290px; min-height: 0; overflow-y: auto; background: rgba(255,255,255,.94); border: 3px solid var(--deep); border-radius: 22px; box-shadow: 0 5px 0 var(--deep); padding: 12px; }
+.home-chap h3 { margin: 0 0 8px; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: 1.15rem; }
+.chap { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.chap li.cur { background: #eef8ff; border-radius: 14px; padding: 4px 4px 8px; }
+.chap button { font: inherit; cursor: pointer; }
+.chap-g { width: 100%; display: flex; align-items: center; gap: 8px; background: #fff; border: 2px solid #dfe4ea; border-radius: 12px; padding: 5px 8px; text-align: left; color: #1f2a40; }
+.chap-g.on { border-color: var(--deep); }
+.cg-av { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; }
+.cg-av svg { width: 30px; height: 30px; }
+.cg-tx { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cg-tx b { font-family: var(--display); font-weight: 400; font-size: 1rem; }
+.cg-bar { height: 7px; border-radius: 4px; background: #e3e8ee; overflow: hidden; }
+.cg-bar i { display: block; height: 100%; background: linear-gradient(90deg, #ffc53d, #ff9f1a); border-radius: 4px; }
+.chap-g em { flex: none; font-style: normal; font-family: var(--display); font-size: .88rem; color: #b07800; min-width: 44px; text-align: right; }
+.chap-sem { display: flex; gap: 6px; margin: 6px 2px; }
+.chap-sem button { flex: 1; border: 2px solid #b9d9ef; background: #fff; border-radius: 999px; padding: 3px 0; font-family: var(--display); color: var(--deep); font-size: .9rem; }
+.chap-sem button.on { background: var(--deep); border-color: var(--deep); color: #fff; }
+.chap-units { display: flex; flex-direction: column; gap: 4px; }
+.chap-u { display: flex; align-items: center; gap: 6px; border: 2px solid transparent; background: #fff; border-radius: 10px; padding: 4px 6px; text-align: left; color: #1f2a40; font-size: .86rem; }
+.chap-u.on { border-color: #ffb627; background: #fff8e1; }
+.chap-u.wait { color: #8b95a3; }
+.cu-n { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--deep); color: #fff; display: grid; place-items: center; font-size: .75rem; font-weight: 700; }
+.chap-u.wait .cu-n { background: #b8c0ca; }
+.cu-nm { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cu-p { flex: none; font-size: .75rem; }
+.cu-dots { display: inline-flex; gap: 2px; }
+.cu-dots i { width: 9px; height: 9px; border-radius: 50%; background: #e3e8ee; border: 1px solid #c4ccd6; }
+.cu-dots i.got { background: #ffc53d; border-color: #b07800; }
+.chap button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.hp-hero { flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; border: 2px solid #fff; box-shadow: 0 2px 0 rgba(0,58,92,.2); }
+.hp-hero svg { width: 46px; height: 46px; }
+.hp-wait { font-family: var(--display); color: #8b95a3; }
 .home-map svg { width: auto; height: 100%; max-width: 100%; max-height: 100%; display: block; filter: drop-shadow(0 8px 0 rgba(0,58,92,.18)); animation: artin .6s ease-out both; }
 .vg-cur { animation: vgpulse 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 @keyframes vgpulse { 50% { opacity: .35; transform: scale(1.08); } }
@@ -242,6 +276,7 @@ body.story-on { overflow: hidden; }
 .home-sub { display: flex; gap: 10px; }
 .home-sub .btn { flex: 1; min-height: 48px; font-size: 1.1rem; }
 .homeback { font-size: .95rem; padding: 4px 12px; }
+@media (max-width: 860px) { .homefs { overflow-y: auto; grid-template-rows: auto auto auto; } .homefs { grid-template-rows: none; grid-auto-rows: auto; align-content: start; } .home-mid, .home-body { display: contents; } .homefs .sf-top { order: 0; } .home-title { order: 1; } .home-map { order: 2; flex: none; } .home-box { order: 3; } .home-chap { order: 4; } .home-map svg { width: 100%; height: auto; max-height: none; } .home-chap { width: 100%; max-height: none; min-height: auto; overflow: visible; } }
 @media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
 @media (prefers-reduced-motion: reduce) { .home-map svg, .vg-cur { animation: none !important; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
@@ -465,10 +500,10 @@ body.story-on { overflow: hidden; }
   <div class="sf-top"><span class="sf-tag">부기의 수학 모험</span><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
     <h1 id="homeTitle" class="home-title">매스 랜드<span>숫자 시계탑의 비밀</span></h1>
-    <div class="home-map" id="homeMap"></div>
+    <div class="home-body"><div class="home-map" id="homeMap"></div><aside class="home-chap" id="homeChap" aria-label="챕터별 진행 현황"></aside></div>
   </div>
   <div class="sf-box home-box">
-    <div class="home-row"><div class="selrow" id="homeSel"></div><div class="home-prog" id="homeProg"></div></div>
+    <div class="home-row"><div class="home-prog" id="homeProg"></div></div>
     <button type="button" class="btn home-start" id="homeStart">모험 시작 ▶</button>
     <div class="home-sub"><button type="button" class="btn ghost" id="homeStory">이야기 보기</button><button type="button" class="btn ghost" id="homeShop">코인 상점</button></div>
   </div>
@@ -795,6 +830,7 @@ body.story-on { overflow: hidden; }
   const ctx = canvas.getContext('2d');
   const $ = id => document.getElementById(id);
 
+  let solids = [], springs = [], pops = [];
   let gates, coins, platforms, enemies, player, state, stats, keys, camX, checkpointX, toastTimer, current;
   let endBanner = '정복 완료!', endSub = '수학 탐험가 부기, 메달 획득!';
   let speedMode = false, clueMode = false, qTimerId = null;
@@ -810,22 +846,82 @@ body.story-on { overflow: hidden; }
     platforms = [];
     coins = [];
     enemies = [];
+    solids = []; springs = []; pops = [];
+    const B = 40;
+    const box = (x, y, type) => solids.push({ x, y, w: B, h: B, type, bump: 0, item: 'coin' });
+    // 땅 위 계단: cols = 각 칸의 높이(블록 수)
+    const stairs = (x0, cols) => { if (!cols.every((_, j) => onGroundAt(x0 + j * B + 4) && onGroundAt(x0 + j * B + B - 4))) return false;
+      cols.forEach((hgt, j) => { for (let r = 1; r <= hgt; r++) box(x0 + j * B, GROUND - r * B, 'brick'); }); return true; };
     const anchors = [80].concat(GATE_X).concat([FLAG_X - 40]);
-    for (let k = 0; k < anchors.length - 1; k++) {
+    const lastK = anchors.length - 2;
+    for (let k = 0; k <= lastK; k++) {
       const a = anchors[k] + 60, b = anchors[k + 1];
-      const c = (a + b) / 2;
-      if (k > 0) {
-        platforms.push({ x: c - 90, y: 330, w: 180, h: 22 });
-        for (let j = -1; j <= 1; j++) coins.push({ x: c + j * 50, y: 290, got: false });
+      const c = Math.round((a + b) / 2 / 10) * 10;
+      const pit = GROUND_SEGS.length > 1 && GROUND_SEGS[0][1] > a - 40 && GROUND_SEGS[0][1] < b ? [GROUND_SEGS[0][1], GROUND_SEGS[1][0]] : null;
+      if (pit && !(k === lastK && k > 0 && onGroundAt(FLAG_X - 300) && onGroundAt(FLAG_X - 140))) {
+        // 구덩이 구간: 머리 위를 막지 않고 코인 아치만 (뛰어넘기 연습)
+        const pm = (pit[0] + pit[1]) / 2;
+        for (let j = -2; j <= 2; j++) coins.push({ x: pm + j * 34, y: 330 - (2 - Math.abs(j)) * 30, got: false });
+      } else if (k === lastK && k > 0) {
+        // 마지막 구간: 깃발 앞 오르막 계단 → 높이 뛸수록 깃발 보너스
+        stairs(FLAG_X - 300, [1, 2, 3, 4]);
+        for (let j = 0; j < 4; j++) coins.push({ x: FLAG_X - 280 + j * B, y: GROUND - (j + 1) * B - 30, got: false });
+        box(c - 200, 300, 'q');
+      } else if (k === 0) {
+        // 첫 구간: 상자 치기 연습
+        box(c - 60, 330, 'brick'); box(c - 20, 330, 'q'); box(c + 20, 330, 'brick');
+      } else if (k % 3 === 1) {
+        // 발판 + 점프대 + 하늘 코인 기둥
+        platforms.push({ x: c - 170, y: 330, w: 160, h: 22 });
+        for (let j = 0; j < 3; j++) coins.push({ x: c - 140 + j * 50, y: 290, got: false });
+        const sx = c + 110;
+        if (onGroundAt(sx) && onGroundAt(sx + 44)) { springs.push({ x: sx, y: GROUND - 26, w: 44, h: 26, sq: 0 }); for (let j = 0; j < 4; j++) coins.push({ x: sx + 22, y: 250 - j * 44, got: false }); }
+        enemies.push({ type: 'fly', x: c - 60, y: 210, by: 210, w: 44, h: 34, vx: -60, min: c - 200, max: c + 60, alive: true, squash: 0, t: k });
+      } else if (k % 3 === 2) {
+        // 물음표 상자 줄
+        box(c - 100, 330, 'brick'); box(c - 60, 330, 'q'); box(c - 20, 330, 'brick'); box(c + 20, 330, 'q'); box(c + 60, 330, 'brick');
+        box(c - 20, 190, 'q');
+      } else {
+        // 넘어가야 하는 벽돌 언덕
+        if (!stairs(c - 80, [1, 2, 2, 1])) box(c - 20, 330, 'q');
+        else for (let j = 0; j < 2; j++) coins.push({ x: c - 20 + j * B, y: GROUND - 2 * B - 30, got: false });
+        enemies.push({ type: 'fly', x: c + 140, y: 230, by: 230, w: 44, h: 34, vx: -60, min: c + 60, max: Math.min(b - 60, c + 260), alive: true, squash: 0, t: k });
       }
       for (let j = 0; j < 3; j++) {
         const cx = a + 80 + j * 46;
-        if (onGroundAt(cx)) coins.push({ x: cx, y: 420, got: false });
+        if (onGroundAt(cx) && !solids.some(q => cx > q.x - 14 && cx < q.x + q.w + 14 && q.y + q.h >= GROUND - 1)) coins.push({ x: cx, y: 420, got: false });
       }
     }
+    // 물음표 상자 속 아이템: 반짝 별 1개, 하트 1개, 나머지는 코인
+    const qs = solids.filter(q => q.type === 'q');
+    if (qs[1]) qs[1].item = 'star';
+    if (qs[3]) qs[3].item = 'heart';
     GATE_X.slice(1).map((x, i) => [x, GATE_X[i + 2] || FLAG_X]).forEach(([a, b]) => {
       enemies.push({ x: a + 180, y: GROUND - 34, w: 44, h: 34, vx: -70, min: a + 120, max: b - 120, alive: true, squash: 0 });
     });
+  }
+
+  // 코인 20개마다 하트 +1 (최대 5)
+  function addCoins(n) {
+    const before = Math.floor(stats.coins / 20);
+    stats.coins += n;
+    if (Math.floor(stats.coins / 20) > before && stats.hearts < 5) { stats.hearts++; showToast(`코인 ${Math.floor(stats.coins / 20) * 20}개! 하트 +1`); tone([880, 1175, 1568], 0.09); }
+  }
+  function tone(fs, len, type = 'square', vol = 0.06) {
+    sfx(ac => fs.forEach((f, i) => { const o = ac.createOscillator(), g = ac.createGain(), t0 = ac.currentTime + i * len;
+      o.type = type; o.frequency.value = f; g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + len * 1.4);
+      o.connect(g); g.connect(ac.destination); o.start(t0); o.stop(t0 + len * 1.5); }));
+  }
+  function hitBlock(q) {
+    q.bump = 0.22;
+    if (q.type !== 'q') { tone([180], 0.06, 'triangle', 0.08); return; }
+    q.type = 'used';
+    const px = q.x + q.w / 2, py = q.y - 8;
+    if (q.item === 'star') { stats.star = 6; pops.push({ kind: 'star', x: px, y: py, vy: -260, life: 0.9 }); showToast('반짝 별! 6초 동안 무적'); tone([523, 659, 784, 1047, 1319], 0.07); }
+    else if (q.item === 'heart' && stats.hearts < 5) { stats.hearts++; pops.push({ kind: 'heart', x: px, y: py, vy: -260, life: 0.9 }); showToast('하트 +1'); tone([660, 990], 0.1, 'triangle'); }
+    else { addCoins(1); pops.push({ kind: 'coin', x: px, y: py, vy: -420, life: 0.55 }); tone([988, 1319], 0.06); }
+    // 상자 위에 있던 헷갈이도 튕겨 나가요
+    for (const e of enemies) if (e.alive && e.type !== 'fly' && Math.abs(e.y + e.h - q.y) < 4 && e.x + e.w > q.x && e.x < q.x + q.w) { e.alive = false; addCoins(2); }
   }
 
   function onGroundAt(x) { return GROUND_SEGS.some(([a, b]) => x >= a && x <= b); }
@@ -833,9 +929,10 @@ body.story-on { overflow: hidden; }
   function resetAll() {
     buildLevel();
     player = { x: 120, y: GROUND - 48, w: 40, h: 48, vx: 0, vy: 0, onGround: true, face: 1, inv: 0, step: 0 };
-    stats = { hearts: 3, coins: 0, first: 0, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false };
+    stats = { hearts: 3, coins: 0, first: 0, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false, star: 0 };
     keys = { left: false, right: false, jump: false, jumpHeld: false };
     camX = 0;
+    try { const h = curHero(); endSub = `수학 탐험가 ${h.name}, 메달 획득!`; canvas.setAttribute('aria-label', `${h.name}가 달리는 수학 모험 게임 화면`); } catch (_) {}
     checkpointX = 120;
     taTime = 0; segStart = 0; taSplits = [];
     state = 'start';
@@ -1029,7 +1126,9 @@ body.story-on { overflow: hidden; }
     p.vx += (target * SPEED - p.vx) * Math.min(1, accel * dt);
     if (keys.jump && !keys.jumpHeld && p.onGround) { p.vy = -JUMP; p.onGround = false; keys.jumpHeld = true; }
     if (!keys.jump) keys.jumpHeld = false;
-    if (!keys.jump && p.vy < -300) p.vy += GRAV * 1.2 * dt;
+    if (!keys.jump && p.vy < -300 && !p.boost) p.vy += GRAV * 1.2 * dt;
+    if (p.vy >= 0) p.boost = false;
+    if (stats.star > 0) stats.star = Math.max(0, stats.star - dt);
     p.vy += GRAV * dt;
     if (p.vy > 1200) p.vy = 1200;
 
@@ -1041,6 +1140,12 @@ body.story-on { overflow: hidden; }
       if (p.x + p.w > g.x && p.x < g.x + g.w) {
         if (p.x + p.w / 2 < g.x + g.w / 2) { p.x = g.x - p.w; p.vx = 0; if (state === 'play') openQuestion(g); }
         else { p.x = g.x + g.w; p.vx = 0; }
+      }
+    }
+    for (const q of solids) {
+      if (p.x + p.w > q.x && p.x < q.x + q.w && p.y + p.h > q.y + 2 && p.y < q.y + q.h - 2) {
+        if (p.x + p.w / 2 < q.x + q.w / 2) p.x = q.x - p.w; else p.x = q.x + q.w;
+        p.vx = 0;
       }
     }
 
@@ -1055,14 +1160,33 @@ body.story-on { overflow: hidden; }
       for (const pl of platforms) {
         if (prevBottom <= pl.y + 1 && bottom >= pl.y && footR > pl.x && footL < pl.x + pl.w) { p.y = pl.y - p.h; p.vy = 0; p.onGround = true; }
       }
+      for (const q of solids) {
+        if (prevBottom <= q.y + 1 && p.y + p.h >= q.y && footR > q.x && footL < q.x + q.w) { p.y = q.y - p.h; p.vy = 0; p.onGround = true; }
+      }
+      for (const sp of springs) {
+        if (prevBottom <= sp.y + 4 && p.y + p.h >= sp.y && footR > sp.x && footL < sp.x + sp.w) { p.y = sp.y - p.h; p.vy = -1250; p.boost = true; p.onGround = false; sp.sq = 0.35; keys.jumpHeld = true; tone([392, 784], 0.07, 'triangle', 0.08); }
+      }
+    } else {
+      // 머리로 상자 치기: 가운데에 가장 가까운 상자 하나만
+      const prevTop = prevBottom - p.h, mid = p.x + p.w / 2;
+      let hit = null;
+      for (const q of solids) {
+        if (prevTop >= q.y + q.h - 2 && p.y <= q.y + q.h && p.x + p.w - 6 > q.x && p.x + 6 < q.x + q.w)
+          if (!hit || Math.abs(q.x + q.w / 2 - mid) < Math.abs(hit.x + hit.w / 2 - mid)) hit = q;
+      }
+      if (hit) { p.y = hit.y + hit.h; p.vy = 60; hitBlock(hit); }
     }
+    for (const q of solids) if (q.bump > 0) q.bump = Math.max(0, q.bump - dt);
+    for (const sp of springs) if (sp.sq > 0) sp.sq = Math.max(0, sp.sq - dt);
+    for (const o of pops) { o.y += o.vy * dt; o.vy += 900 * dt; o.life -= dt; }
+    pops = pops.filter(o => o.life > 0);
     if (p.y > H + 80) { stats.hearts--; stats.hits++; if (stats.hearts <= 0) { state = 'over'; showModal('overModal'); $('retryBtn').focus({ preventScroll: true }); } respawn(); }
     if (p.inv > 0) p.inv -= dt;
     if (p.onGround && Math.abs(p.vx) > 20) p.step += dt * 12;
 
     // 코인
     for (const c of coins) {
-      if (!c.got && Math.abs(p.x + p.w / 2 - c.x) < 26 && Math.abs(p.y + p.h / 2 - c.y) < 34) { c.got = true; stats.coins++; }
+      if (!c.got && Math.abs(p.x + p.w / 2 - c.x) < 26 && Math.abs(p.y + p.h / 2 - c.y) < 34) { c.got = true; addCoins(1); tone([988, 1319], 0.05, 'square', 0.035); }
     }
 
     // 헷갈이
@@ -1071,14 +1195,21 @@ body.story-on { overflow: hidden; }
       e.x += e.vx * dt;
       if (e.x < e.min) { e.x = e.min; e.vx *= -1; }
       if (e.x + e.w > e.max) { e.x = e.max - e.w; e.vx *= -1; }
+      if (e.type === 'fly') { e.t += dt; e.y = e.by + Math.sin(e.t * 2.2) * 46; }
+      else for (const q of solids) if (q.y + q.h >= GROUND - 1 && e.x + e.w > q.x && e.x < q.x + q.w) { e.x = e.vx > 0 ? q.x - e.w : q.x + q.w; e.vx *= -1; }
       if (p.x + p.w > e.x + 4 && p.x < e.x + e.w - 4 && p.y + p.h > e.y && p.y < e.y + e.h) {
-        if (p.vy > 0 && prevBottom <= e.y + 14) { e.alive = false; p.vy = -520; stats.coins += 2; showToast('헷갈이 물리침 +2'); }
+        if (stats.star > 0) { e.alive = false; addCoins(2); showToast('반짝 별로 물리침 +2'); tone([1047, 1568], 0.05); }
+        else if (p.vy > 0 && prevBottom <= e.y + 14) { e.alive = false; p.vy = -520; addCoins(2); showToast('헷갈이 물리침 +2'); tone([330, 660], 0.06); }
         else if (state === 'play') hurt(p.x + p.w / 2 < e.x + e.w / 2 ? -1 : 1);
       }
     }
 
     for (const g of gates) if (g.solved && g.open < 1) g.open = Math.min(1, g.open + dt * 1.6);
-    if (p.x + p.w > FLAG_X && state === 'play') finish();
+    if (p.x + p.w > FLAG_X && state === 'play') {
+      const bonus = Math.max(1, Math.min(5, 1 + Math.floor((GROUND - (p.y + p.h)) / 45)));
+      addCoins(bonus); showToast(`깃발 보너스 +${bonus}`); tone([523, 659, 784, 1047], 0.08, 'triangle', 0.08);
+      finish();
+    }
 
     const want = p.x - W * 0.35;
     camX += (want - camX) * Math.min(1, 8 * dt);
@@ -1126,7 +1257,47 @@ body.story-on { overflow: hidden; }
       ctx.fillStyle = '#8a5a3b'; rr(x, pl.y, pl.w, pl.h, 8); ctx.fill();
       ctx.fillStyle = '#5bb98b'; rr(x, pl.y, pl.w, 9, 6); ctx.fill();
     }
+    for (const sp of springs) {
+      const x = sp.x - camX; if (x + sp.w < 0 || x > W) continue;
+      const k = sp.sq > 0 ? 0.5 + 0.5 * (1 - sp.sq / 0.35) : 1, top = GROUND - sp.h * k;
+      ctx.strokeStyle = '#60646c'; ctx.lineWidth = 4; ctx.beginPath();
+      for (let j = 0; j <= 4; j++) { const yy = top + 6 + (GROUND - top - 6) * j / 4; ctx.lineTo(x + (j % 2 ? 10 : sp.w - 10), yy); } ctx.stroke();
+      ctx.fillStyle = '#e5484d'; rr(x, top, sp.w, 9, 4); ctx.fill();
+      ctx.fillStyle = '#ffd34d'; ctx.font = '12px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('▲', x + sp.w / 2, top - 4);
+    }
+    for (const q of solids) {
+      const x = q.x - camX; if (x + q.w < 0 || x > W) continue;
+      const y = q.y - (q.bump > 0 ? Math.sin((1 - q.bump / 0.22) * Math.PI) * 10 : 0);
+      if (q.type === 'q') {
+        ctx.fillStyle = '#b06a00'; rr(x, y, q.w, q.h, 7); ctx.fill();
+        ctx.fillStyle = '#ffb627'; rr(x + 3, y + 3, q.w - 6, q.h - 7, 5); ctx.fill();
+        ctx.fillStyle = '#fff3c4'; [[7, 7], [q.w - 9, 7], [7, q.h - 11], [q.w - 9, q.h - 11]].forEach(([a, b]) => { ctx.beginPath(); ctx.arc(x + a + 1, y + b + 1, 2, 0, Math.PI * 2); ctx.fill(); });
+        const pulse = 1 + Math.sin(clock * 5 + q.x) * 0.08;
+        ctx.save(); ctx.translate(x + q.w / 2, y + q.h / 2 + 1); ctx.scale(pulse, pulse);
+        ctx.fillStyle = '#7a3e00'; ctx.font = '26px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('?', 1, 2);
+        ctx.fillStyle = '#fff'; ctx.fillText('?', 0, 0); ctx.restore(); ctx.textBaseline = 'alphabetic';
+      } else if (q.type === 'used') {
+        ctx.fillStyle = '#7d5a3c'; rr(x, y, q.w, q.h, 7); ctx.fill();
+        ctx.fillStyle = '#a07a55'; rr(x + 3, y + 3, q.w - 6, q.h - 7, 5); ctx.fill();
+      } else {
+        ctx.fillStyle = '#8f4a2a'; ctx.fillRect(x, y, q.w, q.h);
+        ctx.fillStyle = '#c8673a'; ctx.fillRect(x + 2, y + 2, q.w - 4, q.h - 4);
+        ctx.fillStyle = '#8f4a2a'; ctx.fillRect(x, y + q.h / 2 - 1, q.w, 3); ctx.fillRect(x + q.w / 2 - 1, y, 3, q.h / 2); ctx.fillRect(x + 9, y + q.h / 2, 3, q.h / 2); ctx.fillRect(x + q.w - 12, y + q.h / 2, 3, q.h / 2);
+        ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.fillRect(x + 2, y + 2, q.w - 4, 3);
+      }
+    }
   }
+  function drawPops() {
+    for (const o of pops) {
+      const x = o.x - camX, a = Math.min(1, o.life * 3);
+      ctx.save(); ctx.globalAlpha = a; ctx.translate(x, o.y);
+      if (o.kind === 'coin') { ctx.scale(Math.abs(Math.cos(o.life * 18)) * 0.7 + 0.3, 1); ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#ab6400'; ctx.lineWidth = 2.5; ctx.stroke(); }
+      else if (o.kind === 'star') { ctx.fillStyle = '#ffd34d'; ctx.strokeStyle = '#ab6400'; ctx.lineWidth = 2.5; ctx.beginPath(); for (let i = 0; i < 10; i++) { const r = i % 2 ? 8 : 18, an = -Math.PI / 2 + i * Math.PI / 5; ctx.lineTo(Math.cos(an) * r, Math.sin(an) * r); } ctx.closePath(); ctx.fill(); ctx.stroke(); }
+      else { heartShape(0, 0, 13); }
+      ctx.restore();
+    }
+  }
+  function heartShape(x, y, r) { ctx.fillStyle = '#e5484d'; ctx.beginPath(); ctx.moveTo(x, y + r * 0.9); ctx.bezierCurveTo(x - r * 1.6, y - r * 0.2, x - r * 0.6, y - r * 1.3, x, y - r * 0.4); ctx.bezierCurveTo(x + r * 0.6, y - r * 1.3, x + r * 1.6, y - r * 0.2, x, y + r * 0.9); ctx.fill(); }
 
   function drawCoins(t) {
     for (const c of coins) {
@@ -1181,9 +1352,15 @@ body.story-on { overflow: hidden; }
       if (!e.alive && e.squash > 0.5) continue;
       const x = e.x - camX; if (x + e.w < -10 || x > W + 10) continue;
       const sq = e.alive ? 1 : Math.max(0.15, 1 - e.squash * 2);
-      const hgt = e.h * sq, y = GROUND - hgt;
+      const hgt = e.h * sq, y = e.y + e.h - hgt;
       const wob = e.alive ? Math.sin(t * 8 + e.x) * 2 : 0;
-      ctx.fillStyle = '#8e6bd8'; rr(x, y + wob, e.w, hgt - wob, 16); ctx.fill();
+      if (e.type === 'fly' && e.alive) {
+        const fl = Math.sin(t * 22) * 8;
+        ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#c9b8f0'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.ellipse(x + 4, y + 6 - fl / 2, 14, 7 + fl / 3, -0.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(x + e.w - 4, y + 6 - fl / 2, 14, 7 + fl / 3, 0.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      }
+      ctx.fillStyle = e.type === 'fly' ? '#e0609a' : '#8e6bd8'; rr(x, y + wob, e.w, hgt - wob, 16); ctx.fill();
       if (e.alive) {
         const dir = e.vx < 0 ? -1 : 1;
         ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x + 14 + dir * 3, y + 14, 6, 0, Math.PI * 2); ctx.arc(x + 30 + dir * 3, y + 14, 6, 0, Math.PI * 2); ctx.fill();
@@ -1234,12 +1411,42 @@ body.story-on { overflow: hidden; }
     ctx.lineCap = 'butt';
   }
 
+  // 학년별 주인공: 1학년 송이, 2학년 루미, 3학년 부기, 4학년 달이, 5학년 로키, 6학년 토리
+  const HEROES = { 1: { name: '송이', art: 1, foot: '#c98b4a', bg: '#ffd9b8' }, 2: { name: '루미', art: 2, foot: '#a77ee0', bg: '#ead9ff' }, 3: { name: '부기', art: 3, foot: '#93ad45', bg: '#fdf0dc' },
+    4: { name: '달이', art: 5, foot: '#6e4630', bg: '#f3e1cf' }, 5: { name: '로키', art: 4, foot: '#7b7b86', bg: '#c9c8ff' }, 6: { name: '토리', art: 6, foot: '#c0561c', bg: '#ffe0c7' } };
+  const heroOf = gs => HEROES[+String(gs || '3')[0]] || HEROES[3];
+  const curHero = () => heroOf((pick && pick.gs) || M.sel.gs);
+  const heroImg = {};
+  function heroImage(h) {
+    if (!heroImg[h.art]) { const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(charSVG(h.art).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" ')); heroImg[h.art] = im; }
+    return heroImg[h.art];
+  }
+  function drawHero(x, y, f, bob, s, armUp, medal) {
+    const h = curHero();
+    if (h.art === 3) { drawBoogi(x, y, f, bob, s, armUp, medal); return; }
+    const im = heroImage(h), cx = x + 20;
+    ctx.fillStyle = h.foot;
+    rr(cx - 15 + s, y + 38, 12, 11, 5); ctx.fill();
+    rr(cx + 3 - s, y + 38, 12, 11, 5); ctx.fill();
+    ctx.save(); ctx.translate(cx, y + 22 - bob);
+    if (armUp) ctx.rotate(f * -0.12);
+    ctx.scale(f < 0 ? -1 : 1, 1);
+    if (im.complete && im.naturalWidth) ctx.drawImage(im, -32, -36, 64, 64);
+    else { ctx.fillStyle = h.bg; ctx.beginPath(); ctx.arc(0, -4, 24, 0, Math.PI * 2); ctx.fill(); }
+    ctx.restore();
+    if (medal) { ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.arc(cx, y + 34 - bob, 7, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#ab6400'; ctx.lineWidth = 1.5; ctx.stroke(); }
+  }
   function drawPlayer(t) {
     const p = player;
     if (p.inv > 0 && Math.floor(p.inv * 12) % 2 === 0) return;
     const bob = p.onGround ? Math.abs(Math.sin(p.step)) * 2.5 : 0;
     const s = p.onGround ? Math.sin(p.step) * 4 : 0;
-    drawBoogi(p.x - camX, p.y, p.face, bob, s, !p.onGround, false);
+    if (stats.star > 0) {
+      const g = ctx.createRadialGradient(p.x - camX + 20, p.y + 24, 6, p.x - camX + 20, p.y + 24, 52);
+      g.addColorStop(0, `hsla(${(t * 400) % 360},100%,70%,.7)`); g.addColorStop(1, 'hsla(0,0%,100%,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x - camX + 20, p.y + 24, 52, 0, Math.PI * 2); ctx.fill();
+    }
+    drawHero(p.x - camX, p.y, p.face, bob, s, !p.onGround, false);
     if (stats.shield) { ctx.strokeStyle = 'rgba(138,162,216,0.85)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(p.x - camX + 20, p.y + 22, 40, 0, Math.PI * 2); ctx.stroke(); }
   }
 
@@ -1347,7 +1554,7 @@ body.story-on { overflow: hidden; }
       }
     }
 
-    drawBoogi(bx, by, f, bob, s, arm, t > 5.2);
+    drawHero(bx, by, f, bob, s, arm, t > 5.2);
 
     // 불꽃놀이: 수학 기호가 터져요
     ctx.textAlign = 'center';
@@ -1401,6 +1608,11 @@ body.story-on { overflow: hidden; }
     if (stats.freeze > 0) {
       ctx.fillStyle = '#0090ff'; rr(14, 66, 190, 34, 17); ctx.fill();
       ctx.fillStyle = '#fff'; ctx.font = '20px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('시간 멈춤 ' + Math.ceil(stats.freeze) + '초', 109, 90);
+    }
+    if (stats.star > 0) {
+      const sy = stats.freeze > 0 ? 108 : 66;
+      ctx.fillStyle = `hsl(${(clock * 300) % 360},85%,55%)`; rr(14, sy, 190, 34, 17); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '20px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('★ 무적 ' + Math.ceil(stats.star) + '초', 109, sy + 24);
     }
     const solved = gates.filter(g => g.solved).length;
     ctx.fillStyle = 'rgba(252,252,253,0.9)'; rr(W - 230, 14, 216, 46, 23); ctx.fill();
@@ -1461,6 +1673,7 @@ body.story-on { overflow: hidden; }
       drawGates(clock);
       drawFlag(clock);
       drawEnemies(clock);
+      drawPops();
       drawPlayer(clock);
       drawHUD();
     }
@@ -1793,10 +2006,6 @@ body.story-on { overflow: hidden; }
   }
   function renderBar() {
     const gs = M.sel.gs, us = unitsOf(gs);
-    $('homeSel').innerHTML = `
-        <label class="sel"><span class="vh">학년 학기</span><select id="gsSel">${GS_LIST.map(x => `<option value="${x}" ${x === gs ? 'selected' : ''}>${gsLabel(x)}</option>`).join('')}</select></label>
-        <label class="sel"><span class="vh">단원</span><select id="unitSel">${us.map((u, i) => `<option value="${i}" ${i === M.sel.u ? 'selected' : ''}>${i + 1}단원. ${u}${hasContent(ukey(gs, i)) ? '' : ' (준비 중)'}</option>`).join('')}</select></label>
-`;
     $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip">코인 ${M.coins}</span>`;
   }
   // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
@@ -2222,14 +2431,51 @@ body.story-on { overflow: hidden; }
     </svg>`;
   }
   // 메인(타이틀) 화면
+  // 챕터(학년) → 단원별 진행 현황
+  const piecesOf = key => { const P = M.prog[key]; return P ? P.st.filter(v => v >= 3).length : 0; };
+  function chaptersHTML() {
+    const cg = +M.sel.gs[0], sem = M.sel.gs[2];
+    return `<h3>챕터 진행 현황</h3><ol class="chap">${[1, 2, 3, 4, 5, 6].map(g => {
+      const keys = [];
+      ['1', '2'].forEach(sm => unitsOf(`${g}-${sm}`).forEach((_, u) => { const k = ukey(`${g}-${sm}`, u); if (hasContent(k)) keys.push(k); }));
+      const tot = keys.length * NSTG, got = keys.reduce((a, k) => a + piecesOf(k), 0), pct = tot ? Math.round(got / tot * 100) : null, h = HEROES[g];
+      const head = `<button type="button" class="chap-g${g === cg ? ' on' : ''}" data-grade="${g}" aria-expanded="${g === cg}">
+          <span class="cg-av" style="background:${h.bg}">${charSVG(h.art)}</span>
+          <span class="cg-tx"><b>${g}학년</b><span class="cg-bar"><i style="width:${pct || 0}%"></i></span></span>
+          <em>${pct == null ? '준비 중' : pct === 100 ? '완료 ★' : pct + '%'}</em></button>`;
+      if (g !== cg) return `<li>${head}</li>`;
+      const units = unitsOf(M.sel.gs).map((nm, u) => {
+        const k = ukey(M.sel.gs, u), ok = hasContent(k), pc = piecesOf(k);
+        return `<button type="button" class="chap-u${u === M.sel.u ? ' on' : ''}${ok ? '' : ' wait'}" data-unit="${u}">
+          <span class="cu-n">${u + 1}</span><span class="cu-nm">${esc(nm)}</span>
+          <span class="cu-p">${ok ? `<span class="cu-dots">${GUARD.map((_, i) => `<i class="${i < pc ? 'got' : ''}"></i>`).join('')}</span>` : '준비 중'}</span></button>`;
+      }).join('');
+      return `<li class="cur">${head}<div class="chap-sem">${['1', '2'].map(sm => `<button type="button" data-sem="${sm}" class="${sm === sem ? 'on' : ''}">${sm}학기</button>`).join('')}</div><div class="chap-units">${units}</div></li>`;
+    }).join('')}</ol>`;
+  }
+  $('homeChap').addEventListener('click', e => {
+    const g = e.target.closest('[data-grade]'), sm = e.target.closest('[data-sem]'), u = e.target.closest('[data-unit]');
+    if (g) {
+      const gr = +g.dataset.grade; if (gr === +M.sel.gs[0]) return;
+      // 콘텐츠가 있는 첫 단원으로, 없으면 1학기 1단원
+      let gs = `${gr}-1`, uu = 0;
+      outer: for (const sx of ['1', '2']) for (let i = 0; i < 5; i++) if (hasContent(ukey(`${gr}-${sx}`, i))) { gs = `${gr}-${sx}`; uu = i; break outer; }
+      M.sel = { gs, u: uu };
+    } else if (sm) { M.sel = { gs: `${M.sel.gs[0]}-${sm.dataset.sem}`, u: 0 }; }
+    else if (u) { M.sel.u = +u.dataset.unit; }
+    else return;
+    M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 1단계부터 시작해요.` };
+    renderHome();
+    const f = $('homeChap').querySelector(u ? '.chap-u.on' : sm ? '.chap-sem .on' : '.chap-g.on'); if (f) f.focus({ preventScroll: true });
+  });
   function renderHome() {
     const key = ukey(M.sel.gs, M.sel.u), ready = hasContent(key), n = pieceCount(key), P = prog(key);
     renderBar();
     $('homeMap').innerHTML = villageSVG(ready ? key : null);
-    const begun = P.st.some(v => v > 0);
-    $('homeProg').innerHTML = ready
-      ? `<span class="hp-ic">${hudSVG(key)}</span><span><b>${floorOf(M.sel.gs)}층 · ${esc(unitName(M.sel.gs, M.sel.u))}</b><br>황금 나침반 ${n} / ${NSTG}</span>`
-      : `<span><b>${esc(unitName(M.sel.gs, M.sel.u))}</b><br>이 방은 아직 준비 중이에요</span>`;
+    const begun = P.st.some(v => v > 0), h = heroOf(M.sel.gs);
+    $('homeProg').innerHTML = `<span class="hp-hero" style="background:${h.bg}">${charSVG(h.art)}</span><span><b>${floorOf(M.sel.gs)}학년 탐험가 ${h.name}</b><br>${gsLabel(M.sel.gs)} · ${M.sel.u + 1}단원 ${esc(unitName(M.sel.gs, M.sel.u))}</span>`
+      + (ready ? `<span class="hp-ic" title="황금 나침반 ${n}/${NSTG}">${hudSVG(key)}</span>` : '<span class="hp-wait">준비 중</span>');
+    $('homeChap').innerHTML = chaptersHTML();
     const b = $('homeStart');
     b.disabled = !ready;
     b.textContent = !ready ? '준비 중인 단원이에요' : n === NSTG ? '다시 탐험하기 ▶' : begun ? '이어하기 ▶' : '모험 시작 ▶';
