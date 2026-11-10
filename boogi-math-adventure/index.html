@@ -233,7 +233,10 @@ body.story-on { overflow: hidden; }
 .home-map { flex: 1; min-height: 0; min-width: 0; display: grid; place-items: center; cursor: pointer; }
 .home-title, .home-map { position: relative; }
 .home-chap { position: relative; flex: none; width: 290px; min-height: 0; overflow-y: auto; background: rgba(255,255,255,.94); border: 3px solid var(--deep); border-radius: 22px; box-shadow: 0 5px 0 var(--deep); padding: 12px; }
-.home-chap h3 { margin: 0 0 8px; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: 1.15rem; }
+.chap-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.chap-gsel select { font-size: .95rem; padding: 3px 8px; }
+.home-chap .chap-g { margin-bottom: 2px; }
+.home-chap h3 { margin: 0; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: 1.15rem; }
 .chap { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .chap li.cur { background: #eef8ff; border-radius: 14px; padding: 4px 4px 8px; }
 .chap button { font: inherit; cursor: pointer; }
@@ -2434,25 +2437,33 @@ body.story-on { overflow: hidden; }
   // 챕터(학년) → 단원별 진행 현황
   const piecesOf = key => { const P = M.prog[key]; return P ? P.st.filter(v => v >= 3).length : 0; };
   function chaptersHTML() {
-    const cg = +M.sel.gs[0], sem = M.sel.gs[2];
-    return `<h3>챕터 진행 현황</h3><ol class="chap">${[1, 2, 3, 4, 5, 6].map(g => {
-      const keys = [];
-      ['1', '2'].forEach(sm => unitsOf(`${g}-${sm}`).forEach((_, u) => { const k = ukey(`${g}-${sm}`, u); if (hasContent(k)) keys.push(k); }));
-      const tot = keys.length * NSTG, got = keys.reduce((a, k) => a + piecesOf(k), 0), pct = tot ? Math.round(got / tot * 100) : null, h = HEROES[g];
-      const head = `<button type="button" class="chap-g${g === cg ? ' on' : ''}" data-grade="${g}" aria-expanded="${g === cg}">
-          <span class="cg-av" style="background:${h.bg}">${charSVG(h.art)}</span>
-          <span class="cg-tx"><b>${g}학년</b><span class="cg-bar"><i style="width:${pct || 0}%"></i></span></span>
-          <em>${pct == null ? '준비 중' : pct === 100 ? '완료 ★' : pct + '%'}</em></button>`;
-      if (g !== cg) return `<li>${head}</li>`;
-      const units = unitsOf(M.sel.gs).map((nm, u) => {
-        const k = ukey(M.sel.gs, u), ok = hasContent(k), pc = piecesOf(k);
-        return `<button type="button" class="chap-u${u === M.sel.u ? ' on' : ''}${ok ? '' : ' wait'}" data-unit="${u}">
-          <span class="cu-n">${u + 1}</span><span class="cu-nm">${esc(nm)}</span>
-          <span class="cu-p">${ok ? `<span class="cu-dots">${GUARD.map((_, i) => `<i class="${i < pc ? 'got' : ''}"></i>`).join('')}</span>` : '준비 중'}</span></button>`;
-      }).join('');
-      return `<li class="cur">${head}<div class="chap-sem">${['1', '2'].map(sm => `<button type="button" data-sem="${sm}" class="${sm === sem ? 'on' : ''}">${sm}학기</button>`).join('')}</div><div class="chap-units">${units}</div></li>`;
-    }).join('')}</ol>`;
+    const g = +M.sel.gs[0], sem = M.sel.gs[2], h = HEROES[g];
+    const keys = [];
+    ['1', '2'].forEach(sm => unitsOf(`${g}-${sm}`).forEach((_, u) => { const k = ukey(`${g}-${sm}`, u); if (hasContent(k)) keys.push(k); }));
+    const tot = keys.length * NSTG, got = keys.reduce((a, k) => a + piecesOf(k), 0), pct = tot ? Math.round(got / tot * 100) : null;
+    const units = unitsOf(M.sel.gs).map((nm, u) => {
+      const k = ukey(M.sel.gs, u), ok = hasContent(k), pc = piecesOf(k);
+      return `<button type="button" class="chap-u${u === M.sel.u ? ' on' : ''}${ok ? '' : ' wait'}" data-unit="${u}">
+        <span class="cu-n">${u + 1}</span><span class="cu-nm">${esc(nm)}</span>
+        <span class="cu-p">${ok ? `<span class="cu-dots">${GUARD.map((_, i) => `<i class="${i < pc ? 'got' : ''}"></i>`).join('')}</span>` : '준비 중'}</span></button>`;
+    }).join('');
+    return `<div class="chap-head"><h3>챕터 진행 현황</h3>
+        <label class="sel chap-gsel"><span class="vh">학년 선택</span><select id="chapGrade">${[1, 2, 3, 4, 5, 6].map(x => `<option value="${x}"${x === g ? ' selected' : ''}>${x}학년</option>`).join('')}</select></label></div>
+      <div class="chap-g on"><span class="cg-av" style="background:${h.bg}">${charSVG(h.art)}</span>
+        <span class="cg-tx"><b>${g}학년 · 탐험가 ${h.name}</b><span class="cg-bar"><i style="width:${pct || 0}%"></i></span></span>
+        <em>${pct == null ? '준비 중' : pct === 100 ? '완료 ★' : pct + '%'}</em></div>
+      <div class="chap-sem">${['1', '2'].map(sm => `<button type="button" data-sem="${sm}" class="${sm === sem ? 'on' : ''}">${sm}학기</button>`).join('')}</div>
+      <div class="chap-units">${units}</div>`;
   }
+  $('homeChap').addEventListener('change', e => {
+    if (e.target.id !== 'chapGrade') return;
+    const gr = +e.target.value;
+    let gs = `${gr}-1`, uu = 0;
+    outer: for (const sx of ['1', '2']) for (let i = 0; i < 5; i++) if (hasContent(ukey(`${gr}-${sx}`, i))) { gs = `${gr}-${sx}`; uu = i; break outer; }
+    M.sel = { gs, u: uu };
+    M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 1단계부터 시작해요.` };
+    renderHome(); $('chapGrade').focus();
+  });
   $('homeChap').addEventListener('click', e => {
     const g = e.target.closest('[data-grade]'), sm = e.target.closest('[data-sem]'), u = e.target.closest('[data-unit]');
     if (g) {
