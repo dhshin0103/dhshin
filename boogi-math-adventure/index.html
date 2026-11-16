@@ -223,6 +223,46 @@ body.story-on { overflow: hidden; }
 .sf-btns { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .sf-btns .btn { min-width: 140px; }
 @media (prefers-reduced-motion: reduce) { .sf-cloud, .sf-art, .sf-art .crew span { animation: none !important; } }
+/* 스쿨플랫 연산 학습지 연동 (시연용) */
+.wsfs { background: linear-gradient(180deg, #d9f3ea 0%, #f2fbf7 60%, #fff6dc 100%); }
+.ws-demo { margin-right: auto; margin-left: 8px; font-size: .8rem; font-weight: 700; color: #8a5a00; background: #fff3c4; border: 1.5px dashed #e0a800; border-radius: 999px; padding: 3px 10px; }
+.ws-mid { position: relative; display: flex; gap: 18px; align-items: center; justify-content: center; min-height: 0; overflow: auto; padding: 4px; }
+.ws-paper { flex: none; width: min(420px, 100%); background: #fff; border: 3px solid var(--deep); border-radius: 18px; box-shadow: 0 6px 0 var(--deep); padding: 16px; background-image: repeating-linear-gradient(0deg, transparent 0 27px, #eef4fb 27px 28px); }
+.ws-ph { display: flex; flex-direction: column; gap: 2px; border-bottom: 2px dashed #c9d6e3; padding-bottom: 8px; margin-bottom: 10px; }
+.ws-ph b { font-family: var(--display); font-weight: 400; font-size: 1.25rem; color: var(--deep); }
+.ws-ph span { font-size: .85rem; color: var(--muted); }
+.ws-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.ws-dot { aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-size: 1rem; color: #9aa5b4; background: #f2f5f9; border: 2px solid #dfe4ea; }
+.ws-dot.ok { color: #fff; background: #30a46c; border-color: #23804f; animation: wspop .25s ease-out; font-size: 1.2rem; }
+.ws-dot.no { color: #fff; background: #e5484d; border-color: #b8363a; animation: wspop .25s ease-out; }
+@keyframes wspop { from { transform: scale(.4); } }
+.ws-score { margin-top: 12px; text-align: center; font-family: var(--display); font-size: 1.2rem; color: var(--deep); }
+.ws-score b { font-size: 2rem; color: #30a46c; }
+.ws-side { flex: none; width: min(440px, 100%); display: flex; flex-direction: column; gap: 12px; animation: artin .4s ease-out both; }
+.ws-rw, .ws-wrong { background: #fff; border: 3px solid var(--deep); border-radius: 18px; padding: 12px 14px; }
+.ws-rw h3, .ws-wrong h3 { margin: 0 0 8px; font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--deep); }
+.ws-rw-row { display: flex; align-items: center; gap: 10px; }
+.ws-rw-row + .ws-rw-row { margin-top: 6px; }
+.ws-coin svg { width: 40px; height: 40px; display: block; animation: hopS .5s ease-in-out infinite alternate; }
+.ws-item { font-size: 1.8rem; width: 40px; text-align: center; }
+.ws-rw-row b { font-family: var(--display); font-weight: 400; font-size: 1.6rem; color: #b07800; }
+.ws-rw-row small { color: var(--muted); }
+.ws-wq { border-top: 1px dashed #dfe4ea; padding: 8px 0 4px; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.ws-wq p { margin: 0; width: 100%; font-size: .95rem; line-height: 1.5; color: #1f2a40; }
+.ws-mine { font-size: .85rem; color: #b8363a; background: #ffecec; border-radius: 999px; padding: 2px 10px; text-decoration: line-through; }
+.ws-ans { font-size: .85rem; color: #1d7a4a; background: #e3f6ec; border-radius: 999px; padding: 2px 10px; font-weight: 700; }
+.ws-box { gap: 6px; }
+.ws-box h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(1.3rem, 3vw, 1.7rem); color: var(--deep); }
+.ws-box p { margin: 0; line-height: 1.6; color: #1f2a40; word-break: keep-all; }
+.ws-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+.ws-btns:empty { display: none; }
+.ws-go { background: var(--sun); color: var(--deep); min-width: 200px; }
+.home-chap .ws-open { display: inline-flex; align-items: center; gap: 6px; font-family: var(--display); font-size: .95rem; color: #1d7a4a; background: #e3f6ec; border: 2px solid #30a46c; border-radius: 999px; padding: 5px 12px; cursor: pointer; box-shadow: 0 3px 0 #23804f; }
+.ws-open svg { width: 18px; height: 18px; }
+.ws-open:disabled { opacity: .45; cursor: not-allowed; }
+.ws-open:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.cu-ws { font-size: .7rem; font-weight: 700; color: #1d7a4a; background: #e3f6ec; border-radius: 999px; padding: 0 6px; }
+@media (max-width: 860px) { .wsfs { overflow-y: auto; grid-template-rows: none; grid-auto-rows: auto; grid-template-columns: minmax(0, 1fr); align-content: start; } .ws-mid { flex-direction: column; overflow: visible; min-height: auto; } .ws-paper, .ws-side { width: 100%; } }
 /* 메인(타이틀) 화면 */
 .homefs { background: linear-gradient(180deg, #8fd6ff 0%, #dff4ff 50%, #fff3d6 100%); }
 .homefs .sf-top .wallet .chip { border-color: var(--deep); }
@@ -521,6 +561,13 @@ body.story-on { overflow: hidden; }
     <div class="home-chap" id="homeChap" role="group" aria-label="챕터 진행 현황"></div>
     <div class="home-acts"><button type="button" class="btn ghost" id="homeStory">이야기 보기</button><button type="button" class="btn home-start" id="homeStart">모험 시작 ▶</button><button type="button" class="btn ghost" id="homeShop">코인 상점</button></div>
   </div>
+</div>
+
+<div class="storyfs wsfs" id="wsModal" role="dialog" aria-modal="true" aria-labelledby="wsTitle" hidden>
+  <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-hill"></span></div>
+  <div class="sf-top"><span class="sf-tag">스쿨플랫 연산 학습지 연동</span><span class="ws-demo">시연용 예시 데이터</span><button type="button" class="shopbtn" id="wsClose">← 메인</button></div>
+  <div class="ws-mid" id="wsBody" aria-live="polite"></div>
+  <div class="sf-box ws-box"><h2 id="wsTitle"></h2><p id="wsMsg"></p><div class="ws-btns" id="wsBtns"></div></div>
 </div>
 
 <div class="modal" id="mapModal" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
@@ -979,7 +1026,7 @@ body.story-on { overflow: hidden; }
   bindPad('btnJump', 'jump');
 
   // ---------- 모달 ----------
-  function showModal(id) { document.body.classList.toggle('story-on', id === 'storyModal' || id === 'homeModal' || (id === 'shopModal' && shopReturn === 'homeModal')); ['homeModal', 'storyModal', 'compassModal', 'quizModal', 'mapModal', 'startModal', 'shopModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
+  function showModal(id) { document.body.classList.toggle('story-on', id === 'storyModal' || id === 'homeModal' || id === 'wsModal' || (id === 'shopModal' && shopReturn === 'homeModal')); ['homeModal', 'wsModal', 'storyModal', 'compassModal', 'quizModal', 'mapModal', 'startModal', 'shopModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
   function hideModals() { showModal(null); }
 
   function openQuestion(gate) {
@@ -2983,6 +3030,70 @@ body.story-on { overflow: hidden; }
       <g transform="translate(70,470) rotate(-8)"><path d="M-28 0 h56 l-10 16 h-36 z" fill="#c98b4a" stroke="#2b3a55" stroke-width="3"/><path d="M0 0 v-40" stroke="#2b3a55" stroke-width="3"/><path d="M2 -38 l24 30 h-24 z" fill="#fff" stroke="#2b3a55" stroke-width="2"/></g>
     </svg>`;
   }
+  // ---------- 스쿨플랫 연산 학습지 연동 (시연용 예시 데이터) ----------
+  // 실제 연동 시: 학습지 결과(문항 ID·정오답·단원 코드)를 받아 같은 흐름으로 처리해요
+  const plainQ = t => t.replace(/\{\{|\}\}/g, '');
+  function wsSheet(key) {
+    const C = CONTENT[key], gs = key.slice(0, 3), u = +key.slice(4), d = new Date();
+    const wrongSrc = [[2, 0], [2, 1]];
+    const wrong = wrongSrc.map(([si, k]) => { const q = C.stages[si][k].main, mine = q.c.findIndex((_, i) => i !== q.a); return { src: [si, k], q: q.q, mine: q.c[mine], ans: q.c[q.a] }; });
+    const total = 20, marks = Array.from({ length: total }, (_, i) => !(i === 6 || i === 13));
+    return { title: `${unitName(gs, u)} 연산 학습지 1회`, sub: `${gsLabel(gs)} · ${u + 1}단원`, date: `${d.getMonth() + 1}월 ${d.getDate()}일`, total, marks, correct: marks.filter(Boolean).length, wrong };
+  }
+  let wsState = null;
+  function openWS() {
+    const key = ukey(M.sel.gs, M.sel.u); if (!hasContent(key)) return;
+    M.ws = M.ws || {};
+    wsState = { key, sheet: wsSheet(key), step: M.ws[key] ? 'done' : 'ready' };
+    drawWS(); showModal('wsModal'); const b = $('wsBtns').querySelector('button'); if (b) b.focus({ preventScroll: true });
+  }
+  const wsReward = sh => ({ coins: sh.correct * 2 + (sh.correct === sh.total ? 20 : 0), hint: sh.correct / sh.total >= 0.9 ? 1 : 0 });
+  function drawWS() {
+    const { sheet: sh, step, key } = wsState, rw = wsReward(sh), shown = step === 'ready' ? 0 : step === 'scoring' ? wsState.n || 0 : sh.total;
+    const dots = sh.marks.map((ok, i) => `<span class="ws-dot ${i < shown ? (ok ? 'ok' : 'no') : ''}">${i < shown ? (ok ? '○' : '✕') : i + 1}</span>`).join('');
+    const paper = `<div class="ws-paper"><div class="ws-ph"><b>${esc(sh.title)}</b><span>${sh.sub} · ${sh.date} 제출</span></div>
+      <div class="ws-grid">${dots}</div>
+      <div class="ws-score">${step === 'ready' ? `문항 ${sh.total}개 · 채점 전` : `<b>${shown >= sh.total ? sh.correct : sh.marks.slice(0, shown).filter(Boolean).length}</b> / ${sh.total} 정답`}</div></div>`;
+    let side = '';
+    if (step === 'reward' || step === 'done' || step === 'sent') {
+      side = `<div class="ws-side"><div class="ws-rw"><h3>학습지 보상</h3>
+          <div class="ws-rw-row"><span class="ws-coin">${charCoin()}</span><b>+${rw.coins}</b><small>정답 ${sh.correct}개 × 2</small></div>
+          ${rw.hint ? '<div class="ws-rw-row"><span class="ws-item">💡</span><b>힌트 +1</b><small>정답률 90% 이상</small></div>' : ''}</div>
+        <div class="ws-wrong"><h3>틀린 문제 ${sh.wrong.length}개 → 샌디의 비밀 기지</h3>
+          ${sh.wrong.map(w => `<div class="ws-wq"><p>${fmt(plainQ(w.q))}</p><span class="ws-mine">내 답 ${fmt(w.mine)}</span><span class="ws-ans">정답 ${fmt(w.ans)}</span></div>`).join('')}</div></div>`;
+    }
+    $('wsBody').innerHTML = paper + side;
+    const T = { ready: ['학습지 결과를 불러올까요?', `${sh.date}에 제출한 연산 학습지 ${sh.total}문항을 게임으로 가져와요. 맞힌 만큼 코인을 받고, 틀린 문제는 샌디의 비밀 기지에서 쌍둥이 문제로 다시 풀어요.`],
+      scoring: ['채점 결과를 가져오는 중…', '한 문제씩 확인하고 있어요.'],
+      reward: [`${sh.correct}/${sh.total} 정답! 코인 ${rw.coins}개를 받았어요`, `틀린 ${sh.wrong.length}문제는 샌디에게 보내면 5단계 비밀 기지에서 쌍둥이 문제로 나와요.`],
+      sent: ['샌디의 비밀 기지에 문제가 도착했어요!', `${unitName(key.slice(0, 3), +key.slice(4))} 5단계에서 쌍둥이 문제 ${sh.wrong.length}개로 다시 도전할 수 있어요.`],
+      done: ['이미 연동한 학습지예요', '이 학습지의 보상은 이미 받았어요. 다음 학습지를 풀면 다시 불러올 수 있어요.'] }[step];
+    $('wsTitle').textContent = T[0]; $('wsMsg').textContent = T[1];
+    $('wsBtns').innerHTML = step === 'ready' ? '<button type="button" class="btn ws-go" data-ws="load">결과 불러오기 ▶</button>'
+      : step === 'scoring' ? ''
+      : step === 'reward' ? '<button type="button" class="btn ghost" data-ws="home">메인으로</button><button type="button" class="btn ws-go" data-ws="send">샌디에게 보내기 ▶</button>'
+      : '<button type="button" class="btn ghost" data-ws="home">메인으로</button><button type="button" class="btn ws-go" data-ws="play">지도에서 이어하기 ▶</button>';
+  }
+  function charCoin() { return '<svg viewBox="0 0 40 40"><circle cx="20" cy="21" r="16" fill="#e09a00"/><circle cx="20" cy="19" r="16" fill="#ffd23f" stroke="#b87300" stroke-width="2"/><circle cx="15" cy="17" r="2.2" fill="#5a3500"/><circle cx="25" cy="17" r="2.2" fill="#5a3500"/><path d="M15 23 q5 4 10 0" stroke="#5a3500" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="11" cy="22" rx="2.6" ry="1.6" fill="#ff8f8f" opacity=".6"/><ellipse cx="29" cy="22" rx="2.6" ry="1.6" fill="#ff8f8f" opacity=".6"/></svg>'; }
+  $('wsModal').addEventListener('click', e => {
+    const b = e.target.closest('[data-ws]'); if (!b || !wsState) return;
+    const act = b.dataset.ws, sh = wsState.sheet;
+    if (act === 'load') {
+      wsState.step = 'scoring'; wsState.n = 0; drawWS();
+      const tick = () => { if (!wsState || wsState.step !== 'scoring') return; wsState.n++; drawWS();
+        try { tone(wsState.n - 1 < sh.total && sh.marks[wsState.n - 1] ? [880] : [220], 0.05, 'triangle', 0.05); } catch (_) {}
+        if (wsState.n < sh.total) setTimeout(tick, 90);
+        else setTimeout(() => { const rw = wsReward(sh); M.coins = (M.coins || 0) + rw.coins; M.items.hint = (M.items.hint || 0) + rw.hint; M.ws[wsState.key] = { at: Date.now(), correct: sh.correct, total: sh.total }; saveM(); wsState.step = 'reward'; drawWS(); try { tone([523, 659, 784, 1047], 0.08, 'triangle', 0.07); } catch (_) {} const f = $('wsBtns').querySelector('.ws-go'); if (f) f.focus({ preventScroll: true }); }, 350); };
+      setTimeout(tick, 250);
+    } else if (act === 'send') {
+      const P = prog(wsState.key);
+      sh.wrong.forEach(w => { if (!P.wrong.some(([a, c]) => a === w.src[0] && c === w.src[1])) P.wrong.push(w.src); });
+      saveM(); wsState.step = 'sent'; drawWS(); const f = $('wsBtns').querySelector('.ws-go'); if (f) f.focus({ preventScroll: true });
+    } else if (act === 'home') { wsState = null; openHome(); }
+    else if (act === 'play') { wsState = null; openMap(); }
+  });
+  $('wsClose').addEventListener('click', () => { wsState = null; openHome(); });
+  $('homeChap').addEventListener('click', e => { if (e.target.closest('#wsOpen')) openWS(); });
   // 메인(타이틀) 화면
   // 챕터(학년) → 단원별 진행 현황
   const piecesOf = key => { const P = M.prog[key]; return P ? P.st.filter(v => v >= 3).length : 0; };
@@ -2995,7 +3106,7 @@ body.story-on { overflow: hidden; }
     const units = unitsOf(M.sel.gs).map((nm, u) => {
       const k = ukey(M.sel.gs, u), ok = hasContent(k), pc = piecesOf(k);
       return `<button type="button" class="chap-u${u === M.sel.u ? ' on' : ''}${ok ? '' : ' wait'}" data-unit="${u}" aria-pressed="${u === M.sel.u}" title="${esc(nm)}">
-        <span class="cu-n">${u + 1}</span><span class="cu-nm">${esc(nm)}</span>
+        <span class="cu-n">${u + 1}</span><span class="cu-nm">${esc(nm)}</span>${(M.ws || {})[k] ? '<span class="cu-ws" title="연산 학습지 연동 완료">학습지 ✓</span>' : ''}
         <span class="cu-p">${ok ? `<span class="cu-dots" aria-label="조각 ${pc}/${NSTG}">${GUARD.map((_, i) => `<i class="${i < pc ? 'got' : ''}"></i>`).join('')}</span>` : '준비 중'}</span></button>`;
     }).join('');
     return `<div class="cb-top">
@@ -3003,6 +3114,7 @@ body.story-on { overflow: hidden; }
         <label class="sel chap-gsel"><span class="vh">학년 선택</span><select id="chapGrade">${[1, 2, 3, 4, 5, 6].map(x => `<option value="${x}"${x === g ? ' selected' : ''}>${x}학년</option>`).join('')}</select></label>
         <div class="chap-sem">${['1', '2'].map(sm => `<button type="button" data-sem="${sm}" class="${sm === sem ? 'on' : ''}">${sm}학기</button>`).join('')}</div>
         <span class="cb-pct"><span class="cg-bar"><i style="width:${pct || 0}%"></i></span><em>${pct == null ? '준비 중' : pct === 100 ? '완료 ★' : `${g}학년 ${pct}%`}</em></span>
+        <button type="button" class="ws-open" id="wsOpen"${hasContent(ck) ? '' : ' disabled'}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15 2v5h5M9 12h8M9 16h6" stroke="currentColor" stroke-width="2" fill="none"/></svg>${(M.ws || {})[ck] ? '학습지 연동 ✓' : '연산 학습지 불러오기'}</button>
       </div>
       <div class="chap-units">${units}</div>`;
   }
