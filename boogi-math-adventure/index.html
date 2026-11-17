@@ -408,6 +408,20 @@ body.story-on { overflow: hidden; }
 .qc-presets { display: flex; flex-wrap: wrap; gap: 6px; }
 .qc-presets button { border: 2px solid #dfe4ea; background: #fff; border-radius: 999px; padding: 4px 12px; font-family: var(--display); color: var(--deep); cursor: pointer; }
 .qc-presets button.on { border-color: #f2b705; background: #fff3c4; }
+.tag.ta { background: #ffe1d2; color: #c2410c; font-variant-numeric: tabular-nums; }
+.skipq { border-color: #8b95a3; background: #f1f3f6; color: #4a5563; margin-right: auto; }
+.qz-pop { display: flex; align-items: center; gap: 12px; }
+.qz-roki { flex: none; width: 84px; height: 84px; border-radius: 20px; background: #c9c8ff; display: grid; place-items: center; animation: hopS .5s ease-in-out infinite alternate; }
+.qz-roki svg { width: 74px; height: 74px; }
+.sum-lv { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: linear-gradient(90deg, #fff3c4, #fffaf0); border: 2px solid #f3d27a; }
+.lv-badge { flex: none; width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffe27a, #f2b705); border: 3px solid #b07800; display: grid; place-items: center; font-family: var(--display); font-size: 1.7rem; color: #5a3500; line-height: 1; box-shadow: 0 3px 0 #b07800; }
+.lv-badge small { font-size: .7rem; display: block; margin-bottom: -18px; }
+.lv-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.lv-tx b { font-family: var(--display); font-weight: 400; font-size: 1.3rem; color: #8a5a00; }
+.lv-tx small { color: #6b5a2a; font-size: .85rem; }
+.lv-tx small b { font-family: inherit; font-size: inherit; font-weight: 700; color: #c2410c; }
+.lv-bar { height: 10px; border-radius: 5px; background: #fff; border: 1px solid #f3d27a; overflow: hidden; }
+.lv-bar i { display: block; height: 100%; background: linear-gradient(90deg, #ffc53d, #ff8a3d); border-radius: 5px; }
 .set-sec { margin: 6px 0 0; font-family: var(--display); font-weight: 400; font-size: 1.2rem; color: var(--deep); }
 .set-desc { margin: -6px 0 0; font-size: .85rem; color: var(--muted); line-height: 1.5; }
 .seg { display: inline-flex; border: 2px solid var(--deep); border-radius: 999px; overflow: hidden; flex: none; }
@@ -689,7 +703,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   </div>
   <div class="sf-box home-box">
     <div class="home-chap" id="homeChap" role="group" aria-label="챕터 진행 현황"></div>
-    <div class="home-acts"><button type="button" class="btn ghost" id="homeStory">이야기 보기</button><button type="button" class="btn home-start" id="homeStart">모험 시작 ▶</button><button type="button" class="btn ghost" id="homeShop">코인 상점</button></div>
+    <div class="home-acts"><button type="button" class="btn ghost" id="sumOpen2"><span aria-hidden="true">⭐</span> 모험 요약</button><button type="button" class="btn home-start" id="homeStart">모험 시작 ▶</button><button type="button" class="btn ghost" id="homeShop">코인 상점</button></div>
   </div>
 </div>
 
@@ -703,6 +717,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 <div class="modal toplayer" id="sumModal" role="dialog" aria-modal="true" aria-labelledby="sumTitle" hidden>
   <div class="card sum-card">
     <div class="tagrow"><h2 id="sumTitle" class="sum-h"><span aria-hidden="true">⭐</span> 모험 요약</h2><button type="button" class="xbtn" id="sumClose">닫기 ✕</button></div>
+    <div class="sum-lv" id="sumLv"></div>
     <div class="sum-grid" id="sumGrid"></div>
     <h3 class="sum-sub"><span aria-hidden="true">📅</span> 이번 주 출석 도장 <small id="sumWeek"></small></h3>
     <div class="stamps" id="sumStamps"></div>
@@ -818,12 +833,12 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="modal" id="qModal" role="dialog" aria-modal="true" aria-labelledby="qText" hidden>
   <div class="card">
-    <div class="tagrow"><span class="tag" id="qNum"></span><span class="tag" id="qUnit"></span><span class="tag twin" id="qTwin" hidden>비슷한 문제</span><button type="button" class="ctlbtn mini" data-act="quit">그만하기</button></div>
+    <div class="tagrow"><span class="tag" id="qNum"></span><span class="tag" id="qUnit"></span><span class="tag twin" id="qTwin" hidden>비슷한 문제</span><span class="tag ta" id="qTA" hidden></span><button type="button" class="ctlbtn mini" data-act="quit">그만하기</button></div>
     <h2 id="qText"></h2>
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 뽑기</button></div>
+    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip">모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 뽑기</button></div>
     <div class="hintroll" id="hintRoll" hidden aria-live="polite"></div>
     <div class="calc" id="calcPad" hidden>
       <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
@@ -841,7 +856,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 <div class="modal" id="overModal" role="dialog" aria-modal="true" aria-labelledby="overTitle" hidden>
   <div class="card">
     <h2 id="overTitle">하트를 모두 썼어요</h2>
-    <p class="lead">마지막으로 연 문제 문에서 다시 출발해요. 이미 푼 문제는 그대로 열려 있어요.</p>
+    <p class="lead" id="overLead">마지막으로 연 문제 문에서 다시 출발해요. 이미 푼 문제는 그대로 열려 있어요.</p>
     <div class="btnrow"><button type="button" class="btn ghost" data-act="quit" data-now="1">맵으로</button><button type="button" class="btn" id="retryBtn">다시 도전</button></div>
   </div>
 </div>
@@ -1061,7 +1076,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   let solids = [], springs = [], pops = [];
   let gates, coins, platforms, enemies, player, state, stats, keys, camX, checkpointX, toastTimer, current;
   let endBanner = '정복 완료!', endSub = '수학 탐험가 부기, 메달 획득!';
-  let speedMode = false, clueMode = false, qTimerId = null, runCalc = false;
+  let speedMode = false, clueMode = false, qTimerId = null, runCalc = false, timeAtk = false, overReason = 'heart', surprise = null, qzCtx = 'map';
   let runMode = 'normal', taTime = 0, segStart = 0, taSplits = [];
 
   function buildLevel() {
@@ -1173,6 +1188,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     try { const h = curHero(); endSub = `수학 탐험가 ${h.name}, 메달 획득!`; canvas.setAttribute('aria-label', `${h.name}가 달리는 수학 모험 게임 화면`); } catch (_) {}
     checkpointX = 120;
     taTime = 0; segStart = 0; taSplits = [];
+    stats.taLeft = timeAtk ? taLimit() : 0;
+    // 로키의 돌발 퀴즈: 판마다 70% 확률로, 출발 12~35초 사이 아무 때나 한 번 나타나요
+    surprise = Math.random() < 0.7 ? { at: 12 + Math.random() * 23, done: false } : null;
     state = 'start';
   }
 
@@ -1227,7 +1245,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const item = current.twin ? set.twin : set.main;
     $('qNum').textContent = '문제 ' + (current.gate.i + 1) + ' / ' + TOTAL;
     $('qUnit').textContent = set.unit;
-    $('qTwin').hidden = !current.twin;
+    $('qTwin').hidden = !current.twin; $('qTA').hidden = !timeAtk;
     const qh = fmt(item.q.replace(/\{\{/g, '⟦').replace(/\}\}/g, '⟧'));
     $('qText').innerHTML = qh.replace(/⟦/g, clueMode ? '<u class="clue">' : '').replace(/⟧/g, clueMode ? '</u>' : '');
     $('clueNote').hidden = !(clueMode && item.q.includes('{{'));
@@ -1272,7 +1290,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     btns[item.a].classList.add('right');
     if (idx === item.a) {
       if (current.attempts === 0) stats.first++;
-      M.log.solved++; if (current.attempts === 0) M.log.first++;
+      { const lv0 = levelInfo(M.log.solved).L; M.log.solved++; if (current.attempts === 0) M.log.first++; const lv = levelInfo(M.log.solved); if (lv.L > lv0) setTimeout(() => { showToast(`레벨 업! Lv.${lv.L} ${lv.title}`); try { tone([523, 659, 784, 1047, 1319], 0.08, 'triangle', 0.08); } catch (_) {} }, 700); }
       stats.coins += 3;
       current.gate.solved = true;
       onGateSolved(current.gate.i);
@@ -1293,6 +1311,18 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
 
   $('twinBtn').addEventListener('click', () => { current.twin = !current.twin; renderQuestion(); });
+  // 모르는 문제 넘어가기: 문은 열리지만 '한 번에 맞히기' 별은 놓치고, 5단계 샌디 기지에 쌍둥이 문제로 다시 나와요
+  $('qSkip').addEventListener('click', () => {
+    if (state !== 'question' || !current || current.erasing > 0) return;
+    const set = QUESTIONS[current.gate.i];
+    clearInterval(qTimerId);
+    if (current.attempts === 0 && !current.twin) recordWrong(set.src);
+    stats.retries++; current.gate.solved = true; onGateSolved(current.gate.i); checkpointX = current.gate.x + 80;
+    if (!stats.wrongUnits.includes(set.unit)) stats.wrongUnits.push(set.unit);
+    try { tone([392, 330], 0.06, 'triangle', 0.05); } catch (_) {}
+    if (pick.i === NSTG - 1 && gates.every(g => g.solved)) { state = 'finishing'; setTimeout(() => { hideModals(); finish(); }, 300); return; }
+    hideModals(); state = 'play'; showToast('넘어갔어요! 샌디 기지에서 다시 만나요');
+  });
   $('startBtn').addEventListener('click', () => {
     if (useHeart && M.items.heart > 0) { M.items.heart--; stats.hearts = diffCfg().hearts + 1; }
     if (useShield && M.items.shield > 0) { M.items.shield--; stats.shield = true; }
@@ -1301,7 +1331,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     useHeart = useShield = useCalc = false;
     hideModals(); state = 'play'; canvas.focus && canvas.focus();
   });
-  $('retryBtn').addEventListener('click', () => { stats.hearts = diffCfg().hearts; respawn(); hideModals(); state = 'play'; });
+  $('retryBtn').addEventListener('click', () => { if (overReason === 'time') { resetAll(); hideModals(); state = 'play'; showToast('타임어택 다시 출발!'); return; } stats.hearts = diffCfg().hearts; respawn(); hideModals(); state = 'play'; });
   $('againBtn').addEventListener('click', () => { resetAll(); hideModals(); state = 'play'; });
   $('skipBtn').addEventListener('click', () => { if (state === 'ending') showResults(); });
   $('doneClose').addEventListener('click', () => { hideModals(); $('reopenResult').focus({ preventScroll: true }); });
@@ -1316,6 +1346,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     toastTimer = setTimeout(() => { t.hidden = true; }, 1300);
   }
 
+  function showOver(why) {
+    overReason = why; state = 'over'; clearInterval(qTimerId);
+    $('overTitle').textContent = why === 'time' ? '타임어택 시간이 다 됐어요!' : '하트를 모두 썼어요';
+    $('overLead').textContent = why === 'time' ? `제한 시간 안에 깃발까지 가지 못했어요. 처음부터 다시 도전해 볼까요? (문제 ${QUESTIONS.length}개 · ${fmtTime(taLimit())})` : '마지막으로 연 문제 문에서 다시 출발해요. 이미 푼 문제는 그대로 열려 있어요.';
+    showModal('overModal'); $('retryBtn').focus({ preventScroll: true });
+  }
+  // 2단계 타임어택: 제한 시간 = 문항 수 × 문항당 시간(난이도별)
+  const taPerQ = () => { try { return { easy: 25, normal: 18, hard: 12 }[M.set.diff] || 18; } catch (_) { return 18; } };
+  const taLimit = () => QUESTIONS.length * taPerQ();
   function respawn() {
     player.x = checkpointX; player.y = GROUND - 120; player.vx = 0; player.vy = 0; player.inv = 1.2;
   }
@@ -1327,7 +1366,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     player.inv = 1.5;
     player.vy = -420;
     player.vx = dir * 260;
-    if (stats.hearts <= 0) { state = 'over'; showModal('overModal'); $('retryBtn').focus({ preventScroll: true }); }
+    if (stats.hearts <= 0) showOver('heart');
   }
 
   function finish() {
@@ -1438,7 +1477,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     for (const sp of springs) if (sp.sq > 0) sp.sq = Math.max(0, sp.sq - dt);
     for (const o of pops) { o.x += (o.vx || 0) * dt; o.y += o.vy * dt; o.vy += (o.g == null ? 900 : o.g) * dt; o.life -= dt; }
     pops = pops.filter(o => o.life > 0);
-    if (p.y > H + 80) { stats.hearts--; stats.hits++; if (stats.hearts <= 0) { state = 'over'; showModal('overModal'); $('retryBtn').focus({ preventScroll: true }); } respawn(); }
+    if (p.y > H + 80) { stats.hearts--; stats.hits++; if (stats.hearts <= 0) showOver('heart'); respawn(); }
     if (p.inv > 0) p.inv -= dt;
     if (p.onGround && Math.abs(p.vx) > 20) p.step += dt * 12;
 
@@ -1923,6 +1962,12 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       ctx.fillStyle = g.solved ? '#ffc53d' : '#003a5c';
       ctx.beginPath(); ctx.arc(px + pw * (g.x / FLAG_X), 37, 4, 0, Math.PI * 2); ctx.fill();
     }
+    if (timeAtk) {
+      const L = stats.taLeft, warn = L <= 10, blink = warn && Math.floor(clock * 4) % 2 === 0;
+      ctx.fillStyle = blink ? '#ffb4b4' : warn ? '#e5484d' : '#ff7a3d'; rr(W / 2 - 110, 68, 220, 40, 20); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('⏱ 타임어택 ' + fmtTime(Math.ceil(L)), W / 2, 97);
+    }
     if (runMode === 'ta') {
       ctx.fillStyle = '#e5484d'; rr(W / 2 - 86, 68, 172, 38, 19); ctx.fill();
       ctx.fillStyle = '#fff'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'center';
@@ -1956,6 +2001,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       if (stats.freeze > 0) stats.freeze = Math.max(0, stats.freeze - dt);
       else { stats.time += dt; if (runMode === 'ta') taTime += dt; }
       M.log.sec += dt; if ((logSaveT += dt) > 5) { logSaveT = 0; saveM(); }
+      if (timeAtk && stats.freeze <= 0 && stats.taLeft > 0) { stats.taLeft = Math.max(0, stats.taLeft - dt); if (stats.taLeft <= 0) showOver('time'); }
+      if (timeAtk && !$('qModal').hidden) { const tt = `⏱ ${fmtTime(Math.ceil(stats.taLeft))}`; if ($('qTA').textContent !== tt) $('qTA').textContent = tt; }
+    }
+    if (state === 'play' && surprise && !surprise.done && stats.time >= surprise.at && !gates.every(g => g.solved)) { surprise.done = true; startSurprise();
     }
     const fz = (state === 'play' || state === 'question') && (M.items.freeze || 0) > 0 && stats.freeze <= 0;
     if ($('freezeBtn').hidden === fz) $('freezeBtn').hidden = !fz;
@@ -2756,6 +2805,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   M.set = Object.assign({ qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80 }, M.set || {});
   M.log = Object.assign({ solved: 0, first: 0, sec: 0, days: [] }, M.log || {});
   const qCount = () => Math.max(3, Math.min(20, +M.set.qn || 5));
+  // 레벨: 푼 문제 수로 올라가요. Lv.1→2는 10문제, 그다음부터 5문제씩 더 필요해요
+  const TITLES = [[1, '새싹 탐험가'], [3, '꼬마 탐험가'], [5, '숲속 탐험가'], [8, '용감한 탐험가'], [12, '시계탑 수리공'], [16, '매스 랜드 영웅'], [20, '전설의 탐험가']];
+  function levelInfo(n) { let L = 1, acc = 0, need = 10; while (n >= acc + need) { acc += need; L++; need = 10 + 5 * (L - 1); } const t = TITLES.filter(([l]) => l <= L).pop()[1]; return { L, into: n - acc, need, title: t }; }
   // 난이도·게임 속도
   const DIFF = { easy: { label: '쉬움', hearts: 5, foe: 0.7, erase: true, desc: '틀린 보기 1개를 미리 지워 줘요 · 하트 5개 · 헷갈이가 느리게 움직여요' },
     normal: { label: '보통', hearts: 3, foe: 1, erase: false, desc: '하트 3개 · 기본 속도의 헷갈이' },
@@ -3054,7 +3106,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
   function renderBar() {
     const gs = M.sel.gs, us = unitsOf(gs);
-    $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="sumOpen"><span aria-hidden="true">⭐</span>모험 요약</button><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
+    $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="storyOpen"><span aria-hidden="true">📖</span>이야기 보기</button><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
   }
   // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
   const QUEST = {
@@ -3148,7 +3200,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const G = GUARD[i];
     pick = { gs: M.sel.gs, u: M.sel.u, key, i };
     runMode = 'normal';
-    speedMode = false; clueMode = i === 2;
+    speedMode = false; clueMode = i === 2; timeAtk = i === 1;
     QUESTIONS = stageQuestions(key, i);
     $('startStage').textContent = `${gsLabel(pick.gs)} · ${unitName(pick.gs, pick.u)}`;
     $('startMode').textContent = `${i + 1}단계 ${G.step}`;
@@ -3164,6 +3216,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const n = QUESTIONS.length;
     if (i === 3) return `문제는 모두 ${n}개야. ${n - 1}개 이상 한 번에 맞히면 별 3개, 그러면 나침반 조각을 줄게!`;
     if (i === 4) return `쌍둥이 문제와 도전 문제까지 ${n}개! 별 3개로 통과하면 마지막 조각을 얻을 수 있어.`;
+    if (i === 1) return `여긴 타임어택 공방이야! 문제 ${n}개를 ${fmtTime(taLimit())} 안에 풀고 깃발까지 와야 해. 시간이 다 되면 처음부터야. 별 3개 조건도 잊지 마!`;
     return '별 3개 조건은 세 가지야. ① 깃발까지 완주 ② 문제를 한 번에 모두 맞히기 ③ 하트 지키기! 별 3개면 나침반 조각이야.';
   }
   function openVN(i) {
@@ -3217,17 +3270,18 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
   function quizDraw() {
     if (!qz.cur) qz.cur = quizQ();
-    $('qzBody').innerHTML = `<div class="qtimer"><i id="qzBar" style="width:${(qz.left / 30 * 100).toFixed(1)}%"></i></div>
+    $('qzBody').innerHTML = `<div class="qtimer"><i id="qzBar" style="width:${(qz.left / qz.dur * 100).toFixed(1)}%"></i></div>
       <p class="qzscore">맞힌 문제 <b>${qz.ok}</b> · 남은 시간 <b id="qzLeft">${Math.ceil(qz.left)}</b>초</p>
       <h2 class="qzq">${qz.cur.q} = ?</h2><div class="choices">${qz.cur.opts.map(o => `<button type="button" data-qz="${o}">${o}</button>`).join('')}</div>`;
   }
   function quizStart() {
-    qz = { left: 30, ok: 0, cur: null, t0: performance.now() };
+    const dur = qzCtx === 'game' ? 15 : 30;
+    qz = { left: dur, dur, ok: 0, cur: null, t0: performance.now() };
     quizDraw();
     clearInterval(qz.id);
     qz.id = setInterval(() => {
-      qz.left = Math.max(0, 30 - (performance.now() - qz.t0) / 1000);
-      const b = $('qzBar'), l = $('qzLeft'); if (b) b.style.width = (qz.left / 30 * 100).toFixed(1) + '%'; if (l) l.textContent = Math.ceil(qz.left);
+      qz.left = Math.max(0, qz.dur - (performance.now() - qz.t0) / 1000);
+      const b = $('qzBar'), l = $('qzLeft'); if (b) b.style.width = (qz.left / qz.dur * 100).toFixed(1) + '%'; if (l) l.textContent = Math.ceil(qz.left);
       if (qz.left <= 0) quizEnd();
     }, 100);
     const f = $('qzBody').querySelector('button'); if (f) f.focus({ preventScroll: true });
@@ -3236,18 +3290,31 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     clearInterval(qz.id);
     const coins = qz.ok * 2, best = qz.ok > (M.quizBest || 0);
     M.coins = (M.coins || 0) + coins; if (best) M.quizBest = qz.ok; saveM();
-    $('qzBody').innerHTML = `<p class="bigstars" style="color:#1f2a40">${qz.ok}문제!</p><p class="lead">30초 동안 ${qz.ok}문제를 맞혔어요. 코인 <b>+${coins}</b>${best ? ' · 내 최고 기록!' : ` · 내 최고 기록 ${M.quizBest}문제`}</p>
-      <div class="btnrow"><button type="button" class="btn ghost" id="qzClose2">지도로</button><button type="button" class="btn" id="qzAgain">다시 도전</button></div>`;
-    $('qzAgain').focus({ preventScroll: true });
+    if (qzCtx === 'game') { try { addCoins(coins); } catch (_) {} M.coins -= coins; }
+    $('qzBody').innerHTML = `<p class="bigstars" style="color:#1f2a40">${qz.ok}문제!</p><p class="lead">${qz.dur}초 동안 ${qz.ok}문제를 맞혔어요. 코인 <b>+${coins}</b>${best ? ' · 내 최고 기록!' : ` · 내 최고 기록 ${M.quizBest}문제`}</p>
+      <div class="btnrow">${qzCtx === 'game' ? '<button type="button" class="btn" id="qzBack">모험으로 돌아가기 ▶</button>' : '<button type="button" class="btn ghost" id="qzClose2">지도로</button><button type="button" class="btn" id="qzAgain">다시 도전</button>'}</div>`;
+    const f = $('qzBody').querySelector('.btn:last-child'); if (f) f.focus({ preventScroll: true });
     qz = null;
   }
+  // 게임 중 갑자기 나타나는 로키의 돌발 퀴즈 (15초)
+  function startSurprise() {
+    qzCtx = 'game'; state = 'quiz'; keys.left = keys.right = keys.jump = false;
+    $('qzTitle').textContent = '⚡ 앗! 로키의 돌발 퀴즈!';
+    $('qzBody').innerHTML = `<div class="qz-pop"><span class="qz-roki">${charSVG(4)}</span><p class="lead"><b>로키</b>가 길을 막았어요! <b>15초</b> 동안 구구단·덧셈을 최대한 많이 풀어 봐요. 정답마다 코인 2개!</p></div>
+      <div class="btnrow"><button type="button" class="btn ghost" id="qzPass">다음에 할게요</button><button type="button" class="btn" id="qzGo">도전!</button></div>`;
+    showModal('quizModal'); try { tone([880, 660, 880, 1175], 0.07, 'square', 0.06); } catch (_) {}
+    $('qzGo').focus({ preventScroll: true });
+  }
+  function backToGame() { if (qz) clearInterval(qz.id); qz = null; qzCtx = 'map'; $('qzTitle').textContent = '⚡ 로키의 돌발 퀴즈'; hideModals(); state = 'play'; showToast('다시 출발!'); }
   function openQuiz() {
+    qzCtx = 'map'; $('qzTitle').textContent = '⚡ 로키의 돌발 퀴즈';
     $('qzBody').innerHTML = `<p class="lead">구구단·덧셈 같은 <b>단순 계산</b>을 30초 동안 최대한 많이 풀어요. 정답마다 코인 2개! (메인 탐험에는 시간 제한이 없어요)</p>
       <div class="btnrow"><button type="button" class="btn" id="qzGo">시작!</button></div>`;
     showModal('quizModal'); $('qzGo').focus({ preventScroll: true });
   }
   $('quizModal').addEventListener('click', e => {
     if (e.target.closest('#qzGo') || e.target.closest('#qzAgain')) { quizStart(); return; }
+    if (qzCtx === 'game' && (e.target.closest('#qzBack') || e.target.closest('#qzPass') || e.target.closest('#qzClose'))) { backToGame(); return; }
     if (e.target.closest('#qzClose') || e.target.closest('#qzClose2')) { if (qz) clearInterval(qz.id); qz = null; render(); showModal('mapModal'); return; }
     const b = e.target.closest('[data-qz]'); if (!b || !qz) return;
     if (Number(b.dataset.qz) === qz.cur.a) { qz.ok++; qz.cur = null; quizDraw(); const f = $('qzBody').querySelector('[data-qz]'); if (f) f.focus({ preventScroll: true }); }
@@ -3454,7 +3521,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       sky.innerHTML = '<span class="hsun"></span>' + C.map(([t, w, d, s, o]) => `<span class="hcloud" style="--t:${t}%;--w:${w}vmin;--d:${d}s;--s:${s}s;--o:${o};--x:${Math.round(-s * 0.8)}vw">${cloud}</span>`).join('') + '<span class="hhill a"></span><span class="hhill b"></span>';
     }
     const pf = $('homeProfile');
-    if (pf) pf.innerHTML = `<span class="pf-av">${charSVG(PROFILE.art)}</span><span class="pf-tx"><span class="pf-lv">Lv.${PROFILE.level}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
+    if (pf) pf.innerHTML = `<span class="pf-av">${charSVG(PROFILE.art)}</span><span class="pf-tx"><span class="pf-lv">Lv.${levelInfo(M.log.solved).L}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
   }
   function villageSVG(gs) {
     const names = unitsOf(gs), pcs = names.map((_, u) => piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
@@ -3890,6 +3957,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const L = M.log, acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, mins = Math.floor(L.sec / 60), st = streaks();
     const time = mins >= 60 ? `${Math.floor(mins / 60)}<small>시간</small> ${mins % 60}<small>분</small>` : `${mins}<small>분</small>`;
     const tile = (ic, lb, v, col, extra = '') => `<div class="sum-tile"><span class="ic" aria-hidden="true">${ic}</span><span class="tx"><span class="lb">${lb}</span><span class="v" style="color:${col}">${v}</span>${extra}</span></div>`;
+    const lv = levelInfo(L.solved), nx = TITLES.find(([l]) => l > lv.L);
+    $('sumLv').innerHTML = `<span class="lv-badge"><small>Lv.</small>${lv.L}</span><div class="lv-tx"><b>${lv.title}</b><span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span>
+      <small>다음 레벨까지 <b>${lv.need - lv.into}문제</b> (${lv.into}/${lv.need})${nx ? ` · Lv.${nx[0]}이 되면 ‘${nx[1]}’` : ''}</small></div>`;
     $('sumGrid').innerHTML = tile('📖', '총 문제 수', `${L.solved}<small>문제</small>`, '#6e56cf')
       + tile('🎯', '정답률', `${acc}<small>%</small>`, '#218358', `<span class="bar"><i style="width:${acc}%"></i></span>`)
       + tile('⏱️', '플레이 시간', time, '#2f6fdb')
@@ -3920,8 +3990,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
   function setQn(v) { M.set.qn = Math.max(3, Math.min(20, v)); saveM(); drawSettings(); }
   function openSettings() { drawSettings(); $('setModal').hidden = false; $('setClose').focus({ preventScroll: true }); }
-  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#sumOpen')) openSummary(); else if (e.target.closest('#setOpen')) openSettings(); });
-  $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('sumOpen'); if (b) b.focus({ preventScroll: true }); });
+  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#storyOpen')) { storyBack = 'home'; openStory(); } else if (e.target.closest('#setOpen')) openSettings(); });
+  $('sumOpen2').addEventListener('click', openSummary);
+  $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('sumOpen2'); if (b) b.focus({ preventScroll: true }); });
   $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
   $('setModal').addEventListener('click', e => {
     const q = e.target.closest('[data-qc]'); if (q && !q.disabled) { setQn(qCount() + +q.dataset.qc); return; }
@@ -3942,7 +4013,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     m.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); m.hidden = true; } });
   });
   function openHome() {
-    markAttend();
+    markAttend(); timeAtk = false; surprise = null;
     state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
     storyBack = 'map';
     renderHome(); showModal('homeModal');
@@ -3956,10 +4027,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const pickHouse = u => { M.sel.u = u; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); if (hasContent(ukey(M.sel.gs, u))) { openMap(); return; } const h = $('homeMap').querySelector(`[data-house="${u}"]`); if (h) h.focus({ preventScroll: true }); };
   $('homeMap').addEventListener('click', e => { const h = e.target.closest('[data-house]'); if (h) pickHouse(+h.dataset.house); });
   $('homeMap').addEventListener('keydown', e => { const h = e.target.closest('[data-house]'); if (h && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickHouse(+h.dataset.house); } });
-  $('homeStory').addEventListener('click', () => { storyBack = 'home'; openStory(); });
   $('homeShop').addEventListener('click', () => openShop('homeModal'));
   function openMap() {
-    runCalc = false;
+    runCalc = false; timeAtk = false; surprise = null;
     state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
     $('subline').textContent = '숫자 시계탑의 황금 나침반 조각을 되찾는 모험';
     render();
