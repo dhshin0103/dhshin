@@ -196,6 +196,14 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .calc-keys .fn { background: #e3e8ee; grid-column: span 2; }
 .calc-keys button:focus-visible, .calc-x:focus-visible { outline: 3px solid #ffd34d; outline-offset: 2px; }
 .choices button.gone { opacity: 0.3; text-decoration: line-through; }
+.choices.erasing button:not(:disabled):not(.gone) { border-style: dashed; border-color: #ff8fab; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cg transform='rotate(-35 16 16)'%3E%3Crect x='6' y='10' width='22' height='12' rx='3' fill='%23ff8fab' stroke='%23333' stroke-width='1.5'/%3E%3Crect x='6' y='10' width='8' height='12' rx='3' fill='%234f8de0' stroke='%23333' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E") 4 28, pointer; animation: erwig 1.2s ease-in-out infinite; }
+@keyframes erwig { 50% { transform: rotate(-.8deg); } }
+.choices button.scrub { position: relative; overflow: hidden; }
+.choices button.scrub::after { content: '🧽'; position: absolute; top: 50%; font-size: 1.8rem; transform: translateY(-50%); animation: scrub .42s linear; }
+@keyframes scrub { 0% { left: -10%; } 25% { left: 70%; } 50% { left: 10%; } 75% { left: 80%; } 100% { left: 110%; } }
+.choices button.nope { animation: nope .4s ease-in-out; }
+@keyframes nope { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.hintroll.erase { background: #ffe3ec; border-color: #e0607e; color: #8a2a44; }
 .ctlbtn.freeze { color: #0077b3; }
 .selrow { display: flex; flex-wrap: wrap; gap: 8px; }
 .sel select { font-family: var(--display); font-size: 1.05rem; color: var(--deep); background: #fff; border: 2px solid var(--deep); border-radius: 12px; padding: 6px 10px; max-width: 100%; cursor: pointer; }
@@ -1097,7 +1105,7 @@ body.story-on { overflow: hidden; }
     clearInterval(qTimerId); $('qTimer').hidden = !speedMode; $('qTimerBar').style.width = '100%';
     $('qExplain').hidden = true;
     const box = $('qChoices');
-    box.innerHTML = '';
+    box.innerHTML = ''; box.classList.remove('erasing'); current.erasing = 0;
     item.c.forEach((txt, idx) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -2698,8 +2706,8 @@ body.story-on { overflow: hidden; }
   }
   // 힌트 뽑기: 이 문제에 쓸 수 있는 힌트 중 하나가 룰렛처럼 랜덤으로 나와요
   const HINTS = [
-    { id: 'erase1', label: '보기 1개 지우기', icon: '✂️', w: 4 },
-    { id: 'erase2', label: '보기 2개 지우기', icon: '🍀', w: 1 },
+    { id: 'erase1', label: '지우개 1번', icon: '🧽', w: 4 },
+    { id: 'erase2', label: '지우개 2번', icon: '🍀', w: 1 },
     { id: 'calc', label: '계산기 등장', icon: '🧮', w: 3 },
     { id: 'clue', label: '단서 밑줄 긋기', icon: '🔍', w: 3 }
   ];
@@ -2713,8 +2721,10 @@ body.story-on { overflow: hidden; }
   function applyHint(h) {
     const set = QUESTIONS[current.gate.i], item = current.twin ? set.twin : set.main;
     if (h.id === 'erase1' || h.id === 'erase2') {
-      const wrong = [...$('qChoices').querySelectorAll('button')].filter((b, i) => i !== item.a && !b.disabled);
-      for (let k = 0; k < (h.id === 'erase2' ? 2 : 1) && wrong.length; k++) { const b = wrong.splice(Math.floor(Math.random() * wrong.length), 1)[0]; b.classList.add('gone'); b.disabled = true; }
+      // 지우개: 아이가 직접 틀린 것 같은 보기를 골라 지워요
+      current.erasing = h.id === 'erase2' ? 2 : 1;
+      $('qChoices').classList.add('erasing');
+      eraseMsg();
     } else if (h.id === 'calc') openCalcPad();
     else if (h.id === 'clue') {
       current.clue = true;
@@ -2722,8 +2732,34 @@ body.story-on { overflow: hidden; }
       $('clueNote').hidden = false;
     }
   }
+  function eraseMsg(t) {
+    const box = $('hintRoll'); box.hidden = false; box.className = 'hintroll done erase';
+    box.innerHTML = t || `<span class="hr-ic">🧽</span><span>틀린 것 같은 보기를 눌러 지워요 (${current.erasing}번)</span>`;
+  }
+  // 지우개 모드일 때 보기를 누르면: 답을 고르는 대신 지우기 (캡처 단계에서 가로채요)
+  $('qChoices').addEventListener('click', e => {
+    if (!current || !(current.erasing > 0)) return;
+    const b = e.target.closest('button'); if (!b || b.disabled || b.classList.contains('gone')) return;
+    e.stopPropagation(); e.preventDefault();
+    const set = QUESTIONS[current.gate.i], item = current.twin ? set.twin : set.main;
+    const idx = [...$('qChoices').querySelectorAll('button')].indexOf(b);
+    if (idx === item.a) {
+      // 정답은 지울 수 없어요: 다시 생각해 보게 해요 (지우개는 그대로)
+      b.classList.remove('nope'); void b.offsetWidth; b.classList.add('nope');
+      eraseMsg(`<span class="hr-ic">🤔</span><span>앗, 이 보기는 지워지지 않아요! 다시 생각해 볼까요?</span>`);
+      try { tone([220, 196], 0.08, 'triangle', 0.06); } catch (_) {}
+      return;
+    }
+    b.classList.add('scrub'); b.disabled = true;
+    try { tone([330, 262], 0.05, 'triangle', 0.05); } catch (_) {}
+    setTimeout(() => { b.classList.remove('scrub'); b.classList.add('gone'); }, 420);
+    current.erasing--;
+    const leftWrong = [...$('qChoices').querySelectorAll('button')].filter((x, i) => i !== item.a && !x.disabled).length;
+    if (current.erasing <= 0 || leftWrong < 1) { current.erasing = 0; $('qChoices').classList.remove('erasing'); eraseMsg(`<span class="hr-ic">✨</span><span>싹싹 지웠어요! 이제 답을 골라 봐요</span>`); setTimeout(() => { if (!(current && current.erasing)) $('hintRoll').hidden = true; }, 1800); }
+    else eraseMsg();
+  }, true);
   $('hintBtn').addEventListener('click', () => {
-    if (state !== 'question' || (M.items.hint || 0) <= 0 || hintRolling) return;
+    if (state !== 'question' || (M.items.hint || 0) <= 0 || hintRolling || current.erasing > 0) return;
     const pool = hintPool();
     if (!pool.length) { showToast('이 문제에서는 더 쓸 힌트가 없어요'); return; }
     let r = Math.random() * pool.reduce((a, h) => a + h.w, 0), pick = pool[0];
@@ -2737,8 +2773,9 @@ body.story-on { overflow: hidden; }
       if (n < total) { show(HINTS[n % HINTS.length]); try { tone([440 + (n % 4) * 110], 0.03, 'square', 0.03); } catch (_) {} setTimeout(spin, 50 + n * 9); return; }
       show(pick); box.className = 'hintroll done'; box.insertAdjacentHTML('afterbegin', '<b>힌트 당첨!</b>');
       try { tone([784, 1047], 0.07, 'triangle', 0.06); } catch (_) {}
-      applyHint(pick); hintRolling = false; updateHintBtn();
-      setTimeout(() => { if (!hintRolling) box.hidden = true; }, 2200);
+      hintRolling = false; updateHintBtn();
+      if (pick.id === 'erase1' || pick.id === 'erase2') setTimeout(() => applyHint(pick), 700);
+      else { applyHint(pick); setTimeout(() => { if (!hintRolling && !(current && current.erasing)) box.hidden = true; }, 2200); }
     };
     spin();
   });
