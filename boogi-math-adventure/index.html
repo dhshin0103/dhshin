@@ -679,7 +679,7 @@ body.story-on { overflow: hidden; }
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn calcbtn" id="calcBtn">계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 쓰기</button></div>
+    <div class="qtools"><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 쓰기</button></div>
     <div class="calc" id="calcPad" hidden>
       <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
       <output class="calc-disp" id="calcDisp" aria-live="polite">0</output>
@@ -916,7 +916,7 @@ body.story-on { overflow: hidden; }
   let solids = [], springs = [], pops = [];
   let gates, coins, platforms, enemies, player, state, stats, keys, camX, checkpointX, toastTimer, current;
   let endBanner = '정복 완료!', endSub = '수학 탐험가 부기, 메달 획득!';
-  let speedMode = false, clueMode = false, qTimerId = null;
+  let speedMode = false, clueMode = false, qTimerId = null, runCalc = false;
   let runMode = 'normal', taTime = 0, segStart = 0, taSplits = [];
 
   function buildLevel() {
@@ -1021,7 +1021,7 @@ body.story-on { overflow: hidden; }
   function resetAll() {
     buildLevel();
     player = { x: 120, y: GROUND - 48, w: 40, h: 48, vx: 0, vy: 0, onGround: true, face: 1, inv: 0, step: 0 };
-    stats = { hearts: 3, coins: 0, first: 0, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false, star: 0 };
+    stats = { hearts: 3, coins: 0, first: 0, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false, star: 0, calc: runCalc };
     keys = { left: false, right: false, jump: false, jumpHeld: false };
     camX = 0;
     try { const h = curHero(); endSub = `수학 탐험가 ${h.name}, 메달 획득!`; canvas.setAttribute('aria-label', `${h.name}가 달리는 수학 모험 게임 화면`); } catch (_) {}
@@ -1147,8 +1147,9 @@ body.story-on { overflow: hidden; }
   $('startBtn').addEventListener('click', () => {
     if (useHeart && M.items.heart > 0) { M.items.heart--; stats.hearts = 4; }
     if (useShield && M.items.shield > 0) { M.items.shield--; stats.shield = true; }
-    if (useHeart || useShield) { saveM(); showToast(useHeart && useShield ? '하트 +1, 보호막 장착!' : useHeart ? '하트 4개로 출발!' : '보호막 장착!'); }
-    useHeart = useShield = false;
+    if (useCalc && (M.items.calc || 0) > 0) { M.items.calc--; runCalc = true; stats.calc = true; }
+    if (useHeart || useShield || useCalc) { saveM(); showToast([useHeart && '하트 +1', useShield && '보호막', useCalc && '계산기'].filter(Boolean).join(', ') + ' 챙겨서 출발!'); }
+    useHeart = useShield = useCalc = false;
     hideModals(); state = 'play'; canvas.focus && canvas.focus();
   });
   $('retryBtn').addEventListener('click', () => { stats.hearts = 3; respawn(); hideModals(); state = 'play'; });
@@ -2572,7 +2573,7 @@ body.story-on { overflow: hidden; }
       icon: '<circle cx="26" cy="22" r="14" fill="#ffd34d"/><rect x="19" y="34" width="14" height="8" rx="2" fill="#9aa4b1"/><rect x="21" y="43" width="10" height="4" rx="2" fill="#7d8794"/><path d="M26 14v10M21 20l5 4 5-4" stroke="#b07a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
     { id: 'freeze', name: '시간 멈추기', price: 40, desc: '진행 시간이 20초 동안 멈춰요. 게임 중 위쪽 버튼으로 써요.',
       icon: '<circle cx="26" cy="27" r="18" fill="#d5efff" stroke="#0090ff" stroke-width="4"/><rect x="19" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="28" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="21" y="3" width="10" height="5" rx="2" fill="#0090ff"/>' },
-    { id: 'calc', name: '계산기', price: 40, desc: '식을 세운 뒤 큰 수 계산을 도와줘요. 적용·서술·실생활 문제에서만 쓸 수 있어요(연산 문제는 직접!).',
+    { id: 'calc', name: '계산기', price: 40, desc: '출발 전에 챙기면 그 판의 적용·서술·실생활 문제에서 꺼내 쓸 수 있어요. 연산 문제는 직접!',
       icon: '<rect x="10" y="4" width="32" height="44" rx="6" fill="#4f8de0"/><rect x="15" y="9" width="22" height="10" rx="2" fill="#dff3ff"/><g fill="#fff"><rect x="15" y="23" width="6" height="6" rx="1.5"/><rect x="23" y="23" width="6" height="6" rx="1.5"/><rect x="31" y="23" width="6" height="6" rx="1.5" fill="#ffd34d"/><rect x="15" y="31" width="6" height="6" rx="1.5"/><rect x="23" y="31" width="6" height="6" rx="1.5"/><rect x="31" y="31" width="6" height="6" rx="1.5" fill="#ffd34d"/><rect x="15" y="39" width="14" height="5" rx="1.5"/><rect x="31" y="39" width="6" height="5" rx="1.5" fill="#ffd34d"/></g>' },
     { id: 'heart', name: '하트 +1', price: 50, desc: '다음 판을 하트 4개로 시작해요. 시작 화면에서 골라요.',
       icon: '<path d="M26 44C12 34 6 26 6 18a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 16-20 26z" fill="#e5484d"/><path d="M26 18v14M19 25h14" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' },
@@ -2606,18 +2607,19 @@ body.story-on { overflow: hidden; }
     else { render(); showModal('mapModal'); }
   }
   // 시작 화면: 이번 판에 쓸 아이템
-  let useHeart = false, useShield = false;
+  let useHeart = false, useShield = false, useCalc = false;
   function renderUseItems() {
-    useHeart = useHeart && M.items.heart > 0; useShield = useShield && M.items.shield > 0;
+    useHeart = useHeart && M.items.heart > 0; useShield = useShield && M.items.shield > 0; useCalc = useCalc && (M.items.calc || 0) > 0;
     $('useItems').innerHTML = `<button type="button" class="useitem" data-use="heart" aria-pressed="${useHeart}" ${M.items.heart ? '' : 'disabled'}>하트 +1 쓰기 (${M.items.heart})</button>
       <button type="button" class="useitem" data-use="shield" aria-pressed="${useShield}" ${M.items.shield ? '' : 'disabled'}>보호막 쓰기 (${M.items.shield})</button>
+      <button type="button" class="useitem" data-use="calc" aria-pressed="${useCalc}" ${M.items.calc ? '' : 'disabled'}>계산기 챙기기 (${M.items.calc || 0})</button>
       <button type="button" class="useitem shopgo" id="startShop">코인 상점</button>
       <span class="note">게임 중에 쓰는 아이템: 힌트 ${M.items.hint}개, 시간 멈추기 ${M.items.freeze}개</span>`;
   }
   $('useItems').addEventListener('click', e => {
     if (e.target.closest('#startShop')) { openShop('startModal'); return; }
     const b = e.target.closest('[data-use]'); if (!b || b.disabled) return;
-    if (b.dataset.use === 'heart') useHeart = !useHeart; else useShield = !useShield;
+    if (b.dataset.use === 'heart') useHeart = !useHeart; else if (b.dataset.use === 'calc') useCalc = !useCalc; else useShield = !useShield;
     renderUseItems();
   });
   // 게임 중: 힌트 · 시간 멈추기
@@ -2625,9 +2627,10 @@ body.story-on { overflow: hidden; }
   const calcOK = () => { const set = QUESTIONS[current.gate.i]; return !!(set && set.src && set.src[0] >= 3); };
   let calcExpr = '', calcDone = false;
   function updateCalcBtn() {
-    const n = M.items.calc || 0, ok = current && calcOK();
-    $('calcBtn').textContent = ok ? `계산기 꺼내기 (${n})` : '계산기 (연산 문제는 직접!)';
-    $('calcBtn').disabled = !ok || n <= 0 || !$('calcPad').hidden || current.calcUsed;
+    const on = !!(stats && stats.calc), ok = current && calcOK();
+    $('calcBtn').hidden = !on;
+    $('calcBtn').textContent = ok ? '계산기 꺼내기' : '계산기 (연산 문제는 직접!)';
+    $('calcBtn').disabled = !ok || !$('calcPad').hidden;
   }
   function calcEval(str) {
     const t = str.match(/\d+(?:\.\d+)?|[+\-×÷]/g); if (!t) return '0';
@@ -2656,11 +2659,10 @@ body.story-on { overflow: hidden; }
     tone([520], 0.03, 'square', 0.03);
   });
   $('calcBtn').addEventListener('click', () => {
-    if (state !== 'question' || !calcOK() || (M.items.calc || 0) <= 0 || current.calcUsed) return;
-    M.items.calc--; saveM(); current.calcUsed = true;
+    if (state !== 'question' || !calcOK() || !stats.calc) return;
     calcExpr = ''; calcDone = false; $('calcDisp').textContent = '0';
     $('calcPad').hidden = false; $('calcPad').classList.remove('pop'); void $('calcPad').offsetWidth; $('calcPad').classList.add('pop');
-    updateCalcBtn(); showToast('계산기를 꺼냈어요! 식은 직접 세워요');
+    updateCalcBtn(); showToast('계산기 등장! 식은 직접 세워요');
     const f = $('calcKeys').querySelector('button'); if (f) f.focus({ preventScroll: true });
   });
   $('calcClose').addEventListener('click', () => { $('calcPad').hidden = true; updateCalcBtn(); });
@@ -2793,7 +2795,7 @@ body.story-on { overflow: hidden; }
     $('taRule').hidden = true;
     $('subline').textContent = `시계탑 ${floorOf(pick.gs)}층 › ${unitName(pick.gs, pick.u)} › ${i + 1}단계 ${G.step} · 문제 문 ${QUESTIONS.length}개`;
     resetAll();
-    useHeart = useShield = false; renderUseItems();
+    useHeart = useShield = useCalc = false; renderUseItems();
     openVN(i);
   }
   // ---------- 풀스크린 이야기 (터치해서 계속) ----------
@@ -2823,7 +2825,8 @@ body.story-on { overflow: hidden; }
     $('vnGo').hidden = !last;
     if (last) {
       $('vnItems').innerHTML = `<button type="button" class="useitem" data-vuse="heart" aria-pressed="${useHeart}" ${M.items.heart ? '' : 'disabled'}>하트 +1 (${M.items.heart})</button>
-        <button type="button" class="useitem" data-vuse="shield" aria-pressed="${useShield}" ${M.items.shield ? '' : 'disabled'}>보호막 (${M.items.shield})</button>`;
+        <button type="button" class="useitem" data-vuse="shield" aria-pressed="${useShield}" ${M.items.shield ? '' : 'disabled'}>보호막 (${M.items.shield})</button>
+        <button type="button" class="useitem" data-vuse="calc" aria-pressed="${useCalc}" ${M.items.calc ? '' : 'disabled'}>계산기 (${M.items.calc || 0})</button>`;
       $('vnStart').focus({ preventScroll: true });
     } else $('vnBox').focus({ preventScroll: true });
   }
@@ -2836,7 +2839,7 @@ body.story-on { overflow: hidden; }
     if (e.target.closest('#vnSkip')) { vnI = vnLines.length - 1; drawVN(); return; }
     if (e.target.closest('#vnStart')) { vnStartGame(); return; }
     if (e.target.closest('#vnBack')) { $('vn').hidden = true; openMap(); return; }
-    const u = e.target.closest('[data-vuse]'); if (u) { if (!u.disabled) { if (u.dataset.vuse === 'heart') useHeart = !useHeart; else useShield = !useShield; renderUseItems(); drawVN(); } return; }
+    const u = e.target.closest('[data-vuse]'); if (u) { if (!u.disabled) { if (u.dataset.vuse === 'heart') useHeart = !useHeart; else if (u.dataset.vuse === 'calc') useCalc = !useCalc; else useShield = !useShield; renderUseItems(); drawVN(); } return; }
     if (e.target.closest('.vn-go')) return;
     vnNext();
   });
@@ -3262,6 +3265,7 @@ body.story-on { overflow: hidden; }
   $('homeStory').addEventListener('click', () => { storyBack = 'home'; openStory(); });
   $('homeShop').addEventListener('click', () => openShop('homeModal'));
   function openMap() {
+    runCalc = false;
     state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
     $('subline').textContent = '숫자 시계탑의 황금 나침반 조각을 되찾는 모험';
     render();
