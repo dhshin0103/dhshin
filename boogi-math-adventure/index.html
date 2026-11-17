@@ -170,6 +170,23 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .qtools { display: flex; justify-content: flex-end; }
 .hintbtn { font-family: var(--display); font-size: 1rem; border: 2px solid #b07a00; background: #fff7c2; color: #8a5a00; border-radius: 999px; padding: 5px 14px; cursor: pointer; }
 .hintbtn:disabled { opacity: 0.45; cursor: not-allowed; }
+.qtools { gap: 8px; flex-wrap: wrap; }
+.calcbtn { border-color: #2f6fc0; background: #e6f1ff; color: #1d4f8f; }
+.calc { margin-top: 8px; align-self: center; width: min(300px, 100%); background: #4f8de0; border: 3px solid #1d4f8f; border-radius: 20px; padding: 10px; box-shadow: 0 6px 0 #1d4f8f; }
+.calc.pop { animation: calcpop .45s cubic-bezier(.2, 1.4, .4, 1) both; }
+@keyframes calcpop { from { transform: translateY(60px) rotate(-8deg) scale(.6); opacity: 0; } }
+.calc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.calc-name { font-family: var(--display); color: #fff; font-size: .95rem; }
+.calc-x { border: 0; background: rgba(255,255,255,.25); color: #fff; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: .9rem; }
+.calc-disp { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; min-height: 52px; background: #dff3ff; border: 2px solid #1d4f8f; border-radius: 10px; padding: 4px 10px; font-family: var(--display); font-size: 1.6rem; color: #13325c; overflow: hidden; word-break: break-all; font-variant-numeric: tabular-nums; }
+.calc-disp small { font-size: .85rem; color: #4a6a94; }
+.calc-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+.calc-keys button { min-height: 42px; border: 0; border-radius: 10px; background: #fff; color: #13325c; font-family: var(--display); font-size: 1.25rem; cursor: pointer; box-shadow: 0 3px 0 #1d4f8f; }
+.calc-keys button:active { transform: translateY(2px); box-shadow: 0 1px 0 #1d4f8f; }
+.calc-keys .op { background: #ffd34d; }
+.calc-keys .eq { background: #30a46c; color: #fff; }
+.calc-keys .fn { background: #e3e8ee; grid-column: span 2; }
+.calc-keys button:focus-visible, .calc-x:focus-visible { outline: 3px solid #ffd34d; outline-offset: 2px; }
 .choices button.gone { opacity: 0.3; text-decoration: line-through; }
 .ctlbtn.freeze { color: #0077b3; }
 .selrow { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -662,7 +679,12 @@ body.story-on { overflow: hidden; }
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn" id="hintBtn">힌트 쓰기</button></div>
+    <div class="qtools"><button type="button" class="hintbtn calcbtn" id="calcBtn">계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 쓰기</button></div>
+    <div class="calc" id="calcPad" hidden>
+      <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
+      <output class="calc-disp" id="calcDisp" aria-live="polite">0</output>
+      <div class="calc-keys" id="calcKeys"></div>
+    </div>
     <div class="explain" id="qExplain" hidden>
       <p class="ex-title">이렇게 풀어요</p>
       <p id="qExText"></p>
@@ -973,12 +995,21 @@ body.story-on { overflow: hidden; }
       o.type = type; o.frequency.value = f; g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + len * 1.4);
       o.connect(g); g.connect(ac.destination); o.start(t0); o.stop(t0 + len * 1.5); }));
   }
+  const STAR_T = 5;
+  // 무적 동안 캐릭터 크기: 처음엔 깜빡이며 커지고, 끝날 때 깜빡이며 작아져요
+  function heroScale() {
+    const T = stats.star || 0; if (T <= 0) return 1;
+    const el = STAR_T - T;
+    if (el < 0.5) return Math.floor(el * 14) % 2 ? 1.6 : 1.25;
+    if (T < 0.7) return Math.floor(T * 14) % 2 ? 1.6 : 1;
+    return 1.6;
+  }
   function hitBlock(q) {
     q.bump = 0.22;
     if (q.type !== 'q') { tone([180], 0.06, 'triangle', 0.08); return; }
     q.type = 'used';
     const px = q.x + q.w / 2, py = q.y - 8;
-    if (q.item === 'star') { stats.star = 6; pops.push({ kind: 'star', x: px, y: py, vy: -260, life: 0.9 }); showToast('반짝 별! 6초 동안 무적'); tone([523, 659, 784, 1047, 1319], 0.07); }
+    if (q.item === 'star') { stats.star = STAR_T; pops.push({ kind: 'star', x: px, y: py, vy: -260, life: 0.9 }); showToast('반짝 별! 5초 동안 커지고 무적!'); tone([523, 659, 784, 1047, 1319], 0.07); }
     else if (q.item === 'heart' && stats.hearts < 5) { stats.hearts++; pops.push({ kind: 'heart', x: px, y: py, vy: -260, life: 0.9 }); showToast('하트 +1'); tone([660, 990], 0.1, 'triangle'); }
     else { addCoins(1); pops.push({ kind: 'coin', x: px, y: py, vy: -420, life: 0.55 }); tone([988, 1319], 0.06); }
     // 상자 위에 있던 헷갈이도 튕겨 나가요
@@ -1002,6 +1033,12 @@ body.story-on { overflow: hidden; }
   // ---------- 입력 ----------
   const keyMap = { ArrowLeft: 'left', a: 'left', A: 'left', ArrowRight: 'right', d: 'right', D: 'right', ' ': 'jump', ArrowUp: 'jump', w: 'jump', W: 'jump' };
   window.addEventListener('keydown', e => {
+    if (state === 'question' && !$('calcPad').hidden) {
+      const m = { '*': '×', '/': '÷', Enter: '=', Backspace: '⌫', Escape: 'C', x: '×' }[e.key] || e.key;
+      const b = $('calcKeys').querySelector(`[data-ck="${m}"]`);
+      if (b) { e.preventDefault(); b.click(); }
+      return;
+    }
     if (state === 'question' && /^[1-4]$/.test(e.key)) {
       const btn = $('qChoices').querySelectorAll('button')[Number(e.key) - 1];
       if (btn && !btn.disabled) btn.click();
@@ -1033,6 +1070,7 @@ body.story-on { overflow: hidden; }
     state = 'question';
     keys.left = keys.right = keys.jump = false;
     current = { gate, twin: false, attempts: 0 };
+    $('calcPad').hidden = true;
     renderQuestion();
     showModal('qModal');
   }
@@ -1534,12 +1572,18 @@ body.story-on { overflow: hidden; }
     if (p.inv > 0 && Math.floor(p.inv * 12) % 2 === 0) return;
     const bob = p.onGround ? Math.abs(Math.sin(p.step)) * 2.5 : 0;
     const s = p.onGround ? Math.sin(p.step) * 4 : 0;
+    const sc = heroScale(), fx = p.x - camX + 20, fy = p.y + p.h;
     if (stats.star > 0) {
-      const g = ctx.createRadialGradient(p.x - camX + 20, p.y + 24, 6, p.x - camX + 20, p.y + 24, 52);
+      const R = 52 * sc, cy = fy - 24 * sc;
+      const g = ctx.createRadialGradient(fx, cy, 6, fx, cy, R);
       g.addColorStop(0, `hsla(${(t * 400) % 360},100%,70%,.7)`); g.addColorStop(1, 'hsla(0,0%,100%,0)');
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x - camX + 20, p.y + 24, 52, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(fx, cy, R, 0, Math.PI * 2); ctx.fill();
+      // 반짝이 별 가루
+      for (let k = 0; k < 5; k++) { const a = t * 3 + k * 1.26, rr2 = 34 * sc; ctx.fillStyle = `hsl(${(t * 300 + k * 70) % 360},90%,65%)`; ctx.beginPath(); ctx.arc(fx + Math.cos(a) * rr2, cy + Math.sin(a) * rr2 * 0.8, 3.5, 0, Math.PI * 2); ctx.fill(); }
     }
+    ctx.save(); ctx.translate(fx, fy); ctx.scale(sc, sc); ctx.translate(-fx, -fy);
     drawHero(p.x - camX, p.y, p.face, bob, s, !p.onGround, false);
+    ctx.restore();
     if (stats.shield) { ctx.strokeStyle = 'rgba(138,162,216,0.85)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(p.x - camX + 20, p.y + 22, 40, 0, Math.PI * 2); ctx.stroke(); }
   }
 
@@ -1705,7 +1749,7 @@ body.story-on { overflow: hidden; }
     if (stats.star > 0) {
       const sy = stats.freeze > 0 ? 108 : 66;
       ctx.fillStyle = `hsl(${(clock * 300) % 360},85%,55%)`; rr(14, sy, 190, 34, 17); ctx.fill();
-      ctx.fillStyle = '#fff'; ctx.font = '20px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('★ 무적 ' + Math.ceil(stats.star) + '초', 109, sy + 24);
+      ctx.fillStyle = '#fff'; ctx.font = '20px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('★ 거인 무적 ' + Math.ceil(stats.star) + '초', 109, sy + 24);
     }
     const solved = gates.filter(g => g.solved).length;
     ctx.fillStyle = 'rgba(252,252,253,0.9)'; rr(W - 230, 14, 216, 46, 23); ctx.fill();
@@ -2424,11 +2468,12 @@ body.story-on { overflow: hidden; }
   const KEY = 'mathland-v2';
   const NSTG = GUARD.length;
   function defaultsM() {
-    return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0 }, badges: [], sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
+    return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0, calc: 1 }, badges: [], sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
       news: { good: false, text: '시계탑 3층 [분수와 소수]의 방에 도착했어요! 1단계부터 황금 나침반 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false, quizBest: 0 };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
+  if (M.items && M.items.calc == null) M.items.calc = 1;
   function saveM() { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} }
   function prog(key) { return M.prog[key] || (M.prog[key] = { st: [0, 0, 0, 0, 0], pct: [0, 0, 0, 0, 0], cl: [false, false, false, false, false], wrong: [] }); }
   // 잠금: 앞 단계를 마치면 다음 단계가 열려요
@@ -2527,6 +2572,8 @@ body.story-on { overflow: hidden; }
       icon: '<circle cx="26" cy="22" r="14" fill="#ffd34d"/><rect x="19" y="34" width="14" height="8" rx="2" fill="#9aa4b1"/><rect x="21" y="43" width="10" height="4" rx="2" fill="#7d8794"/><path d="M26 14v10M21 20l5 4 5-4" stroke="#b07a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
     { id: 'freeze', name: '시간 멈추기', price: 40, desc: '진행 시간이 20초 동안 멈춰요. 게임 중 위쪽 버튼으로 써요.',
       icon: '<circle cx="26" cy="27" r="18" fill="#d5efff" stroke="#0090ff" stroke-width="4"/><rect x="19" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="28" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="21" y="3" width="10" height="5" rx="2" fill="#0090ff"/>' },
+    { id: 'calc', name: '계산기', price: 40, desc: '식을 세운 뒤 큰 수 계산을 도와줘요. 적용·서술·실생활 문제에서만 쓸 수 있어요(연산 문제는 직접!).',
+      icon: '<rect x="10" y="4" width="32" height="44" rx="6" fill="#4f8de0"/><rect x="15" y="9" width="22" height="10" rx="2" fill="#dff3ff"/><g fill="#fff"><rect x="15" y="23" width="6" height="6" rx="1.5"/><rect x="23" y="23" width="6" height="6" rx="1.5"/><rect x="31" y="23" width="6" height="6" rx="1.5" fill="#ffd34d"/><rect x="15" y="31" width="6" height="6" rx="1.5"/><rect x="23" y="31" width="6" height="6" rx="1.5"/><rect x="31" y="31" width="6" height="6" rx="1.5" fill="#ffd34d"/><rect x="15" y="39" width="14" height="5" rx="1.5"/><rect x="31" y="39" width="6" height="5" rx="1.5" fill="#ffd34d"/></g>' },
     { id: 'heart', name: '하트 +1', price: 50, desc: '다음 판을 하트 4개로 시작해요. 시작 화면에서 골라요.',
       icon: '<path d="M26 44C12 34 6 26 6 18a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 16-20 26z" fill="#e5484d"/><path d="M26 18v14M19 25h14" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' },
     { id: 'shield', name: '보호막', price: 60, desc: '헷갈이에 한 번 부딪혀도 다치지 않아요. 시작 화면에서 골라요.',
@@ -2574,7 +2621,51 @@ body.story-on { overflow: hidden; }
     renderUseItems();
   });
   // 게임 중: 힌트 · 시간 멈추기
+  // 계산기: 식을 세우는 문제(적용·서술·실생활)에서만. 연산 문제는 직접 계산해요
+  const calcOK = () => { const set = QUESTIONS[current.gate.i]; return !!(set && set.src && set.src[0] >= 3); };
+  let calcExpr = '', calcDone = false;
+  function updateCalcBtn() {
+    const n = M.items.calc || 0, ok = current && calcOK();
+    $('calcBtn').textContent = ok ? `계산기 꺼내기 (${n})` : '계산기 (연산 문제는 직접!)';
+    $('calcBtn').disabled = !ok || n <= 0 || !$('calcPad').hidden || current.calcUsed;
+  }
+  function calcEval(str) {
+    const t = str.match(/\d+(?:\.\d+)?|[+\-×÷]/g); if (!t) return '0';
+    const nums = [], ops = [], prec = o => (o === '×' || o === '÷') ? 2 : 1;
+    const ap = () => { const b = nums.pop(), a = nums.pop(), o = ops.pop(); nums.push(o === '+' ? a + b : o === '-' ? a - b : o === '×' ? a * b : b === 0 ? NaN : a / b); };
+    let expectNum = true;
+    for (const x of t) { if (/\d/.test(x)) { nums.push(parseFloat(x)); expectNum = false; } else { if (expectNum) return '식을 다시 확인해요'; while (ops.length && prec(ops[ops.length - 1]) >= prec(x)) ap(); ops.push(x); expectNum = true; } }
+    if (expectNum) return '식을 다시 확인해요';
+    while (ops.length) ap();
+    const v = nums[0];
+    if (!isFinite(v)) return '0으로 나눌 수 없어요';
+    return String(Math.round(v * 1e6) / 1e6);
+  }
+  const CK = ['7', '8', '9', '÷', '4', '5', '6', '×', '1', '2', '3', '-', '0', '.', '=', '+', 'C', '⌫'];
+  $('calcKeys').innerHTML = CK.map(k => `<button type="button" data-ck="${k}" class="${'÷×-+'.includes(k) ? 'op' : k === '=' ? 'eq' : k === 'C' || k === '⌫' ? 'fn' : ''}">${k === '-' ? '−' : k}</button>`).join('');
+  $('calcKeys').addEventListener('click', e => {
+    const b = e.target.closest('[data-ck]'); if (!b) return;
+    const k = b.dataset.ck;
+    if (calcDone && /[\d.]/.test(k)) calcExpr = '';
+    calcDone = false;
+    if (k === 'C') calcExpr = '';
+    else if (k === '⌫') calcExpr = calcExpr.slice(0, -1);
+    else if (k === '=') { const r = calcEval(calcExpr); $('calcDisp').innerHTML = `<small>${esc(calcExpr.replace(/-/g, '−'))} =</small>${esc(r)}`; calcExpr = /^[\d.]+$/.test(r) ? r : ''; calcDone = true; tone([660, 990], 0.05, 'triangle', 0.05); return; }
+    else if (calcExpr.length < 24) calcExpr += k;
+    $('calcDisp').textContent = (calcExpr || '0').replace(/-/g, '−');
+    tone([520], 0.03, 'square', 0.03);
+  });
+  $('calcBtn').addEventListener('click', () => {
+    if (state !== 'question' || !calcOK() || (M.items.calc || 0) <= 0 || current.calcUsed) return;
+    M.items.calc--; saveM(); current.calcUsed = true;
+    calcExpr = ''; calcDone = false; $('calcDisp').textContent = '0';
+    $('calcPad').hidden = false; $('calcPad').classList.remove('pop'); void $('calcPad').offsetWidth; $('calcPad').classList.add('pop');
+    updateCalcBtn(); showToast('계산기를 꺼냈어요! 식은 직접 세워요');
+    const f = $('calcKeys').querySelector('button'); if (f) f.focus({ preventScroll: true });
+  });
+  $('calcClose').addEventListener('click', () => { $('calcPad').hidden = true; updateCalcBtn(); });
   function updateHintBtn() {
+    updateCalcBtn();
     const n = M.items.hint || 0;
     $('hintBtn').textContent = `힌트 쓰기 (${n})`;
     $('hintBtn').disabled = n <= 0;
