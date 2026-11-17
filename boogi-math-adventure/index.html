@@ -172,6 +172,14 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .hintbtn:disabled { opacity: 0.45; cursor: not-allowed; }
 .qtools { gap: 8px; flex-wrap: wrap; }
 .calcbtn { border-color: #2f6fc0; background: #e6f1ff; color: #1d4f8f; }
+#qModal .card { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); overflow-y: auto; }
+.hintroll { align-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 8px 18px; border-radius: 999px; border: 3px solid #b07a00; background: #fff7c2; font-family: var(--display); font-size: 1.15rem; color: #6b4300; }
+.hintroll.rolling { animation: hrshake .12s linear infinite alternate; }
+.hintroll.done { background: #ffd34d; animation: hrpop .35s cubic-bezier(.2, 1.5, .4, 1); }
+.hintroll b { font-weight: 400; color: #fff; background: #e5484d; border-radius: 999px; padding: 1px 10px; font-size: .9rem; }
+.hr-ic { font-size: 1.4rem; }
+@keyframes hrshake { to { transform: rotate(-2deg) scale(1.03); } }
+@keyframes hrpop { from { transform: scale(.6); } }
 .calc { margin-top: 8px; align-self: center; width: min(300px, 100%); background: #4f8de0; border: 3px solid #1d4f8f; border-radius: 20px; padding: 10px; box-shadow: 0 6px 0 #1d4f8f; }
 .calc.pop { animation: calcpop .45s cubic-bezier(.2, 1.4, .4, 1) both; }
 @keyframes calcpop { from { transform: translateY(60px) rotate(-8deg) scale(.6); opacity: 0; } }
@@ -679,7 +687,8 @@ body.story-on { overflow: hidden; }
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 쓰기</button></div>
+    <div class="qtools"><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 뽑기</button></div>
+    <div class="hintroll" id="hintRoll" hidden aria-live="polite"></div>
     <div class="calc" id="calcPad" hidden>
       <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
       <output class="calc-disp" id="calcDisp" aria-live="polite">0</output>
@@ -1070,7 +1079,7 @@ body.story-on { overflow: hidden; }
     state = 'question';
     keys.left = keys.right = keys.jump = false;
     current = { gate, twin: false, attempts: 0 };
-    $('calcPad').hidden = true;
+    $('calcPad').hidden = true; $('hintRoll').hidden = true;
     renderQuestion();
     showModal('qModal');
   }
@@ -2579,7 +2588,7 @@ body.story-on { overflow: hidden; }
 
   // ---------- 코인 상점 ----------
   const ITEMS = [
-    { id: 'hint', name: '힌트 받기', price: 30, desc: '문제에서 틀린 보기 1개를 지워 줘요. 문제 화면에서 써요.',
+    { id: 'hint', name: '힌트 뽑기', price: 30, desc: '문제 화면에서 쓰면 보기 지우기·계산기·단서 밑줄 중 하나가 랜덤으로 나와요.',
       icon: '<circle cx="26" cy="22" r="14" fill="#ffd34d"/><rect x="19" y="34" width="14" height="8" rx="2" fill="#9aa4b1"/><rect x="21" y="43" width="10" height="4" rx="2" fill="#7d8794"/><path d="M26 14v10M21 20l5 4 5-4" stroke="#b07a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
     { id: 'freeze', name: '시간 멈추기', price: 40, desc: '진행 시간이 20초 동안 멈춰요. 게임 중 위쪽 버튼으로 써요.',
       icon: '<circle cx="26" cy="27" r="18" fill="#d5efff" stroke="#0090ff" stroke-width="4"/><rect x="19" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="28" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="21" y="3" width="10" height="5" rx="2" fill="#0090ff"/>' },
@@ -2670,27 +2679,68 @@ body.story-on { overflow: hidden; }
   });
   $('calcBtn').addEventListener('click', () => {
     if (state !== 'question' || !calcOK() || !stats.calc) return;
+    openCalcPad();
+    showToast('계산기 등장! 식은 직접 세워요');
+  });
+  function openCalcPad() {
     calcExpr = ''; calcDone = false; $('calcDisp').textContent = '0';
     $('calcPad').hidden = false; $('calcPad').classList.remove('pop'); void $('calcPad').offsetWidth; $('calcPad').classList.add('pop');
-    updateCalcBtn(); showToast('계산기 등장! 식은 직접 세워요');
+    updateCalcBtn();
     const f = $('calcKeys').querySelector('button'); if (f) f.focus({ preventScroll: true });
-  });
+    $('calcPad').scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
   $('calcClose').addEventListener('click', () => { $('calcPad').hidden = true; updateCalcBtn(); });
   function updateHintBtn() {
     updateCalcBtn();
     const n = M.items.hint || 0;
-    $('hintBtn').textContent = `힌트 쓰기 (${n})`;
+    $('hintBtn').textContent = `🎲 힌트 뽑기 (${n})`;
     $('hintBtn').disabled = n <= 0;
   }
-  $('hintBtn').addEventListener('click', () => {
-    if (state !== 'question' || (M.items.hint || 0) <= 0) return;
+  // 힌트 뽑기: 이 문제에 쓸 수 있는 힌트 중 하나가 룰렛처럼 랜덤으로 나와요
+  const HINTS = [
+    { id: 'erase1', label: '보기 1개 지우기', icon: '✂️', w: 4 },
+    { id: 'erase2', label: '보기 2개 지우기', icon: '🍀', w: 1 },
+    { id: 'calc', label: '계산기 등장', icon: '🧮', w: 3 },
+    { id: 'clue', label: '단서 밑줄 긋기', icon: '🔍', w: 3 }
+  ];
+  let hintRolling = false;
+  function hintPool() {
     const set = QUESTIONS[current.gate.i], item = current.twin ? set.twin : set.main;
-    const btns = [...$('qChoices').querySelectorAll('button')];
-    const wrong = btns.filter((b, i) => i !== item.a && !b.classList.contains('gone') && !b.classList.contains('wrong'));
-    if (wrong.length <= 1) { showToast('더 지울 보기가 없어요'); return; }
-    const pickB = wrong[Math.floor(Math.random() * wrong.length)];
-    pickB.classList.add('gone'); pickB.disabled = true;
-    M.items.hint--; saveM(); updateHintBtn();
+    const left = [...$('qChoices').querySelectorAll('button')].filter((b, i) => i !== item.a && !b.disabled).length;
+    return HINTS.filter(h => h.id === 'erase1' ? left >= 2 : h.id === 'erase2' ? left >= 3
+      : h.id === 'calc' ? calcOK() && $('calcPad').hidden : h.id === 'clue' ? item.q.includes('{{') && !current.clue && !clueMode : false);
+  }
+  function applyHint(h) {
+    const set = QUESTIONS[current.gate.i], item = current.twin ? set.twin : set.main;
+    if (h.id === 'erase1' || h.id === 'erase2') {
+      const wrong = [...$('qChoices').querySelectorAll('button')].filter((b, i) => i !== item.a && !b.disabled);
+      for (let k = 0; k < (h.id === 'erase2' ? 2 : 1) && wrong.length; k++) { const b = wrong.splice(Math.floor(Math.random() * wrong.length), 1)[0]; b.classList.add('gone'); b.disabled = true; }
+    } else if (h.id === 'calc') openCalcPad();
+    else if (h.id === 'clue') {
+      current.clue = true;
+      $('qText').innerHTML = fmt(item.q.replace(/\{\{/g, '⟦').replace(/\}\}/g, '⟧')).replace(/⟦/g, '<u class="clue">').replace(/⟧/g, '</u>');
+      $('clueNote').hidden = false;
+    }
+  }
+  $('hintBtn').addEventListener('click', () => {
+    if (state !== 'question' || (M.items.hint || 0) <= 0 || hintRolling) return;
+    const pool = hintPool();
+    if (!pool.length) { showToast('이 문제에서는 더 쓸 힌트가 없어요'); return; }
+    let r = Math.random() * pool.reduce((a, h) => a + h.w, 0), pick = pool[0];
+    for (const h of pool) { if ((r -= h.w) < 0) { pick = h; break; } }
+    M.items.hint--; saveM(); hintRolling = true; $('hintBtn').disabled = true;
+    const box = $('hintRoll'); box.hidden = false; box.className = 'hintroll rolling';
+    const show = h => { box.innerHTML = `<span class="hr-ic">${h.icon}</span><span>${h.label}</span>`; };
+    let n = 0; const total = reduceMotion ? 1 : 12;
+    const spin = () => {
+      n++;
+      if (n < total) { show(HINTS[n % HINTS.length]); try { tone([440 + (n % 4) * 110], 0.03, 'square', 0.03); } catch (_) {} setTimeout(spin, 50 + n * 9); return; }
+      show(pick); box.className = 'hintroll done'; box.insertAdjacentHTML('afterbegin', '<b>힌트 당첨!</b>');
+      try { tone([784, 1047], 0.07, 'triangle', 0.06); } catch (_) {}
+      applyHint(pick); hintRolling = false; updateHintBtn();
+      setTimeout(() => { if (!hintRolling) box.hidden = true; }, 2200);
+    };
+    spin();
   });
   $('freezeBtn').addEventListener('click', () => {
     if (!(state === 'play' || state === 'question') || (M.items.freeze || 0) <= 0 || stats.freeze > 0) return;
