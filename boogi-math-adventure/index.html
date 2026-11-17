@@ -1,4 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
 <title>부기의 수학 모험</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -367,6 +368,92 @@ body.story-on { overflow: hidden; }
 @media (max-width: 520px) { .home-acts { grid-template-columns: 1fr 1fr; } .home-acts .home-start { grid-column: 1 / -1; grid-row: 1; } }
 @media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
 @media (prefers-reduced-motion: reduce) { .home-map svg, .vg-cur, .vg-glow, .vg-spark { animation: none !important; } }
+/* 모험 요약 · 설정 (메인 위에 뜨는 창) */
+.modal.toplayer { z-index: 10050; }
+.chip-btn { cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-btn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.sum-card { width: min(680px, 100%); gap: 16px; }
+.sum-h { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.6rem; color: var(--deep); display: flex; align-items: center; gap: 8px; }
+.sum-card .xbtn, .set-card .xbtn { border-color: var(--sun); box-shadow: 0 0 0 2px var(--sun); }
+.sum-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.sum-tile { display: flex; align-items: center; gap: 12px; padding: 16px 14px; border: 2px solid #e3e8ee; border-radius: 16px; background: #fff; min-width: 0; }
+.sum-tile .ic { flex: none; font-size: 2rem; line-height: 1; }
+.sum-tile .tx { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.sum-tile .lb { font-size: .82rem; font-weight: 700; color: #8b95a3; }
+.sum-tile .v { font-family: var(--display); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.sum-tile .v small { font-size: .85rem; margin-left: 2px; }
+.sum-tile .bar { height: 6px; border-radius: 3px; background: #eceef2; overflow: hidden; margin-top: 4px; }
+.sum-tile .bar i { display: block; height: 100%; background: #30a46c; border-radius: 3px; }
+.sum-sub { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sum-sub small { font-family: var(--body); font-size: .8rem; color: var(--muted); }
+.stamps { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.stamp { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.stamp .d { font-size: .85rem; font-weight: 700; color: #8b95a3; }
+.stamp.today .d { color: var(--deep); }
+.stamp .c { width: min(46px, 100%); aspect-ratio: 1; border-radius: 50%; border: 2px dashed #c4ccd6; display: grid; place-items: center; }
+.stamp.on .c { border: 3px solid #b8302f; background: radial-gradient(circle at 35% 35%, #ff6b6b, #e5484d); box-shadow: 0 2px 0 #b8302f; color: #fff; font-size: 1.4rem; font-weight: 900; transform: rotate(-8deg); }
+.stamp.today .c { outline: 3px solid var(--sun); outline-offset: 3px; }
+.stamp .t { font-size: .7rem; font-weight: 700; color: #fff; background: var(--deep); border-radius: 999px; padding: 1px 8px; }
+.stamp .t.ph { visibility: hidden; }
+.set-card { width: min(520px, 100%); gap: 14px; }
+.set-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.set-lb { display: flex; flex-direction: column; gap: 2px; }
+.set-lb b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); }
+.set-lb small { color: var(--muted); font-size: .82rem; }
+.qcnt { display: flex; align-items: center; gap: 8px; }
+.qc-btn { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--deep); background: #fff; color: var(--deep); font-size: 1.4rem; font-family: var(--display); cursor: pointer; box-shadow: 0 3px 0 var(--deep); }
+.qc-btn:disabled { opacity: .4; cursor: not-allowed; }
+.qcnt output { min-width: 82px; text-align: center; font-family: var(--display); font-size: 1.5rem; color: #b07800; font-variant-numeric: tabular-nums; }
+#qcRange { width: 100%; accent-color: #f2b705; }
+.qc-presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.qc-presets button { border: 2px solid #dfe4ea; background: #fff; border-radius: 999px; padding: 4px 12px; font-family: var(--display); color: var(--deep); cursor: pointer; }
+.qc-presets button.on { border-color: #f2b705; background: #fff3c4; }
+.tgl { width: 58px; height: 32px; border-radius: 999px; border: 2px solid var(--deep); background: #dfe4ea; position: relative; cursor: pointer; padding: 0; }
+.tgl span { position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: left .15s; }
+.tgl[aria-checked="true"] { background: #30a46c; }
+.tgl[aria-checked="true"] span { left: 28px; }
+.qc-btn:focus-visible, .qc-presets button:focus-visible, .tgl:focus-visible, #qcRange:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+@media (max-width: 560px) { .sum-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sum-tile { padding: 12px 10px; gap: 8px; } .sum-tile .ic { font-size: 1.6rem; } .sum-tile .v { font-size: 1.6rem; } .homefs .wallet { flex-wrap: wrap; justify-content: flex-end; } }
+/* 메인 화면 고도화: 하늘, 프로필, 코인 */
+.homefs { background: linear-gradient(180deg, #46a9f2 0%, #86cffc 36%, #c9ecff 66%, #fff1cf 100%); }
+.hsun { position: absolute; right: 7%; top: 5%; width: 16vmin; height: 16vmin; border-radius: 50%; background: radial-gradient(circle, #fffbe0 0 34%, rgba(255,240,170,.55) 35% 52%, rgba(255,240,170,0) 72%); }
+.hcloud { position: absolute; left: 0; top: var(--t); width: var(--w); opacity: var(--o, 1); animation: hdrift var(--d) linear infinite; animation-delay: var(--s); will-change: transform; }
+.hcloud svg { display: block; width: 100%; height: auto; animation: hbob 5s ease-in-out infinite alternate; animation-delay: var(--s); filter: drop-shadow(0 6px 0 rgba(60,130,190,.12)); }
+@keyframes hdrift { from { transform: translateX(-34vmin); } to { transform: translateX(104vw); } }
+@keyframes hbob { from { transform: translateY(-5px); } to { transform: translateY(6px); } }
+.hhill { position: absolute; border-radius: 50%; }
+.hhill.a { left: -20%; right: 30%; bottom: -30vh; height: 46vh; background: #8fcf74; }
+.hhill.b { left: 25%; right: -20%; bottom: -34vh; height: 50vh; background: #a6dc86; }
+.profile { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.95); border: 2px solid var(--deep); border-radius: 999px; padding: 4px 18px 4px 4px; box-shadow: 0 3px 0 rgba(0,58,92,.22); }
+.pf-av { flex: none; width: 48px; height: 48px; border-radius: 50%; background: #ead9ff; border: 2px solid #b995f5; display: grid; place-items: center; overflow: hidden; }
+.pf-av svg { width: 44px; height: 44px; display: block; }
+.pf-tx { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
+.pf-lv { font-family: var(--display); font-size: .78rem; color: var(--deep); background: var(--sun); border-radius: 999px; padding: 1px 9px; }
+.pf-nm { font-family: var(--display); font-size: 1.15rem; color: var(--deep); }
+.homefs .wallet { display: flex; align-items: center; gap: 8px; }
+.homefs .wallet .chip { display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 0 rgba(0,58,92,.22); }
+.coin-ic { width: 26px; height: 26px; display: block; margin: -3px 0 -3px -6px; }
+.home-chap .ws-open { display: none !important; }
+.vg-bob { animation: vgbob 2.6s ease-in-out infinite; } @keyframes vgbob { 50% { transform: translateY(-3px); } }
+.vg-sail { animation: vgsail 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 90%; } @keyframes vgsail { 50% { transform: rotate(4deg) translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .hcloud, .hcloud svg, .vg-bob, .vg-sail { animation: none !important; } .hcloud { transform: translateX(var(--x, 40vw)); } }
+/* 메인 지도: 정복 축하, 강물 흐름 */
+.vg-jump { animation: vgjump .62s cubic-bezier(.3,0,.4,1) 12; transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes vgjump { 0%, 100% { transform: translateY(0) scale(1.06, .94); } 18% { transform: translateY(0) scale(.96, 1.05); } 50% { transform: translateY(-26px) scale(1, 1); } 82% { transform: translateY(0) scale(.96, 1.05); } }
+.vg-flow { animation: vgflow 2.8s linear infinite; } @keyframes vgflow { to { stroke-dashoffset: -60; } }
+.cheer { position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; padding: 16px; background: rgba(0,40,70,.5); animation: cheerin .25s ease-out both; }
+@keyframes cheerin { from { opacity: 0; } }
+.cheer-box { position: relative; overflow: hidden; width: min(440px, 100%); background: #fff; border: 3px solid var(--deep); border-radius: 28px; box-shadow: 0 8px 0 var(--deep); padding: 26px 24px 22px; text-align: center; animation: pop .5s cubic-bezier(.2,1.5,.4,1) both; }
+.cheer-conf { position: absolute; inset: 0; pointer-events: none; }
+.cheer-conf i { position: absolute; top: -14px; width: 9px; height: 14px; border-radius: 3px; animation: cheerfall 2.6s linear infinite; }
+@keyframes cheerfall { to { transform: translateY(460px) rotate(540deg); } }
+.cheer-char { position: relative; width: 132px; height: 132px; margin: 0 auto 10px; border-radius: 50%; display: grid; place-items: center; border: 4px solid #fff; box-shadow: 0 0 0 3px var(--sun); }
+.cheer-char svg { width: 112px; height: 112px; display: block; animation: vgjump .62s cubic-bezier(.3,0,.4,1) infinite; transform-origin: 50% 100%; }
+.cheer-k { position: relative; display: inline-block; margin: 0 0 6px; font-family: var(--display); font-size: 1.05rem; color: var(--deep); background: var(--sun); border-radius: 999px; padding: 3px 16px; }
+.cheer-box h2 { position: relative; margin: 0 0 8px; font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 5vw, 2.1rem); color: var(--deep); line-height: 1.2; }
+.cheer-m { position: relative; margin: 0 0 16px; color: #1f2a40; line-height: 1.6; }
+.cheer-ok { position: relative; min-width: 180px; min-height: 52px; font-size: 1.25rem; background: var(--sun); color: var(--deep); }
+@media (prefers-reduced-motion: reduce) { .vg-jump, .vg-flow, .cheer-conf i, .cheer-char svg, .cheer, .cheer-box { animation: none !important; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -564,7 +651,7 @@ body.story-on { overflow: hidden; }
 
 <div class="wrap">
   <div class="top">
-    <h1>부기의 수학 모험</h1>
+    <h1>매스 랜드</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
     <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><button type="button" class="ctlbtn freeze" id="freezeBtn" hidden>시간 멈추기</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
@@ -585,7 +672,7 @@ body.story-on { overflow: hidden; }
 
 <div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
-  <div class="sf-top"><span class="sf-tag">부기의 수학 모험</span><div class="wallet" id="homeWallet"></div></div>
+  <div class="sf-top"><div class="profile" id="homeProfile" aria-label="내 프로필"></div><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
     <h1 id="homeTitle" class="home-title">매스 랜드<span>숫자 시계탑의 비밀</span></h1>
     <div class="home-body"><div class="home-map" id="homeMap"></div></div>
@@ -601,6 +688,33 @@ body.story-on { overflow: hidden; }
   <div class="sf-top"><span class="sf-tag">스쿨플랫 연산 학습지 연동</span><span class="ws-demo">시연용 예시 데이터</span><button type="button" class="shopbtn" id="wsClose">← 메인</button></div>
   <div class="ws-mid" id="wsBody" aria-live="polite"></div>
   <div class="sf-box ws-box"><h2 id="wsTitle"></h2><p id="wsMsg"></p><div class="ws-btns" id="wsBtns"></div></div>
+</div>
+
+<div class="modal toplayer" id="sumModal" role="dialog" aria-modal="true" aria-labelledby="sumTitle" hidden>
+  <div class="card sum-card">
+    <div class="tagrow"><h2 id="sumTitle" class="sum-h"><span aria-hidden="true">⭐</span> 모험 요약</h2><button type="button" class="xbtn" id="sumClose">닫기 ✕</button></div>
+    <div class="sum-grid" id="sumGrid"></div>
+    <h3 class="sum-sub"><span aria-hidden="true">📅</span> 이번 주 출석 도장 <small id="sumWeek"></small></h3>
+    <div class="stamps" id="sumStamps"></div>
+    <p class="note">게임을 연 날마다 출석 도장 1개가 찍혀요. 출석은 월요일부터 일요일까지 한 주로 세요. 정답률은 한 번에 맞힌 문제의 비율이에요.</p>
+  </div>
+</div>
+
+<div class="modal toplayer" id="setModal" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
+  <div class="card set-card">
+    <div class="tagrow"><h2 id="setTitle" class="sum-h"><span aria-hidden="true">⚙️</span> 설정</h2><button type="button" class="xbtn" id="setClose">닫기 ✕</button></div>
+    <div class="set-row">
+      <div class="set-lb"><b>한 판 문항 수</b><small>문제 문 개수예요. 3~20문항 중에서 골라요.</small></div>
+      <div class="qcnt"><button type="button" class="qc-btn" data-qc="-1" aria-label="문항 수 줄이기">−</button><output id="qcOut" aria-live="polite">5문항</output><button type="button" class="qc-btn" data-qc="1" aria-label="문항 수 늘리기">+</button></div>
+    </div>
+    <input type="range" id="qcRange" min="3" max="20" step="1" value="5" aria-label="한 판 문항 수">
+    <div class="qc-presets" id="qcPresets"></div>
+    <div class="set-row">
+      <div class="set-lb"><b>효과음</b><small>동전·점프·정답 소리</small></div>
+      <button type="button" class="tgl" id="sndTgl" role="switch" aria-checked="true"><span></span></button>
+    </div>
+    <p class="note" id="setNote"></p>
+  </div>
 </div>
 
 <div class="modal" id="mapModal" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
@@ -1141,6 +1255,7 @@ body.story-on { overflow: hidden; }
     btns[item.a].classList.add('right');
     if (idx === item.a) {
       if (current.attempts === 0) stats.first++;
+      M.log.solved++; if (current.attempts === 0) M.log.first++;
       stats.coins += 3;
       current.gate.solved = true;
       onGateSolved(current.gate.i);
@@ -1583,7 +1698,7 @@ body.story-on { overflow: hidden; }
   }
   function drawHero(x, y, f, bob, s, armUp, medal) {
     const h = curHero();
-    if (h.art === 3) { drawBoogi(x, y, f, bob, s, armUp, medal); return; }
+    
     const im = heroImage(h), cx = x + 20;
     // 그림 자체에 발이 있어 발바닥을 땅(y+48)에 맞춰요. 걸을 때 살짝 기우뚱
     ctx.save(); ctx.translate(cx, y + 24 - bob);
@@ -1641,6 +1756,7 @@ body.story-on { overflow: hidden; }
   }
 
   function playFanfare() {
+    if (M && M.set && M.set.sound === false) return;
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
@@ -1797,7 +1913,7 @@ body.story-on { overflow: hidden; }
     }
   }
 
-  let last = performance.now(), clock = 0;
+  let last = performance.now(), clock = 0, logSaveT = 0;
   // 취소·재시작: 실수로 누르지 않게 두 번 눌러야 실행돼요
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
@@ -1822,6 +1938,7 @@ body.story-on { overflow: hidden; }
     if (state === 'play' || state === 'question') {
       if (stats.freeze > 0) stats.freeze = Math.max(0, stats.freeze - dt);
       else { stats.time += dt; if (runMode === 'ta') taTime += dt; }
+      M.log.sec += dt; if ((logSaveT += dt) > 5) { logSaveT = 0; saveM(); }
     }
     const fz = (state === 'play' || state === 'question') && (M.items.freeze || 0) > 0 && stats.freeze <= 0;
     if ($('freezeBtn').hidden === fz) $('freezeBtn').hidden = !fz;
@@ -1877,6 +1994,107 @@ body.story-on { overflow: hidden; }
   ];
   // 수호자 캐릭터 (첨부 캐릭터를 참고해 단순하게 그린 시제품용 그림. 정식 그림 파일로 바꿀 수 있어요)
   function charSVG(g) {
+    // 키즈플랫 캐릭터 화풍: 외곽선 없는 면, 조약돌 같은 몸통, 밝은 배, 한 손 인사, 흰자 + 남색 눈동자
+    const NV = '#232846';
+    const eye = (x, y, r = 5, dx = 0.18) => `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * 0.94}" fill="#fff"/><circle cx="${x + r * dx}" cy="${y + r * 0.08}" r="${r * 0.6}" fill="${NV}"/><circle cx="${x + r * dx - r * 0.22}" cy="${y - r * 0.2}" r="${r * 0.2}" fill="#fff"/>`;
+    const smile = (x, y, w = 5, c = NV, sw = 2.2) => `<path d="M${x - w} ${y}q${w} ${w * 0.95} ${w * 2} 0" stroke="${c}" stroke-width="${sw}" fill="none" stroke-linecap="round"/>`;
+    const limb = (d, c, w = 9) => `<path d="${d}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+    const legs = (x1, x2, c, y = 82, w = 11, h = 14) => `<rect x="${x1}" y="${y}" width="${w}" height="${h}" rx="${w / 2}" fill="${c}"/><rect x="${x2}" y="${y}" width="${w}" height="${h}" rx="${w / 2}" fill="${c}"/>`;
+    const spikes = (cx, cy, r1, r2, n, a0, a1, col) => { let d = ''; for (let k = 0; k <= n * 2; k++) { const a = (a0 + (a1 - a0) * k / (n * 2)) * Math.PI / 180, r = k % 2 ? r2 : r1; d += (k ? 'L' : 'M') + (cx + Math.cos(a) * r).toFixed(1) + ' ' + (cy + Math.sin(a) * r).toFixed(1) + ' '; } return `<path d="${d}Z" fill="${col}" stroke="${col}" stroke-width="1.5" stroke-linejoin="round"/>`; };
+    const art = {
+      0: `<rect x="12" y="20" width="76" height="52" rx="6" fill="#f6e3b0" stroke="#c49a4a" stroke-width="3"/><path d="M22 60 q14 -20 28 -6 t28 -20" stroke="#c0392b" stroke-width="3" stroke-dasharray="5 4" fill="none"/>
+          <path d="M70 26 l10 10 M80 26 l-10 10" stroke="#c0392b" stroke-width="4" stroke-linecap="round"/>
+          <rect x="30" y="64" width="40" height="24" rx="4" fill="#b5703a"/><rect x="30" y="64" width="40" height="9" rx="3" fill="#8a4f25"/><rect x="46" y="69" width="8" height="11" rx="2" fill="#ffc53d"/>`,
+      // 송이: 고슴도치, 연두 헤드폰, 한 손 인사
+      1: `${spikes(50, 57, 31, 39, 12, 140, 400, '#7d4b30')}
+          ${legs(37, 52, '#b87a4f')}
+          ${limb('M71 62 Q82 58 83 47', '#c68b5e', 10)}
+          <path d="M50 19 C67 19 76 32 76 50 V70 C76 85 66 92 50 92 C34 92 24 85 24 70 V50 C24 32 33 19 50 19Z" fill="#c68b5e"/>
+          <path d="M31 46 C31 37 39 33 50 33 C61 33 69 37 69 46 C69 55 61 60 50 60 C39 60 31 55 31 46Z" fill="#dcaa7b"/>
+          <ellipse cx="50" cy="74" rx="17" ry="15" fill="#dcaa7b"/>
+          ${limb('M27 66 Q27 76 35 78', '#b87a4f', 8)}
+          <path d="M27 42 A23.5 23.5 0 0 1 73 42" stroke="#a79f37" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <rect x="17" y="36" width="13" height="21" rx="6.5" fill="#cdc54f"/><rect x="70" y="36" width="13" height="21" rx="6.5" fill="#cdc54f"/>
+          <rect x="26" y="38" width="5" height="17" rx="2.5" fill="#8f8a2f"/><rect x="69" y="38" width="5" height="17" rx="2.5" fill="#8f8a2f"/>
+          ${eye(42, 45, 5.2)}${eye(58, 45, 5.2, -0.18)}<ellipse cx="50" cy="51.5" rx="2.6" ry="2" fill="#8a4a2c"/>${smile(50, 54.5, 4)}`,
+      // 루미: 보라 털뭉치, 작은 뿔, 별 더듬이, 한 손 인사
+      2: `${legs(38, 52, '#cda5fa', 83, 11, 13)}
+          ${limb('M74 62 Q84 57 85 46', '#d6b2ff', 10)}
+          <path d="M50 30 V18" stroke="#b497ea" stroke-width="2" stroke-linecap="round"/>
+          <path d="M50 4.500 l2.700 5.400 6 .900 -4.350 4.200 1.050 6 -5.400 -2.850 -5.400 2.850 1.050 -6 -4.350 -4.200 6 -.900z" fill="#ffd84d" stroke="#ffd84d" stroke-width="1.500" stroke-linejoin="round" transform="translate(50 14) rotate(12) scale(.74) translate(-50 -13)"/>
+          <path d="M35 34 Q28 31 29 23 Q35 25 40 30 Z M65 34 Q72 31 71 23 Q65 25 60 30 Z" fill="#8769cc"/>
+          <path d="M50 27 C63 27 72 33 74 43 l6 2 l-5 5 l6 4 l-6 4 l5 5 l-6 4 C74 82 67 91 50 91 C33 91 26 82 26 67 l-6 -4 l5 -5 l-6 -4 l6 -4 l-5 -5 l6 -2 C28 33 37 27 50 27Z" fill="#d6b2ff" stroke="#d6b2ff" stroke-width="2" stroke-linejoin="round"/>
+          ${limb('M27 64 Q20 70 22 79', '#cda5fa', 10)}
+          <path d="M19.500 69 l4.500 3 l-4 3 l4.500 3" stroke="#a983ec" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="50" cy="74" r="11" fill="#e9d6ff"/>
+          <path d="M39 44.500 q4.500 -4 9 0 M52 44.500 q4.500 -4 9 0" stroke="#c39af6" stroke-width="1.800" fill="none" stroke-linecap="round"/>
+          ${eye(44, 50, 5)}${eye(56, 50, 5, -0.18)}${smile(50, 58, 5.500, NV, 2.400)}`,
+      // 부기: 거북, 주황 동그란 안경, 망치
+      3: `${legs(37, 52, '#a9c956', 83, 11, 13)}
+          <ellipse cx="50" cy="68" rx="29" ry="25" fill="#3c6b35"/>
+          ${limb('M24 60 Q17 64 19 72', '#b7d263', 10)}
+          ${limb('M75 62 Q84 57 84 46', '#b7d263', 10)}
+          <g transform="rotate(16 85 34)"><rect x="82.5" y="24" width="5" height="26" rx="2.5" fill="#b57f4b"/><rect x="75" y="15" width="20" height="12" rx="3" fill="#33305f"/></g>
+          <ellipse cx="50" cy="70" rx="20.5" ry="19.5" fill="#f0e58c"/>
+          <path d="M33 61 Q50 57 67 61 M30.5 69 Q50 65 69.5 69 M32 77 Q50 73.500 68 77 M37 84.500 Q50 82 63 84.500" stroke="#c9bb52" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <circle cx="50" cy="31" r="20.5" fill="#b7d263"/>
+          <circle cx="41.5" cy="31" r="7.2" fill="#fff" stroke="#e0652d" stroke-width="2.6"/><circle cx="58.5" cy="31" r="7.2" fill="#fff" stroke="#e0652d" stroke-width="2.6"/><path d="M48.700 30 q1.300 -1.200 2.600 0" stroke="#e0652d" stroke-width="2.4" fill="none"/>
+          <circle cx="43" cy="31.500" r="3.300" fill="${NV}"/><circle cx="57" cy="31.500" r="3.300" fill="${NV}"/><circle cx="42" cy="30.300" r="1" fill="#fff"/><circle cx="56" cy="30.300" r="1" fill="#fff"/>
+          ${smile(50, 41, 4.5)}`,
+      // 로키: 너구리, 보라 베레모, 지시봉
+      4: `<path d="M64 84 Q84 88 88 70" stroke="#a9a6ac" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M72 80 l3 11 M80 76 l8 8 M83 68 l11 3" stroke="#5c5964" stroke-width="4.500" stroke-linecap="butt"/>
+          ${legs(35, 50, '#77747d', 84, 11, 12)}
+          <ellipse cx="48" cy="72" rx="22" ry="21" fill="#a9a6ac"/><ellipse cx="46" cy="75" rx="14" ry="14" fill="#d9d6da"/>
+          <path d="M63 60 L92 22" stroke="#8a5cf0" stroke-width="2.600" stroke-linecap="round"/>
+          ${limb('M66 68 Q70 64 66 59', '#a9a6ac', 9)}
+          ${limb('M28 70 Q30 80 39 80', '#93909a', 8)}
+          <path d="M29 33 l-4 -13 l13 6 z M67 33 l4 -13 l-13 6 z" fill="#77747d"/>
+          <ellipse cx="48" cy="42" rx="25" ry="19" fill="#a9a6ac"/>
+          <path d="M24 44 C24 35 32 33 39 34 C44 35 47 38 48 41 C49 38 52 35 57 34 C64 33 72 35 72 44 C72 51 63 54 56 51 C52 49.500 49 47 48 44 C47 47 44 49.500 40 51 C33 54 24 51 24 44Z" fill="#5c5964"/>
+          <ellipse cx="48" cy="52" rx="9" ry="6.500" fill="#e9e7ea"/>
+          ${eye(39, 43, 5.2)}${eye(57, 43, 5.2, -0.18)}<ellipse cx="48" cy="49.500" rx="2.800" ry="2" fill="${NV}"/>${smile(48, 52.500, 3, NV, 2)}
+          <ellipse cx="49" cy="25" rx="19" ry="8" fill="#9b7cf0" transform="rotate(-7 49 25)"/><ellipse cx="45" cy="23" rx="9" ry="3" fill="#b29af5" transform="rotate(-7 45 23)"/><path d="M53 18 l3 -6" stroke="#7a5ad6" stroke-width="2.600" stroke-linecap="round"/>`,
+      // 달이: 수달 탐정, 검은 뿔테 안경, 중절모, X-File
+      5: `<path d="M60 90 Q78 96 92 90 Q80 84 66 80 Z" fill="#7d4c33"/>
+          ${legs(34, 50, '#84533a', 84, 12, 12)}
+          <circle cx="29" cy="34" r="6" fill="#84533a"/><circle cx="67" cy="34" r="6" fill="#84533a"/>
+          <rect x="27" y="27" width="42" height="66" rx="20" fill="#9d6747"/>
+          <rect x="35" y="59" width="26" height="31" rx="11" fill="#e6c9a2"/>
+          <g transform="translate(5 -9) rotate(10 82 56)"><rect x="70" y="42" width="23" height="29" rx="2.500" fill="#f6b96a"/><path d="M70 47 h23" stroke="#e59f4a" stroke-width="1.500"/><text x="81.500" y="62" text-anchor="middle" font-family="Jua, sans-serif" font-size="7.500" fill="#a8602c">X-File</text></g>
+          ${limb('M66 70 Q76 70 78 61', '#9d6747', 9)}
+          ${limb('M30 68 Q31 78 39 79', '#84533a', 8)}
+          <rect x="34" y="45" width="28" height="13" rx="6.500" fill="#e6c9a2"/>
+          <circle cx="40" cy="42" r="7.300" fill="#fff" stroke="#1f1d24" stroke-width="3.200"/><circle cx="56" cy="42" r="7.300" fill="#fff" stroke="#1f1d24" stroke-width="3.200"/><path d="M47 41.500 h2" stroke="#1f1d24" stroke-width="3"/>
+          <circle cx="41.500" cy="42.500" r="3.300" fill="${NV}"/><circle cx="54.500" cy="42.500" r="3.300" fill="${NV}"/><circle cx="40.500" cy="41.300" r="1" fill="#fff"/><circle cx="53.500" cy="41.300" r="1" fill="#fff"/>
+          <ellipse cx="48" cy="50" rx="2.600" ry="1.800" fill="#5a3322"/><path d="M44 53 q2 2.400 4 0 q2 2.400 4 0" stroke="#5a3322" stroke-width="1.800" fill="none" stroke-linecap="round"/>
+          <path d="M33 30 Q33 16 48 16 Q63 16 63 30 Z" fill="#b8693c"/><rect x="33" y="25" width="30" height="5" fill="#8f2f2a"/><rect x="27" y="29" width="42" height="5.500" rx="2.750" fill="#8a4a2a"/><path d="M61 24 l6 -5 l1 6 z" fill="#ffd34d"/>`,
+      // 토리: 다람쥐, 파란 털모자, 큰 꼬리
+      6: `<path d="M38 88 C14 92 6 70 14 56 C20 46 34 46 38 56 C41 64 34 70 28 67" fill="#cf6a2d"/><circle cx="22" cy="60" r="15" fill="#cf6a2d"/>
+          ${legs(40, 54, '#e07a33', 85, 10, 11)}
+          ${limb('M72 68 Q82 65 84 55', '#f28d42', 9)}
+          <ellipse cx="52" cy="74" rx="20" ry="19" fill="#f28d42"/><ellipse cx="52" cy="77" rx="12" ry="12" fill="#ffb783"/>
+          ${limb('M34 72 Q35 81 43 82', '#e07a33', 7.500)}
+          <path d="M33 38 l-3 -17 l14 9 z M71 38 l3 -17 l-14 9 z" fill="#e07a33"/>
+          <path d="M52 27 C66 27 74 35 74 45 C74 55 64 61 52 61 C40 61 30 55 30 45 C30 35 38 27 52 27Z" fill="#f28d42"/>
+          <path d="M34 50 C34 44 40 43 45 45 C49 46.500 51 49 52 49 C53 49 55 46.500 59 45 C64 43 70 44 70 50 C70 57 62 61 52 61 C42 61 34 57 34 50Z" fill="#fff0de"/>
+          ${eye(43, 45, 4.600)}${eye(61, 45, 4.600, -0.18)}<path d="M49.600 50 h4.800 l-2.400 2.800 z" fill="#b94a2a"/>${smile(52, 54, 3.200, NV, 2)}
+          <path d="M37 33 Q37 18 52 18 Q67 18 67 33 Z" fill="#4f8de0"/><path d="M43 31 v-9 M49 31 v-12 M55 31 v-12 M61 31 v-9" stroke="#3a70c2" stroke-width="1.600"/><rect x="35" y="29" width="34" height="6.500" rx="3.250" fill="#3a70c2"/><circle cx="52" cy="15" r="5" fill="#77adf2"/>`,
+      // 샌디: 햄스터, 분홍 볼, 남색 헤드폰
+      7: `<circle cx="32" cy="27" r="7.500" fill="#e2a96c"/><circle cx="68" cy="27" r="7.500" fill="#e2a96c"/><circle cx="32" cy="27" r="3.600" fill="#f2a39d"/><circle cx="68" cy="27" r="3.600" fill="#f2a39d"/>
+          ${legs(37, 52, '#e6b074', 84, 11, 12)}
+          ${limb('M73 66 Q83 62 84 52', '#efbd80', 10)}
+          <path d="M50 21 C68 21 78 33 78 47 C78 54 76 58 74 61 C77 66 78 71 77 76 C75 87 65 93 50 93 C35 93 25 87 23 76 C22 71 23 66 26 61 C24 58 22 54 22 47 C22 33 32 21 50 21Z" fill="#efbd80"/>
+          <ellipse cx="50" cy="76" rx="17.500" ry="14.500" fill="#fadcab"/>
+          ${limb('M28 68 Q29 78 37 79', '#e6b074', 8)}
+          <circle cx="33.500" cy="52" r="7.500" fill="#f29a94"/><circle cx="66.500" cy="52" r="7.500" fill="#f29a94"/>
+          ${eye(42.500, 45, 4.400)}${eye(57.500, 45, 4.400, -0.18)}<path d="M47.800 49.500 h4.400 l-2.200 2.600 z" fill="#d86e6a"/><path d="M45.500 54 q2.250 2.600 4.500 0 q2.250 2.600 4.500 0" stroke="${NV}" stroke-width="1.900" fill="none" stroke-linecap="round"/>
+          <path d="M23 42 A27 27 0 0 1 77 42" stroke="#2e3a5c" stroke-width="5.500" fill="none" stroke-linecap="round"/>
+          <ellipse cx="21" cy="45" rx="8" ry="11.500" fill="#2e3a5c"/><ellipse cx="79" cy="45" rx="8" ry="11.500" fill="#2e3a5c"/><ellipse cx="18.500" cy="43" rx="2.400" ry="5.500" fill="#4c5a84"/><ellipse cx="81.500" cy="43" rx="2.400" ry="5.500" fill="#4c5a84"/>`
+    };
+    return `<svg viewBox="0 0 100 100" aria-hidden="true">${art[g]}</svg>`;
+  }
+  function charSVGOld(g) {
     // 키즈플랫 캐릭터 스타일: 통통한 전신, 큰 흰 눈 + 짙은 눈동자, 단순한 면 색
     const eye = (x, y, r = 5) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff"/><circle cx="${x + r * 0.15}" cy="${y + r * 0.1}" r="${r * 0.62}" fill="#1d2433"/><circle cx="${x + r * 0.4}" cy="${y - r * 0.25}" r="${r * 0.22}" fill="#fff"/>`;
     const dot = (x, y, r = 2.6) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#1d2433"/><circle cx="${x + r * 0.35}" cy="${y - r * 0.35}" r="${r * 0.35}" fill="#fff"/>`;
@@ -2482,9 +2700,24 @@ body.story-on { overflow: hidden; }
   const ukey = (gs, u) => `${gs}-${u}`;
   const hasContent = key => !!CONTENT[key];
   // 단계별 문제: 콘텐츠의 6묶음(개념·어휘·연산·적용·서술·실생활)을 5단계로 다시 묶어요
+  // 설정한 문항 수(3~20)에 맞춰 단계 문제를 늘리거나 줄여요. 모자라면 같은 단원의 다른 문제·쌍둥이 문제로 채워요
   function stageQuestions(key, i) {
+    const base = stageQuestionsBase(key, i), N = qCount(), C = CONTENT[key], G = GUARD[i];
+    if (base.length >= N) return base.slice(0, N);
+    const seen = new Set(base.map(q => q.src.join('-') + (q.swap ? 't' : 'm')));
+    const order = [[0, 1, 2, 3, 4, 5], [3, 2, 0, 1, 4, 5], [4, 5, 3, 2, 0, 1], [0, 1, 2, 3, 4, 5], [5, 4, 3, 2, 1, 0]][i] || [0, 1, 2, 3, 4, 5];
+    const out = base.slice();
+    for (const swap of [false, true]) for (const s2 of order) for (const k of [0, 1]) {
+      if (out.length >= N) break;
+      const id = `${s2}-${k}${swap ? 't' : 'm'}`; if (seen.has(id) || !C.stages[s2] || !C.stages[s2][k]) continue;
+      const set = C.stages[s2][k]; seen.add(id);
+      out.push({ unit: i === 3 ? '단원 총괄' : i === 4 ? '도전 문제' : G.step, src: [s2, k], swap, main: swap ? set.twin : set.main, twin: swap ? set.main : set.twin });
+    }
+    return out.slice(0, N);
+  }
+  function stageQuestionsBase(key, i) {
     const C = CONTENT[key], G = GUARD[i];
-    const tag = (s, k, swap, unit) => { const set = C.stages[s][k]; return { unit: unit || G.step, src: [s, k], main: swap ? set.twin : set.main, twin: swap ? set.main : set.twin }; };
+    const tag = (s, k, swap, unit) => { const set = C.stages[s][k]; return { unit: unit || G.step, src: [s, k], swap: !!swap, main: swap ? set.twin : set.main, twin: swap ? set.main : set.twin }; };
     if (i === 0) return [tag(0, 0), tag(0, 1), tag(1, 0)];
     if (i === 1) return [tag(3, 0), tag(3, 1), tag(2, 0)];
     if (i === 2) return [tag(4, 0), tag(4, 1), tag(5, 0)];
@@ -2502,6 +2735,12 @@ body.story-on { overflow: hidden; }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
   if (M.items && M.items.calc == null) M.items.calc = 1;
+  // 설정과 모험 기록
+  M.set = Object.assign({ qn: 5, sound: true }, M.set || {});
+  M.log = Object.assign({ solved: 0, first: 0, sec: 0, days: [] }, M.log || {});
+  const qCount = () => Math.max(3, Math.min(20, +M.set.qn || 5));
+  const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  function markAttend() { const k = dayKey(new Date()); if (!M.log.days.includes(k)) { M.log.days.push(k); M.log.days.sort(); try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} } }
   function saveM() { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} }
   function prog(key) { return M.prog[key] || (M.prog[key] = { st: [0, 0, 0, 0, 0], pct: [0, 0, 0, 0, 0], cl: [false, false, false, false, false], wrong: [] }); }
   // 잠금: 앞 단계를 마치면 다음 단계가 열려요
@@ -2791,7 +3030,7 @@ body.story-on { overflow: hidden; }
   }
   function renderBar() {
     const gs = M.sel.gs, us = unitsOf(gs);
-    $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip">코인 ${M.coins}</span>`;
+    $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="sumOpen"><span aria-hidden="true">⭐</span>모험 요약</button><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
   }
   // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
   const QUEST = {
@@ -2993,7 +3232,7 @@ body.story-on { overflow: hidden; }
   $('cmpClose').addEventListener('click', () => { render(); showModal('mapModal'); });
   // ---------- 8/8 완성 시네마틱: 나침반 각성 → 시계탑 부활 → 축하 파티 → 마스터 배지 ----------
   let cineCtx = null, cineTimers = [], confettiRAF = 0;
-  function sfx(fn) { try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; const ac = new AC(); fn(ac); setTimeout(() => { try { ac.close(); } catch (_) {} }, 4000); } catch (_) {} }
+  function sfx(fn) { if (M && M.set && M.set.sound === false) return; try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; const ac = new AC(); fn(ac); setTimeout(() => { try { ac.close(); } catch (_) {} }, 4000); } catch (_) {} }
   function playCharge() {    // 마법 차징 "위이잉- 챠르르륵"
     sfx(ac => {
       const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sawtooth';
@@ -3158,7 +3397,274 @@ body.story-on { overflow: hidden; }
   // 메인 화면의 매스 랜드 섬 지도 (선택한 단원의 진행 상황이 집마다 표시됨)
   // 집 5채 = 선택한 학기의 단원 5개. 단원의 나침반 5조각을 모두 모으면 그 집에 불이 켜져요
   const ROOFS = ['#e5484d', '#4f8de0', '#30a46c', '#b67cf2', '#f59e2b'];
+  // 메인 화면 꾸미기: 떠다니는 구름 하늘, 내 프로필, 코인 아이콘
+  const COIN_SVG = '<svg class="coin-ic" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#e89b00"/><circle cx="16" cy="15" r="13" fill="#ffc53d"/><circle cx="16" cy="15" r="9.500" fill="#ffd96b"/><circle cx="12.500" cy="13" r="1.600" fill="#8a5a00"/><circle cx="19.500" cy="13" r="1.600" fill="#8a5a00"/><path d="M11.500 17 q4.500 4.500 9 0" stroke="#8a5a00" stroke-width="1.800" fill="none" stroke-linecap="round"/><path d="M7.500 8.500 q2.500 -3 6 -3.500" stroke="#fff" stroke-width="1.800" fill="none" stroke-linecap="round" opacity=".8"/></svg>';
+  const PROFILE = { art: 2, level: 1, name: '루미' };
+  // 집(단원)을 정복했을 때 뜨는 축하 팝업
+  function homeCheer(gs, i, n) {
+    const host = $('homeModal'), G = GUARD[i];
+    if (host.hidden) { if (M.won) delete M.won[ukey(gs, i)]; saveM(); return; }
+    const old = $('cheer'); if (old) old.remove();
+    const el = document.createElement('div');
+    el.id = 'cheer'; el.className = 'cheer'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'cheerT');
+    const conf = Array.from({ length: 22 }, (_, k) => `<i style="left:${(k * 37) % 100}%;background:${['#ffc53d', '#ff8fab', '#7fd0f5', '#8fd27a', '#b995f5'][k % 5]};animation-delay:${-(k % 7) * 0.35}s;animation-duration:${2.2 + (k % 4) * 0.4}s"></i>`).join('');
+    el.innerHTML = `<div class="cheer-box"><div class="cheer-conf" aria-hidden="true">${conf}</div>
+      <div class="cheer-char" style="background:${G.bg}">${charSVG(G.art)}</div>
+      <p class="cheer-k">${i + 1}단원 정복!</p><h2 id="cheerT">${esc(unitName(gs, i))}</h2>
+      <p class="cheer-m">${G.name}의 집 문이 활짝 열렸어요!<br>${n >= 5 ? '시계탑이 모두 고쳐져서 다시 움직여요!' : `시계탑이 한 단계 더 고쳐졌어요. (${n}/5)`}</p>
+      <button type="button" class="btn cheer-ok">신난다!</button></div>`;
+    host.appendChild(el);
+    const close = () => { el.remove(); const h = $('homeMap').querySelector(`[data-house="${i}"]`); if (h) h.focus({ preventScroll: true }); };
+    el.querySelector('.cheer-ok').addEventListener('click', close);
+    el.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    el.querySelector('.cheer-ok').focus({ preventScroll: true });
+  }
+  function homeDeco() {
+    const sky = $('homeModal').querySelector('.sf-sky');
+    if (sky && !sky.dataset.deco) {
+      sky.dataset.deco = '1';
+      const cloud = '<svg viewBox="0 0 220 100" aria-hidden="true"><g fill="#e4f2fc"><ellipse cx="62" cy="70" rx="56" ry="24"/><ellipse cx="158" cy="72" rx="52" ry="22"/></g><g fill="#fff"><ellipse cx="58" cy="62" rx="52" ry="24"/><ellipse cx="112" cy="46" rx="48" ry="38"/><ellipse cx="160" cy="62" rx="50" ry="24"/><ellipse cx="80" cy="38" rx="30" ry="24"/><ellipse cx="146" cy="40" rx="26" ry="20"/></g></svg>';
+      const C = [[4, 30, 70, 0, 1], [16, 20, 95, -40, .85], [9, 38, 120, -75, .95], [30, 16, 105, -20, .7], [24, 26, 82, -55, .9], [44, 22, 130, -100, .75], [2, 14, 150, -110, .6]];
+      sky.innerHTML = '<span class="hsun"></span>' + C.map(([t, w, d, s, o]) => `<span class="hcloud" style="--t:${t}%;--w:${w}vmin;--d:${d}s;--s:${s}s;--o:${o};--x:${Math.round(-s * 0.8)}vw">${cloud}</span>`).join('') + '<span class="hhill a"></span><span class="hhill b"></span>';
+    }
+    const pf = $('homeProfile');
+    if (pf) pf.innerHTML = `<span class="pf-av">${charSVG(PROFILE.art)}</span><span class="pf-tx"><span class="pf-lv">Lv.${PROFILE.level}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
+  }
   function villageSVG(gs) {
+    const names = unitsOf(gs), pcs = names.map((_, u) => piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
+    // 방금 정복한 집: 캐릭터가 점프하고 축하 팝업이 떠요 (한 번만)
+    const won = M.won || (M.won = {}), fresh = lit.map((v, u) => v && !won[ukey(gs, u)]), fi = fresh.indexOf(true);
+    fresh.forEach((f, u) => { if (f) won[ukey(gs, u)] = 1; });
+    if (fi >= 0) setTimeout(() => homeCheer(gs, fi, n), 700);
+    const H = [[190, 400], [340, 490], [540, 482], [800, 420], [770, 235]], T = [450, 268], OL = '#2b3a55';
+    const rnd = (x, y, r, c = '#4fae5a', d = '#3c8f4a') => `<g><ellipse cx="${x}" cy="${y + r * 0.95}" rx="${r * 0.8}" ry="${r * 0.22}" fill="#2f7d3c" opacity=".22"/><rect x="${x - 3.500}" y="${y + r * 0.2}" width="7" height="${r * 0.75}" rx="3" fill="#8a5a33"/><circle cx="${x}" cy="${y}" r="${r}" fill="${d}"/><circle cx="${x - r * 0.12}" cy="${y - r * 0.14}" r="${r * 0.86}" fill="${c}"/><circle cx="${x - r * 0.38}" cy="${y - r * 0.42}" r="${r * 0.36}" fill="#fff" opacity=".22"/><circle cx="${x + r * 0.3}" cy="${y + r * 0.2}" r="${r * 0.14}" fill="#fff" opacity=".12"/></g>`;
+    const pine = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="24" rx="15" ry="4.500" fill="#2f7d3c" opacity=".22"/><rect x="-3" y="12" width="6" height="12" rx="2" fill="#7a4d2b"/><path d="M0 -34 L14 -12 H-14 Z M0 -22 L18 4 H-18 Z M0 -8 L21 18 H-21 Z" fill="#2f8f5a"/><path d="M0 -34 L14 -12 H0 Z M0 -22 L18 4 H0 Z M0 -8 L21 18 H0 Z" fill="#257848"/></g>`;
+    const bush = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><circle cx="-8" cy="0" r="8" fill="#5cb565"/><circle cx="6" cy="1" r="7" fill="#4aa457"/><circle cx="-1" cy="-5" r="8" fill="#6cc474"/></g>`;
+    const leafy = (x, y, s = 1, c = ['#3f9a52', '#57b862', '#86d37c'], fruit) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="30" rx="21" ry="5" fill="#2f7d3c" opacity=".24"/>
+      <path d="M-5 30 C-3 20 -3 10 -6 0 H6 C3 10 3 20 6 30 Z" fill="#8f5d36"/><path d="M1 30 C0 20 1 10 2 0 H6 C3 10 3 20 6 30 Z" fill="#6f4526"/><path d="M-2 13 L-13 1 M2 15 L13 3" stroke="#8f5d36" stroke-width="3.500" stroke-linecap="round"/>
+      <path d="M-27 -3 C-34 -15 -24 -28 -13 -25 C-12 -39 9 -43 15 -30 C27 -33 34 -18 27 -8 C32 3 21 11 10 6 C4 13 -8 13 -13 5 C-23 9 -32 3 -27 -3 Z" fill="${c[0]}"/>
+      <path d="M-23 -7 C-28 -17 -19 -26 -11 -22 C-9 -34 8 -38 12 -27 C23 -29 27 -17 22 -10 C19 -3 9 -1 3 -6 C-4 0 -17 0 -23 -7 Z" fill="${c[1]}"/>
+      <path d="M-15 -18 C-15 -27 -4 -31 2 -26 C8 -29 13 -22 9 -18 C4 -13 -9 -12 -15 -18 Z" fill="${c[2]}" opacity=".85"/>
+      <path d="M-16 -2 q3 -3 6 0 M10 -10 q3 -3 6 0 M-2 2 q3 -3 6 0" stroke="${c[0]}" stroke-width="1.800" fill="none" stroke-linecap="round"/>
+      ${fruit ? '<circle cx="-12" cy="-8" r="3" fill="#ff6b6b"/><circle cx="8" cy="-16" r="3" fill="#ff6b6b"/><circle cx="14" cy="-2" r="3" fill="#ff6b6b"/><circle cx="-2" cy="-24" r="3" fill="#ff6b6b"/>' : ''}</g>`;
+    const pine2 = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="24" rx="16" ry="4.500" fill="#2f7d3c" opacity=".24"/><rect x="-3" y="12" width="6" height="12" rx="2" fill="#7a4d2b"/>
+      <path d="M0 -36 L13 -14 L7 -15 L18 3 L10 2 L22 19 H-22 L-10 2 L-18 3 L-7 -15 L-13 -14 Z" fill="#2f8f5a"/><path d="M0 -36 L13 -14 L7 -15 L18 3 L10 2 L22 19 H0 Z" fill="#23744a"/>
+      <path d="M-7 -15 q7 5 14 0 M-10 2 q10 6 20 0" stroke="#1d6440" stroke-width="1.600" fill="none" opacity=".7"/></g>`;
+    const trees = [[150, 262, 1.05], [606, 188, .9, 1], [566, 372, .9], [116, 344, .8, 1], [884, 300, .85]].map(([x, y, s, f], k) => leafy(x, y, s, k % 2 ? ['#4a9a4a', '#69bd5c', '#9bdc82'] : ['#3f9a52', '#57b862', '#86d37c'], f)).join('')
+      + [[186, 322, .8], [356, 196, .8], [720, 548, .7], [140, 430, .7], [456, 548, .7], [640, 546, .6]].map(a => pine2(...a)).join('')
+      + [[300, 445, 1], [690, 300, .9], [430, 430, .8], [870, 372, .8], [560, 160, .9], [262, 336, .8], [500, 396, .8]].map(a => bush(...a)).join('');
+    const treesOld = [[150, 285, 24], [212, 262, 17], [116, 362, 18], [262, 548, 19], [452, 556, 17], [612, 215, 19], [338, 212, 21], [640, 548, 15], [262, 332, 14], [500, 392, 15]].map(([x, y, r], k) => rnd(x, y, r, k % 3 ? '#57b862' : '#74c96a', k % 3 ? '#3c9150' : '#4ea552')).join('')
+      + [[176, 318, .8], [905, 322, .9], [392, 180, .75], [720, 548, .7], [140, 430, .7]].map(a => pine(...a)).join('')
+      + [[300, 445, 1], [690, 300, .9], [430, 430, .8], [870, 372, .8], [560, 160, .9]].map(a => bush(...a)).join('');
+    const flowers = [[300, 388], [606, 396], [404, 396], [716, 336], [236, 470], [500, 300], [352, 300]].map(([x, y], k) => `<g><circle cx="${x}" cy="${y}" r="4.500" fill="${['#ff8fab', '#ffd34d', '#c79bff'][k % 3]}"/><circle cx="${x}" cy="${y}" r="1.600" fill="#fff"/><circle cx="${x + 11}" cy="${y + 6}" r="3.600" fill="#fff"/><circle cx="${x + 11}" cy="${y + 6}" r="1.400" fill="#ffd34d"/><circle cx="${x - 8}" cy="${y + 8}" r="3.600" fill="${['#ffd34d', '#ff8fab', '#fff'][k % 3]}"/></g>`).join('');
+    const tufts = [[180, 220], [300, 250], [420, 330], [520, 250], [600, 330], [740, 380], [840, 300], [700, 180], [480, 150], [220, 500], [400, 500], [620, 440], [820, 150], [330, 150], [160, 330]].map(([x, y]) => `<path d="M${x - 6} ${y} l3 -7 l3 7 l3 -9 l3 9" stroke="#6fb85c" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`).join('');
+    const pts = [...H, T];
+    let road = `M${pts[0][0]} ${pts[0][1] + 16}`;
+    for (let k = 1; k < pts.length; k++) { const [ax, ay] = pts[k - 1], [bx, by] = pts[k]; road += ` Q${(ax + bx) / 2} ${Math.max(ay, by) + 46} ${bx} ${by + 16}`; }
+    const win = (x, y, w, h, on, arch) => `<path d="${arch ? `M${x} ${y + h} V${y + w / 2} a${w / 2} ${w / 2} 0 0 1 ${w} 0 V${y + h} Z` : `M${x} ${y} h${w} v${h} h${-w} Z`}" fill="${on ? '#ffd86b' : '#bfe6ff'}" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M${x + w / 2} ${y + (arch ? 2 : 0)} v${h - (arch ? 2 : 0)} M${x} ${y + h * 0.55} h${w}" stroke="${OL}" stroke-width="1.300" opacity=".7"/>`;
+    const door = (x, y, w, h, c, arch = true) => `<path d="M${x} ${y + h} V${y + (arch ? w / 2 : 0)} ${arch ? `a${w / 2} ${w / 2} 0 0 1 ${w} 0` : `h${w}`} V${y + h} Z" fill="${c}" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><circle cx="${x + w - 4}" cy="${y + h * 0.6}" r="1.500" fill="#ffd34d"/>`;
+    const tiles = (x1, x2, y1, y2, c) => { let d = ''; for (let k = 1; k < 4; k++) { const t = k / 4, y = y1 + (y2 - y1) * t, hw = (x2 - x1) / 2 * t, cx = (x1 + x2) / 2; d += `M${(cx - hw).toFixed(1)} ${y.toFixed(1)} H${(cx + hw).toFixed(1)} `; } return `<path d="${d}" stroke="${c}" stroke-width="1.600" opacity=".55"/>`; };
+    // 집 5채: 1번 오두막에서 5번 저택으로 갈수록 크고 화려해져요. [그림, 반폭, 지붕 높이]
+    const lock = (x, y, p) => `<g><circle cx="${x}" cy="${y}" r="18" fill="#fff" stroke="${OL}" stroke-width="2.500"/><path d="M${x - 6} ${y - 3} v-5 a6 6 0 0 1 12 0 v5" stroke="#7c8794" stroke-width="3.500" fill="none"/><rect x="${x - 9.500}" y="${y - 4}" width="19" height="15" rx="3.500" fill="#f2c94c" stroke="${OL}" stroke-width="2"/><circle cx="${x}" cy="${y + 2}" r="2.300" fill="${OL}"/><path d="M${x} ${y + 3} v4" stroke="${OL}" stroke-width="2" stroke-linecap="round"/>
+      <rect x="${x - 16}" y="${y + 21}" width="32" height="15" rx="7.500" fill="${OL}" stroke="#fff" stroke-width="1.500"/><text x="${x}" y="${y + 32.500}" text-anchor="middle" font-family="Jua" font-size="11" fill="#fff">${p}/${NSTG}</text></g>`;
+    const HOUSE = [
+      (x, y, on) => [`<rect x="${x - 28}" y="${y - 12}" width="56" height="36" rx="4" fill="#fff3dc" stroke="${OL}" stroke-width="2.500"/>
+        <path d="M${x - 37} ${y - 10} L${x} ${y - 44} L${x + 37} ${y - 10} Z" fill="#d9924a" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/>${tiles(x - 37, x + 37, y - 44, y - 10, '#a8682c')}
+        ${door(x - 20, y + 2, 14, 22, '#b97a45', false)}${win(x + 2, y - 4, 16, 14, on)}
+        <path d="M${x - 46} ${y + 24} v-12 M${x - 40} ${y + 24} v-12 M${x - 34} ${y + 24} v-12 M${x - 49} ${y + 16} h18" stroke="#b98a55" stroke-width="2.500" stroke-linecap="round"/>`, 30, 46],
+      (x, y, on) => [`<rect x="${x + 14}" y="${y - 56}" width="11" height="24" fill="#c9694a" stroke="${OL}" stroke-width="2.500"/><rect x="${x + 12}" y="${y - 59}" width="15" height="5" rx="2" fill="#8f4a36"/>
+        <rect x="${x - 34}" y="${y - 18}" width="68" height="42" rx="4" fill="#fdf6ea" stroke="${OL}" stroke-width="2.500"/>
+        <path d="M${x - 43} ${y - 16} L${x} ${y - 56} L${x + 43} ${y - 16} Z" fill="#4f8de0" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/>${tiles(x - 43, x + 43, y - 56, y - 16, '#2f66b5')}
+        <circle cx="${x}" cy="${y - 30}" r="5" fill="${on ? '#ffd86b' : '#bfe6ff'}" stroke="${OL}" stroke-width="2"/>
+        ${door(x - 8, y - 2, 16, 26, '#e0a060')}${win(x - 29, y - 8, 15, 14, on)}${win(x + 14, y - 8, 15, 14, on)}
+        <rect x="${x - 31}" y="${y + 7}" width="19" height="5" rx="2" fill="#8a5a33"/><circle cx="${x - 27}" cy="${y + 6}" r="2.500" fill="#ff8fab"/><circle cx="${x - 21.500}" cy="${y + 5}" r="2.500" fill="#ffd34d"/><circle cx="${x - 16}" cy="${y + 6}" r="2.500" fill="#ff8fab"/>
+        <rect x="${x + 12}" y="${y + 7}" width="19" height="5" rx="2" fill="#8a5a33"/><circle cx="${x + 16}" cy="${y + 6}" r="2.500" fill="#ffd34d"/><circle cx="${x + 21.500}" cy="${y + 5}" r="2.500" fill="#ff8fab"/><circle cx="${x + 27}" cy="${y + 6}" r="2.500" fill="#ffd34d"/>`, 36, 60],
+      (x, y, on) => [`<rect x="${x - 40}" y="${y - 34}" width="80" height="58" rx="4" fill="#fffaf2" stroke="${OL}" stroke-width="2.500"/>
+        <path d="M${x - 49} ${y - 32} L${x - 8} ${y - 72} L${x + 49} ${y - 32} Z" fill="#d9683f" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/>
+        <path d="M${x - 38} ${y - 43} L${x + 34} ${y - 43} M${x - 27} ${y - 54} L${x + 18} ${y - 54} M${x - 17} ${y - 64} L${x + 4} ${y - 64}" stroke="#a8431f" stroke-width="1.800" opacity=".6"/>
+        <path d="M${x - 30} ${y - 43} v10 M${x - 14} ${y - 54} v21 M${x + 2} ${y - 64} v31 M${x + 18} ${y - 54} v21 M${x + 32} ${y - 43} v10" stroke="#f08a5c" stroke-width="2" opacity=".7"/>
+        ${win(x + 6, y - 26, 22, 16, on)}
+        <rect x="${x + 1}" y="${y - 8}" width="33" height="8" rx="1.500" fill="#b5654a" stroke="${OL}" stroke-width="2"/><path d="M${x + 7} ${y - 8} v8 M${x + 14} ${y - 8} v8 M${x + 21} ${y - 8} v8 M${x + 28} ${y - 8} v8" stroke="#8a4632" stroke-width="1.300"/>
+        ${win(x + 6, y + 4, 22, 20, on, true)}
+        <path d="M${x - 44} ${y - 2} L${x - 24} ${y - 22} L${x - 4} ${y - 2} Z" fill="#e2774c" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/>
+        <path d="M${x - 39} ${y - 2} V${y + 24} M${x - 9} ${y - 2} V${y + 24}" stroke="#fffaf2" stroke-width="5"/><path d="M${x - 41.500} ${y - 1} V${y + 24} M${x - 36.500} ${y - 1} V${y + 24} M${x - 11.500} ${y - 1} V${y + 24} M${x - 6.500} ${y - 1} V${y + 24}" stroke="${OL}" stroke-width="1.500"/>
+        ${door(x - 31, y + 2, 14, 22, '#8a5a33')}`, 42, 74],
+      (x, y, on) => [`<rect x="${x - 34}" y="${y - 84}" width="11" height="22" fill="#b9b3c4" stroke="${OL}" stroke-width="2.500"/><rect x="${x - 36}" y="${y - 87}" width="15" height="5" rx="2" fill="#8d879a"/>
+        <rect x="${x - 43}" y="${y - 46}" width="86" height="70" rx="4" fill="#fff0dc" stroke="${OL}" stroke-width="2.500"/>
+        <rect x="${x - 43}" y="${y + 15}" width="86" height="9" fill="#c9bfae" stroke="${OL}" stroke-width="2"/>
+        <path d="M${x - 52} ${y - 44} L${x - 32} ${y - 76} H${x + 32} L${x + 52} ${y - 44} Z" fill="#2fa67c" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/>
+        <path d="M${x - 45} ${y - 55} H${x + 45} M${x - 38} ${y - 66} H${x + 38}" stroke="#1d7a5a" stroke-width="1.800" opacity=".6"/>
+        <path d="M${x - 13} ${y - 50} L${x} ${y - 68} L${x + 13} ${y - 50} Z" fill="#3cba8d" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/><rect x="${x - 9}" y="${y - 52}" width="18" height="8" fill="#fff0dc" stroke="${OL}" stroke-width="2"/><circle cx="${x}" cy="${y - 56}" r="3.500" fill="${on ? '#ffd86b' : '#bfe6ff'}" stroke="${OL}" stroke-width="1.500"/>
+        ${win(x - 36, y - 37, 15, 17, on)}${win(x + 21, y - 37, 15, 17, on)}${win(x - 9, y - 38, 18, 20, on, true)}
+        <path d="M${x - 37.500} ${y - 37} v17 M${x - 19.500} ${y - 37} v17 M${x + 19.500} ${y - 37} v17 M${x + 37.500} ${y - 37} v17" stroke="#2fa67c" stroke-width="3.500"/>
+        <rect x="${x - 18}" y="${y - 17}" width="36" height="6" rx="2" fill="#fff" stroke="${OL}" stroke-width="2"/><path d="M${x - 14} ${y - 26} v9 M${x - 7} ${y - 26} v9 M${x} ${y - 26} v9 M${x + 7} ${y - 26} v9 M${x + 14} ${y - 26} v9 M${x - 17} ${y - 26} h34" stroke="${OL}" stroke-width="1.600"/>
+        ${door(x - 10, y - 6, 20, 30, '#7a4d2b')}<path d="M${x} ${y - 6} v30" stroke="${OL}" stroke-width="1.500"/>
+        ${win(x - 37, y - 4, 16, 15, on)}${win(x + 21, y - 4, 16, 15, on)}`, 45, 88],
+      (x, y, on) => [`<rect x="${x - 26}" y="${y - 52}" width="78" height="76" rx="4" fill="#fff6e6" stroke="${OL}" stroke-width="2.500"/>
+        <rect x="${x - 26}" y="${y - 16}" width="78" height="5" fill="#f2c94c" stroke="${OL}" stroke-width="1.500"/>
+        <path d="M${x - 33} ${y - 50} L${x - 14} ${y - 84} H${x + 40} L${x + 59} ${y - 50} Z" fill="#8a63d2" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/>
+        <path d="M${x - 27} ${y - 61} H${x + 53} M${x - 21} ${y - 72} H${x + 47}" stroke="#6442b0" stroke-width="1.800" opacity=".6"/><path d="M${x - 14} ${y - 84} H${x + 40}" stroke="#f2c94c" stroke-width="4" stroke-linecap="round"/>
+        <path d="M${x + 2} ${y - 56} L${x + 14} ${y - 74} L${x + 26} ${y - 56} Z" fill="#a17fe6" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/><rect x="${x + 6}" y="${y - 58}" width="16" height="9" fill="#fff6e6" stroke="${OL}" stroke-width="2"/><circle cx="${x + 14}" cy="${y - 61}" r="3.500" fill="${on ? '#ffd86b' : '#bfe6ff'}" stroke="${OL}" stroke-width="1.500"/>
+        ${win(x - 4, y - 42, 15, 19, on, true)}${win(x + 31, y - 42, 15, 19, on, true)}${win(x + 33, y - 5, 14, 17, on)}
+        <path d="M${x + 2} ${y + 24} v-22 a12 12 0 0 1 24 0 v22 Z" fill="#7a4d2b" stroke="${OL}" stroke-width="2.500"/><path d="M${x + 14} ${y - 10} v34" stroke="${OL}" stroke-width="1.500"/><circle cx="${x + 11}" cy="${y + 10}" r="1.500" fill="#ffd34d"/><circle cx="${x + 17}" cy="${y + 10}" r="1.500" fill="#ffd34d"/>
+        <path d="M${x - 3} ${y + 24} h34 M${x - 7} ${y + 28} h42" stroke="#d8cdb8" stroke-width="4" stroke-linecap="round"/>
+        <rect x="${x - 54}" y="${y - 66}" width="32" height="90" rx="5" fill="#fff0d6" stroke="${OL}" stroke-width="2.500"/>
+        <path d="M${x - 60} ${y - 64} L${x - 38} ${y - 108} L${x - 16} ${y - 64} Z" fill="#7350c4" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/><path d="M${x - 52} ${y - 78} H${x - 24} M${x - 46} ${y - 91} H${x - 30}" stroke="#55389e" stroke-width="1.800" opacity=".6"/>
+        <path d="M${x - 38} ${y - 108} v-14" stroke="${OL}" stroke-width="2.500"/><path d="M${x - 37} ${y - 122} h16 l-5 5 5 5 h-16 z" fill="#f2c94c" stroke="${OL}" stroke-width="1.500"/>
+        ${win(x - 45, y - 54, 14, 18, on, true)}${win(x - 45, y - 24, 14, 18, on, true)}${win(x - 45, y + 2, 14, 14, on)}
+        <rect x="${x - 54}" y="${y - 32}" width="32" height="4" fill="#f2c94c" stroke="${OL}" stroke-width="1.500"/>`, 56, 110]
+    ];
+    const houses = H.map(([x, y], i) => {
+      const G = GUARD[i], on = lit[i], cur = i === M.sel.u, nm = names[i];
+      const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
+      const [body, hw, top] = HOUSE[i](x, y, on), cx = x + hw - 6;
+      return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(nm)}, 나침반 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
+        ${on ? `<circle class="vg-glow" cx="${x}" cy="${y - 26}" r="84" fill="url(#vgGlow)"/>` : ''}
+        ${cur ? `<ellipse class="vg-cur" cx="${x + 16}" cy="${y + 24}" rx="${hw + 52}" ry="22" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
+        <ellipse cx="${x}" cy="${y + 25}" rx="${hw + 10}" ry="9" fill="#2f7d3c" opacity=".25"/>
+        ${on ? body : `<g filter="url(#vgDim)" opacity=".85">${body}</g>`}
+        ${on ? '' : lock(x, y - top * 0.42, pcs[i])}<ellipse cx="${cx + 31}" cy="${y + 25}" rx="21" ry="5.500" fill="#2f7d3c" opacity=".28"/>
+        <g class="${fresh[i] ? 'vg-jump' : 'vg-bob'}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 36}) scale(.62)">${art}</g></g>
+        <circle cx="${x - hw - 2}" cy="${y - top + 12}" r="14" fill="${OL}" stroke="#fff" stroke-width="2.500"/><text x="${x - hw - 2}" y="${y - top + 17.500}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text>
+        ${on ? `<g class="vg-spark" fill="${fresh[i] ? '#ffd34d' : '#fff'}"><path d="M${x - hw - 14} ${y - top + 40} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${x + hw + 4} ${y - top + 6} l2.500 6 6 2.500 -6 2.500 -2.500 6 -2.500 -6 -6 -2.500 6 -2.500z"/></g>` : ''}
+      </g>`;
+    }).join('');
+    const [tx, ty] = T, done = n === 5, B = ty + 30, ST = '#dcae66', STD = '#b98a47', GD = '#f2c94c', SL = '#7c8794', SLD = '#626c78';
+    let ticks = ''; for (let k = 0; k < 12; k++) { const a = k * Math.PI / 6, r1 = k % 3 ? 19 : 17, r2 = 22.500; ticks += `M${(tx + Math.sin(a) * r1).toFixed(1)} ${(B - 124 - Math.cos(a) * r1).toFixed(1)} L${(tx + Math.sin(a) * r2).toFixed(1)} ${(B - 124 - Math.cos(a) * r2).toFixed(1)} `; }
+    const arches = (x0, y0, w, h, cnt, gap) => Array.from({ length: cnt }, (_, k) => `<path d="M${x0 + k * (w + gap)} ${y0 + h} v${-(h - w / 2)} a${w / 2} ${w / 2} 0 0 1 ${w} 0 v${h - w / 2} z" fill="#4a3a2a" opacity=".75"/>`).join('');
+    // 시계탑은 망가진 채로 시작해요. 집을 하나 정복할 때마다 한 군데씩 고쳐져요:
+    // 1채 몸통 균열·돌무더기, 2채 시계판, 3채 종루·지붕, 4채 첨탑, 5채 금빛 완성 + 시곗바늘이 다시 돌아요
+    const fix = k => n >= k, CRK = '#5a4226', GDX = fix(4) ? GD : '#c9a548';
+    const tower = `<g>
+      <ellipse cx="${tx}" cy="${B + 2}" rx="70" ry="14" fill="#2f7d3c" opacity=".28"/>
+      ${n >= 1 && !done ? `<g stroke="#a8743c" stroke-width="3.500" stroke-linecap="round"><path d="M${tx - 64} ${B + 2} V${B - 118} M${tx - 48} ${B + 2} V${B - 118} M${tx - 64} ${B - 30} L${tx - 48} ${B - 58} M${tx - 64} ${B - 74} L${tx - 48} ${B - 102}"/></g><g fill="#c98b4a" stroke="${OL}" stroke-width="1.500"><rect x="${tx - 70}" y="${B - 44}" width="32" height="5" rx="2"/><rect x="${tx - 70}" y="${B - 88}" width="32" height="5" rx="2"/><rect x="${tx - 70}" y="${B - 122}" width="32" height="5" rx="2"/></g>` : ''}
+      <g ${done ? '' : 'filter="url(#vgDull)"'}>
+      <rect x="${tx - 34}" y="${B - 92}" width="68" height="92" fill="${ST}" stroke="${OL}" stroke-width="3"/>
+      <path d="M${tx - 22} ${B - 88} V${B - 12} M${tx - 11} ${B - 88} V${B - 34} M${tx} ${B - 88} V${B - 34} M${tx + 11} ${B - 88} V${B - 34} M${tx + 22} ${B - 88} V${B - 12}" stroke="${STD}" stroke-width="2.500"/>
+      <path d="M${tx - 34} ${B - 62} h68 M${tx - 34} ${B - 36} h68" stroke="${STD}" stroke-width="2"/>
+      ${arches(tx - 28, B - 84, 5, 18, 5, 7.750)}
+      ${fix(1) ? '' : `<path d="M${tx + 12} ${B - 34} h16 v10 h-9 v7 h-7 z M${tx - 30} ${B - 58} h10 v8 h-10 z" fill="#7d5f36"/><path d="M${tx - 16} ${B - 86} l8 14 l-9 11 l10 15 l-6 13 l7 10 M${tx + 26} ${B - 70} l-7 11 l6 10 l-5 9" stroke="${CRK}" stroke-width="2.500" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`}
+      <rect x="${tx - 40}" y="${B - 12}" width="80" height="12" rx="2" fill="#c79a55" stroke="${OL}" stroke-width="3"/>
+      <path d="M${tx - 11} ${B} v-20 a11 11 0 0 1 22 0 v20 z" fill="#7a4d2b" stroke="${OL}" stroke-width="2.500"/><path d="M${tx} ${B - 30} v30" stroke="${OL}" stroke-width="1.500"/>
+      ${fix(1) ? '' : `<path d="M${tx - 13} ${B - 22} L${tx + 13} ${B - 6} M${tx + 13} ${B - 22} L${tx - 13} ${B - 6}" stroke="#a8743c" stroke-width="4.500" stroke-linecap="round"/>`}
+      <rect x="${tx - 40}" y="${B - 160}" width="80" height="70" fill="#e6bb74" stroke="${OL}" stroke-width="3"/>
+      <rect x="${tx - 44}" y="${B - 96}" width="88" height="8" rx="2" fill="${GDX}" stroke="${OL}" stroke-width="2.500"/>
+      <rect x="${tx - 31}" y="${B - 155}" width="62" height="62" rx="3" fill="#2b3a55" stroke="${GDX}" stroke-width="4"/>
+      <path d="M${tx - 25} ${B - 149} l5 0 l-5 5 z M${tx + 25} ${B - 149} l-5 0 l5 5 z M${tx - 25} ${B - 99} l5 0 l-5 -5 z M${tx + 25} ${B - 99} l-5 0 l5 -5 z" fill="${GDX}"/>
+      <circle cx="${tx}" cy="${B - 124}" r="26" fill="${done ? '#ffe9a0' : fix(2) ? '#fff' : '#d9d2c0'}" stroke="${GDX}" stroke-width="3"/><circle cx="${tx}" cy="${B - 124}" r="14" fill="none" stroke="#c9d3df" stroke-width="1.500"/>
+      <path d="${ticks}" stroke="#2b3a55" stroke-width="2.200" stroke-linecap="round" ${fix(2) ? '' : 'stroke-dasharray="3 9" opacity=".6"'}/>
+      ${fix(2) ? `<g class="${done ? 'hands spin' : ''}" style="transform-origin:${tx}px ${B - 124}px"><path d="M${tx} ${B - 124} V${B - 143}" stroke="#2b3a55" stroke-width="3" stroke-linecap="round"/><path d="M${tx} ${B - 124} L${tx + 11} ${B - 117}" stroke="#2b3a55" stroke-width="4" stroke-linecap="round"/></g>`
+        : `<path d="M${tx} ${B - 124} L${tx + 3} ${B - 104}" stroke="#2b3a55" stroke-width="3" stroke-linecap="round"/><path d="M${tx} ${B - 124} l-7 5" stroke="#2b3a55" stroke-width="4" stroke-linecap="round"/><path d="M${tx - 20} ${B - 141} l11 8 l-5 8 l13 5 l-3 9 l10 9 M${tx + 4} ${B - 120} l12 -9" stroke="${CRK}" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/><path d="M${tx + 8} ${B - 147} l10 4 l-3 9 z" fill="#2b3a55"/>`}
+      <circle cx="${tx}" cy="${B - 124}" r="3" fill="${GDX}" stroke="#2b3a55" stroke-width="1.500"/>
+      <rect x="${tx - 37}" y="${B - 182}" width="74" height="22" fill="${ST}" stroke="${OL}" stroke-width="3"/>${arches(tx - 31, B - 178, 6, 16, 7, 3.330)}
+      <rect x="${tx - 44}" y="${B - 164}" width="88" height="7" rx="2" fill="${GDX}" stroke="${OL}" stroke-width="2.500"/>
+      <path d="M${tx - 42} ${B - 164} v-22 M${tx + 42} ${B - 164} v-22" stroke="${STD}" stroke-width="5" stroke-linecap="round"/>${fix(3) ? `<path d="M${tx - 42} ${B - 186} v-9 M${tx + 42} ${B - 186} v-9" stroke="${GDX}" stroke-width="3" stroke-linecap="round"/>` : ''}
+      <path d="M${tx - 40} ${B - 182} L${tx - 20} ${B - 210} H${tx + 20} L${tx + 40} ${B - 182} Z" fill="${SL}" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/><path d="M${tx} ${B - 210} L${tx + 20} ${B - 210} L${tx + 40} ${B - 182} H${tx} Z" fill="${SLD}" opacity=".55"/>
+      ${fix(3) ? `<path d="M${tx - 20} ${B - 188} l4 -7 l4 7 z M${tx - 4} ${B - 188} l4 -7 l4 7 z M${tx + 12} ${B - 188} l4 -7 l4 7 z M${tx - 12} ${B - 198} l4 -7 l4 7 z M${tx + 4} ${B - 198} l4 -7 l4 7 z" fill="${GDX}" stroke="${OL}" stroke-width="1.200" stroke-linejoin="round"/>`
+        : `<path d="M${tx - 24} ${B - 190} l9 -7 l7 5 l-4 8 z M${tx + 6} ${B - 203} l11 2 l-2 9 l-9 -3 z M${tx - 4} ${B - 192} l6 -3 l4 6 l-7 2 z" fill="#343a45"/><path d="M${tx - 38} ${B - 181} L${tx + 32} ${B - 163} M${tx - 32} ${B - 162} L${tx + 38} ${B - 180}" stroke="#a8743c" stroke-width="5" stroke-linecap="round"/><circle cx="${tx - 34}" cy="${B - 180}" r="1.300" fill="${OL}"/><circle cx="${tx + 34}" cy="${B - 179}" r="1.300" fill="${OL}"/>`}
+      <rect x="${tx - 19}" y="${B - 226}" width="38" height="16" fill="${GDX}" stroke="${OL}" stroke-width="2.500"/>${arches(tx - 15, B - 223, 5, 12, 4, 3.330)}
+      <rect x="${tx - 23}" y="${B - 229}" width="46" height="5" rx="2" fill="${fix(4) ? '#d9a92a' : '#b08d3c'}" stroke="${OL}" stroke-width="2"/>
+      ${fix(4) ? `<path d="M${tx - 21} ${B - 229} L${tx} ${B - 266} L${tx + 21} ${B - 229} Z" fill="${SL}" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/><path d="M${tx} ${B - 266} L${tx + 21} ${B - 229} H${tx} Z" fill="${SLD}" opacity=".55"/>
+        <path d="M${tx - 12} ${B - 240} h24 M${tx - 7} ${B - 250} h14" stroke="${GD}" stroke-width="2" stroke-linecap="round"/>
+        <path d="M${tx} ${B - 266} v-13 M${tx - 5} ${B - 274} h10" stroke="${GD}" stroke-width="3" stroke-linecap="round"/><circle cx="${tx}" cy="${B - 267}" r="3.500" fill="${GD}" stroke="${OL}" stroke-width="1.500"/>`
+        : `<path d="M${tx - 21} ${B - 229} L${tx - 12} ${B - 246} l5 5 l4 -8 l5 7 l4 -5 L${tx + 21} ${B - 229} Z" fill="${SL}" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/>`}
+      </g>
+      ${fix(4) ? '' : `<g transform="translate(${tx + 62},${B - 2}) rotate(72)"><path d="M-11 0 L0 -24 L11 0 Z" fill="${SL}" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/><path d="M0 -24 v-10 M-4 -30 h8" stroke="#c9a548" stroke-width="2.500" stroke-linecap="round"/></g>`}
+      ${fix(2) ? '' : `<g transform="translate(${tx - 52},${B + 2})"><circle r="9" fill="#c9a548" stroke="#8a6a1f" stroke-width="4.500" stroke-dasharray="3.600 3.470"/><circle r="6.500" fill="#c9a548"/><circle r="2.500" fill="#8a6a1f"/></g>`}
+      ${fix(1) ? '' : `<g fill="#bfa06c" stroke="${OL}" stroke-width="1.800" stroke-linejoin="round"><path d="M${tx + 36} ${B + 8} l7 -9 l10 2 l3 8 z"/><path d="M${tx - 34} ${B + 10} l5 -6 l8 1 l2 6 z"/><path d="M${tx + 20} ${B + 12} l4 -5 l6 1 l1 5 z"/></g>`}
+      ${done ? `<g class="vg-spark" fill="#fff6c2"><path d="M${tx - 58} ${B - 150} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${tx + 54} ${B - 200} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${tx + 50} ${B - 110} l2.500 6 6 2.500 -6 2.500 -2.500 6 -2.500 -6 -6 -2.500 6 -2.500z"/></g>` : ''}
+      <rect x="${tx - 66}" y="${ty + 42}" width="132" height="30" rx="15" fill="${done ? '#b07800' : '#2b3a55'}" stroke="#fff" stroke-width="2"/><text x="${tx}" y="${ty + 63}" text-anchor="middle" font-family="Jua" font-size="17" fill="#fff">${done ? '시계탑 수리 완료!' : `시계탑 수리 ${n}/5`}</text>
+    </g>`;
+    const towerOld = `<g>
+      <ellipse cx="${tx}" cy="${B + 2}" rx="70" ry="14" fill="#2f7d3c" opacity=".28"/>
+      <rect x="${tx - 34}" y="${B - 92}" width="68" height="92" fill="${ST}" stroke="${OL}" stroke-width="3"/>
+      <path d="M${tx - 22} ${B - 88} V${B - 12} M${tx - 11} ${B - 88} V${B - 34} M${tx} ${B - 88} V${B - 34} M${tx + 11} ${B - 88} V${B - 34} M${tx + 22} ${B - 88} V${B - 12}" stroke="${STD}" stroke-width="2.500"/>
+      <path d="M${tx - 34} ${B - 62} h68 M${tx - 34} ${B - 36} h68" stroke="${STD}" stroke-width="2"/>
+      ${arches(tx - 28, B - 84, 5, 18, 5, 7.750)}
+      <rect x="${tx - 40}" y="${B - 12}" width="80" height="12" rx="2" fill="#c79a55" stroke="${OL}" stroke-width="3"/>
+      <path d="M${tx - 11} ${B} v-20 a11 11 0 0 1 22 0 v20 z" fill="#7a4d2b" stroke="${OL}" stroke-width="2.500"/><path d="M${tx} ${B - 30} v30" stroke="${OL}" stroke-width="1.500"/>
+      <rect x="${tx - 40}" y="${B - 160}" width="80" height="70" fill="#e6bb74" stroke="${OL}" stroke-width="3"/>
+      <rect x="${tx - 44}" y="${B - 96}" width="88" height="8" rx="2" fill="${GD}" stroke="${OL}" stroke-width="2.500"/>
+      <rect x="${tx - 31}" y="${B - 155}" width="62" height="62" rx="3" fill="#2b3a55" stroke="${GD}" stroke-width="4"/>
+      <path d="M${tx - 25} ${B - 149} l5 0 l-5 5 z M${tx + 25} ${B - 149} l-5 0 l5 5 z M${tx - 25} ${B - 99} l5 0 l-5 -5 z M${tx + 25} ${B - 99} l-5 0 l5 -5 z" fill="${GD}"/>
+      <circle cx="${tx}" cy="${B - 124}" r="26" fill="${done ? '#ffe9a0' : '#fff'}" stroke="${GD}" stroke-width="3"/><circle cx="${tx}" cy="${B - 124}" r="14" fill="none" stroke="#c9d3df" stroke-width="1.500"/>
+      <path d="${ticks}" stroke="#2b3a55" stroke-width="2.200" stroke-linecap="round"/>
+      <g class="${done ? 'hands spin' : ''}" style="transform-origin:${tx}px ${B - 124}px"><path d="M${tx} ${B - 124} V${B - 143}" stroke="#2b3a55" stroke-width="3" stroke-linecap="round"/><path d="M${tx} ${B - 124} L${tx + 11} ${B - 117}" stroke="#2b3a55" stroke-width="4" stroke-linecap="round"/></g><circle cx="${tx}" cy="${B - 124}" r="3" fill="${GD}" stroke="#2b3a55" stroke-width="1.500"/>
+      <rect x="${tx - 37}" y="${B - 182}" width="74" height="22" fill="${ST}" stroke="${OL}" stroke-width="3"/>${arches(tx - 31, B - 178, 6, 16, 7, 3.330)}
+      <rect x="${tx - 44}" y="${B - 164}" width="88" height="7" rx="2" fill="${GD}" stroke="${OL}" stroke-width="2.500"/>
+      <path d="M${tx - 42} ${B - 164} v-22 M${tx + 42} ${B - 164} v-22" stroke="${STD}" stroke-width="5" stroke-linecap="round"/><path d="M${tx - 42} ${B - 186} v-9 M${tx + 42} ${B - 186} v-9" stroke="${GD}" stroke-width="3" stroke-linecap="round"/>
+      <path d="M${tx - 40} ${B - 182} L${tx - 20} ${B - 210} H${tx + 20} L${tx + 40} ${B - 182} Z" fill="${SL}" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/><path d="M${tx} ${B - 210} L${tx + 20} ${B - 210} L${tx + 40} ${B - 182} H${tx} Z" fill="${SLD}" opacity=".55"/>
+      <path d="M${tx - 20} ${B - 188} l4 -7 l4 7 z M${tx - 4} ${B - 188} l4 -7 l4 7 z M${tx + 12} ${B - 188} l4 -7 l4 7 z M${tx - 12} ${B - 198} l4 -7 l4 7 z M${tx + 4} ${B - 198} l4 -7 l4 7 z" fill="${GD}" stroke="${OL}" stroke-width="1.200" stroke-linejoin="round"/>
+      <rect x="${tx - 19}" y="${B - 226}" width="38" height="16" fill="${GD}" stroke="${OL}" stroke-width="2.500"/>${arches(tx - 15, B - 223, 5, 12, 4, 3.330)}
+      <rect x="${tx - 23}" y="${B - 229}" width="46" height="5" rx="2" fill="#d9a92a" stroke="${OL}" stroke-width="2"/>
+      <path d="M${tx - 21} ${B - 229} L${tx} ${B - 266} L${tx + 21} ${B - 229} Z" fill="${SL}" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/><path d="M${tx} ${B - 266} L${tx + 21} ${B - 229} H${tx} Z" fill="${SLD}" opacity=".55"/>
+      <path d="M${tx - 12} ${B - 240} h24 M${tx - 7} ${B - 250} h14" stroke="${GD}" stroke-width="2" stroke-linecap="round"/>
+      <path d="M${tx} ${B - 266} v-13 M${tx - 5} ${B - 274} h10" stroke="${GD}" stroke-width="3" stroke-linecap="round"/><circle cx="${tx}" cy="${B - 267}" r="3.500" fill="${GD}" stroke="${OL}" stroke-width="1.500"/>
+      <rect x="${tx - 62}" y="${ty + 42}" width="124" height="30" rx="15" fill="#2b3a55" stroke="#fff" stroke-width="2"/><text x="${tx}" y="${ty + 63}" text-anchor="middle" font-family="Jua" font-size="17" fill="#fff">숫자 시계탑 ${n}/5</text>
+    </g>`;
+    const waves = [[60, 92], [905, 78], [150, 560], [935, 420], [520, 42], [962, 262], [48, 250], [300, 52], [760, 42], [560, 584]].map(([x, y], k) => `<path d="M${x - 20} ${y} q10 -9 20 0 t20 0" stroke="${k % 2 ? '#d6f3ff' : '#fff'}" stroke-width="3" fill="none" stroke-linecap="round" opacity="${k % 2 ? .55 : .8}"/>`).join('');
+    const ISL = 'M95 345 C70 195 225 85 430 95 C580 70 790 80 900 185 C985 265 975 445 870 515 C745 590 520 580 350 565 C185 555 110 480 95 345 Z';
+    const RIV = 'M640 108 C660 200 600 260 655 330 C705 395 660 450 690 548';
+    const RV = 'M638 80 C660 196 600 260 655 330 C705 395 662 452 694 574';
+    // 강: 위에서 아래로 갈수록 넓어지는 물줄기를 중심선에서 계산해 그려요
+    const cub = (p, t) => { const u = 1 - t; return [0, 1].map(k => u * u * u * p[0][k] + 3 * u * u * t * p[1][k] + 3 * u * t * t * p[2][k] + t * t * t * p[3][k]); };
+    const cl = []; [[[638, 80], [660, 196], [600, 260], [655, 330]], [[655, 330], [705, 395], [662, 452], [694, 574]]].forEach((sg, j) => { for (let k = j ? 1 : 0; k <= 14; k++) cl.push(cub(sg, k / 14)); });
+    const bankL = [], bankR = []; cl.forEach((p, k) => { const a = cl[Math.max(0, k - 1)], b = cl[Math.min(cl.length - 1, k + 1)], dx = b[0] - a[0], dy = b[1] - a[1], m = Math.hypot(dx, dy) || 1, w = 8 + 11 * k / (cl.length - 1) + 2.200 * Math.sin(k * 1.1); bankL.push([p[0] - dy / m * w, p[1] + dx / m * w]); bankR.push([p[0] + dy / m * w, p[1] - dx / m * w]); });
+    const rivD = 'M' + [...bankL, ...bankR.reverse()].map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L') + ' Z';
+    const river = `<path d="${rivD}" fill="#e9dca6" stroke="#e9dca6" stroke-width="11" stroke-linejoin="round"/><path d="${rivD}" fill="#79b96a" stroke="#79b96a" stroke-width="5" stroke-linejoin="round" opacity=".55"/>
+      <path d="${rivD}" fill="url(#vgRiv)" stroke="#bff0fb" stroke-width="2" stroke-linejoin="round"/>
+      <path d="${RV}" stroke="#bdeefc" stroke-width="7" fill="none" stroke-linecap="round" opacity=".45"/>
+      <path d="${rivD}" fill="none" stroke="#2f8fd6" stroke-width="2.500" stroke-linejoin="round" opacity=".28" transform="translate(0,2)"/><g fill="none" stroke="#fff" stroke-linecap="round"><path class="vg-flow" d="${RV}" stroke-width="2" stroke-dasharray="7 53" opacity=".7" transform="translate(3,0)"/><path class="vg-flow" d="${RV}" stroke-width="1.600" stroke-dasharray="5 55" stroke-dashoffset="30" opacity=".5" transform="translate(-4,0)"/></g>
+      <g><ellipse cx="633" cy="262" rx="6" ry="4" fill="#9aa3ad" stroke="${OL}" stroke-width="1.500"/><path d="M625 267 q8 5 16 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="682" cy="398" rx="7" ry="4.500" fill="#aab2bb" stroke="${OL}" stroke-width="1.500"/><path d="M673 404 q9 5 18 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+      <g stroke="#3f9a52" stroke-width="2.200" stroke-linecap="round" fill="none"><path d="M622 300 v-11 M626 301 v-8 M618 301 v-7"/><path d="M706 436 v-11 M710 437 v-8 M702 437 v-7"/><path d="M662 178 v-10 M666 179 v-7"/></g>
+      <path d="M676 568 q9 7 18 0 t18 0 M622 86 q8 -6 16 0 t16 0" stroke="#fff" stroke-width="2.500" fill="none" stroke-linecap="round" opacity=".85"/>`;
+    // 산: 바위 능선과 만년설, 발치의 초록 언덕
+    const mtn2 = (x, w, h, c, d) => { const P = (a, b) => `${(x + w * a).toFixed(1)} ${(208 - h * b).toFixed(1)}`; return `<path d="M${P(-1, 0)} L${P(-.62, .46)} L${P(-.5, .4)} L${P(-.2, .86)} L${P(0, 1)} L${P(.22, .7)} L${P(.34, .76)} L${P(.62, .36)} L${P(1, 0)} Z" fill="${c}"/>
+      <path d="M${P(0, 1)} L${P(.22, .7)} L${P(.34, .76)} L${P(.62, .36)} L${P(1, 0)} L${P(.2, 0)} L${P(.1, .45)} Z" fill="${d}"/>
+      <path d="M${P(-.5, .4)} L${P(-.34, .2)} M${P(-.2, .86)} L${P(-.3, .5)} L${P(-.18, .3)} M${P(.34, .76)} L${P(.42, .44)}" stroke="${d}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+      <path d="M${P(-.2, .86)} L${P(0, 1)} L${P(.22, .7)} L${P(.15, .6)} L${P(.06, .7)} L${P(-.03, .58)} L${P(-.11, .7)} L${P(-.2, .62)} L${P(-.27, .7)} Z" fill="#fff"/><path d="M${P(0, 1)} L${P(.22, .7)} L${P(.15, .6)} L${P(.06, .7)} Z" fill="#d7e4f2"/>`; };
+    const hills = `${mtn2(196, 50, 70, '#93a2ba', '#7888a3')}${mtn2(330, 52, 78, '#93a2ba', '#7888a3')}${mtn2(262, 68, 112, '#a9b6ca', '#8696b0')}
+      <path d="M136 214 C150 192 176 190 192 204 C206 186 236 184 252 202 C268 186 300 186 316 204 C332 190 362 192 388 216 Z" fill="#7fc76a"/><path d="M150 214 C166 200 184 200 196 210 C214 198 238 198 254 210 C272 200 298 200 314 211 C332 202 352 204 370 216 Z" fill="#93d274"/>`;
+    const mtn = (x, w, h, c, d, snow) => `<path d="M${x - w} 208 L${x} ${208 - h} L${x + w} 208 Z" fill="${c}"/><path d="M${x} ${208 - h} L${x + w} 208 H${x + w * 0.15} Z" fill="${d}"/>${snow ? `<path d="M${x} ${208 - h} l${-w * 0.3} ${h * 0.3} l${w * 0.14} ${-h * 0.06} l${w * 0.12} ${h * 0.1} l${w * 0.12} ${-h * 0.1} l${w * 0.16} ${h * 0.08} l${w * 0.06} ${-h * 0.02} Z" fill="#fff"/>` : ''}`;
+    const rose = Array.from({ length: 8 }, (_, k) => { const a = k * 45, L = k % 2 ? 22 : 36; return `<g transform="rotate(${a})"><path d="M0 ${-L} L${k % 2 ? 5 : 7} 0 L0 0 Z" fill="${k === 0 ? '#e5484d' : k % 2 ? '#c9a23a' : '#2b3a55'}"/><path d="M0 ${-L} L${k % 2 ? -5 : -7} 0 L0 0 Z" fill="${k === 0 ? '#b8302f' : k % 2 ? '#f2c94c' : '#56658a'}"/></g>`; }).join('');
+    const cticks = Array.from({ length: 24 }, (_, k) => `<path d="M0 -44 v${k % 6 ? 4 : 0}" stroke="#8a6a1f" stroke-width="1.500" transform="rotate(${k * 15})"/>`).join('');
+    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 랜드 섬 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
+      <defs><radialGradient id="vgGlow"><stop offset="0" stop-color="#fff6a8" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient>
+        <radialGradient id="vgSea" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="#7fdcf2"/><stop offset=".55" stop-color="#4fb9ea"/><stop offset="1" stop-color="#2f8fd6"/></radialGradient>
+        <linearGradient id="vgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9de86"/><stop offset="1" stop-color="#86c96a"/></linearGradient>
+        <linearGradient id="vgRiv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe0f5"/><stop offset="1" stop-color="#4fb9ea"/></linearGradient><filter id="vgDim"><feColorMatrix type="saturate" values=".3"/></filter><filter id="vgDull"><feColorMatrix type="saturate" values="${(0.35 + 0.13 * n).toFixed(2)}"/></filter><clipPath id="vgClip"><rect x="2" y="2" width="996" height="596" rx="34"/></clipPath></defs>
+      <rect x="2" y="2" width="996" height="596" rx="34" fill="url(#vgSea)"/>
+      <g clip-path="url(#vgClip)">
+      <path d="${ISL}" fill="none" stroke="#a5ecf7" stroke-width="54" opacity=".5" stroke-linejoin="round"/>
+      <path d="${ISL}" fill="none" stroke="#d9fbff" stroke-width="26" opacity=".55" stroke-linejoin="round"/>
+      ${waves}
+      <path d="${ISL}" fill="#f6e3ae" stroke="#fff" stroke-width="5" stroke-opacity=".85"/>
+      <g fill="#e3c887"><circle cx="128" cy="300" r="3"/><circle cx="118" cy="400" r="2.500"/><circle cx="300" cy="118" r="3"/><circle cx="560" cy="100" r="2.500"/><circle cx="930" cy="330" r="3"/><circle cx="880" cy="490" r="2.500"/><circle cx="560" cy="562" r="3"/><circle cx="200" cy="520" r="2.500"/><circle cx="800" cy="130" r="2.500"/></g>
+      <path d="M912 396 l2.400 5 5.400 .800 -3.900 3.800 .900 5.400 -4.800 -2.600 -4.800 2.600 .900 -5.400 -3.900 -3.800 5.400 -.800z" fill="#ff9d7a"/><path d="M150 478 q6 -9 12 0 z" fill="#ffc9d6" stroke="#e79ab0" stroke-width="1.500"/>
+      <path d="M125 345 C108 215 240 118 432 126 C578 104 772 114 870 205 C945 275 935 430 845 490 C730 556 520 548 358 536 C210 526 138 462 125 345 Z" fill="url(#vgGrass)" stroke="#6fb85c" stroke-width="3"/>
+      <g fill="#93d274" opacity=".7"><ellipse cx="300" cy="300" rx="90" ry="34"/><ellipse cx="760" cy="330" rx="80" ry="30"/><ellipse cx="520" cy="200" rx="70" ry="24"/><ellipse cx="460" cy="470" rx="100" ry="26"/></g>
+      ${tufts}
+      ${hills}
+      ${river}
+      
+      
+      
+      ${trees}${flowers}
+      <path d="${road}" stroke="#d2ab6c" stroke-width="27" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${road}" stroke="#f0d9a6" stroke-width="21" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${road}" stroke="#fff" stroke-width="3.500" fill="none" stroke-dasharray="3 15" stroke-linecap="round" opacity=".9"/>
+      <g transform="translate(672,458) rotate(-12)"><rect x="-40" y="-15" width="80" height="30" rx="6" fill="#c98b4a" stroke="${OL}" stroke-width="2.500"/><path d="M-28 -15 v30 M-14 -15 v30 M0 -15 v30 M14 -15 v30 M28 -15 v30" stroke="#8a5a33" stroke-width="2"/><path d="M-40 -17 q40 -14 80 0 M-40 17 q40 -14 80 0" stroke="#7a4d2b" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M-40 -17 v-7 M40 -17 v-7 M-40 17 v-7 M40 17 v-7" stroke="#7a4d2b" stroke-width="4" stroke-linecap="round"/></g>
+      ${tower}${houses}
+      <g class="vg-sail"><g transform="translate(62,470) rotate(-6)"><path d="M-34 6 q34 12 68 0" stroke="#fff" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round" transform="translate(0,16)"/><path d="M-32 0 H32 L22 18 H-22 Z" fill="#c9713f" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/><path d="M-29 5 H29" stroke="#fff3dc" stroke-width="3"/><path d="M0 0 V-52" stroke="${OL}" stroke-width="3" stroke-linecap="round"/><path d="M3 -48 L30 -8 H3 Z" fill="#fff" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M-3 -40 L-24 -8 H-3 Z" fill="#ffe9a8" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M0 -52 h14 l-4 4 4 4 h-14 z" fill="#e5484d"/></g></g>
+      <g transform="translate(948,140)"><path d="M-9 0 a9 9 0 0 1 18 0 z" fill="#e5484d" stroke="${OL}" stroke-width="2"/><rect x="-9" y="0" width="18" height="6" fill="#fff" stroke="${OL}" stroke-width="2"/><path d="M0 -9 v-8" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="-19" r="3" fill="#ffd34d"/><path d="M-18 10 q9 -6 18 0 t18 0" stroke="#fff" stroke-width="2.500" fill="none" opacity=".8"/></g>
+      <path d="M828 60 q7 -8 14 0 q7 -8 14 0 M870 44 q5 -6 10 0 q5 -6 10 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g transform="translate(922,520)"><circle r="54" fill="#2b3a55" opacity=".18" cy="4"/><circle r="52" fill="#f2c94c" stroke="${OL}" stroke-width="3"/><circle r="45" fill="#fff8e6" stroke="#b98a1f" stroke-width="2"/>${cticks}<circle r="30" fill="none" stroke="#e3d4a8" stroke-width="1.500"/>${rose}<circle r="5" fill="#f2c94c" stroke="${OL}" stroke-width="2"/>
+        <g font-family="Jua" font-size="13" text-anchor="middle" fill="#2b3a55"><circle cy="-52" r="11" fill="#e5484d" stroke="${OL}" stroke-width="2.500"/><text y="-47.500" fill="#fff">N</text><text x="39" y="4.500" font-size="10">E</text><text y="43" font-size="10">S</text><text x="-39" y="4.500" font-size="10">W</text></g></g>
+      </g>
+      <rect x="2" y="2" width="996" height="596" rx="34" fill="none" stroke="${OL}" stroke-width="4"/>
+    </svg>`;
+  }
+  function villageSVGOld(gs) {
     const names = unitsOf(gs), pcs = names.map((_, u) => piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
     const H = [[190, 400], [340, 490], [570, 480], [800, 420], [770, 235]], T = [450, 268];
     const tree = (x, y, r = 22, c = '#4fae5a') => `<g><rect x="${x - 4}" y="${y}" width="8" height="${r * 0.9}" rx="3" fill="#8a5a33"/><circle cx="${x}" cy="${y - r * 0.2}" r="${r}" fill="${c}"/><circle cx="${x - r * 0.35}" cy="${y - r * 0.5}" r="${r * 0.45}" fill="#fff" opacity=".18"/></g>`;
@@ -3345,7 +3851,60 @@ body.story-on { overflow: hidden; }
     b.textContent = !ready ? '준비 중인 단원이에요' : n === NSTG ? '다시 탐험하기 ▶' : begun ? '이어하기 ▶' : '모험 시작 ▶';
     saveM();
   }
+  // ---------- 모험 요약 ----------
+  function streaks() {
+    const set = new Set(M.log.days), d = new Date(); let cur = 0;
+    while (set.has(dayKey(d))) { cur++; d.setDate(d.getDate() - 1); }
+    let best = 0, run = 0, prev = null;
+    for (const k of [...set].sort()) { const t = new Date(k + 'T00:00:00'); run = prev && Math.round((t - prev) / 86400000) === 1 ? run + 1 : 1; best = Math.max(best, run); prev = t; }
+    return { cur, best: Math.max(best, cur) };
+  }
+  function openSummary() {
+    markAttend();
+    const L = M.log, acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, mins = Math.floor(L.sec / 60), st = streaks();
+    const time = mins >= 60 ? `${Math.floor(mins / 60)}<small>시간</small> ${mins % 60}<small>분</small>` : `${mins}<small>분</small>`;
+    const tile = (ic, lb, v, col, extra = '') => `<div class="sum-tile"><span class="ic" aria-hidden="true">${ic}</span><span class="tx"><span class="lb">${lb}</span><span class="v" style="color:${col}">${v}</span>${extra}</span></div>`;
+    $('sumGrid').innerHTML = tile('📖', '총 문제 수', `${L.solved}<small>문제</small>`, '#6e56cf')
+      + tile('🎯', '정답률', `${acc}<small>%</small>`, '#218358', `<span class="bar"><i style="width:${acc}%"></i></span>`)
+      + tile('⏱️', '플레이 시간', time, '#2f6fdb')
+      + tile('📅', '총 출석', `${L.days.length}<small>일</small>`, '#0e7490')
+      + tile('🔥', '연속 출석', `${st.cur}<small>일</small>`, '#e5484d')
+      + tile('⭐', '최장 연속', `${st.best}<small>일</small>`, '#b07800');
+    // 이번 주: 월요일 ~ 일요일 고정
+    const now = new Date(), mon = new Date(now); mon.setDate(now.getDate() - (now.getDay() + 6) % 7);
+    const DN = ['월', '화', '수', '목', '금', '토', '일'], todayK = dayKey(now), have = new Set(L.days);
+    const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+    $('sumWeek').textContent = `${mon.getMonth() + 1}/${mon.getDate()}(월) ~ ${sun.getMonth() + 1}/${sun.getDate()}(일)`;
+    $('sumStamps').innerHTML = DN.map((nm, k) => { const d = new Date(mon); d.setDate(mon.getDate() + k); const key = dayKey(d), on = have.has(key), td = key === todayK;
+      return `<div class="stamp${on ? ' on' : ''}${td ? ' today' : ''}" aria-label="${nm}요일${td ? '(오늘)' : ''} ${on ? '출석' : '미출석'}"><span class="d">${nm}</span><span class="c">${on ? '✓' : ''}</span><span class="t${td ? '' : ' ph'}">오늘</span></div>`; }).join('');
+    $('sumModal').hidden = false; $('sumClose').focus({ preventScroll: true });
+  }
+  // ---------- 설정 ----------
+  function drawSettings() {
+    const n = qCount();
+    $('qcOut').textContent = `${n}문항`; $('qcRange').value = n;
+    $('setModal').querySelector('[data-qc="-1"]').disabled = n <= 3; $('setModal').querySelector('[data-qc="1"]').disabled = n >= 20;
+    $('qcPresets').innerHTML = [3, 5, 10, 15, 20].map(v => `<button type="button" data-qp="${v}" class="${v === n ? 'on' : ''}">${v}문항</button>`).join('');
+    $('sndTgl').setAttribute('aria-checked', String(M.set.sound !== false));
+    $('setNote').textContent = `다음 판부터 문제 문이 ${n}개 나와요. 4단계(단원 총괄)는 ${n}문제 중 ${n - 1}개 이상 한 번에 맞히면 별 3개예요.`;
+  }
+  function setQn(v) { M.set.qn = Math.max(3, Math.min(20, v)); saveM(); drawSettings(); }
+  function openSettings() { drawSettings(); $('setModal').hidden = false; $('setClose').focus({ preventScroll: true }); }
+  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#sumOpen')) openSummary(); else if (e.target.closest('#setOpen')) openSettings(); });
+  $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('sumOpen'); if (b) b.focus({ preventScroll: true }); });
+  $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
+  $('setModal').addEventListener('click', e => {
+    const q = e.target.closest('[data-qc]'); if (q && !q.disabled) { setQn(qCount() + +q.dataset.qc); return; }
+    const p = e.target.closest('[data-qp]'); if (p) { setQn(+p.dataset.qp); return; }
+    if (e.target.closest('#sndTgl')) { M.set.sound = M.set.sound === false; saveM(); drawSettings(); if (M.set.sound) tone([660, 990], 0.06, 'triangle', 0.06); }
+  });
+  $('qcRange').addEventListener('input', e => setQn(+e.target.value));
+  [$('sumModal'), $('setModal')].forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) { m.hidden = true; } });
+    m.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); m.hidden = true; } });
+  });
   function openHome() {
+    markAttend();
     state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
     storyBack = 'map';
     renderHome(); showModal('homeModal');
@@ -3375,5 +3934,6 @@ body.story-on { overflow: hidden; }
   openHome();
 })();
 </script>
+
 
 </body></html>
