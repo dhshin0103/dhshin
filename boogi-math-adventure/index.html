@@ -454,6 +454,7 @@ body.story-on { overflow: hidden; }
 .cheer-m { position: relative; margin: 0 0 16px; color: #1f2a40; line-height: 1.6; }
 .cheer-ok { position: relative; min-width: 180px; min-height: 52px; font-size: 1.25rem; background: var(--sun); color: var(--deep); }
 @media (prefers-reduced-motion: reduce) { .vg-jump, .vg-flow, .cheer-conf i, .cheer-char svg, .cheer, .cheer-box { animation: none !important; } }
+.vg-house, .vg-house:focus { outline: none; -webkit-tap-highlight-color: transparent; } .vg-house:focus-visible rect:first-of-type { stroke: #2b3a55; } .vg-house:focus-visible { filter: drop-shadow(0 0 6px #ffb627); }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -3522,7 +3523,7 @@ body.story-on { overflow: hidden; }
         ${on ? `<circle class="vg-glow" cx="${x}" cy="${y - 26}" r="84" fill="url(#vgGlow)"/>` : ''}
         ${cur ? `<ellipse class="vg-cur" cx="${x + 16}" cy="${y + 24}" rx="${hw + 52}" ry="22" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
         <ellipse cx="${x}" cy="${y + 25}" rx="${hw + 10}" ry="9" fill="#2f7d3c" opacity=".25"/>
-        ${on ? body : `<g filter="url(#vgDim)" opacity=".85">${body}</g>`}
+        ${on ? body : `<g filter="url(#vgDim)" opacity=".9">${body}</g>`}
         ${on ? '' : lock(x, y - top * 0.42, pcs[i])}<ellipse cx="${cx + 31}" cy="${y + 25}" rx="21" ry="5.500" fill="#2f7d3c" opacity=".28"/>
         <g class="${fresh[i] ? 'vg-jump' : 'vg-bob'}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 36}) scale(.62)">${art}</g></g>
         <circle cx="${x - hw - 2}" cy="${y - top + 12}" r="14" fill="${OL}" stroke="#fff" stroke-width="2.500"/><text x="${x - hw - 2}" y="${y - top + 17.500}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text>
@@ -3632,7 +3633,7 @@ body.story-on { overflow: hidden; }
       <defs><radialGradient id="vgGlow"><stop offset="0" stop-color="#fff6a8" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient>
         <radialGradient id="vgSea" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="#7fdcf2"/><stop offset=".55" stop-color="#4fb9ea"/><stop offset="1" stop-color="#2f8fd6"/></radialGradient>
         <linearGradient id="vgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9de86"/><stop offset="1" stop-color="#86c96a"/></linearGradient>
-        <linearGradient id="vgRiv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe0f5"/><stop offset="1" stop-color="#4fb9ea"/></linearGradient><filter id="vgDim"><feColorMatrix type="saturate" values=".3"/></filter><filter id="vgDull"><feColorMatrix type="saturate" values="${(0.35 + 0.13 * n).toFixed(2)}"/></filter><clipPath id="vgClip"><rect x="2" y="2" width="996" height="596" rx="34"/></clipPath></defs>
+        <linearGradient id="vgRiv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe0f5"/><stop offset="1" stop-color="#4fb9ea"/></linearGradient><filter id="vgDim"><feColorMatrix type="matrix" values="0.22 0.22 0.22 0 0.34  0.22 0.22 0.22 0 0.34  0.22 0.22 0.22 0 0.34  0 0 0 1 0"/></filter><filter id="vgDull"><feColorMatrix type="saturate" values="${(0.35 + 0.13 * n).toFixed(2)}"/></filter><clipPath id="vgClip"><rect x="2" y="2" width="996" height="596" rx="34"/></clipPath></defs>
       <rect x="2" y="2" width="996" height="596" rx="34" fill="url(#vgSea)"/>
       <g clip-path="url(#vgClip)">
       <path d="${ISL}" fill="none" stroke="#a5ecf7" stroke-width="54" opacity=".5" stroke-linejoin="round"/>
@@ -3915,7 +3916,7 @@ body.story-on { overflow: hidden; }
     if (e.target.id === 'unitSel') { M.sel.u = Number(e.target.value); M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); $('unitSel').focus(); }
   });
   $('homeStart').addEventListener('click', () => { if (!$('homeStart').disabled) openMap(); });
-  const pickHouse = u => { M.sel.u = u; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); const h = $('homeMap').querySelector(`[data-house="${u}"]`); if (h) h.focus({ preventScroll: true }); };
+  const pickHouse = u => { M.sel.u = u; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); if (hasContent(ukey(M.sel.gs, u))) { openMap(); return; } const h = $('homeMap').querySelector(`[data-house="${u}"]`); if (h) h.focus({ preventScroll: true }); };
   $('homeMap').addEventListener('click', e => { const h = e.target.closest('[data-house]'); if (h) pickHouse(+h.dataset.house); });
   $('homeMap').addEventListener('keydown', e => { const h = e.target.closest('[data-house]'); if (h && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickHouse(+h.dataset.house); } });
   $('homeStory').addEventListener('click', () => { storyBack = 'home'; openStory(); });
