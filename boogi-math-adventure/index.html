@@ -445,6 +445,30 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .profile { cursor: pointer; font: inherit; color: inherit; text-align: left; }
 .profile:hover { transform: translateY(-1px); } .profile:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 .set-lb small { display: block; }
+.bd-sum { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 16px; background: linear-gradient(90deg, #fff6d6, #fff); border: 2px solid #f3d27a; }
+.bd-sum .bd-big { font-family: var(--display); font-size: 2rem; color: #8a5a00; line-height: 1; white-space: nowrap; }
+.bd-sum .bd-big small { font-size: 1rem; color: #b08a3a; }
+.bd-sum .bd-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; font-size: .86rem; color: #6b5a2a; }
+.bd-bar { height: 10px; border-radius: 99px; background: #f1e6c4; overflow: hidden; } .bd-bar i { display: block; height: 100%; background: linear-gradient(90deg, #ffc53d, #ff9d2e); border-radius: 99px; }
+.bd-next { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: #eef7ff; border: 2px dashed #8cc8f5; font-size: .88rem; color: #1f4f78; text-align: left; cursor: pointer; font: inherit; width: 100%; }
+.bd-next svg { width: 46px; height: 46px; flex: none; } .bd-next b { color: var(--deep); }
+.bd-sec { display: flex; align-items: baseline; gap: 8px; margin: 4px 0 0; font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); }
+.bd-sec small { font-family: inherit; font-size: .9rem; color: #8a5a00; }
+.bd-gs { margin: 2px 0 -2px; font-size: .8rem; font-weight: 700; color: #6b7a8c; }
+.bd-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; }
+@media (max-width: 560px) { .bd-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; } .bd-item { padding: 8px 4px; } .bd-item b { font-size: .78rem; } }
+.bd-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 9px 6px 8px; min-width: 0; border-radius: 14px; border: 2px solid #e6e9ef; background: #fff; text-align: center; font: inherit; color: inherit; cursor: pointer; position: relative; }
+.bd-item svg { width: 50px; height: 50px; }
+.bd-item b { font-size: .86rem; color: var(--deep); line-height: 1.25; word-break: keep-all; }
+.bd-item small { font-size: .72rem; color: #7a8696; line-height: 1.3; word-break: keep-all; }
+.bd-item.got { background: linear-gradient(180deg, #fffbea, #fff); border-color: #f3d27a; cursor: default; }
+.bd-item.got .bd-ok { font-size: .74rem; font-weight: 700; color: #b07800; }
+.bd-item.todo svg { filter: grayscale(1); opacity: .55; }
+.bd-item.todo.going { border-color: #8cc8f5; background: #f5fbff; } .bd-item.todo.going svg { filter: grayscale(.6); opacity: .8; }
+.bd-item .bd-p { width: 100%; display: flex; flex-direction: column; gap: 3px; margin-top: 2px; font-size: .72rem; color: #4f6680; }
+.bd-item .bd-p .bd-bar { height: 6px; } .bd-item .bd-p .bd-bar i { background: #4f9de0; }
+.bd-item.todo:hover, .bd-item.todo:focus-visible { border-color: #4f9de0; outline: none; transform: translateY(-1px); }
+.bd-empty { padding: 14px; border-radius: 14px; background: #f7f8fa; color: #6b7a8c; font-size: .88rem; text-align: center; }
 .me-card { width: min(640px, 100%); gap: 12px; max-height: calc(100dvh - 32px); overflow-y: auto; }
 .me-top { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 18px; background: linear-gradient(90deg, #f5efff, #fff); border: 2px solid #e2d6ff; }
 .me-av { flex: none; width: 104px; height: 104px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 0 3px #b995f5; display: grid; place-items: center; }
@@ -786,6 +810,12 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   </div>
 </div>
 
+<div class="modal toplayer" id="badgeModal" role="dialog" aria-modal="true" aria-labelledby="badgeTitle" hidden>
+  <div class="card me-card bd-card-wrap">
+    <div class="tagrow"><h2 id="badgeTitle" class="sum-h"><span aria-hidden="true">🏅</span> 내 배지</h2><button type="button" class="xbtn" id="badgeClose">닫기 ✕</button></div>
+    <div id="badgeBody"></div>
+  </div>
+</div>
 <div class="modal toplayer" id="meModal" role="dialog" aria-modal="true" aria-labelledby="meTitle" hidden>
   <div class="card me-card">
     <div class="tagrow"><h2 id="meTitle" class="sum-h"><span aria-hidden="true">🙂</span> 내 정보</h2><button type="button" class="xbtn" id="meClose">닫기 ✕</button></div>
@@ -3221,7 +3251,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function renderBar() {
     const gs = M.sel.gs, us = unitsOf(gs);
     try { markAttend(); renderAttend(); } catch (_) {}
-    $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="storyOpen"><span aria-hidden="true">📖</span>이야기 보기</button><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
+    $('homeWallet').innerHTML = `<button type="button" class="chip chip-btn" id="badgeOpen" aria-label="내 배지 보기, ${M.badges.length}개 보유"><span aria-hidden="true">🏅</span>배지 ${M.badges.length}</button><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="storyOpen"><span aria-hidden="true">📖</span>이야기 보기</button><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
   }
   // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
   const QUEST = {
@@ -4114,14 +4144,52 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('meBody').innerHTML = `<div class="me-top"><span class="me-av" style="background:${CHAR_BG[PROFILE.art]}">${charSVG(PROFILE.art)}</span>
         <div class="me-id"><span class="pf-lv">Lv.${lv.L}</span><b>${PROFILE.name}</b><small>${lv.title}</small>
           <span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span><small>다음 레벨까지 ${lv.need - lv.into}문제${nx ? ` · Lv.${nx[0]} ‘${nx[1]}’` : ''}</small></div></div>
-      <div class="me-chips"><span>📖 <b>${L.solved}</b>문제</span><span>🎯 정답률 <b>${acc}%</b></span><span>⏱️ <b>${mins}</b>분</span><span>🔥 연속 <b>${st.cur}</b>일</span><span>🪙 코인 <b>${M.coins}</b></span><span>🏅 배지 <b>${M.badges.length}</b>개</span></div>
+      <div class="me-chips"><span>📖 <b>${L.solved}</b>문제</span><span>🎯 정답률 <b>${acc}%</b></span><span>⏱️ <b>${mins}</b>분</span><span>🔥 연속 <b>${st.cur}</b>일</span><span>🪙 코인 <b>${M.coins}</b></span></div>
       <h3 class="set-sec">탐험 현황 <small class="me-note">집 번호 = 단원 · 노란 집 = 정복(조각 5개)</small></h3>${grades}
-      ${M.badges.length ? `<div class="me-badges">${M.badges.map(b => `<span>🏅 ${esc(b)}</span>`).join('')}</div>` : ''}
       <h3 class="set-sec">내 아이템</h3><div class="me-items">${itemsHTML}</div>
       <h3 class="set-sec">내 캐릭터 고르기</h3><div class="me-chars">${chars}</div>`;
     $('meModal').hidden = false; $('meClose').focus({ preventScroll: true });
   }
   $('homeProfile').addEventListener('click', openMe);
+  // ---------- 내 배지: 보유한 배지 / 앞으로 받을 배지 ----------
+  const BD_COL = { '3-1': ['#ffcf4a', '#e8a317', '#ff6b6b'], '3-2': ['#ffb347', '#e07b1f', '#4f8de0'], '5-1': ['#8fd3ff', '#3a8fd6', '#9b6bff'], '5-2': ['#b9a3ff', '#7b5ce0', '#30b06c'] };
+  function medalSVG(gs, u) {
+    const [f, d, r] = BD_COL[gs] || BD_COL['3-1'];
+    return `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 4 h9 l6 18 h-9 z" fill="${r}"/><path d="M44 4 h-9 l-6 18 h9 z" fill="${r}" opacity=".8"/>
+      <circle cx="32" cy="40" r="20" fill="${d}"/><circle cx="32" cy="40" r="16" fill="${f}" stroke="#fff" stroke-width="2" stroke-opacity=".7"/>
+      <path d="M32 29 l3.2 6.6 7.2 1 -5.2 5 1.3 7.2 -6.5 -3.4 -6.5 3.4 1.3 -7.2 -5.2 -5 7.2 -1 z" fill="#fff" opacity=".9"/>
+      <circle cx="49" cy="25" r="8" fill="#fff" stroke="${d}" stroke-width="2"/><text x="49" y="29" text-anchor="middle" font-family="Jua" font-size="11" fill="${d}">${u + 1}</text></svg>`;
+  }
+  function badgeList() {
+    return Object.keys(CONTENT).map(key => { const gs = key.slice(0, 3), u = +key.slice(4); return { key, gs, u, name: CONTENT[key].badge, got: M.badges.includes(CONTENT[key].badge), pcs: piecesOf(key) }; })
+      .sort((a, b) => a.gs.localeCompare(b.gs) || a.u - b.u);
+  }
+  function openBadges() {
+    const all = badgeList(), got = all.filter(b => b.got), todo = all.filter(b => !b.got);
+    const short = n => esc(n.replace(/ 배지$/, ''));
+    const where = b => `${gsLabel(b.gs)} · ${b.u + 1}단원 ${esc(unitName(b.gs, b.u))}`;
+    const next = [...todo].sort((a, b) => b.pcs - a.pcs || (a.gs === M.sel.gs ? -1 : 0))[0];
+    const gotHTML = got.length ? `<div class="bd-grid">${got.map(b => `<div class="bd-item got">${medalSVG(b.gs, b.u)}<b>${short(b.name)}</b><small>${where(b)}</small><span class="bd-ok">✓ 획득 완료</span></div>`).join('')}</div>`
+      : `<p class="bd-empty">아직 받은 배지가 없어요. 한 단원의 1~5단계를 모두 별 3개로 통과하면 첫 배지를 받아요!</p>`;
+    const groups = [...new Set(todo.map(b => b.gs))].map(gs => `<p class="bd-gs">${gsLabel(gs)}</p><div class="bd-grid">${todo.filter(b => b.gs === gs).map(b =>
+      `<button type="button" class="bd-item todo${b.pcs ? ' going' : ''}" data-bkey="${b.key}" title="눌러서 이 단원으로 가기">${medalSVG(b.gs, b.u)}<b>${short(b.name)}</b><small>${b.u + 1}단원 ${esc(unitName(b.gs, b.u))}</small>
+        <span class="bd-p"><span class="bd-bar"><i style="width:${b.pcs / NSTG * 100}%"></i></span>${b.pcs ? `조각 ${b.pcs}/${NSTG} · ${NSTG - b.pcs}단계 남음` : '아직 시작 전'}</span></button>`).join('')}</div>`).join('');
+    $('badgeBody').innerHTML = `<div class="bd-sum"><span class="bd-big">${got.length}<small> / ${all.length}</small></span><span class="bd-txt"><b>모은 배지</b><span class="bd-bar"><i style="width:${got.length / all.length * 100}%"></i></span>단원의 1~5단계를 모두 별 3개로 통과하면(조각 5개) 그 단원의 마스터 배지를 받아요.</span></div>
+      ${next ? `<button type="button" class="bd-next" data-bkey="${next.key}">${medalSVG(next.gs, next.u)}<span>다음 목표 · <b>${short(next.name)}</b><br>${where(next)} — ${next.pcs ? `조각 ${next.pcs}/${NSTG}, 앞으로 ${NSTG - next.pcs}단계만 별 3개로 통과하면 돼요!` : '1단계부터 별 3개에 도전해 보세요!'}</span></button>` : ''}
+      <h3 class="bd-sec">내가 가진 배지 <small>${got.length}개</small></h3>${gotHTML}
+      <h3 class="bd-sec">앞으로 받을 배지 <small>${todo.length}개 · 누르면 그 단원으로 가요</small></h3>${todo.length ? groups : '<p class="bd-empty">모든 배지를 모았어요! 진짜 수학 탐험가예요 🎉</p>'}`;
+    $('badgeModal').hidden = false; $('badgeClose').focus({ preventScroll: true });
+  }
+  const closeBadges = () => { $('badgeModal').hidden = true; const b = $('badgeOpen'); if (b) b.focus({ preventScroll: true }); };
+  $('badgeClose').addEventListener('click', closeBadges);
+  $('badgeModal').addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); closeBadges(); } });
+  $('badgeModal').addEventListener('click', e => {
+    if (e.target === $('badgeModal')) { closeBadges(); return; }
+    const t = e.target.closest('[data-bkey]'); if (!t) return;
+    const k = t.dataset.bkey; M.sel = { gs: k.slice(0, 3), u: +k.slice(4) };
+    M.news = { good: false, text: `${gsLabel(M.sel.gs)} [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 별 3개로 조각을 모아 배지를 받아요.` };
+    saveM(); $('badgeModal').hidden = true; renderHome(); renderBar();
+  });
   $('meClose').addEventListener('click', () => { $('meModal').hidden = true; $('homeProfile').focus({ preventScroll: true }); });
   $('meModal').addEventListener('click', e => {
     if (e.target === $('meModal')) { $('meModal').hidden = true; return; }
@@ -4161,7 +4229,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
   function setQn(v) { M.set.qn = Math.max(3, Math.min(20, v)); saveM(); drawSettings(); }
   function openSettings() { drawSettings(); $('setModal').hidden = false; $('setClose').focus({ preventScroll: true }); }
-  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#storyOpen')) { storyBack = 'home'; openStory(); } else if (e.target.closest('#setOpen')) openSettings(); });
+  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#badgeOpen')) openBadges(); else if (e.target.closest('#storyOpen')) { storyBack = 'home'; openStory(); } else if (e.target.closest('#setOpen')) openSettings(); });
   $('sumOpen2').addEventListener('click', openSummary);
   $('homeAtt').addEventListener('click', openSummary);
   $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('sumOpen2'); if (b) b.focus({ preventScroll: true }); });
