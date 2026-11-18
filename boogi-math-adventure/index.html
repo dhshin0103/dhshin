@@ -1,6 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 
-<title>슈퍼스쿨 : 매스 아일랜드</title>
+<title>스쿨플랫 : 매스 아일랜드</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap">
@@ -302,7 +302,8 @@ body.story-on { overflow: hidden; }
 .homefs .sf-top .wallet .chip { border-color: var(--deep); }
 .home-mid { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 0; }
 .home-title { margin: 0; flex: none; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: clamp(2rem, 5.6vw, 3.4rem); line-height: 1.1; text-align: center; text-shadow: 0 3px 0 #fff, 0 5px 0 rgba(0,58,92,.18); display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 14px; }
-.home-title .ht-brand { align-self: center; font-family: var(--display); font-weight: 400; font-size: clamp(.95rem, 2.2vw, 1.3rem); color: #fff; background: linear-gradient(180deg, #ff6b4a, #e8432a); border: 3px solid #fff; box-shadow: 0 3px 0 rgba(0,58,92,.25); border-radius: 999px; padding: .1em .7em; margin-right: .35em; text-shadow: 0 1px 0 rgba(0,0,0,.2); transform: rotate(-4deg); }
+.home-title .ht-brand { align-self: center; display: inline-flex; align-items: center; gap: .3em; font-family: "Noto Sans KR", sans-serif; font-weight: 700; letter-spacing: -.02em; font-size: clamp(1rem, 2.2vw, 1.35rem); color: #00abff; background: #fff; border-radius: 999px; padding: .3em .85em .3em .7em; margin-right: .45em; text-shadow: none; box-shadow: 0 3px 0 rgba(0,58,92,.18); }
+.home-title .sf-logo { width: 1.05em; height: 1.3em; display: block; }
 .home-title span { font-size: clamp(1.1rem, 2.8vw, 1.6rem); color: #b07800; }
 .home-body { flex: 1; min-height: 0; width: min(1240px, 100%); display: flex; gap: 14px; align-items: stretch; }
 .home-map { flex: 1; min-height: 0; min-width: 0; display: grid; place-items: center; }
@@ -369,7 +370,7 @@ body.story-on { overflow: hidden; }
 @media (max-width: 520px) { .home-acts { grid-template-columns: 1fr 1fr; } .home-acts .home-start { grid-column: 1 / -1; grid-row: 1; } }
 @media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
 @media (max-width: 860px) { .homefs .home-map { min-height: auto; } }
-@media (max-width: 520px) { .home-title { font-size: 1.9rem; gap: 2px 8px; } .home-title .ht-brand { font-size: .9rem; } .home-title span { flex-basis: 100%; font-size: 1.05rem; } }
+@media (max-width: 520px) { .home-title { font-size: 1.9rem; gap: 2px 8px; } .home-title .ht-brand { font-size: .9rem; } }
 @media (prefers-reduced-motion: reduce) { .home-map svg, .vg-cur, .vg-glow, .vg-spark { animation: none !important; } }
 /* 모험 요약 · 설정 (메인 위에 뜨는 창) */
 .modal.toplayer { z-index: 10050; }
@@ -737,7 +738,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="wrap">
   <div class="top">
-    <h1>슈퍼스쿨 : 매스 아일랜드</h1>
+    <h1>스쿨플랫 : 매스 아일랜드</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
     <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><button type="button" class="ctlbtn giant" id="giantBtn" hidden>거대화</button><button type="button" class="ctlbtn freeze" id="freezeBtn" hidden>시간 멈추기</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
@@ -760,7 +761,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
   <div class="sf-top"><button type="button" class="profile" id="homeProfile" aria-label="내 정보 보기"></button><button type="button" class="att" id="homeAtt" aria-label="이번 주 출석 도장"></button><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
-    <h1 id="homeTitle" class="home-title" aria-label="슈퍼스쿨 : 매스 아일랜드 — 숫자 시계탑의 비밀"><b class="ht-brand">슈퍼스쿨</b>매스 아일랜드<span>숫자 시계탑의 비밀</span></h1>
+    <h1 id="homeTitle" class="home-title" aria-label="스쿨플랫 : 매스 아일랜드"><b class="ht-brand"><svg class="sf-logo" viewBox="0 0 140 175" aria-hidden="true"><path d="M5 60 L48 42 L65 55 L135 73 V145 L5 170 Z" fill="#00abff"/><path d="M48 42 V3" stroke="#00abff" stroke-width="6"/><path d="M51 3 L85 17 L51 28 Z" fill="#00abff"/></svg>스쿨플랫</b>매스 아일랜드</h1>
     <div class="home-body"><div class="home-map" id="homeMap"></div></div>
   </div>
   <div class="sf-box home-box">
