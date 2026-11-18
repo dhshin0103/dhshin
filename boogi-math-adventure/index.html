@@ -409,6 +409,7 @@ body.story-on { overflow: hidden; }
 .qc-presets button { border: 2px solid #dfe4ea; background: #fff; border-radius: 999px; padding: 4px 12px; font-family: var(--display); color: var(--deep); cursor: pointer; }
 .qc-presets button.on { border-color: #f2b705; background: #fff3c4; }
 .tag.ta { background: #ffe1d2; color: #c2410c; font-variant-numeric: tabular-nums; }
+.skipq .no5 { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; background: #fff; border: 1px solid #b8c0ca; font-size: .75rem; margin-right: 2px; }
 .skipq { border-color: #8b95a3; background: #f1f3f6; color: #4a5563; margin-right: auto; }
 .qz-pop { display: flex; align-items: center; gap: 12px; }
 .qz-roki { flex: none; width: 84px; height: 84px; border-radius: 20px; background: #c9c8ff; display: grid; place-items: center; animation: hopS .5s ease-in-out infinite alternate; }
@@ -691,7 +692,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     </div>
     <button type="button" class="jump" id="btnJump">점프</button>
   </div>
-  <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동, <kbd>스페이스</kbd> 점프(공중에서 한 번 더 누르면 이단 점프), 문제는 <kbd>1</kbd>~<kbd>4</kbd> 숫자로도 고를 수 있어요.</p>
+  <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동, <kbd>스페이스</kbd> 점프(공중에서 한 번 더 누르면 이단 점프), 문제는 <kbd>1</kbd>~<kbd>4</kbd>, 넘어가기는 <kbd>5</kbd> 숫자로도 고를 수 있어요.</p>
 </div>
 
 <div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
@@ -838,7 +839,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip">모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 뽑기</button></div>
+    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip"><span class="no5">5</span> 모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 뽑기</button></div>
     <div class="hintroll" id="hintRoll" hidden aria-live="polite"></div>
     <div class="calc" id="calcPad" hidden>
       <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
@@ -1156,7 +1157,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       o.type = type; o.frequency.value = f; g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + len * 1.4);
       o.connect(g); g.connect(ac.destination); o.start(t0); o.stop(t0 + len * 1.5); }));
   }
-  const STAR_T = 5, GIANT = 5;
+  const STAR_T = 10, GIANT = 5;
   // 무적 동안 캐릭터 크기: 처음엔 깜빡이며 커지고, 끝날 때 깜빡이며 작아져요
   function heroScale() {
     const T = stats.star || 0; if (T <= 0) return 1;
@@ -1170,7 +1171,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     if (q.type !== 'q') { tone([180], 0.06, 'triangle', 0.08); return; }
     q.type = 'used';
     const px = q.x + q.w / 2, py = q.y - 8;
-    if (q.item === 'star') { stats.star = STAR_T; pops.push({ kind: 'star', x: px, y: py, vy: -260, life: 0.9 }); showToast('반짝 별! 5초 동안 5배 거인!'); tone([523, 659, 784, 1047, 1319], 0.07); }
+    if (q.item === 'star') { stats.star = STAR_T; pops.push({ kind: 'star', x: px, y: py, vy: -260, life: 0.9 }); showToast('반짝 별! 10초 동안 5배 거인!'); tone([523, 659, 784, 1047, 1319], 0.07); }
     else if (q.item === 'heart' && stats.hearts < 5) { stats.hearts++; pops.push({ kind: 'heart', x: px, y: py, vy: -260, life: 0.9 }); showToast('하트 +1'); tone([660, 990], 0.1, 'triangle'); }
     else { addCoins(1); pops.push({ kind: 'coin', x: px, y: py, vy: -420, life: 0.55 }); tone([988, 1319], 0.06); }
     // 상자 위에 있던 헷갈이도 튕겨 나가요
@@ -1203,6 +1204,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       if (b) { e.preventDefault(); b.click(); }
       return;
     }
+    if (state === 'question' && e.key === '5') { e.preventDefault(); $('qSkip').click(); return; }
     if (state === 'question' && /^[1-4]$/.test(e.key)) {
       const btn = $('qChoices').querySelectorAll('button')[Number(e.key) - 1];
       if (btn && !btn.disabled) btn.click();
@@ -1439,6 +1441,23 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         else { p.x = g.x + g.w; p.vx = 0; }
       }
     }
+    // 거인일 때: 몸에 닿는 벽돌·상자·계단을 모두 부숴요 (문제 문은 그대로)
+    if (stats.star > 0) {
+      const gsc = heroScale();
+      if (gsc > 1.4) {
+        const gw = p.w * gsc, gh = p.h * gsc, gx = p.x + p.w / 2 - gw / 2, gy = p.y + p.h - gh;
+        const hit = solids.filter(q => gx + gw > q.x && gx < q.x + q.w && gy + gh > q.y && gy < q.y + q.h);
+        if (hit.length) {
+          hit.forEach(q => {
+            if (q.type === 'q') hitBlock(q);
+            for (let k = 0; k < 4; k++) pops.push({ kind: 'brick', x: q.x + 10 + (k % 2) * 20, y: q.y + 10 + Math.floor(k / 2) * 20, vx: (k % 2 ? 1 : -1) * (120 + Math.random() * 160), vy: -380 - Math.random() * 220, g: 1600, life: 0.9, rot: Math.random() * 6, col: q.type === 'brick' ? '#c8673a' : '#a07a55' });
+          });
+          solids = solids.filter(q => !hit.includes(q));
+          addCoins(hit.length); tone([140, 110], 0.07, 'square', 0.08);
+          if (!stats.smashT || clock - stats.smashT > 1.2) { stats.smashT = clock; showToast(`쾅! 장애물 ${hit.length}개 부숨 +${hit.length}`); }
+        }
+      }
+    }
     for (const q of solids) {
       if (p.x + p.w > q.x && p.x < q.x + q.w && p.y + p.h > q.y + 2 && p.y < q.y + q.h - 2) {
         if (p.x + p.w / 2 < q.x + q.w / 2) p.x = q.x - p.w; else p.x = q.x + q.w;
@@ -1592,6 +1611,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       ctx.save(); ctx.globalAlpha = a; ctx.translate(x, o.y);
       if (o.kind === 'coin') { ctx.restore(); ctx.save(); ctx.globalAlpha = a; drawSmileCoin(x, o.y, 14, o.life * 6); if (o.life < 0.2 && !o.burst) { o.burst = 1; coinBurst(o.x, o.y); } }
       else if (o.kind === 'plus') { ctx.font = '26px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 5; ctx.strokeStyle = '#fff'; ctx.strokeText('+1', 0, 0); ctx.fillStyle = '#f08c00'; ctx.fillText('+1', 0, 0); }
+      else if (o.kind === 'brick') { ctx.rotate((o.rot || 0) + (0.9 - o.life) * 10); ctx.fillStyle = o.col; ctx.fillRect(-8, -6, 16, 12); ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(-8, 2, 16, 4); }
       else if (o.kind === 'puff') { const k = 1 - o.life / 0.4; ctx.fillStyle = `rgba(255,255,255,${0.9 * (1 - k)})`; ctx.beginPath(); ctx.arc(0, 0, 6 + k * 10, 0, Math.PI * 2); ctx.fill(); }
       else if (o.kind === 'spark') { ctx.fillStyle = o.col; ctx.beginPath(); for (let i = 0; i < 8; i++) { const r = i % 2 ? 2 : 6, an = i * Math.PI / 4; ctx.lineTo(Math.cos(an) * r, Math.sin(an) * r); } ctx.closePath(); ctx.fill(); }
       else if (o.kind === 'star') { ctx.fillStyle = '#ffd34d'; ctx.strokeStyle = '#ab6400'; ctx.lineWidth = 2.5; ctx.beginPath(); for (let i = 0; i < 10; i++) { const r = i % 2 ? 8 : 18, an = -Math.PI / 2 + i * Math.PI / 5; ctx.lineTo(Math.cos(an) * r, Math.sin(an) * r); } ctx.closePath(); ctx.fill(); ctx.stroke(); }
