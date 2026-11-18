@@ -468,6 +468,32 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .bd-item .bd-p { width: 100%; display: flex; flex-direction: column; gap: 3px; margin-top: 2px; font-size: .72rem; color: #4f6680; }
 .bd-item .bd-p .bd-bar { height: 6px; } .bd-item .bd-p .bd-bar i { background: #4f9de0; }
 .bd-item.todo:hover, .bd-item.todo:focus-visible { border-color: #4f9de0; outline: none; transform: translateY(-1px); }
+.bd-ms { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+.bd-m { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; border-radius: 14px; border: 2px dashed #d5dbe4; background: #fafbfc; text-align: center; }
+.bd-m.done { border-style: solid; border-color: #f3d27a; background: #fffbea; }
+.bd-mn { font-family: var(--display); font-size: 1.05rem; color: var(--deep); }
+.bd-mi { width: 46px; height: 40px; display: grid; place-items: center; } .bd-mi svg { width: 46px; height: 40px; }
+.bd-m:not(.done) .bd-mi { filter: grayscale(1); opacity: .5; }
+.bd-coin svg { width: 30px !important; height: 30px !important; }
+.bd-m small { font-size: .72rem; color: #4f5d70; line-height: 1.25; word-break: keep-all; }
+.bd-ms-st { font-size: .72rem; font-weight: 700; color: #8a96a6; } .bd-m.done .bd-ms-st { color: #b07800; }
+.bd-gift { color: #7b5ce0 !important; font-weight: 700; }
+.bd-rep { margin-top: 3px; border: 1.5px solid #e0b84a; background: #fff; color: #8a5a00; border-radius: 999px; padding: 3px 9px; font: inherit; font-size: .72rem; font-weight: 700; cursor: pointer; }
+.bd-item.got.rep { border-color: #ffb300; box-shadow: 0 0 0 3px rgba(255,197,61,.35); }
+.bd-item.got.rep .bd-rep { background: #ffc53d; border-color: #ffc53d; color: #4a3000; }
+.bd-crown { position: absolute; top: 6px; left: 6px; background: #ffc53d; color: #4a3000; font-size: .66rem; font-weight: 700; border-radius: 999px; padding: 1px 7px; }
+@media (max-width: 560px) { .bd-ms { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pf-avw { position: relative; flex: none; display: inline-grid; }
+.pf-rep { position: absolute; right: -6px; bottom: -6px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); display: grid; place-items: center; }
+.pf-rep svg { width: 22px; height: 22px; }
+.me-id .me-rep b { font-family: inherit; font-weight: 700; font-size: .86rem; color: var(--deep); line-height: 1.3; }
+.me-rep { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; color: #6b5a2a; } .me-rep svg { width: 26px; height: 26px; } .me-rep.none { font-size: .76rem; color: #9a8c6a; }
+.wd-info { display: flex; flex-direction: column; gap: 6px; min-width: 0; } .wd-info small { color: #6b5a8a; }
+.wd-cur { display: flex; flex-wrap: wrap; gap: 6px; } .wd-on { font-size: .8rem; background: #fff; border-radius: 999px; padding: 3px 10px; border: 1px solid #e2d6ff; } .wd-on.muted { color: #9a90b0; }
+.wd-off { border: 0; background: #ede5ff; color: #5b3fb5; border-radius: 999px; padding: 1px 8px; font: inherit; font-size: .74rem; cursor: pointer; margin-left: 2px; }
+.wd-ic { position: relative; flex: none; width: 60px; height: 56px; display: grid; place-items: center; background: #f5efff; border-radius: 14px; } .wd-ic svg { width: 54px; height: 48px; }
+.wd-item.locked .wd-ic svg { filter: grayscale(1); opacity: .45; } .wd-lock { position: absolute; right: -4px; bottom: -4px; font-style: normal; font-size: .9rem; }
+.wd-item.on { box-shadow: 0 0 0 3px #b995f5; }
 .bd-empty { padding: 14px; border-radius: 14px; background: #f7f8fa; color: #6b7a8c; font-size: .88rem; text-align: center; }
 .me-card { width: min(640px, 100%); gap: 12px; max-height: calc(100dvh - 32px); overflow-y: auto; }
 .me-top { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 18px; background: linear-gradient(90deg, #f5efff, #fff); border: 2px solid #e2d6ff; }
@@ -1869,8 +1895,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const curHero = () => stageHero(pick ? pick.i : 0);
   const heroImg = {};
   function heroImage(h) {
-    if (!heroImg[h.art]) { const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(charSVG(h.art).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" ')); heroImg[h.art] = im; }
-    return heroImg[h.art];
+    const ck = h.art + '|' + (M.wear.head || '') + '|' + (M.wear.back || '');
+    if (!heroImg[ck]) { const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(dressSVG(h.art, M.wear, 'xmlns="http://www.w3.org/2000/svg" width="480" height="464"')); heroImg[ck] = im; }
+    return heroImg[ck];
   }
   function drawHero(x, y, f, bob, s, armUp, medal) {
     const h = curHero();
@@ -1880,7 +1907,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     ctx.save(); ctx.translate(cx, y + 24 - bob);
     if (armUp) ctx.rotate(f * -0.12); else if (s) ctx.rotate(s * 0.02);
     ctx.scale(f < 0 ? -1 : 1, 1);
-    if (im.complete && im.naturalWidth) ctx.drawImage(im, -32, -36, 64, 64);
+    if (im.complete && im.naturalWidth) ctx.drawImage(im, -32 + DRESS_VB[0] * 0.64, -36 + DRESS_VB[1] * 0.64, DRESS_VB[2] * 0.64, DRESS_VB[3] * 0.64);
     else { ctx.fillStyle = h.bg; ctx.beginPath(); ctx.arc(0, -4, 24, 0, Math.PI * 2); ctx.fill(); }
     ctx.restore();
     if (medal) { ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.arc(cx, y + 34 - bob, 7, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#ab6400'; ctx.lineWidth = 1.5; ctx.stroke(); }
@@ -2919,7 +2946,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const KEY = 'mathland-v2';
   const NSTG = GUARD.length;
   function defaultsM() {
-    return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0, calc: 1 }, badges: [], sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
+    return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0, calc: 1 }, badges: [], wear: { head: null, back: null }, ms: [], rep: null, set: { qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80, learn: 'std' }, profile: { art: 2 }, log: { solved: 0, first: 0, sec: 0, days: [] }, sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
       news: { good: false, text: '시계탑 3층 [분수와 소수]의 방에 도착했어요! 1단계부터 황금 나침반 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false, quizBest: 0 };
   }
   let M;
@@ -2929,6 +2956,62 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   M.set = Object.assign({ qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80, learn: 'std' }, M.set || {});
   M.profile = Object.assign({ art: 2 }, M.profile || {});
   M.log = Object.assign({ solved: 0, first: 0, sec: 0, days: [] }, M.log || {});
+  // ---------- 옷장: 배지·마일스톤으로 해금하는 의상 (코인으로는 살 수 없어요) ----------
+  // 모자(head)는 머리 꼭대기 (x, y, 폭), 등(back)은 어깨 가운데 (x, y) 기준. 캐릭터 그림 좌표(0~100)
+  const HEAD_AT = { 1: [48, 24, 40], 2: [50, 27, 36], 3: [49, 12, 34], 4: [50, 20, 40], 5: [46, 18, 38], 6: [51, 16, 36], 7: [50, 17, 40] };
+  const BACK_AT = { 1: [48, 56], 2: [50, 56], 3: [50, 52], 4: [50, 60], 5: [46, 58], 6: [50, 58], 7: [50, 58] };
+  const OLW = 'stroke="#2b3a55" stroke-width="1.6" stroke-linejoin="round"';
+  const cape = (fill, extra = '') => `<path d="M-15 -6 Q-34 18 -30 29 Q0 35 30 29 Q34 18 15 -6 Z" fill="${fill}" ${OLW}/>${extra}`;
+  const WEAR = [
+    { id: 'pm_beanie', slot: 'head', name: '플러스 마이너스 비니', key: '3-1-0', svg: `<path d="M-20 0 A20 19 0 0 1 20 0 Z" fill="#ff6b6b" ${OLW}/><rect x="-21" y="-4" width="42" height="7" rx="3.5" fill="#e04848" ${OLW}/><circle cy="-20" r="4.5" fill="#fff" ${OLW}/><path d="M-11 -11 h7 M-7.5 -14.5 v7 M5 -11 h7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>` },
+    { id: 'tri_cone', slot: 'head', name: '세모 고깔모자', key: '3-1-1', svg: `<path d="M-15 0 L0 -30 L15 0 Z" fill="#4fc3f7" ${OLW}/><path d="M-9 -12 L9 -12 M-12 -6 L12 -6" stroke="#fff" stroke-width="2.4"/><circle cy="-31" r="4" fill="#ffd34d" ${OLW}/><rect x="-6" y="-24" width="5" height="5" fill="#ff8fab"/><circle cx="5" cy="-18" r="2.6" fill="#ffd34d"/>` },
+    { id: 'div_crown', slot: 'head', name: '나눗셈 은빛 왕관', key: '3-1-2', svg: `<path d="M-17 0 V-16 L-9 -8 L0 -20 L9 -8 L17 -16 V0 Z" fill="#d6dde8" ${OLW}/><circle cy="-13" r="1.8" fill="#4f6b8f"/><path d="M-5 -8 h10" stroke="#4f6b8f" stroke-width="2.2" stroke-linecap="round"/><circle cy="-3.5" r="1.8" fill="#4f6b8f"/>` },
+    { id: 'x_band', slot: 'head', name: '곱하기 리본 머리띠', key: '3-1-3', svg: `<path d="M-20 2 Q0 -14 20 2" stroke="#2b3a55" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M-20 2 Q0 -14 20 2" stroke="#ff8a3d" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M-9 -20 L9 -4 M9 -20 L-9 -4" stroke="#2b3a55" stroke-width="8" stroke-linecap="round"/><path d="M-9 -20 L9 -4 M9 -20 L-9 -4" stroke="#ffc53d" stroke-width="4.6" stroke-linecap="round"/>` },
+    { id: 'half_hat', slot: 'head', name: '이분의 일 중절모', key: '3-1-4', svg: `<ellipse cy="-1" rx="22" ry="4.5" fill="#3a4a6b" ${OLW}/><path d="M-13 -1 V-20 Q0 -24 13 -20 V-1 Z" fill="#4a5d85" ${OLW}/><rect x="-13" y="-8" width="26" height="5" fill="#ffc53d"/><text y="-11" text-anchor="middle" font-family="Jua" font-size="8" fill="#fff">½</text>` },
+    { id: 'rocket_pack', slot: 'back', name: '세 자리 로켓 가방', key: '3-2-0', svg: `<rect x="-30" y="-8" width="11" height="28" rx="5.5" fill="#e5e9f0" ${OLW}/><rect x="19" y="-8" width="11" height="28" rx="5.5" fill="#e5e9f0" ${OLW}/><path d="M-30 -2 h11 M19 -2 h11" stroke="#e5484d" stroke-width="3"/><path d="M-28 20 L-24.5 32 L-21 20 Z M21 20 L24.5 32 L28 20 Z" fill="#ff9d2e"/><path d="M-26 20 L-24.5 26 L-23 20 Z M23 20 L24.5 26 L26 20 Z" fill="#ffe08a"/>` },
+    { id: 'candy_bag', slot: 'back', name: '사탕 나눔 배낭', key: '3-2-1', svg: `<rect x="-36" y="-6" width="24" height="30" rx="7" fill="#ff8fab" ${OLW}/><rect x="-33" y="6" width="18" height="10" rx="3" fill="#ffd1dc" ${OLW}/><circle cx="-29" cy="-9" r="4" fill="#ffd34d" ${OLW}/><circle cx="-20" cy="-10" r="4" fill="#4fc3f7" ${OLW}/>` },
+    { id: 'halo', slot: 'head', name: '동그라미 후광', key: '3-2-2', svg: `<ellipse cy="-10" rx="17" ry="5" fill="none" stroke="#b07800" stroke-width="5.4"/><ellipse cy="-10" rx="17" ry="5" fill="none" stroke="#ffd34d" stroke-width="3"/><circle cx="-17" cy="-10" r="1.6" fill="#fff"/>` },
+    { id: 'cake_hat', slot: 'head', name: '조각 케이크 모자', key: '3-2-3', svg: `<path d="M-16 0 L16 0 L16 -12 L-16 -18 Z" fill="#fff3dc" ${OLW}/><path d="M-16 -7 L16 -3" stroke="#ff8fab" stroke-width="3.4"/><path d="M-16 -18 L16 -12" stroke="#ff8fab" stroke-width="3" stroke-linecap="round"/><circle cx="6" cy="-19" r="4.4" fill="#e5484d" ${OLW}/><path d="M6 -23 q2 -5 6 -6" stroke="#30a46c" stroke-width="1.8" fill="none"/>` },
+    { id: 'drop_hat', slot: 'head', name: '물방울 벙거지', key: '3-2-4', svg: `<path d="M-22 0 Q0 -6 22 0 L16 -6 Q0 -12 -16 -6 Z" fill="#3a8fd6" ${OLW}/><path d="M-14 -6 Q-13 -20 0 -20 Q13 -20 14 -6 Z" fill="#6cc0f5" ${OLW}/><path d="M0 -33 Q-6 -24 -5 -21 A5 5 0 0 0 5 -21 Q6 -24 0 -33 Z" fill="#8fd3ff" ${OLW}/>` },
+    { id: 'paren_band', slot: 'head', name: '괄호 더듬이', key: '5-1-0', svg: `<path d="M-18 2 Q0 -12 18 2" stroke="#2b3a55" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M-8 -6 Q-14 -18 -10 -26 M8 -6 Q14 -18 10 -26" stroke="#2b3a55" stroke-width="2" fill="none"/><text x="-10" y="-24" text-anchor="middle" font-family="Jua" font-size="13" fill="#9b6bff" stroke="#2b3a55" stroke-width=".8">(</text><text x="10" y="-24" text-anchor="middle" font-family="Jua" font-size="13" fill="#9b6bff" stroke="#2b3a55" stroke-width=".8">)</text>` },
+    { id: 'bee_wings', slot: 'back', name: '꿀벌 배수 날개', key: '5-1-1', svg: `<ellipse cx="-24" cy="-6" rx="16" ry="11" transform="rotate(-25 -24 -6)" fill="#dff4ff" fill-opacity=".9" ${OLW}/><ellipse cx="24" cy="-6" rx="16" ry="11" transform="rotate(25 24 -6)" fill="#dff4ff" fill-opacity=".9" ${OLW}/><ellipse cx="-20" cy="10" rx="10" ry="7" transform="rotate(20 -20 10)" fill="#dff4ff" ${OLW}/><ellipse cx="20" cy="10" rx="10" ry="7" transform="rotate(-20 20 10)" fill="#dff4ff" ${OLW}/>` },
+    { id: 'pattern_cape', slot: 'back', name: '규칙 무늬 망토', key: '5-1-2', svg: cape('#30a46c', `<path d="M-22 10 l6 -6 6 6 6 -6 6 6 6 -6 6 6 6 -6 M-27 23 l6 -6 6 6 6 -6 6 6 6 -6 6 6 6 -6 6 6" stroke="#ffd34d" stroke-width="2.4" fill="none"/>`) },
+    { id: 'chef_hat', slot: 'head', name: '통분 요리사 모자', key: '5-1-3', svg: `<rect x="-12" y="-9" width="24" height="9" rx="2" fill="#fff" ${OLW}/><path d="M-12 -9 C-24 -12 -20 -28 -8 -24 C-6 -34 6 -34 8 -24 C20 -28 24 -12 12 -9 Z" fill="#fff" ${OLW}/><path d="M-4 -9 v-6 M4 -9 v-6" stroke="#c9d3e0" stroke-width="1.4"/>` },
+    { id: 'grid_cape', slot: 'back', name: '모눈 넓이 망토', key: '5-1-4', svg: cape('#4f8de0', `<path d="M-20 2 V30 M-10 -2 V32 M0 -4 V33 M10 -2 V32 M20 2 V30 M-26 10 H26 M-30 20 H30" stroke="#bfe4ff" stroke-width="1.4"/>`) },
+    { id: 'safari_hat', slot: 'head', name: '어림 탐험 모자', key: '5-2-0', svg: `<ellipse cy="-1" rx="23" ry="5" fill="#c9a86a" ${OLW}/><path d="M-14 -2 Q-14 -20 0 -20 Q14 -20 14 -2 Z" fill="#e0c385" ${OLW}/><rect x="-14" y="-8" width="28" height="4" fill="#8a5a33"/>` },
+    { id: 'wizard_hat', slot: 'head', name: '분수 마법사 모자', key: '5-2-1', svg: `<ellipse cy="-1" rx="21" ry="4.5" fill="#5b3fb5" ${OLW}/><path d="M-13 -2 Q-4 -18 2 -34 Q4 -22 13 -2 Z" fill="#7b5ce0" ${OLW}/><path d="M-3 -16 l1.6 3.4 3.6 .5 -2.6 2.5 .6 3.6 -3.2 -1.7 -3.2 1.7 .6 -3.6 -2.6 -2.5 3.6 -.5 z" fill="#ffd34d"/><circle cx="6" cy="-8" r="1.6" fill="#ffd34d"/>` },
+    { id: 'butterfly_wings', slot: 'back', name: '대칭 나비 날개', key: '5-2-2', svg: `<path d="M0 0 C-14 -26 -44 -20 -36 2 C-44 16 -20 28 0 6 Z" fill="#ff8fab" ${OLW}/><path d="M0 0 C14 -26 44 -20 36 2 C44 16 20 28 0 6 Z" fill="#ff8fab" ${OLW}/><circle cx="-22" cy="-6" r="5" fill="#ffd34d"/><circle cx="22" cy="-6" r="5" fill="#ffd34d"/><circle cx="-20" cy="12" r="3.4" fill="#fff"/><circle cx="20" cy="12" r="3.4" fill="#fff"/>` },
+    { id: 'dot_bow', slot: 'head', name: '소수점 땡땡이 리본', key: '5-2-3', svg: `<path d="M0 -8 L-18 -18 L-18 2 Z M0 -8 L18 -18 L18 2 Z" fill="#e5484d" ${OLW}/><circle cy="-8" r="5" fill="#c0392b" ${OLW}/><circle cx="-12" cy="-10" r="1.8" fill="#fff"/><circle cx="-13" cy="-3" r="1.6" fill="#fff"/><circle cx="12" cy="-10" r="1.8" fill="#fff"/><circle cx="13" cy="-3" r="1.6" fill="#fff"/>` },
+    { id: 'dice_hat', slot: 'head', name: '주사위 모자', key: '5-2-4', svg: `<path d="M-12 -2 L-12 -20 L0 -26 L12 -20 L12 -2 L0 4 Z" fill="#fff" ${OLW}/><path d="M-12 -20 L0 -14 L12 -20 M0 -14 V4" stroke="#2b3a55" stroke-width="1.4" fill="none"/><circle cy="-20" r="1.8" fill="#e5484d"/><circle cx="-8" cy="-12" r="1.5" fill="#2b3a55"/><circle cx="-4" cy="-4" r="1.5" fill="#2b3a55"/><circle cx="4" cy="-10" r="1.5" fill="#2b3a55"/><circle cx="8" cy="-4" r="1.5" fill="#2b3a55"/>` },
+    { id: 'gold_crown', slot: 'head', name: '황금 왕관', ms: 5, svg: `<path d="M-18 0 V-18 L-9 -9 L0 -24 L9 -9 L18 -18 V0 Z" fill="#ffc53d" ${OLW}/><rect x="-18" y="-5" width="36" height="5" fill="#e8a317" ${OLW}/><circle cy="-13" r="3" fill="#e5484d" ${OLW}/><circle cx="-18" cy="-19" r="2.4" fill="#4fc3f7"/><circle cx="18" cy="-19" r="2.4" fill="#30a46c"/><circle cy="-25" r="2.4" fill="#fff"/>` },
+    { id: 'rainbow_cape', slot: 'back', name: '전설의 무지개 망토', ms: 20, svg: cape('#ff6b6b', `<path d="M-21 5 Q0 0 21 5 L26 13 Q0 8 -26 13 Z" fill="#ffc53d"/><path d="M-26 13 Q0 8 26 13 L29 21 Q0 16 -29 21 Z" fill="#30a46c"/><path d="M-29 21 Q0 16 29 21 L30 29 Q0 34 -30 29 Z" fill="#4f8de0"/>`) }
+  ];
+  const WEAR_BY = id => WEAR.find(w => w.id === id);
+  const MILESTONES = [{ n: 3, coins: 200, text: '코인 200개' }, { n: 5, item: 'gold_crown', text: '황금 왕관' }, { n: 10, coins: 500, text: '코인 500개' }, { n: 20, item: 'rainbow_cape', text: '전설의 무지개 망토' }];
+  M.wear = Object.assign({ head: null, back: null }, M.wear || {});
+  M.ms = Array.isArray(M.ms) ? M.ms : [];
+  const ownsWear = w => w.key ? M.badges.includes((CONTENT[w.key] || {}).badge) : M.badges.length >= w.ms;
+  const wearFrom = w => w.key ? `${(CONTENT[w.key] || {}).badge || ''}로 받아요` : `배지 ${w.ms}개 모으기 보상`;
+  // 배지 개수 마일스톤: 새로 달성한 보상을 지급하고 문구 목록을 돌려줘요
+  function claimMilestones() {
+    const got = [];
+    MILESTONES.forEach(m => { if (M.badges.length >= m.n && !M.ms.includes(m.n)) { M.ms.push(m.n); if (m.coins) M.coins += m.coins; got.push(`배지 ${m.n}개 달성 보상: ${m.text}`); } });
+    return got;
+  }
+  const wearPart = (w, art) => {
+    if (!w) return '';
+    if (w.slot === 'head') { const [x, y, wd] = HEAD_AT[art] || HEAD_AT[2], s = wd / 40; return `<g transform="translate(${x} ${y}) scale(${s})">${w.svg}</g>`; }
+    const [x, y] = BACK_AT[art] || BACK_AT[2]; return `<g transform="translate(${x} ${y}) scale(1.3)">${w.svg}</g>`;
+  };
+  // 옷을 입힌 캐릭터. 모자가 위로 솟을 수 있어 그림 영역을 조금 넓혀요
+  const DRESS_VB = [-10, -16, 120, 116];
+  function dressSVG(art, wear = M.wear, attrs = '') {
+    const inner = charSVG(art).replace(/^\s*<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+    const head = WEAR_BY(wear && wear.head), back = WEAR_BY(wear && wear.back);
+    return `<svg viewBox="${DRESS_VB.join(' ')}" ${attrs} aria-hidden="true">${wearPart(back, art)}${inner}${wearPart(head, art)}</svg>`;
+  }
+  const wearIcon = w => `<svg viewBox="${w.slot === 'head' ? '-26 -38 52 46' : '-40 -26 80 72'}" aria-hidden="true">${w.svg}</svg>`;
+  claimMilestones();
   const qCount = () => Math.max(3, Math.min(20, +M.set.qn || 5));
   // 레벨: 푼 문제 수로 올라가요. Lv.1→2는 10문제, 그다음부터 5문제씩 더 필요해요
   const TITLES = [[1, '새싹 탐험가'], [3, '꼬마 탐험가'], [5, '숲속 탐험가'], [8, '용감한 탐험가'], [12, '시계탑 수리공'], [16, '매스 아일랜드 영웅'], [20, '전설의 탐험가']];
@@ -2979,9 +3062,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     if (M.justCompass) {
       M.coins += 100;
       if (!M.badges.includes(badge)) M.badges.push(badge);
+      var msGot = claimMilestones();
       endBanner = '황금 나침반 완성!'; endSub = '숫자 시계탑이 다시 움직여요!';
     }
-    M.news = M.justCompass ? { good: true, text: `시계탑 ${floorOf(pick.gs)}층 복원 완료! 황금 나침반 ${NSTG}조각을 모두 맞췄어요.` }
+    M.news = M.justCompass ? { good: true, text: `시계탑 ${floorOf(pick.gs)}층 복원 완료! ${badge}를 받았어요.` + (typeof msGot !== 'undefined' && msGot && msGot.length ? ` 🎁 ${msGot.join(' · ')}` : '') + (WEAR.find(w => w.key === key) ? ` 👕 옷장에 '${WEAR.find(w => w.key === key).name}'이(가) 생겼어요!` : '') }
       : newPiece ? { good: true, text: `${GUARD[i].name}의 ${GUARD[i].step}을 별 3개로 통과! 황금 나침반 조각 ${pieceCount(key)}/${NSTG}을 얻었어요.` }
       : opened.length && !wasCleared ? { good: true, text: `${GUARD[i].step} 완료! ${opened.map(k => GUARD[k].place).join('·')}가 열렸어요.` }
       : { good: true, text: `${GUARD[i].name}의 ${GUARD[i].step}에서 별 ${got}개를 받았어요. 별 3개면 나침반 조각!` };
@@ -3060,8 +3144,13 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     document.querySelectorAll('[data-shoptab]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.shoptab === shopTab)));
     $('shopWallet').innerHTML = `내 코인 <b>${M.coins}</b> · ${shopTab === 'game' ? '게임 중에 쓰는 아이템이에요' : '내 캐릭터를 꾸미는 옷·모자예요'}`;
     if (shopTab === 'wear') {
-      $('shopGrid').innerHTML = `<div class="wear-pre"><span class="pf-av big">${charSVG(PROFILE.art)}</span><p><b>옷 상점이 곧 열려요!</b><br>모은 코인으로 ${PROFILE.name}에게 모자·옷·안경을 입혀 줄 수 있어요.</p></div>`
-        + [['🎩', '모자'], ['👕', '옷'], ['👓', '안경'], ['🎒', '가방']].map(([ic, nm]) => `<div class="item wear-soon"><span class="wear-ic">${ic}</span><div><b>${nm}</b><p>준비 중이에요</p><div class="row"><small>곧 만나요</small><button type="button" class="buy" disabled>준비 중</button></div></div></div>`).join('');
+      const slotName = { head: '머리', back: '등' };
+      const cur = sl => { const w = WEAR_BY(M.wear[sl]); return w ? `<span class="wd-on">${slotName[sl]}: <b>${w.name}</b> <button type="button" class="wd-off" data-unwear="${sl}">벗기</button></span>` : `<span class="wd-on muted">${slotName[sl]}: 비어 있어요</span>`; };
+      const nOwn = WEAR.filter(ownsWear).length;
+      $('shopGrid').innerHTML = `<div class="wear-pre"><span class="pf-av big" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span><div class="wd-info"><p><b>${PROFILE.name}의 옷장</b> · 모은 옷 ${nOwn}/${WEAR.length}<br><small>옷은 코인으로 살 수 없어요. 단원 배지를 받거나 배지를 많이 모으면 생겨요. 입은 옷은 게임 속 친구들도 함께 입어요!</small></p><div class="wd-cur">${cur('head')}${cur('back')}</div></div></div>`
+        + WEAR.map(w => { const own = ownsWear(w), on = M.wear[w.slot] === w.id;
+          return `<div class="item wd-item${own ? '' : ' locked'}${on ? ' on' : ''}"><span class="wd-ic">${wearIcon(w)}${own ? '' : '<i class="wd-lock" aria-hidden="true">🔒</i>'}</span><div><b>${w.name}</b><p>${slotName[w.slot]} · ${wearFrom(w)}</p>
+            <div class="row"><small>${own ? (on ? '입는 중 ✓' : '가지고 있어요') : '아직 잠겨 있어요'}</small>${own ? `<button type="button" class="buy" data-wear="${w.id}">${on ? '벗기' : '입어 보기'}</button>` : `<button type="button" class="buy" disabled>🔒 잠김</button>`}</div></div></div>`; }).join('');
       $('shopMsg').textContent = msg || ''; return;
     }
     $('shopGrid').innerHTML = ITEMS.map(it => `<div class="item">${itemIcon(it)}<div><b>${it.name}</b><p>${it.desc}</p>
@@ -3079,6 +3168,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       const nb = $('shopGrid').querySelector(`[data-buy="${it.id}"]`); if (nb && !nb.disabled) nb.focus({ preventScroll: true });
       return;
     }
+    const wb = e.target.closest('[data-wear]');
+    if (wb) { const w = WEAR_BY(wb.dataset.wear); if (!w || !ownsWear(w)) return; M.wear[w.slot] = M.wear[w.slot] === w.id ? null : w.id; saveM(); renderShop(M.wear[w.slot] ? `${w.name}을(를) 입었어요!` : `${w.name}을(를) 벗었어요.`); try { renderBar(); } catch (_) {} const nb = $('shopGrid').querySelector(`[data-wear="${w.id}"]`); if (nb) nb.focus({ preventScroll: true }); return; }
+    const ub = e.target.closest('[data-unwear]'); if (ub) { M.wear[ub.dataset.unwear] = null; saveM(); renderShop('옷을 벗었어요.'); try { renderBar(); } catch (_) {} return; }
     const tb = e.target.closest('[data-shoptab]'); if (tb) { shopTab = tb.dataset.shoptab; renderShop(); tb.focus({ preventScroll: true }); return; }
     if (e.target.closest('#shopClose')) closeShop();
   });
@@ -3691,7 +3783,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       sky.innerHTML = '<span class="hsun"></span>' + C.map(([t, w, d, s, o]) => `<span class="hcloud" style="--t:${t}%;--w:${w}vmin;--d:${d}s;--s:${s}s;--o:${o};--x:${Math.round(-s * 0.8)}vw">${cloud}</span>`).join('') + '<span class="hhill a"></span><span class="hhill b"></span>';
     }
     const pf = $('homeProfile');
-    if (pf) pf.innerHTML = `<span class="pf-av" style="background:${CHAR_BG[PROFILE.art]}">${charSVG(PROFILE.art)}</span><span class="pf-tx"><span class="pf-lv">Lv.${levelInfo(M.log.solved).L}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
+    if (pf) pf.innerHTML = `<span class="pf-avw"><span class="pf-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span>${repBadgeMini()}</span><span class="pf-tx"><span class="pf-lv">Lv.${levelInfo(M.log.solved).L}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
   }
   function villageSVG(gs) {
     const names = unitsOf(gs), pcs = names.map((_, u) => piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
@@ -4141,8 +4233,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       return `<div class="me-grade"><h4>${g}학년</h4>${sems}</div>`; }).join('');
     const itemsHTML = ITEMS.map(it => `<span class="me-item" title="${it.name}">${itemIcon(it)}<b>${M.items[it.id] || 0}</b><small>${it.name}</small></span>`).join('');
     const chars = Object.keys(CHAR_NAMES).map(Number).map(a => `<button type="button" class="me-char${a === PROFILE.art ? ' on' : ''}" data-art="${a}" aria-pressed="${a === PROFILE.art}" style="background:${CHAR_BG[a]}">${charSVG(a)}<span>${CHAR_NAMES[a]}</span></button>`).join('');
-    $('meBody').innerHTML = `<div class="me-top"><span class="me-av" style="background:${CHAR_BG[PROFILE.art]}">${charSVG(PROFILE.art)}</span>
-        <div class="me-id"><span class="pf-lv">Lv.${lv.L}</span><b>${PROFILE.name}</b><small>${lv.title}</small>
+    $('meBody').innerHTML = `<div class="me-top"><span class="me-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span>
+        <div class="me-id"><span class="pf-lv">Lv.${lv.L}</span><b>${PROFILE.name}</b><small>${lv.title}</small>${repBadgeLine()}
           <span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span><small>다음 레벨까지 ${lv.need - lv.into}문제${nx ? ` · Lv.${nx[0]} ‘${nx[1]}’` : ''}</small></div></div>
       <div class="me-chips"><span>📖 <b>${L.solved}</b>문제</span><span>🎯 정답률 <b>${acc}%</b></span><span>⏱️ <b>${mins}</b>분</span><span>🔥 연속 <b>${st.cur}</b>일</span><span>🪙 코인 <b>${M.coins}</b></span></div>
       <h3 class="set-sec">탐험 현황 <small class="me-note">집 번호 = 단원 · 노란 집 = 정복(조각 5개)</small></h3>${grades}
@@ -4160,6 +4252,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <path d="M32 29 l3.2 6.6 7.2 1 -5.2 5 1.3 7.2 -6.5 -3.4 -6.5 3.4 1.3 -7.2 -5.2 -5 7.2 -1 z" fill="#fff" opacity=".9"/>
       <circle cx="49" cy="25" r="8" fill="#fff" stroke="${d}" stroke-width="2"/><text x="49" y="29" text-anchor="middle" font-family="Jua" font-size="11" fill="${d}">${u + 1}</text></svg>`;
   }
+  const repBadge = () => (M.rep && CONTENT[M.rep] && M.badges.includes(CONTENT[M.rep].badge)) ? M.rep : null;
+  function repBadgeMini() { const k = repBadge(); return k ? `<span class="pf-rep" title="대표 배지: ${esc(CONTENT[k].badge)}">${medalSVG(k.slice(0, 3), +k.slice(4))}</span>` : ''; }
+  function repBadgeLine() { const k = repBadge(); return k ? `<span class="me-rep">${medalSVG(k.slice(0, 3), +k.slice(4))}<span>대표 배지 · <b>${esc(CONTENT[k].badge.replace(/ 배지$/, ''))}</b></span></span>` : `<span class="me-rep none">대표 배지가 없어요 · 상단 🏅 배지에서 골라요</span>`; }
   function badgeList() {
     return Object.keys(CONTENT).map(key => { const gs = key.slice(0, 3), u = +key.slice(4); return { key, gs, u, name: CONTENT[key].badge, got: M.badges.includes(CONTENT[key].badge), pcs: piecesOf(key) }; })
       .sort((a, b) => a.gs.localeCompare(b.gs) || a.u - b.u);
@@ -4169,14 +4264,17 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const short = n => esc(n.replace(/ 배지$/, ''));
     const where = b => `${gsLabel(b.gs)} · ${b.u + 1}단원 ${esc(unitName(b.gs, b.u))}`;
     const next = [...todo].sort((a, b) => b.pcs - a.pcs || (a.gs === M.sel.gs ? -1 : 0))[0];
-    const gotHTML = got.length ? `<div class="bd-grid">${got.map(b => `<div class="bd-item got">${medalSVG(b.gs, b.u)}<b>${short(b.name)}</b><small>${where(b)}</small><span class="bd-ok">✓ 획득 완료</span></div>`).join('')}</div>`
+    const gotHTML = got.length ? `<div class="bd-grid">${got.map(b => { const isRep = M.rep === b.key, w = WEAR.find(x => x.key === b.key);
+        return `<div class="bd-item got${isRep ? ' rep' : ''}">${isRep ? '<span class="bd-crown">대표</span>' : ''}${medalSVG(b.gs, b.u)}<b>${short(b.name)}</b><small>${where(b)}</small>${w ? `<small class="bd-gift">👕 ${w.name}</small>` : ''}<button type="button" class="bd-rep" data-rep="${b.key}" aria-pressed="${isRep}">${isRep ? '★ 대표 배지' : '대표로 달기'}</button></div>`; }).join('')}</div>`
       : `<p class="bd-empty">아직 받은 배지가 없어요. 한 단원의 1~5단계를 모두 별 3개로 통과하면 첫 배지를 받아요!</p>`;
     const groups = [...new Set(todo.map(b => b.gs))].map(gs => `<p class="bd-gs">${gsLabel(gs)}</p><div class="bd-grid">${todo.filter(b => b.gs === gs).map(b =>
       `<button type="button" class="bd-item todo${b.pcs ? ' going' : ''}" data-bkey="${b.key}" title="눌러서 이 단원으로 가기">${medalSVG(b.gs, b.u)}<b>${short(b.name)}</b><small>${b.u + 1}단원 ${esc(unitName(b.gs, b.u))}</small>
         <span class="bd-p"><span class="bd-bar"><i style="width:${b.pcs / NSTG * 100}%"></i></span>${b.pcs ? `조각 ${b.pcs}/${NSTG} · ${NSTG - b.pcs}단계 남음` : '아직 시작 전'}</span></button>`).join('')}</div>`).join('');
     $('badgeBody').innerHTML = `<div class="bd-sum"><span class="bd-big">${got.length}<small> / ${all.length}</small></span><span class="bd-txt"><b>모은 배지</b><span class="bd-bar"><i style="width:${got.length / all.length * 100}%"></i></span>단원의 1~5단계를 모두 별 3개로 통과하면(조각 5개) 그 단원의 마스터 배지를 받아요.</span></div>
       ${next ? `<button type="button" class="bd-next" data-bkey="${next.key}">${medalSVG(next.gs, next.u)}<span>다음 목표 · <b>${short(next.name)}</b><br>${where(next)} — ${next.pcs ? `조각 ${next.pcs}/${NSTG}, 앞으로 ${NSTG - next.pcs}단계만 별 3개로 통과하면 돼요!` : '1단계부터 별 3개에 도전해 보세요!'}</span></button>` : ''}
-      <h3 class="bd-sec">내가 가진 배지 <small>${got.length}개</small></h3>${gotHTML}
+      <h3 class="bd-sec">배지 모으기 보상</h3><div class="bd-ms">${MILESTONES.map(m => { const done = got.length >= m.n, w = m.item && WEAR_BY(m.item);
+        return `<div class="bd-m${done ? ' done' : ''}"><span class="bd-mn">${m.n}개</span><span class="bd-mi">${w ? wearIcon(w) : `<span class="bd-coin">${COIN_SVG}</span>`}</span><small>${m.text}</small><span class="bd-ms-st">${done ? '✓ 받음' : `${m.n - got.length}개 남음`}</span></div>`; }).join('')}</div>
+      <h3 class="bd-sec">내가 가진 배지 <small>${got.length}개${got.length ? ' · 대표 배지는 프로필에 달려요' : ''}</small></h3>${gotHTML}
       <h3 class="bd-sec">앞으로 받을 배지 <small>${todo.length}개 · 누르면 그 단원으로 가요</small></h3>${todo.length ? groups : '<p class="bd-empty">모든 배지를 모았어요! 진짜 수학 탐험가예요 🎉</p>'}`;
     $('badgeModal').hidden = false; $('badgeClose').focus({ preventScroll: true });
   }
@@ -4185,6 +4283,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   $('badgeModal').addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); closeBadges(); } });
   $('badgeModal').addEventListener('click', e => {
     if (e.target === $('badgeModal')) { closeBadges(); return; }
+    const rb = e.target.closest('[data-rep]');
+    if (rb) { M.rep = M.rep === rb.dataset.rep ? null : rb.dataset.rep; saveM(); renderBar(); const st = $('badgeModal').querySelector('.me-card').scrollTop; openBadges(); $('badgeModal').querySelector('.me-card').scrollTop = st; const f = $('badgeModal').querySelector(`[data-rep="${rb.dataset.rep}"]`); if (f) f.focus({ preventScroll: true }); return; }
     const t = e.target.closest('[data-bkey]'); if (!t) return;
     const k = t.dataset.bkey; M.sel = { gs: k.slice(0, 3), u: +k.slice(4) };
     M.news = { good: false, text: `${gsLabel(M.sel.gs)} [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 별 3개로 조각을 모아 배지를 받아요.` };
