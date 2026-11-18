@@ -438,6 +438,30 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .tgl[aria-checked="true"] span { left: 28px; }
 .qc-btn:focus-visible, .qc-presets button:focus-visible, .tgl:focus-visible, #qcRange:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 @media (max-width: 560px) { .sum-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sum-tile { padding: 12px 10px; gap: 8px; } .sum-tile .ic { font-size: 1.6rem; } .sum-tile .v { font-size: 1.6rem; } .homefs .wallet { flex-wrap: wrap; justify-content: flex-end; } }
+.att { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.95); border: 2px solid var(--deep); border-radius: 18px; padding: 4px 12px; box-shadow: 0 3px 0 rgba(0,58,92,.22); cursor: pointer; font: inherit; color: var(--deep); margin: 0 auto 0 12px; }
+.att:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.att-h { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
+.att-h b { font-family: var(--display); font-weight: 400; font-size: .95rem; white-space: nowrap; }
+.att-h small { font-size: .72rem; font-weight: 700; color: #e5484d; white-space: nowrap; }
+.att-row { display: flex; gap: 4px; }
+.att-d { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.att-d i { width: 24px; height: 24px; border-radius: 50%; border: 2px dashed #c4ccd6; display: grid; place-items: center; font-style: normal; font-size: .8rem; font-weight: 900; color: #fff; }
+.att-d.on i { border: 2px solid #b8302f; background: radial-gradient(circle at 35% 35%, #ff6b6b, #e5484d); transform: rotate(-8deg); }
+.att-d.today i { outline: 2px solid var(--sun); outline-offset: 1px; }
+.att-d em { font-style: normal; font-size: .62rem; font-weight: 700; color: #8b95a3; }
+.att-d.today em { color: var(--deep); }
+@media (max-width: 860px) { .homefs .sf-top { flex-wrap: wrap; } .att { order: 3; width: 100%; margin: 4px 0 0; justify-content: space-between; } }
+.shop-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #eef3f7; border-radius: 14px; padding: 4px; }
+.shop-tabs button { border: 0; border-radius: 10px; padding: 10px 8px; font-family: var(--display); font-size: 1.1rem; background: transparent; color: var(--muted); cursor: pointer; }
+.shop-tabs button[aria-selected="true"] { background: #fff; color: var(--deep); box-shadow: 0 2px 0 rgba(0,58,92,.2); }
+.shop-tabs button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.wear-pre { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; background: #f5efff; border-radius: 16px; padding: 12px 14px; }
+.wear-pre p { margin: 0; line-height: 1.6; color: #1f2a40; }
+.pf-av.big { width: 72px; height: 72px; flex: none; border-radius: 50%; background: #ead9ff; border: 2px solid #b995f5; display: grid; place-items: center; }
+.pf-av.big svg { width: 64px; height: 64px; }
+.wear-soon { opacity: .6; }
+.wear-ic { font-size: 2.2rem; width: 52px; text-align: center; }
+.ctlbtn.giant { color: #b07800; border-color: #b07800; background: #fff3c4; }
 /* 메인 화면 고도화: 하늘, 프로필, 코인 */
 .homefs { background: linear-gradient(180deg, #46a9f2 0%, #86cffc 36%, #c9ecff 66%, #fff1cf 100%); }
 .hsun { position: absolute; right: 7%; top: 5%; width: 16vmin; height: 16vmin; border-radius: 50%; background: radial-gradient(circle, #fffbe0 0 34%, rgba(255,240,170,.55) 35% 52%, rgba(255,240,170,0) 72%); }
@@ -678,7 +702,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="top">
     <h1>매스 랜드</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
-    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><button type="button" class="ctlbtn freeze" id="freezeBtn" hidden>시간 멈추기</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
+    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><button type="button" class="ctlbtn giant" id="giantBtn" hidden>거대화</button><button type="button" class="ctlbtn freeze" id="freezeBtn" hidden>시간 멈추기</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
   <div class="stage" id="stage">
     <canvas id="game" width="960" height="540" aria-label="부기가 달리는 수학 모험 게임 화면"></canvas>
@@ -697,7 +721,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
-  <div class="sf-top"><div class="profile" id="homeProfile" aria-label="내 프로필"></div><div class="wallet" id="homeWallet"></div></div>
+  <div class="sf-top"><div class="profile" id="homeProfile" aria-label="내 프로필"></div><button type="button" class="att" id="homeAtt" aria-label="이번 주 출석 도장"></button><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
     <h1 id="homeTitle" class="home-title">매스 랜드<span>숫자 시계탑의 비밀</span></h1>
     <div class="home-body"><div class="home-map" id="homeMap"></div></div>
@@ -720,9 +744,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     <div class="tagrow"><h2 id="sumTitle" class="sum-h"><span aria-hidden="true">⭐</span> 모험 요약</h2><button type="button" class="xbtn" id="sumClose">닫기 ✕</button></div>
     <div class="sum-lv" id="sumLv"></div>
     <div class="sum-grid" id="sumGrid"></div>
-    <h3 class="sum-sub"><span aria-hidden="true">📅</span> 이번 주 출석 도장 <small id="sumWeek"></small></h3>
-    <div class="stamps" id="sumStamps"></div>
-    <p class="note">게임을 연 날마다 출석 도장 1개가 찍혀요. 출석은 월요일부터 일요일까지 한 주로 세요. 정답률은 한 번에 맞힌 문제의 비율이에요.</p>
+    <p class="note">정답률은 한 번에 맞힌 문제의 비율이에요. 이번 주 출석 도장(월~일)은 메인 화면 위쪽에서 볼 수 있어요.</p>
   </div>
 </div>
 
@@ -826,6 +848,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 <div class="modal" id="shopModal" role="dialog" aria-modal="true" aria-labelledby="shopTitle" hidden>
   <div class="card shop-card">
     <div class="tagrow"><h2 id="shopTitle">코인 상점</h2><button type="button" class="xbtn" id="shopClose">닫기 ✕</button></div>
+    <div class="shop-tabs" role="tablist" aria-label="상점 종류"><button type="button" role="tab" id="tabGame" data-shoptab="game" aria-selected="true">🎮 게임 아이템</button><button type="button" role="tab" id="tabWear" data-shoptab="wear" aria-selected="false">👕 옷 상점</button></div>
     <p class="lead" id="shopWallet"></p>
     <div class="shop-grid" id="shopGrid"></div>
     <p class="shop-msg" id="shopMsg" aria-live="polite"></p>
@@ -2029,6 +2052,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const fz = (state === 'play' || state === 'question') && (M.items.freeze || 0) > 0 && stats.freeze <= 0;
     if ($('freezeBtn').hidden === fz) $('freezeBtn').hidden = !fz;
     if (fz) { const ft = '시간 멈추기 (' + M.items.freeze + ')'; if ($('freezeBtn').textContent !== ft) $('freezeBtn').textContent = ft; }
+    const gzz = state === 'play' && (M.items.giant || 0) > 0 && !(stats.star > 0);
+    if ($('giantBtn').hidden === gzz) $('giantBtn').hidden = !gzz;
+    if (gzz) { const gt = '⭐ 거대화 (' + M.items.giant + ')'; if ($('giantBtn').textContent !== gt) $('giantBtn').textContent = gt; }
     if (state === 'ending') {
       updateEnding(dt);
       if (state === 'ending') drawEnding();
@@ -2937,6 +2963,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       icon: '<circle cx="26" cy="27" r="18" fill="#d5efff" stroke="#0090ff" stroke-width="4"/><rect x="19" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="28" y="18" width="5" height="18" rx="2" fill="#0077b3"/><rect x="21" y="3" width="10" height="5" rx="2" fill="#0090ff"/>' },
     { id: 'calc', name: '계산기', price: 40, desc: '출발 전에 챙기면 그 판의 적용·서술·실생활 문제에서 꺼내 쓸 수 있어요. 연산 문제는 직접!',
       icon: '<rect x="10" y="4" width="32" height="44" rx="6" fill="#4f8de0"/><rect x="15" y="9" width="22" height="10" rx="2" fill="#dff3ff"/><g fill="#fff"><rect x="15" y="23" width="6" height="6" rx="1.5"/><rect x="23" y="23" width="6" height="6" rx="1.5"/><rect x="31" y="23" width="6" height="6" rx="1.5" fill="#ffd34d"/><rect x="15" y="31" width="6" height="6" rx="1.5"/><rect x="23" y="31" width="6" height="6" rx="1.5"/><rect x="31" y="31" width="6" height="6" rx="1.5" fill="#ffd34d"/><rect x="15" y="39" width="14" height="5" rx="1.5"/><rect x="31" y="39" width="6" height="5" rx="1.5" fill="#ffd34d"/></g>' },
+    { id: 'giant', name: '거대화하기', price: 80, desc: '게임 중 위쪽 [거대화] 버튼을 누르면 10초 동안 5배 거인! 적도 장애물도 쾅 부숴요.',
+      icon: '<circle cx="26" cy="26" r="22" fill="#ffe08a"/><path d="M26 6 l5 11 12 1.5 -9 8 2.5 12 -10.5 -6 -10.5 6 2.5 -12 -9 -8 12 -1.5z" fill="#ffc53d" stroke="#b07800" stroke-width="2" stroke-linejoin="round"/><path d="M14 40 l-6 6 M38 40 l6 6 M26 44 v6" stroke="#e5484d" stroke-width="3" stroke-linecap="round"/><text x="26" y="31" text-anchor="middle" font-family="Jua" font-size="11" fill="#7a3e00">×5</text>' },
     { id: 'heart', name: '하트 +1', price: 50, desc: '다음 판을 하트 4개로 시작해요. 시작 화면에서 골라요.',
       icon: '<path d="M26 44C12 34 6 26 6 18a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 16-20 26z" fill="#e5484d"/><path d="M26 18v14M19 25h14" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' },
     { id: 'shield', name: '보호막', price: 60, desc: '헷갈이에 한 번 부딪혀도 다치지 않아요. 시작 화면에서 골라요.',
@@ -2944,13 +2972,20 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   ];
   const itemIcon = it => `<svg viewBox="0 0 52 52" aria-hidden="true">${it.icon}</svg>`;
   let shopReturn = 'mapModal';
+  let shopTab = 'game';
   function renderShop(msg) {
-    $('shopWallet').innerHTML = `내 코인 <b>${M.coins}</b> · 게임에서 모은 코인이 쌓여요`;
+    document.querySelectorAll('[data-shoptab]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.shoptab === shopTab)));
+    $('shopWallet').innerHTML = `내 코인 <b>${M.coins}</b> · ${shopTab === 'game' ? '게임 중에 쓰는 아이템이에요' : '내 캐릭터를 꾸미는 옷·모자예요'}`;
+    if (shopTab === 'wear') {
+      $('shopGrid').innerHTML = `<div class="wear-pre"><span class="pf-av big">${charSVG(PROFILE.art)}</span><p><b>옷 상점이 곧 열려요!</b><br>모은 코인으로 ${PROFILE.name}에게 모자·옷·안경을 입혀 줄 수 있어요.</p></div>`
+        + [['🎩', '모자'], ['👕', '옷'], ['👓', '안경'], ['🎒', '가방']].map(([ic, nm]) => `<div class="item wear-soon"><span class="wear-ic">${ic}</span><div><b>${nm}</b><p>준비 중이에요</p><div class="row"><small>곧 만나요</small><button type="button" class="buy" disabled>준비 중</button></div></div></div>`).join('');
+      $('shopMsg').textContent = msg || ''; return;
+    }
     $('shopGrid').innerHTML = ITEMS.map(it => `<div class="item">${itemIcon(it)}<div><b>${it.name}</b><p>${it.desc}</p>
       <div class="row"><small>가진 개수 ${M.items[it.id] || 0}</small><button type="button" class="buy" data-buy="${it.id}" ${M.coins < it.price ? 'disabled' : ''}>코인 ${it.price}</button></div></div></div>`).join('');
     $('shopMsg').textContent = msg || '';
   }
-  function openShop(from) { shopReturn = from; renderShop(); showModal('shopModal'); $('shopClose').focus({ preventScroll: true }); }
+  function openShop(from) { shopReturn = from; shopTab = 'game'; renderShop(); showModal('shopModal'); $('shopClose').focus({ preventScroll: true }); }
   $('shopModal').addEventListener('click', e => {
     const b = e.target.closest('[data-buy]');
     if (b) {
@@ -2961,6 +2996,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       const nb = $('shopGrid').querySelector(`[data-buy="${it.id}"]`); if (nb && !nb.disabled) nb.focus({ preventScroll: true });
       return;
     }
+    const tb = e.target.closest('[data-shoptab]'); if (tb) { shopTab = tb.dataset.shoptab; renderShop(); tb.focus({ preventScroll: true }); return; }
     if (e.target.closest('#shopClose')) closeShop();
   });
   function closeShop() {
@@ -2976,7 +3012,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <button type="button" class="useitem" data-use="shield" aria-pressed="${useShield}" ${M.items.shield ? '' : 'disabled'}>보호막 쓰기 (${M.items.shield})</button>
       <button type="button" class="useitem" data-use="calc" aria-pressed="${useCalc}" ${M.items.calc ? '' : 'disabled'}>계산기 챙기기 (${M.items.calc || 0})</button>
       <button type="button" class="useitem shopgo" id="startShop">코인 상점</button>
-      <span class="note">게임 중에 쓰는 아이템: 힌트 ${M.items.hint}개, 시간 멈추기 ${M.items.freeze}개</span>`;
+      <span class="note">게임 중에 쓰는 아이템: 힌트 ${M.items.hint}개, 시간 멈추기 ${M.items.freeze}개, 거대화 ${M.items.giant || 0}개</span>`;
   }
   $('useItems').addEventListener('click', e => {
     if (e.target.closest('#startShop')) { openShop('startModal'); return; }
@@ -3114,6 +3150,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     };
     spin();
   });
+  $('giantBtn').addEventListener('click', () => {
+    if (state !== 'play' || (M.items.giant || 0) <= 0 || stats.star > 0) return;
+    M.items.giant--; saveM(); stats.star = STAR_T; showToast('거대화! 10초 동안 5배 거인!'); tone([523, 659, 784, 1047, 1319], 0.07);
+    canvas.focus && canvas.focus();
+  });
   $('freezeBtn').addEventListener('click', () => {
     if (!(state === 'play' || state === 'question') || (M.items.freeze || 0) <= 0 || stats.freeze > 0) return;
     M.items.freeze--; saveM(); stats.freeze = 20; showToast('시간 멈춤! 20초');
@@ -3126,6 +3167,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
   function renderBar() {
     const gs = M.sel.gs, us = unitsOf(gs);
+    try { markAttend(); renderAttend(); } catch (_) {}
     $('homeWallet').innerHTML = `<span class="chip">배지 ${M.badges.length}</span><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="storyOpen"><span aria-hidden="true">📖</span>이야기 보기</button><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
   }
   // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
@@ -3995,6 +4037,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     for (const k of [...set].sort()) { const t = new Date(k + 'T00:00:00'); run = prev && Math.round((t - prev) / 86400000) === 1 ? run + 1 : 1; best = Math.max(best, run); prev = t; }
     return { cur, best: Math.max(best, cur) };
   }
+  // 메인 위쪽 이번 주 출석 도장 (월~일 고정)
+  function renderAttend() {
+    const el = $('homeAtt'); if (!el) return;
+    const now = new Date(), mon = new Date(now); mon.setDate(now.getDate() - (now.getDay() + 6) % 7);
+    const DN = ['월', '화', '수', '목', '금', '토', '일'], todayK = dayKey(now), have = new Set(M.log.days), st = streaks();
+    el.innerHTML = `<span class="att-h"><b>이번 주 출석</b><small>🔥 연속 ${st.cur}일</small></span><span class="att-row">${DN.map((nm, k) => { const d = new Date(mon); d.setDate(mon.getDate() + k); const key = dayKey(d), on = have.has(key), td = key === todayK;
+      return `<span class="att-d${on ? ' on' : ''}${td ? ' today' : ''}" title="${nm}요일${td ? '(오늘)' : ''} ${on ? '출석' : ''}"><i>${on ? '✓' : ''}</i><em>${td ? '오늘' : nm}</em></span>`; }).join('')}</span>`;
+    el.setAttribute('aria-label', `이번 주 출석 ${DN.filter((_, k) => { const d = new Date(mon); d.setDate(mon.getDate() + k); return have.has(dayKey(d)); }).length}일, 연속 ${st.cur}일. 눌러서 모험 요약 보기`);
+  }
   function openSummary() {
     markAttend();
     const L = M.log, acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, mins = Math.floor(L.sec / 60), st = streaks();
@@ -4009,13 +4060,6 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       + tile('📅', '총 출석', `${L.days.length}<small>일</small>`, '#0e7490')
       + tile('🔥', '연속 출석', `${st.cur}<small>일</small>`, '#e5484d')
       + tile('⭐', '최장 연속', `${st.best}<small>일</small>`, '#b07800');
-    // 이번 주: 월요일 ~ 일요일 고정
-    const now = new Date(), mon = new Date(now); mon.setDate(now.getDate() - (now.getDay() + 6) % 7);
-    const DN = ['월', '화', '수', '목', '금', '토', '일'], todayK = dayKey(now), have = new Set(L.days);
-    const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-    $('sumWeek').textContent = `${mon.getMonth() + 1}/${mon.getDate()}(월) ~ ${sun.getMonth() + 1}/${sun.getDate()}(일)`;
-    $('sumStamps').innerHTML = DN.map((nm, k) => { const d = new Date(mon); d.setDate(mon.getDate() + k); const key = dayKey(d), on = have.has(key), td = key === todayK;
-      return `<div class="stamp${on ? ' on' : ''}${td ? ' today' : ''}" aria-label="${nm}요일${td ? '(오늘)' : ''} ${on ? '출석' : '미출석'}"><span class="d">${nm}</span><span class="c">${on ? '✓' : ''}</span><span class="t${td ? '' : ' ph'}">오늘</span></div>`; }).join('');
     $('sumModal').hidden = false; $('sumClose').focus({ preventScroll: true });
   }
   // ---------- 설정 ----------
@@ -4035,6 +4079,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function openSettings() { drawSettings(); $('setModal').hidden = false; $('setClose').focus({ preventScroll: true }); }
   $('homeWallet').addEventListener('click', e => { if (e.target.closest('#storyOpen')) { storyBack = 'home'; openStory(); } else if (e.target.closest('#setOpen')) openSettings(); });
   $('sumOpen2').addEventListener('click', openSummary);
+  $('homeAtt').addEventListener('click', openSummary);
   $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('sumOpen2'); if (b) b.focus({ preventScroll: true }); });
   $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
   $('setModal').addEventListener('click', e => {
