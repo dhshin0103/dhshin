@@ -1,6 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 
-<title>부기의 수학 모험</title>
+<title>슈퍼스쿨 : 매스 아일랜드</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap">
@@ -302,6 +302,7 @@ body.story-on { overflow: hidden; }
 .homefs .sf-top .wallet .chip { border-color: var(--deep); }
 .home-mid { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 0; }
 .home-title { margin: 0; flex: none; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: clamp(2rem, 5.6vw, 3.4rem); line-height: 1.1; text-align: center; text-shadow: 0 3px 0 #fff, 0 5px 0 rgba(0,58,92,.18); display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 14px; }
+.home-title .ht-brand { align-self: center; font-family: var(--display); font-weight: 400; font-size: clamp(.95rem, 2.2vw, 1.3rem); color: #fff; background: linear-gradient(180deg, #ff6b4a, #e8432a); border: 3px solid #fff; box-shadow: 0 3px 0 rgba(0,58,92,.25); border-radius: 999px; padding: .1em .7em; margin-right: .35em; text-shadow: 0 1px 0 rgba(0,0,0,.2); transform: rotate(-4deg); }
 .home-title span { font-size: clamp(1.1rem, 2.8vw, 1.6rem); color: #b07800; }
 .home-body { flex: 1; min-height: 0; width: min(1240px, 100%); display: flex; gap: 14px; align-items: stretch; }
 .home-map { flex: 1; min-height: 0; min-width: 0; display: grid; place-items: center; }
@@ -367,6 +368,8 @@ body.story-on { overflow: hidden; }
 @media (max-width: 860px) { .homefs { overflow-y: auto; grid-template-rows: auto auto auto; } .homefs { grid-template-rows: none; grid-auto-rows: auto; grid-template-columns: minmax(0, 1fr); align-content: start; } .home-box { min-width: 0; } .home-mid, .home-body { display: contents; } .homefs .sf-top { order: 0; } .home-title { order: 1; } .home-map { order: 2; flex: none; } .home-box { order: 3; } .home-map svg { width: 100%; height: auto; max-height: none; } .home-chap .chap-units { display: flex; flex-direction: row; overflow-x: auto; padding-bottom: 4px; } .home-chap .chap-u { flex: 0 0 132px; } .cb-pct { flex-basis: 100%; } }
 @media (max-width: 520px) { .home-acts { grid-template-columns: 1fr 1fr; } .home-acts .home-start { grid-column: 1 / -1; grid-row: 1; } }
 @media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
+@media (max-width: 860px) { .homefs .home-map { min-height: auto; } }
+@media (max-width: 520px) { .home-title { font-size: 1.9rem; gap: 2px 8px; } .home-title .ht-brand { font-size: .9rem; } .home-title span { flex-basis: 100%; font-size: 1.05rem; } }
 @media (prefers-reduced-motion: reduce) { .home-map svg, .vg-cur, .vg-glow, .vg-spark { animation: none !important; } }
 /* 모험 요약 · 설정 (메인 위에 뜨는 창) */
 .modal.toplayer { z-index: 10050; }
@@ -734,7 +737,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="wrap">
   <div class="top">
-    <h1>매스 랜드</h1>
+    <h1>슈퍼스쿨 : 매스 아일랜드</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
     <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><button type="button" class="ctlbtn giant" id="giantBtn" hidden>거대화</button><button type="button" class="ctlbtn freeze" id="freezeBtn" hidden>시간 멈추기</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
@@ -757,7 +760,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
   <div class="sf-top"><button type="button" class="profile" id="homeProfile" aria-label="내 정보 보기"></button><button type="button" class="att" id="homeAtt" aria-label="이번 주 출석 도장"></button><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
-    <h1 id="homeTitle" class="home-title">매스 랜드<span>숫자 시계탑의 비밀</span></h1>
+    <h1 id="homeTitle" class="home-title" aria-label="슈퍼스쿨 : 매스 아일랜드 — 숫자 시계탑의 비밀"><b class="ht-brand">슈퍼스쿨</b>매스 아일랜드<span>숫자 시계탑의 비밀</span></h1>
     <div class="home-body"><div class="home-map" id="homeMap"></div></div>
   </div>
   <div class="sf-box home-box">
@@ -862,7 +865,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="storyfs" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
-  <div class="sf-top"><span class="sf-tag">매스 랜드 이야기</span><span class="sf-dots" id="storyStep"></span></div>
+  <div class="sf-top"><span class="sf-tag">매스 아일랜드 이야기</span><span class="sf-dots" id="storyStep"></span></div>
   <div class="sf-art" id="storyArt"></div>
   <div class="sf-box">
     <h2 id="storyTitle"></h2>
@@ -2119,7 +2122,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
   resetAll();
   requestAnimationFrame(frame);
-  // ---------- 매스 랜드: 단원별 탐험 일지 ----------
+  // ---------- 매스 아일랜드: 단원별 탐험 일지 ----------
   // 단원 하나 = 미지의 섬. 7명의 수호자 연구소(관문)를 차례로 통과하며 열쇠를 모으고, 보물지도(단원평가)에서 보물 상자를 열어요.
   const UNITS = {
     1: ['9까지의 수', '여러 가지 모양', '덧셈', '뺄셈', '50까지의 수', '100까지의 수', '덧셈(받아올림)', '뺄셈(받아내림)', '시각', '규칙 찾기'],
@@ -2897,7 +2900,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   M.log = Object.assign({ solved: 0, first: 0, sec: 0, days: [] }, M.log || {});
   const qCount = () => Math.max(3, Math.min(20, +M.set.qn || 5));
   // 레벨: 푼 문제 수로 올라가요. Lv.1→2는 10문제, 그다음부터 5문제씩 더 필요해요
-  const TITLES = [[1, '새싹 탐험가'], [3, '꼬마 탐험가'], [5, '숲속 탐험가'], [8, '용감한 탐험가'], [12, '시계탑 수리공'], [16, '매스 랜드 영웅'], [20, '전설의 탐험가']];
+  const TITLES = [[1, '새싹 탐험가'], [3, '꼬마 탐험가'], [5, '숲속 탐험가'], [8, '용감한 탐험가'], [12, '시계탑 수리공'], [16, '매스 아일랜드 영웅'], [20, '전설의 탐험가']];
   function levelInfo(n) { let L = 1, acc = 0, need = 10; while (n >= acc + need) { acc += need; L++; need = 10 + 5 * (L - 1); } const t = TITLES.filter(([l]) => l <= L).pop()[1]; return { L, into: n - acc, need, title: t }; }
   // 난이도·게임 속도
   const DIFF = { easy: { label: '쉬움', hearts: 5, foe: 0.7, erase: true, desc: '틀린 보기 1개를 미리 지워 줘요 · 하트 5개 · 헷갈이가 느리게 움직여요' },
@@ -3566,7 +3569,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   });
   window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('cine').hidden && !$('cine').classList.contains('s4')) { cineTimers.forEach(clearTimeout); cineTimers = []; cineScene(4); } });
   const STORY = [
-    ['평화로운 동물 마을, 매스 랜드', '매스 랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
+    ['평화로운 동물 섬, 매스 아일랜드', '매스 아일랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
     ['황금 나침반이 부서졌어요!', '어느 날 갑작스러운 오류로 시계탑의 핵심 부품인 황금 나침반이 조각나 흩어졌어요. 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
     ['수학 탐험가의 모험', '지도 한 장을 들고 시계탑의 층마다 친구들을 차례로 만나요. 5개 관문을 별 3개로 통과할 때마다 나침반 조각을 되찾고, 모두 모으면 그 층의 시계가 다시 움직여요!']
   ];
@@ -3621,7 +3624,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   });
   $('tReset').addEventListener('click', () => { M = defaultsM(); openHome(); });
 
-  // 메인 화면의 매스 랜드 섬 지도 (선택한 단원의 진행 상황이 집마다 표시됨)
+  // 메인 화면의 매스 아일랜드 지도 (선택한 단원의 진행 상황이 집마다 표시됨)
   // 집 5채 = 선택한 학기의 단원 5개. 단원의 나침반 5조각을 모두 모으면 그 집에 불이 켜져요
   const ROOFS = ['#e5484d', '#4f8de0', '#30a46c', '#b67cf2', '#f59e2b'];
   // 메인 화면 꾸미기: 떠다니는 구름 하늘, 내 프로필, 코인 아이콘
@@ -3858,7 +3861,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const mtn = (x, w, h, c, d, snow) => `<path d="M${x - w} 208 L${x} ${208 - h} L${x + w} 208 Z" fill="${c}"/><path d="M${x} ${208 - h} L${x + w} 208 H${x + w * 0.15} Z" fill="${d}"/>${snow ? `<path d="M${x} ${208 - h} l${-w * 0.3} ${h * 0.3} l${w * 0.14} ${-h * 0.06} l${w * 0.12} ${h * 0.1} l${w * 0.12} ${-h * 0.1} l${w * 0.16} ${h * 0.08} l${w * 0.06} ${-h * 0.02} Z" fill="#fff"/>` : ''}`;
     const rose = Array.from({ length: 8 }, (_, k) => { const a = k * 45, L = k % 2 ? 22 : 36; return `<g transform="rotate(${a})"><path d="M0 ${-L} L${k % 2 ? 5 : 7} 0 L0 0 Z" fill="${k === 0 ? '#e5484d' : k % 2 ? '#c9a23a' : '#2b3a55'}"/><path d="M0 ${-L} L${k % 2 ? -5 : -7} 0 L0 0 Z" fill="${k === 0 ? '#b8302f' : k % 2 ? '#f2c94c' : '#56658a'}"/></g>`; }).join('');
     const cticks = Array.from({ length: 24 }, (_, k) => `<path d="M0 -44 v${k % 6 ? 4 : 0}" stroke="#8a6a1f" stroke-width="1.500" transform="rotate(${k * 15})"/>`).join('');
-    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 랜드 섬 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
+    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 아일랜드 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
       <defs><radialGradient id="vgGlow"><stop offset="0" stop-color="#fff6a8" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient>
         <radialGradient id="vgSea" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="#7fdcf2"/><stop offset=".55" stop-color="#4fb9ea"/><stop offset="1" stop-color="#2f8fd6"/></radialGradient>
         <linearGradient id="vgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9de86"/><stop offset="1" stop-color="#86c96a"/></linearGradient>
@@ -3937,7 +3940,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <rect x="${tx - 62}" y="${ty + 38}" width="124" height="30" rx="15" fill="#2b3a55"/><text x="${tx}" y="${ty + 59}" text-anchor="middle" font-family="Jua" font-size="17" fill="#fff">숫자 시계탑 ${n}/5</text>
     </g>`;
     const waves = [[60, 90], [900, 80], [70, 560], [930, 560], [520, 40], [960, 260]].map(([x, y]) => `<path d="M${x - 18} ${y} q9 -8 18 0 t18 0" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/>`).join('');
-    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 랜드 섬 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
+    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 아일랜드 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
       <defs><radialGradient id="vgGlow"><stop offset="0" stop-color="#fff6a8" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient><filter id="vgGray"><feColorMatrix type="matrix" values="0.25 0.25 0.25 0 0.05  0.25 0.25 0.25 0 0.05  0.25 0.25 0.25 0 0.05  0 0 0 1 0"/></filter>
         <linearGradient id="vgSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd0f5"/><stop offset="1" stop-color="#4fb3e8"/></linearGradient></defs>
       <rect x="2" y="2" width="996" height="596" rx="34" fill="url(#vgSea)" stroke="#2b3a55" stroke-width="4"/>
