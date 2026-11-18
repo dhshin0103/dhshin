@@ -3695,7 +3695,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const tiles = (x1, x2, y1, y2, c) => { let d = ''; for (let k = 1; k < 4; k++) { const t = k / 4, y = y1 + (y2 - y1) * t, hw = (x2 - x1) / 2 * t, cx = (x1 + x2) / 2; d += `M${(cx - hw).toFixed(1)} ${y.toFixed(1)} H${(cx + hw).toFixed(1)} `; } return `<path d="${d}" stroke="${c}" stroke-width="1.600" opacity=".55"/>`; };
     // 집 5채: 1번 오두막에서 5번 저택으로 갈수록 크고 화려해져요. [그림, 반폭, 지붕 높이]
     const lock = (x, y, p) => `<g><circle cx="${x}" cy="${y}" r="18" fill="#fff" stroke="${OL}" stroke-width="2.500"/><path d="M${x - 6} ${y - 3} v-5 a6 6 0 0 1 12 0 v5" stroke="#7c8794" stroke-width="3.500" fill="none"/><rect x="${x - 9.500}" y="${y - 4}" width="19" height="15" rx="3.500" fill="#f2c94c" stroke="${OL}" stroke-width="2"/><circle cx="${x}" cy="${y + 2}" r="2.300" fill="${OL}"/><path d="M${x} ${y + 3} v4" stroke="${OL}" stroke-width="2" stroke-linecap="round"/>
-      <rect x="${x - 16}" y="${y + 21}" width="32" height="15" rx="7.500" fill="${OL}" stroke="#fff" stroke-width="1.500"/><text x="${x}" y="${y + 32.500}" text-anchor="middle" font-family="Jua" font-size="11" fill="#fff">${p}/${NSTG}</text></g>`;
+      <rect x="${x - 25}" y="${y + 21}" width="50" height="16" rx="8" fill="${OL}" stroke="#fff" stroke-width="1.500"/><text x="${x}" y="${y + 33}" text-anchor="middle" font-family="Jua" font-size="11.500" fill="#fff"><tspan fill="#ffd34d">★</tspan>${p}/${NSTG * 3}</text></g>`;
     const HOUSE = [
       (x, y, on) => [`<rect x="${x - 28}" y="${y - 12}" width="56" height="36" rx="4" fill="#fff3dc" stroke="${OL}" stroke-width="2.500"/>
         <path d="M${x - 37} ${y - 10} L${x} ${y - 44} L${x + 37} ${y - 10} Z" fill="#d9924a" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/>${tiles(x - 37, x + 37, y - 44, y - 10, '#a8682c')}
@@ -3743,6 +3743,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         ${win(x - 45, y - 54, 14, 18, on, true)}${win(x - 45, y - 24, 14, 18, on, true)}${win(x - 45, y + 2, 14, 14, on)}
         <rect x="${x - 54}" y="${y - 32}" width="32" height="4" fill="#f2c94c" stroke="${OL}" stroke-width="1.500"/>`, 56, 110]
     ];
+    const stars = names.map((_, u) => ((M.prog[ukey(gs, u)] || {}).st || []).reduce((a, v) => a + v, 0));
     const houses = H.map(([x, y], i) => {
       const G = GUARD[i], on = lit[i], cur = i === M.sel.u, nm = names[i];
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
@@ -3752,7 +3753,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         ${cur ? `<ellipse class="vg-cur" cx="${x + 16}" cy="${y + 24}" rx="${hw + 52}" ry="22" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
         <ellipse cx="${x}" cy="${y + 25}" rx="${hw + 10}" ry="9" fill="#2f7d3c" opacity=".25"/>
         ${on ? body : `<g filter="url(#vgDim)" opacity=".9">${body}</g>`}
-        ${on ? '' : lock(x, y - top * 0.42, pcs[i])}<ellipse cx="${cx + 31}" cy="${y + 25}" rx="21" ry="5.500" fill="#2f7d3c" opacity=".28"/>
+        ${on ? '' : lock(x, y - top * 0.42, stars[i])}<ellipse cx="${cx + 31}" cy="${y + 25}" rx="21" ry="5.500" fill="#2f7d3c" opacity=".28"/>
         <g class="${fresh[i] ? 'vg-jump' : 'vg-bob'}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 36}) scale(.62)">${art}</g></g>
         <circle cx="${x - hw - 2}" cy="${y - top + 12}" r="14" fill="${OL}" stroke="#fff" stroke-width="2.500"/><text x="${x - hw - 2}" y="${y - top + 17.500}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text>
         ${on ? `<g class="vg-spark" fill="${fresh[i] ? '#ffd34d' : '#fff'}"><path d="M${x - hw - 14} ${y - top + 40} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${x + hw + 4} ${y - top + 6} l2.500 6 6 2.500 -6 2.500 -2.500 6 -2.500 -6 -6 -2.500 6 -2.500z"/></g>` : ''}
