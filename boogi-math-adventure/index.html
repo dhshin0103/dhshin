@@ -438,6 +438,40 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .tgl[aria-checked="true"] span { left: 28px; }
 .qc-btn:focus-visible, .qc-presets button:focus-visible, .tgl:focus-visible, #qcRange:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 @media (max-width: 560px) { .sum-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sum-tile { padding: 12px 10px; gap: 8px; } .sum-tile .ic { font-size: 1.6rem; } .sum-tile .v { font-size: 1.6rem; } .homefs .wallet { flex-wrap: wrap; justify-content: flex-end; } }
+.profile { cursor: pointer; font: inherit; color: inherit; text-align: left; }
+.profile:hover { transform: translateY(-1px); } .profile:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.set-lb small { display: block; }
+.me-card { width: min(640px, 100%); gap: 12px; max-height: calc(100dvh - 32px); overflow-y: auto; }
+.me-top { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 18px; background: linear-gradient(90deg, #f5efff, #fff); border: 2px solid #e2d6ff; }
+.me-av { flex: none; width: 104px; height: 104px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 0 3px #b995f5; display: grid; place-items: center; }
+.me-av svg { width: 92px; height: 92px; }
+.me-id { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.me-id b { font-family: var(--display); font-weight: 400; font-size: 1.7rem; color: var(--deep); line-height: 1.1; }
+.me-id small { color: #6b5a2a; font-size: .85rem; }
+.me-id .lv-bar { width: 100%; }
+.me-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.me-chips span { background: #f1f5f9; border-radius: 999px; padding: 5px 12px; font-size: .88rem; color: #1f2a40; }
+.me-chips b { font-family: var(--display); font-weight: 400; font-size: 1.05rem; color: var(--deep); }
+.me-note { font-family: var(--body); font-size: .75rem; color: var(--muted); margin-left: 6px; }
+.me-grade { display: grid; grid-template-columns: 52px 1fr 1fr; gap: 8px; align-items: center; }
+.me-grade h4 { margin: 0; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: 1.1rem; }
+.me-sem { display: flex; flex-direction: column; gap: 4px; background: #fff; border: 2px solid #e3e8ee; border-radius: 12px; padding: 8px 10px; }
+.me-sem b { font-size: .8rem; color: var(--muted); }
+.me-houses { display: flex; gap: 4px; }
+.me-houses i { font-style: normal; width: 26px; height: 24px; display: grid; place-items: center; font-size: .75rem; font-weight: 700; color: #8b95a3; background: #eef1f5; clip-path: polygon(50% 0, 100% 40%, 100% 100%, 0 100%, 0 40%); }
+.me-houses i.mid { background: #ffe7b3; color: #8a5a00; }
+.me-houses i.on { background: #ffc53d; color: #5a3500; }
+.me-sem small { font-size: .74rem; color: var(--muted); }
+.me-badges { display: flex; flex-wrap: wrap; gap: 6px; } .me-badges span { background: #fff3c4; border: 1px solid #f3d27a; border-radius: 999px; padding: 3px 10px; font-size: .82rem; color: #8a5a00; }
+.me-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.me-item { display: flex; flex-direction: column; align-items: center; gap: 2px; background: #f4fbff; border-radius: 12px; padding: 8px 4px; }
+.me-item svg { width: 34px; height: 34px; } .me-item b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); } .me-item small { font-size: .7rem; color: var(--muted); text-align: center; }
+.me-chars { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.me-char { border: 3px solid transparent; border-radius: 14px; padding: 4px 2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; font: inherit; }
+.me-char svg { width: 100%; max-width: 56px; height: auto; } .me-char span { font-family: var(--display); font-size: .8rem; color: var(--deep); }
+.me-char.on { border-color: var(--deep); box-shadow: 0 3px 0 var(--deep); }
+.me-char:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+@media (max-width: 560px) { .me-grade { grid-template-columns: 1fr; } .me-chars { grid-template-columns: repeat(4, minmax(0, 1fr)); } .me-av { width: 80px; height: 80px; } .me-av svg { width: 70px; height: 70px; } }
 .att { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.95); border: 2px solid var(--deep); border-radius: 18px; padding: 4px 12px; box-shadow: 0 3px 0 rgba(0,58,92,.22); cursor: pointer; font: inherit; color: var(--deep); margin: 0 auto 0 12px; }
 .att:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 .att-h { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
@@ -721,7 +755,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
-  <div class="sf-top"><div class="profile" id="homeProfile" aria-label="내 프로필"></div><button type="button" class="att" id="homeAtt" aria-label="이번 주 출석 도장"></button><div class="wallet" id="homeWallet"></div></div>
+  <div class="sf-top"><button type="button" class="profile" id="homeProfile" aria-label="내 정보 보기"></button><button type="button" class="att" id="homeAtt" aria-label="이번 주 출석 도장"></button><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
     <h1 id="homeTitle" class="home-title">매스 랜드<span>숫자 시계탑의 비밀</span></h1>
     <div class="home-body"><div class="home-map" id="homeMap"></div></div>
@@ -748,6 +782,13 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   </div>
 </div>
 
+<div class="modal toplayer" id="meModal" role="dialog" aria-modal="true" aria-labelledby="meTitle" hidden>
+  <div class="card me-card">
+    <div class="tagrow"><h2 id="meTitle" class="sum-h"><span aria-hidden="true">🙂</span> 내 정보</h2><button type="button" class="xbtn" id="meClose">닫기 ✕</button></div>
+    <div id="meBody"></div>
+  </div>
+</div>
+
 <div class="modal toplayer" id="setModal" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
   <div class="card set-card">
     <div class="tagrow"><h2 id="setTitle" class="sum-h"><span aria-hidden="true">⚙️</span> 설정</h2><button type="button" class="xbtn" id="setClose">닫기 ✕</button></div>
@@ -759,9 +800,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     </div>
     <input type="range" id="qcRange" min="3" max="20" step="1" value="5" aria-label="한 판 문항 수">
     <div class="qc-presets" id="qcPresets"></div>
-    <div class="set-row"><div class="set-lb"><b>난이도</b></div><div class="seg" id="segDiff" role="radiogroup" aria-label="난이도"></div></div>
-    <p class="set-desc" id="diffDesc"></p>
+    <div class="set-row"><div class="set-lb"><b>학습 난이도</b><small>스쿨플랫 연동 문제의 수준</small></div><div class="seg" id="segLearn" role="radiogroup" aria-label="학습 난이도"></div></div>
+    <p class="set-desc" id="learnDesc"></p>
     <h3 class="set-sec">게임</h3>
+    <div class="set-row"><div class="set-lb"><b>게임 난이도</b><small>하트·헷갈이·보기 도움</small></div><div class="seg" id="segDiff" role="radiogroup" aria-label="게임 난이도"></div></div>
+    <p class="set-desc" id="diffDesc"></p>
     <div class="set-row"><div class="set-lb"><b>게임 속도</b></div><div class="seg" id="segSpeed" role="radiogroup" aria-label="게임 속도"></div></div>
     <div class="set-row"><div class="set-lb"><b>효과음</b></div><div class="seg" id="segSound" role="radiogroup" aria-label="효과음"></div></div>
     <div class="set-row"><div class="set-lb"><b>소리 크기</b></div><input type="range" id="volRange" min="0" max="100" step="5" value="80" aria-label="소리 크기" class="vol"></div>
@@ -2817,7 +2860,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const base = stageQuestionsBase(key, i), N = qCount(), C = CONTENT[key], G = GUARD[i];
     if (base.length >= N) return base.slice(0, N);
     const seen = new Set(base.map(q => q.src.join('-') + (q.swap ? 't' : 'm')));
-    const order = [[0, 1, 2, 3, 4, 5], [3, 2, 0, 1, 4, 5], [4, 5, 3, 2, 0, 1], [0, 1, 2, 3, 4, 5], [5, 4, 3, 2, 1, 0]][i] || [0, 1, 2, 3, 4, 5];
+    const ord0 = [[0, 1, 2, 3, 4, 5], [3, 2, 0, 1, 4, 5], [4, 5, 3, 2, 0, 1], [0, 1, 2, 3, 4, 5], [5, 4, 3, 2, 1, 0]][i] || [0, 1, 2, 3, 4, 5];
+    const order = M.set.learn === 'basic' ? [...ord0].sort((x, y) => x - y) : M.set.learn === 'adv' ? [...ord0].sort((x, y) => y - x) : ord0;
     const out = base.slice();
     for (const swap of [false, true]) for (const s2 of order) for (const k of [0, 1]) {
       if (out.length >= N) break;
@@ -2848,7 +2892,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
   if (M.items && M.items.calc == null) M.items.calc = 1;
   // 설정과 모험 기록
-  M.set = Object.assign({ qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80 }, M.set || {});
+  M.set = Object.assign({ qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80, learn: 'std' }, M.set || {});
+  M.profile = Object.assign({ art: 2 }, M.profile || {});
   M.log = Object.assign({ solved: 0, first: 0, sec: 0, days: [] }, M.log || {});
   const qCount = () => Math.max(3, Math.min(20, +M.set.qn || 5));
   // 레벨: 푼 문제 수로 올라가요. Lv.1→2는 10문제, 그다음부터 5문제씩 더 필요해요
@@ -2860,6 +2905,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     hard: { label: '어려움', hearts: 2, foe: 1.4, erase: false, desc: '하트 2개 · 헷갈이가 빠르게 움직여요 · 힌트 없이 도전해 보세요' } };
   const GSPEED = { slow: { label: '느리게', k: 0.8 }, normal: { label: '보통', k: 1 }, fast: { label: '빠르게', k: 1.2 } };
   const diffCfg = () => DIFF[M.set.diff] || DIFF.normal;
+  // 학습 난이도: 스쿨플랫 문제와 연동하면 이 수준의 문항을 받아와요. 시제품에서는 단원 안 문제 고르는 순서에 반영해요
+  const LEARN = { basic: { label: '기초', desc: '개념·용어·기본 계산 문제를 먼저 풀어요. 스쿨플랫 연동 시 기초 수준 문항이 나와요.' },
+    std: { label: '기본', desc: '교과서 수준의 문제를 골고루 풀어요. 스쿨플랫 연동 시 기본 수준 문항이 나와요.' },
+    adv: { label: '심화', desc: '서술형·실생활 같은 생각하는 문제를 먼저 풀어요. 스쿨플랫 연동 시 심화 수준 문항이 나와요.' } };
   const speedK = () => (GSPEED[M.set.speed] || GSPEED.normal).k;
   const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   function markAttend() { const k = dayKey(new Date()); if (!M.log.days.includes(k)) { M.log.days.push(k); M.log.days.sort(); try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} } }
@@ -3577,7 +3626,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const ROOFS = ['#e5484d', '#4f8de0', '#30a46c', '#b67cf2', '#f59e2b'];
   // 메인 화면 꾸미기: 떠다니는 구름 하늘, 내 프로필, 코인 아이콘
   const COIN_SVG = '<svg class="coin-ic" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#e89b00"/><circle cx="16" cy="15" r="13" fill="#ffc53d"/><circle cx="16" cy="15" r="9.500" fill="#ffd96b"/><circle cx="12.500" cy="13" r="1.600" fill="#8a5a00"/><circle cx="19.500" cy="13" r="1.600" fill="#8a5a00"/><path d="M11.500 17 q4.500 4.500 9 0" stroke="#8a5a00" stroke-width="1.800" fill="none" stroke-linecap="round"/><path d="M7.500 8.500 q2.500 -3 6 -3.500" stroke="#fff" stroke-width="1.800" fill="none" stroke-linecap="round" opacity=".8"/></svg>';
-  const PROFILE = { art: 2, level: 1, name: '루미' };
+  const CHAR_NAMES = { 1: '송이', 2: '루미', 3: '부기', 4: '로키', 5: '달이', 6: '토리', 7: '샌디' };
+  const CHAR_BG = { 1: '#ffd9b8', 2: '#ead9ff', 3: '#fdf0dc', 4: '#c9c8ff', 5: '#f3e1cf', 6: '#ffe0c7', 7: '#f3e2c4' };
+  const PROFILE = { get art() { return M.profile.art || 2; }, get name() { return CHAR_NAMES[this.art]; }, get level() { return levelInfo(M.log.solved).L; } };
   // 집(단원)을 정복했을 때 뜨는 축하 팝업
   function homeCheer(gs, i, n) {
     const host = $('homeModal'), G = GUARD[i];
@@ -3606,7 +3657,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       sky.innerHTML = '<span class="hsun"></span>' + C.map(([t, w, d, s, o]) => `<span class="hcloud" style="--t:${t}%;--w:${w}vmin;--d:${d}s;--s:${s}s;--o:${o};--x:${Math.round(-s * 0.8)}vw">${cloud}</span>`).join('') + '<span class="hhill a"></span><span class="hhill b"></span>';
     }
     const pf = $('homeProfile');
-    if (pf) pf.innerHTML = `<span class="pf-av">${charSVG(PROFILE.art)}</span><span class="pf-tx"><span class="pf-lv">Lv.${levelInfo(M.log.solved).L}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
+    if (pf) pf.innerHTML = `<span class="pf-av" style="background:${CHAR_BG[PROFILE.art]}">${charSVG(PROFILE.art)}</span><span class="pf-tx"><span class="pf-lv">Lv.${levelInfo(M.log.solved).L}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
   }
   function villageSVG(gs) {
     const names = unitsOf(gs), pcs = names.map((_, u) => piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
@@ -4046,6 +4097,32 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       return `<span class="att-d${on ? ' on' : ''}${td ? ' today' : ''}" title="${nm}요일${td ? '(오늘)' : ''} ${on ? '출석' : ''}"><i>${on ? '✓' : ''}</i><em>${td ? '오늘' : nm}</em></span>`; }).join('')}</span>`;
     el.setAttribute('aria-label', `이번 주 출석 ${DN.filter((_, k) => { const d = new Date(mon); d.setDate(mon.getDate() + k); return have.has(dayKey(d)); }).length}일, 연속 ${st.cur}일. 눌러서 모험 요약 보기`);
   }
+  // ---------- 내 정보 ----------
+  function openMe() {
+    const L = M.log, lv = levelInfo(L.solved), nx = TITLES.find(([l]) => l > lv.L), acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, st = streaks(), mins = Math.floor(L.sec / 60);
+    const grades = [3, 5].map(g => {
+      const sems = ['1', '2'].map(sm => { const gs = `${g}-${sm}`, us = unitsOf(gs); const lit = us.filter((_, u) => piecesOf(ukey(gs, u)) >= NSTG).length, pcs = us.reduce((a, _, u) => a + piecesOf(ukey(gs, u)), 0);
+        return `<div class="me-sem"><b>${sm}학기</b><span class="me-houses">${us.map((nm, u) => `<i class="${piecesOf(ukey(gs, u)) >= NSTG ? 'on' : piecesOf(ukey(gs, u)) ? 'mid' : ''}" title="${u + 1}단원 ${esc(nm)} · 조각 ${piecesOf(ukey(gs, u))}/${NSTG}">${u + 1}</i>`).join('')}</span><small>정복 ${lit}/5 · 조각 ${pcs}/25</small></div>`; }).join('');
+      return `<div class="me-grade"><h4>${g}학년</h4>${sems}</div>`; }).join('');
+    const itemsHTML = ITEMS.map(it => `<span class="me-item" title="${it.name}">${itemIcon(it)}<b>${M.items[it.id] || 0}</b><small>${it.name}</small></span>`).join('');
+    const chars = Object.keys(CHAR_NAMES).map(Number).map(a => `<button type="button" class="me-char${a === PROFILE.art ? ' on' : ''}" data-art="${a}" aria-pressed="${a === PROFILE.art}" style="background:${CHAR_BG[a]}">${charSVG(a)}<span>${CHAR_NAMES[a]}</span></button>`).join('');
+    $('meBody').innerHTML = `<div class="me-top"><span class="me-av" style="background:${CHAR_BG[PROFILE.art]}">${charSVG(PROFILE.art)}</span>
+        <div class="me-id"><span class="pf-lv">Lv.${lv.L}</span><b>${PROFILE.name}</b><small>${lv.title}</small>
+          <span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span><small>다음 레벨까지 ${lv.need - lv.into}문제${nx ? ` · Lv.${nx[0]} ‘${nx[1]}’` : ''}</small></div></div>
+      <div class="me-chips"><span>📖 <b>${L.solved}</b>문제</span><span>🎯 정답률 <b>${acc}%</b></span><span>⏱️ <b>${mins}</b>분</span><span>🔥 연속 <b>${st.cur}</b>일</span><span>🪙 코인 <b>${M.coins}</b></span><span>🏅 배지 <b>${M.badges.length}</b>개</span></div>
+      <h3 class="set-sec">탐험 현황 <small class="me-note">집 번호 = 단원 · 노란 집 = 정복(조각 5개)</small></h3>${grades}
+      ${M.badges.length ? `<div class="me-badges">${M.badges.map(b => `<span>🏅 ${esc(b)}</span>`).join('')}</div>` : ''}
+      <h3 class="set-sec">내 아이템</h3><div class="me-items">${itemsHTML}</div>
+      <h3 class="set-sec">내 캐릭터 고르기</h3><div class="me-chars">${chars}</div>`;
+    $('meModal').hidden = false; $('meClose').focus({ preventScroll: true });
+  }
+  $('homeProfile').addEventListener('click', openMe);
+  $('meClose').addEventListener('click', () => { $('meModal').hidden = true; $('homeProfile').focus({ preventScroll: true }); });
+  $('meModal').addEventListener('click', e => {
+    if (e.target === $('meModal')) { $('meModal').hidden = true; return; }
+    const c = e.target.closest('[data-art]'); if (c) { M.profile.art = +c.dataset.art; saveM(); renderBar(); openMe(); const f = $('meModal').querySelector(`[data-art="${c.dataset.art}"]`); if (f) f.focus({ preventScroll: true }); }
+  });
+  $('meModal').addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); $('meModal').hidden = true; } });
   function openSummary() {
     markAttend();
     const L = M.log, acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, mins = Math.floor(L.sec / 60), st = streaks();
@@ -4068,12 +4145,14 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('qcOut').textContent = `${n}문항`; $('qcRange').value = n;
     $('setModal').querySelector('[data-qc="-1"]').disabled = n <= 3; $('setModal').querySelector('[data-qc="1"]').disabled = n >= 20;
     $('qcPresets').innerHTML = [3, 5, 10, 15, 20].map(v => `<button type="button" data-qp="${v}" class="${v === n ? 'on' : ''}">${v}문항</button>`).join('');
+    seg('segLearn', Object.entries(LEARN).map(([k, v]) => [k, v.label]), M.set.learn);
+    $('learnDesc').textContent = (LEARN[M.set.learn] || LEARN.std).desc;
     seg('segDiff', Object.entries(DIFF).map(([k, v]) => [k, v.label]), M.set.diff);
     seg('segSpeed', Object.entries(GSPEED).map(([k, v]) => [k, v.label]), M.set.speed);
     seg('segSound', [['on', '켜기'], ['off', '끄기']], M.set.sound === false ? 'off' : 'on');
     $('diffDesc').textContent = diffCfg().desc;
     $('volRange').value = M.set.vol; $('volRange').disabled = M.set.sound === false;
-    $('setNote').textContent = `다음 판부터 문제 문 ${n}개 · ${diffCfg().label} · 게임 속도 ${(GSPEED[M.set.speed] || GSPEED.normal).label}로 시작해요. 4단계(단원 총괄)는 ${n}문제 중 ${n - 1}개 이상 한 번에 맞히면 별 3개예요.`;
+    $('setNote').textContent = `다음 판부터 문제 문 ${n}개 · 학습 ${(LEARN[M.set.learn] || LEARN.std).label} · 게임 ${diffCfg().label} · 게임 속도 ${(GSPEED[M.set.speed] || GSPEED.normal).label}로 시작해요. 4단계(단원 총괄)는 ${n}문제 중 ${n - 1}개 이상 한 번에 맞히면 별 3개예요.`;
   }
   function setQn(v) { M.set.qn = Math.max(3, Math.min(20, v)); saveM(); drawSettings(); }
   function openSettings() { drawSettings(); $('setModal').hidden = false; $('setClose').focus({ preventScroll: true }); }
@@ -4088,7 +4167,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const sg = e.target.closest('[data-seg]');
     if (sg) {
       const id = sg.dataset.seg, v = sg.dataset.v;
-      if (id === 'segDiff') M.set.diff = v; else if (id === 'segSpeed') M.set.speed = v; else M.set.sound = v === 'on';
+      if (id === 'segLearn') M.set.learn = v; else if (id === 'segDiff') M.set.diff = v; else if (id === 'segSpeed') M.set.speed = v; else M.set.sound = v === 'on';
       saveM(); drawSettings(); if (M.set.sound !== false) tone([660, 990], 0.06, 'triangle', 0.06);
       const f = $('setModal').querySelector(`[data-seg="${id}"][data-v="${v}"]`); if (f) f.focus({ preventScroll: true });
     }
