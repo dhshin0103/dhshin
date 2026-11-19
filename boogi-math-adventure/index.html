@@ -742,7 +742,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .cine.s4 .cine-skip { display: none; }
 .cine-skip:focus-visible, .cs4 .btn:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .cine *, .pinbounce, .flagblink, .cinebtn { animation: none !important; } }
-/* 첫 화면: 큰 섬 지도 + 옆 황금 나침반 퍼즐 */
+/* 첫 화면: 큰 섬 지도 + 옆 시계 퍼즐 */
 .home2 { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
 .home2 .journey svg { min-width: 0; }
 .pzside { background: #fff; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
@@ -909,7 +909,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     <div class="set-row"><div class="set-lb"><b>효과음</b></div><div class="seg" id="segSound" role="radiogroup" aria-label="효과음"></div></div>
     <div class="set-row"><div class="set-lb"><b>소리 크기</b></div><input type="range" id="volRange" min="0" max="100" step="5" value="80" aria-label="소리 크기" class="vol"></div>
     <h3 class="set-sec">이야기</h3>
-    <div class="set-row"><div class="set-lb"><b>매스 아일랜드 이야기</b><small>시계탑과 황금 나침반 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
+    <div class="set-row"><div class="set-lb"><b>매스 아일랜드 이야기</b><small>멈춰 버린 시계탑 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
     <p class="note" id="setNote"></p>
   </div>
 </div>
@@ -1572,10 +1572,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('reviewBox').hidden = true;
     $('taBox').hidden = false;
     const chk = pick.i === 3
-      ? [[`${TOTAL}문제 중 ${R.first}문제를 한 번에 맞힘`, true], [`${TOTAL - 1}문제 이상 한 번에 맞히면 별 3개`, R.stars === 3], ['별 3개면 황금 나침반 조각', R.stars === 3]]
+      ? [[`${TOTAL}문제 중 ${R.first}문제를 한 번에 맞힘`, true], [`${TOTAL - 1}문제 이상 한 번에 맞히면 별 3개`, R.stars === 3], ['별 3개면 시계 퍼즐 조각', R.stars === 3]]
       : [['깃발까지 완주', R.s1], ['문제를 한 번에 모두 맞히기', R.s2], ['하트 지키기 (한 번도 다치지 않기)', R.s3]];
-    const pmsg = R.newPiece ? `<p class="piece-msg">황금 나침반 조각 ${pick.i + 1}번을 얻었어요! (${pieceCount(pick.key)}/${NSTG})${M.justCompass ? ' 나침반 완성! 시계탑이 다시 움직여요.' : ''}</p>`
-      : R.best < 3 ? `<p class="piece-msg no">별 3개로 통과하면 이 관문의 나침반 조각을 얻어요. (지금 최고 별 ${R.best}개)</p>` : '';
+    const pmsg = R.newPiece ? `<p class="piece-msg">시계 퍼즐 조각 ${pick.i + 1}번을 얻었어요! (${pieceCount(pick.key)}/${NSTG})${M.justCompass ? ' 시계 퍼즐 완성! 시계탑이 다시 움직여요.' : ''}</p>`
+      : R.best < 3 ? `<p class="piece-msg no">별 3개로 통과하면 이 단계의 시계 퍼즐 조각을 얻어요. (지금 최고 별 ${R.best}개)</p>` : '';
     const omsg = R.opened.length ? `<p class="piece-msg">${R.opened.map(k => GUARD[k].place).join('·')}가 열렸어요!</p>` : '';
     $('taBox').innerHTML = `<ul class="checks">${chk.map(([t, ok]) => `<li class="${ok ? 'ok' : ''}"><b>★</b>${t}</li>`).join('')}</ul>${pmsg}${omsg}`;
     M.justCompass = false;
@@ -2997,7 +2997,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const NSTG = GUARD.length;
   function defaultsM() {
     return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0, calc: 1 }, badges: [], wear: { head: null, back: null }, wearOwn: [], ms: [], rep: null, set: { qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80, learn: 'std' }, profile: { art: 2 }, log: { solved: 0, first: 0, sec: 0, days: [] }, sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
-      news: { good: false, text: '시계탑 3층 [분수와 소수]의 방에 도착했어요! 1단계부터 황금 나침반 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false, quizBest: 0 };
+      news: { good: false, text: '시계탑 3층 [분수와 소수]의 방에 도착했어요! 1단계부터 시계 퍼즐 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false, quizBest: 0 };
   }
   let M;
   try { const raw = localStorage.getItem(KEY); M = raw ? Object.assign(defaultsM(), JSON.parse(raw)) : defaultsM(); } catch (_) { M = defaultsM(); }
@@ -3120,15 +3120,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       M.coins += 100;
       if (!M.badges.includes(badge)) M.badges.push(badge);
       var msGot = claimMilestones();
-      endBanner = '황금 나침반 완성!'; endSub = '숫자 시계탑이 다시 움직여요!';
+      endBanner = '시계 퍼즐 완성!'; endSub = '숫자 시계탑이 다시 움직여요!';
     }
     M.news = M.justCompass ? { good: true, text: `시계탑 ${floorOf(pick.gs)}층 복원 완료! ${badge}를 받았어요.` + (typeof msGot !== 'undefined' && msGot && msGot.length ? ` 🎁 ${msGot.join(' · ')}` : '') + (WEAR.find(w => w.key === key) ? ` 👕 옷장에 '${WEAR.find(w => w.key === key).name}'이(가) 생겼어요!` : '') }
-      : newPiece ? { good: true, text: `${GUARD[i].name}의 ${GUARD[i].step}을 별 3개로 통과! 황금 나침반 조각 ${pieceCount(key)}/${NSTG}을 얻었어요.` }
+      : newPiece ? { good: true, text: `${GUARD[i].name}의 ${GUARD[i].step}을 별 3개로 통과! 시계 퍼즐 조각 ${pieceCount(key)}/${NSTG}을 얻었어요.` }
       : opened.length && !wasCleared ? { good: true, text: `${GUARD[i].step} 완료! ${opened.map(k => GUARD[k].place).join('·')}가 열렸어요.` }
-      : { good: true, text: `${GUARD[i].name}의 ${GUARD[i].step}에서 별 ${got}개를 받았어요. 별 3개면 나침반 조각!` };
+      : { good: true, text: `${GUARD[i].name}의 ${GUARD[i].step}에서 별 ${got}개를 받았어요. 별 3개면 시계 퍼즐 조각!` };
     saveM();
   }
-  // 황금 나침반 퍼즐: 단계마다 조각 1개(별 3개로 통과), 5조각이면 가운데 바늘이 움직여요
+  // 시계 퍼즐: 단계마다 조각 1개(별 3개로 통과), 5조각이면 가운데 바늘이 움직여요
   const hasPiece = (key, i) => !!key && prog(key).st[i] >= 3;
   const pieceCount = key => GUARD.filter((_, i) => hasPiece(key, i)).length;
   function compassSVG(key, popI, size) {
@@ -3146,7 +3146,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     }
     const all = pieceCount(key) === N;
     const needle = `<g class="needle ${all ? 'hands spin' : ''}" style="transform-origin:${cx}px ${cy}px"><path d="M${cx} ${cy - 34} L${cx + 9} ${cy} L${cx} ${cy + 34} L${cx - 9} ${cy} Z" fill="${all ? '#e5484d' : '#d7dbe2'}" stroke="${all ? '#7a1f22' : '#c4cad3'}" stroke-width="2"/></g>`;
-    return `<svg viewBox="0 0 240 240" role="img" aria-label="황금 나침반 퍼즐 ${pieceCount(key)}/${N}조각" ${size ? `width="${size}"` : ''}>
+    return `<svg viewBox="0 0 240 240" role="img" aria-label="시계 퍼즐 ${pieceCount(key)}/${N}조각" ${size ? `width="${size}"` : ''}>
       <circle cx="${cx}" cy="${cy}" r="${R + 10}" fill="${all ? '#ffd34d' : '#fff8e1'}" stroke="#2b3a55" stroke-width="3"/>${parts.join('')}
       <circle cx="${cx}" cy="${cy}" r="${r0 - 4}" fill="${all ? '#ffd34d' : '#f1f3f6'}" stroke="${all ? '#b07800' : '#c4cad3'}" stroke-width="2.5"/>${needle}
       <text x="${cx}" y="16" text-anchor="middle" font-family="Jua" font-size="14" fill="#2b3a55">N</text></svg>`;
@@ -3499,7 +3499,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       const [x, y] = P[i], open = ready && unlocked(key, i), done = pr.cl[i], st = pr.st[i], got = hasPiece(key, i), fog = !open;
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
       const title = `${i + 1}단계 · ${G.step}`;
-      return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 나침반 조각 획득' : ''}">
+      return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 시계 퍼즐 조각 획득' : ''}">
         <g ${fog ? 'filter="url(#fogblur)" opacity=".6"' : ''}>
         <ellipse cx="${x}" cy="${y + 54}" rx="70" ry="14" fill="#c9a46a" opacity=".45"/>
         <circle class="ring" cx="${x}" cy="${y}" r="62" fill="${G.bg}" stroke="${open ? '#ffffff' : '#cfd6de'}" stroke-width="7"/>
@@ -3515,7 +3515,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const pin = cur === null ? '' : (() => { const [px, py] = P[cur]; return `<g pointer-events="none" class="pinbounce"><path d="M${px} ${py - 96} c-14 -17 -17 -26 -17 -33 a17 17 0 0 1 34 0 c0 7 -3 16 -17 33z" fill="#e5484d"/><circle cx="${px}" cy="${py - 129}" r="6" fill="#fff"/></g>`; })();
     const CX = 560, CY = 138, NVc = '#2b3a55';
     const heart = clockHeart(key, popI, CX, CY) + `<g><rect id="hudBtn" role="button" tabindex="0" aria-label="시계 퍼즐 ${n}/${NSTG}조각. 눌러서 수집 현황 보기" style="cursor:pointer" x="${CX - 134}" y="${CY + 108}" width="268" height="30" rx="15" fill="${n === NSTG ? '#b07800' : NVc}" stroke="#fff" stroke-width="2"/><text pointer-events="none" x="${CX}" y="${CY + 129}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${n === NSTG ? '시계 수리 완료! 다시 움직여요' : `시계 퍼즐 ${n}/${NSTG} · 별 3개로 한 조각`}</text></g>`;
-    return `<svg viewBox="0 0 1000 640" role="group" aria-label="시계탑 ${floorOf(M.sel.gs)}층 ${unitName(M.sel.gs, M.sel.u)}의 방 지도, 황금 나침반 ${n}/${NSTG}조각">
+    return `<svg viewBox="0 0 1000 640" role="group" aria-label="시계탑 ${floorOf(M.sel.gs)}층 ${unitName(M.sel.gs, M.sel.u)}의 방 지도, 시계 퍼즐 ${n}/${NSTG}조각">
       <defs><filter id="jgs"><feColorMatrix type="saturate" values="0"/></filter><filter id="fogblur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.5"/></filter>
         <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf3df"/><stop offset="1" stop-color="#f1dcb2"/></linearGradient></defs>
       <rect width="1000" height="640" rx="22" fill="url(#wall)"/>
@@ -3583,10 +3583,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   let vnLines = [], vnI = 0, vnStage = 0;
   function vnRule(i) {
     const n = QUESTIONS.length;
-    if (i === 3) return `문제는 모두 ${n}개야. ${n - 1}개 이상 한 번에 맞히면 별 3개, 그러면 나침반 조각을 줄게!`;
+    if (i === 3) return `문제는 모두 ${n}개야. ${n - 1}개 이상 한 번에 맞히면 별 3개, 그러면 시계 퍼즐 조각을 줄게!`;
     if (i === 4) return `쌍둥이 문제와 도전 문제까지 ${n}개! 별 3개로 통과하면 마지막 조각을 얻을 수 있어.`;
     if (i === 1) return `여긴 타임어택 공방이야! 문제 ${n}개를 ${fmtTime(taLimit())} 안에 풀고 깃발까지 와야 해. 시간이 다 되면 처음부터야. 별 3개 조건도 잊지 마!`;
-    return '별 3개 조건은 세 가지야. ① 깃발까지 완주 ② 문제를 한 번에 모두 맞히기 ③ 하트 지키기! 별 3개면 나침반 조각이야.';
+    return '별 3개 조건은 세 가지야. ① 깃발까지 완주 ② 문제를 한 번에 모두 맞히기 ③ 하트 지키기! 별 3개면 시계 퍼즐 조각이야.';
   }
   function openVN(i) {
     const G = GUARD[i];
@@ -3765,14 +3765,14 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     cineCtx = opt;
     const key = opt.key, gs = key.slice(0, 3), u = +key.slice(4), fl = floorOf(gs), unit = unitName(gs, u);
     const lastI = opt.lastI != null ? opt.lastI : NSTG - 1;
-    $('cs1').innerHTML = `<div class="zoom">${compassSVG(key, lastI)}</div><p class="cine-cap">황금 나침반 ${NSTG}/${NSTG}</p>`;
+    $('cs1').innerHTML = `<div class="zoom"><svg viewBox="0 0 220 220" role="img" aria-label="시계 퍼즐 완성">${clockHeart(key, lastI, 110, 110)}</svg></div><p class="cine-cap">시계 퍼즐 ${NSTG}/${NSTG}</p>`;
     $('cs2').innerHTML = `<div class="towerbig">${bigTowerSVG()}</div><p class="cine-cap">시계탑 ${fl}층의 톱니가 다시 돌아가요!</p>`;
     $('cs3').innerHTML = `<div class="cloud l"></div><div class="cloud r"></div><p class="say" id="cineMsg">축하해! ${fl}층 복원 완료!</p>
       <div class="crew2">${[1, 2, 4, 3, 5, 6, 7].map(a => `<span>${charSVG(a)}</span>`).join('')}</div>`;
     $('cs4').innerHTML = `<div class="award"><div class="halo"></div>${emblemSVG()}
       <h2>${gs[0]}학년 ${esc(unit)} 완벽 마스터</h2>
-      <p class="lead">황금 나침반이 다시 돌고, 시계탑 ${fl}층의 시간이 움직이기 시작했어요!</p>
-      <div class="rewards"><span>수학 코인 +100</span><span>황금 나침반 수료증</span>${CONTENT[key] ? `<span>${CONTENT[key].badge}</span>` : ''}</div>
+      <p class="lead">시계 퍼즐이 모두 맞춰져, 시계탑 ${fl}층의 시간이 다시 움직이기 시작했어요!</p>
+      <div class="rewards"><span>수학 코인 +100</span><span>시계 수리 수료증</span>${CONTENT[key] ? `<span>${CONTENT[key].badge}</span>` : ''}</div>
       <div class="btnrow"><button type="button" class="btn ghost" id="cineReplay">다시 보기</button><button type="button" class="btn ghost" id="cineClose">${opt.fromGame || opt.keepClose ? '결과 보기' : '닫기'}</button><button type="button" class="btn next" id="cineNext">다음 층으로 ▶</button></div></div>`;
     $('cine').hidden = false; $('cine').className = 'cine s0';
     hideModals();
@@ -3794,15 +3794,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       closeCine();
       M.justCompass = false;
       const nk = nextContentKey(cineCtx.key);
-      if (nk) { M.sel = { gs: nk.slice(0, 3), u: +nk.slice(4) }; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 새 황금 나침반 조각을 모아 볼까요?` }; }
+      if (nk) { M.sel = { gs: nk.slice(0, 3), u: +nk.slice(4) }; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 새 시계 퍼즐 조각을 모아 볼까요?` }; }
       resetAll(); openMap();
     }
   });
   window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('cine').hidden && !$('cine').classList.contains('s4')) { cineTimers.forEach(clearTimeout); cineTimers = []; cineScene(4); } });
   const STORY = [
     ['평화로운 동물 섬, 매스 아일랜드', '매스 아일랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
-    ['황금 나침반이 부서졌어요!', '어느 날 갑작스러운 오류로 시계탑의 핵심 부품인 황금 나침반이 조각나 흩어졌어요. 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
-    ['수학 탐험가의 모험', '지도 한 장을 들고 시계탑의 층마다 친구들을 차례로 만나요. 5개 관문을 별 3개로 통과할 때마다 나침반 조각을 되찾고, 모두 모으면 그 층의 시계가 다시 움직여요!']
+    ['시계가 멈춰 버렸어요!', '어느 날 갑작스러운 오류로 시계탑의 심장인 시계판이 다섯 조각으로 깨져 흩어졌어요. 시계가 멈추자 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
+    ['수학 탐험가의 모험', '지도 한 장을 들고 시계탑의 층마다 친구들을 차례로 만나요. 5개 단계를 별 3개로 통과할 때마다 시계 퍼즐 조각을 되찾고, 다섯 조각을 모두 맞추면 시계가 다시 움직여요!']
   ];
   let storyI = 0;
   function drawStory() {
@@ -3814,7 +3814,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     // 메인 화면과 같은 섬·시계탑 그림을 써요: 1쪽 평화로운 섬(시계탑이 움직임), 2쪽 망가진 시계탑 + 흩어진 나침반
     const isl = n => villageSVG(M.sel.gs, { n }).replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"').replace(/ role="button" tabindex="0"/g, '').replace(/cursor:pointer/g, '').replace(/ data-cmp="1"/g, '').replace(/(id="|url\(#)vg/g, '$1sv');
     $('storyArt').innerHTML = storyI === 0 ? `<div class="sf-isl">${isl(5)}</div>`
-      : storyI === 1 ? `<div class="sf-broken"><div class="sf-isl zoom">${isl(0).replace('viewBox="0 0 1000 600"', 'viewBox="300 20 300 320"')}</div><div class="sf-cmp">${compassSVG(null, null)}</div></div>`
+      : storyI === 1 ? `<div class="sf-broken"><div class="sf-isl zoom">${isl(0).replace('viewBox="0 0 1000 600"', 'viewBox="300 20 300 320"')}</div><div class="sf-cmp"><svg viewBox="0 0 220 220" aria-hidden="true">${clockHeart(null, null, 110, 110)}</svg></div></div>`
       : `<div class="crew">${GUARD.map(G => `<span style="background:${G.bg}">${charSVG(G.art)}</span>`).join('')}</div>`;
     $('storyNext').textContent = storyI < STORY.length - 1 ? '다음 ▶' : '모험 시작!';
   }
@@ -3985,7 +3985,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       const G = GUARD[i], on = lit[i], cur = !story && i === M.sel.u, nm = names[i];
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
       const [body, hw, top] = HOUSE[i](x, y, on), cx = x + hw - 6;
-      return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(nm)}, 나침반 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
+      return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(nm)}, 퍼즐 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
         ${on ? `<circle class="vg-glow" cx="${x}" cy="${y - 26}" r="84" fill="url(#vgGlow)"/>` : ''}
         ${cur ? `<ellipse class="vg-cur" cx="${x + 16}" cy="${y + 24}" rx="${hw + 52}" ry="22" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
         <ellipse cx="${x}" cy="${y + 25}" rx="${hw + 10}" ry="9" fill="#2f7d3c" opacity=".25"/>
@@ -4125,8 +4125,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <g class="vg-sail"><g transform="translate(62,470) rotate(-6)"><path d="M-34 6 q34 12 68 0" stroke="#fff" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round" transform="translate(0,16)"/><path d="M-32 0 H32 L22 18 H-22 Z" fill="#c9713f" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/><path d="M-29 5 H29" stroke="#fff3dc" stroke-width="3"/><path d="M0 0 V-52" stroke="${OL}" stroke-width="3" stroke-linecap="round"/><path d="M3 -48 L30 -8 H3 Z" fill="#fff" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M-3 -40 L-24 -8 H-3 Z" fill="#ffe9a8" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M0 -52 h14 l-4 4 4 4 h-14 z" fill="#e5484d"/></g></g>
       <g transform="translate(948,140)"><path d="M-9 0 a9 9 0 0 1 18 0 z" fill="#e5484d" stroke="${OL}" stroke-width="2"/><rect x="-9" y="0" width="18" height="6" fill="#fff" stroke="${OL}" stroke-width="2"/><path d="M0 -9 v-8" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="-19" r="3" fill="#ffd34d"/><path d="M-18 10 q9 -6 18 0 t18 0" stroke="#fff" stroke-width="2.500" fill="none" opacity=".8"/></g>
       <path d="M828 60 q7 -8 14 0 q7 -8 14 0 M870 44 q5 -6 10 0 q5 -6 10 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
-      ${story ? '' : `<g class="vg-cmp" data-cmp="1" style="cursor:pointer" aria-hidden="true"><rect x="876" y="573" width="92" height="21" rx="10.5" fill="#2b3a55" stroke="#fff" stroke-width="2"/><text x="922" y="588.5" text-anchor="middle" font-family="Jua" font-size="13" fill="#fff">🧩 퍼즐 ${pcs[M.sel.u] || 0}/${NSTG}</text></g>`}<g transform="translate(922,512)" class="vg-cmp" data-cmp="1" role="button" tabindex="0" aria-label="나침반: 조각 ${pcs[M.sel.u] || 0}/${NSTG}. 눌러서 퍼즐 수집 현황 보기" style="cursor:pointer"><circle r="54" fill="#2b3a55" opacity=".18" cy="4"/><circle r="52" fill="#f2c94c" stroke="${OL}" stroke-width="3"/><circle r="45" fill="#fff8e6" stroke="#b98a1f" stroke-width="2"/>${cticks}<circle r="30" fill="none" stroke="#e3d4a8" stroke-width="1.500"/>${rose}<circle r="5" fill="#f2c94c" stroke="${OL}" stroke-width="2"/>
-        <g font-family="Jua" font-size="13" text-anchor="middle" fill="#2b3a55"><circle cy="-52" r="11" fill="#e5484d" stroke="${OL}" stroke-width="2.500"/><text y="-47.500" fill="#fff">N</text><text x="39" y="4.500" font-size="10">E</text><text y="43" font-size="10">S</text><text x="-39" y="4.500" font-size="10">W</text></g></g>
+      ${story ? '' : `<g class="vg-cmp" data-cmp="1" style="cursor:pointer" aria-hidden="true"><rect x="876" y="573" width="92" height="21" rx="10.5" fill="#2b3a55" stroke="#fff" stroke-width="2"/><text x="922" y="588.5" text-anchor="middle" font-family="Jua" font-size="13" fill="#fff">🧩 퍼즐 ${pcs[M.sel.u] || 0}/${NSTG}</text></g>`}<g transform="translate(922,512)" class="vg-cmp" data-cmp="1" role="button" tabindex="0" aria-label="시계 퍼즐: 조각 ${pcs[M.sel.u] || 0}/${NSTG}. 눌러서 퍼즐 수집 현황 보기" style="cursor:pointer">${(() => { const k = pcs[M.sel.u] || 0, all = k >= NSTG; let w = '';
+        for (let q = 0; q < NSTG; q++) { const a0 = -Math.PI / 2 + q * 2 * Math.PI / NSTG, a1 = a0 + 2 * Math.PI / NSTG, R = 38, pt = a => `${(R * Math.cos(a)).toFixed(1)} ${(R * Math.sin(a)).toFixed(1)}`, on = story ? story.n > 0 : hasPiece(ukey(gs, M.sel.u), q);
+          w += `<path d="M0 0 L${pt(a0)} A${R} ${R} 0 0 1 ${pt(a1)} Z" fill="${on ? (all ? '#fff2b8' : '#fff8e6') : '#3a4766'}" stroke="${on ? '#f2c94c' : '#8a96b0'}" stroke-width="1.5" ${on ? '' : 'stroke-dasharray="3 3"'}/>`; }
+        return `<circle r="54" fill="#2b3a55" opacity=".18" cy="4"/><rect x="-50" y="-50" width="100" height="100" rx="12" fill="#2b3a55" stroke="${all ? '#f2c94c' : '#c9a548'}" stroke-width="4"/><circle r="43" fill="${all ? '#ffd34d' : '#1f2a40'}" stroke="#f2c94c" stroke-width="3"/>${w}
+          <path d="M0 0 V-26" stroke="${all ? '#2b3a55' : '#c9d3df'}" stroke-width="3.5" stroke-linecap="round"/><path d="M0 0 L15 9" stroke="${all ? '#2b3a55' : '#c9d3df'}" stroke-width="4.5" stroke-linecap="round"/><circle r="5" fill="#f2c94c" stroke="#2b3a55" stroke-width="2"/>`; })()}</g>
       </g>
       <rect x="2" y="2" width="996" height="596" rx="34" fill="none" stroke="${OL}" stroke-width="4"/>
     </svg>`;
@@ -4144,7 +4147,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const houses = H.map(([x, y], i) => {
       const G = GUARD[i], on = lit[i], cur = i === M.sel.u, nm = names[i];
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
-      return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(nm)}, 나침반 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
+      return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(nm)}, 퍼즐 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
         ${on ? `<circle class="vg-glow" cx="${x}" cy="${y - 40}" r="96" fill="url(#vgGlow)"/>` : ''}
         ${cur ? `<circle class="vg-cur" cx="${x}" cy="${y - 4}" r="62" fill="none" stroke="#ffd34d" stroke-width="6"/>` : ''}
         <g ${on ? '' : 'filter="url(#vgGray)" opacity=".5"'}>
@@ -4483,7 +4486,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function openMap() {
     runCalc = false; timeAtk = false; surprise = null;
     state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
-    $('subline').textContent = '숫자 시계탑의 황금 나침반 조각을 되찾는 모험';
+    $('subline').textContent = '숫자 시계탑의 시계 퍼즐 조각을 되찾는 모험';
     render();
     if (!M.seenStory) { openStory(); return; }
     showModal('mapModal');
