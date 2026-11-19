@@ -413,7 +413,7 @@ body.story-on { overflow: hidden; }
 .qc-presets button { border: 2px solid #dfe4ea; background: #fff; border-radius: 999px; padding: 4px 12px; font-family: var(--display); color: var(--deep); cursor: pointer; }
 .qc-presets button.on { border-color: #f2b705; background: #fff3c4; }
 .tag.ta { background: #ffe1d2; color: #c2410c; font-variant-numeric: tabular-nums; }
-.skipq .no5 { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; background: #fff; border: 1px solid #b8c0ca; font-size: .75rem; margin-right: 2px; }
+.hintbtn .no5, .calcbtn .no5, .skipq .no5 { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; background: #fff; border: 1px solid #b8c0ca; font-size: .75rem; margin-right: 2px; }
 .skipq { border-color: #8b95a3; background: #f1f3f6; color: #4a5563; margin-right: auto; }
 .qz-pop { display: flex; align-items: center; gap: 12px; }
 .qz-roki { flex: none; width: 84px; height: 84px; border-radius: 20px; background: #c9c8ff; display: grid; place-items: center; animation: hopS .5s ease-in-out infinite alternate; }
@@ -554,8 +554,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 #ctl { width: 100%; justify-content: flex-end; }
 .itembar { display: flex; align-items: center; gap: 5px; margin-right: auto; padding: 4px 8px 4px 12px; background: #fff; border: 2px solid var(--deep); border-radius: 18px; box-shadow: 0 3px 0 var(--deep); }
 .ib-lab { font-family: var(--display); font-size: .9rem; color: var(--deep); margin-right: 2px; white-space: nowrap; }
-.ib { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0; width: 54px; padding: 3px 2px 2px; border: 2px solid transparent; border-radius: 12px; background: #f3f6fa; cursor: pointer; font: inherit; color: var(--deep); }
+.ib { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0; width: 62px; padding: 3px 2px 2px; border: 2px solid transparent; border-radius: 12px; background: #f3f6fa; cursor: pointer; font: inherit; color: var(--deep); }
 .ib svg { width: 28px; height: 28px; }
+.ib .ib-k { display: inline-block; min-width: 13px; height: 13px; margin-right: 2px; border-radius: 4px; background: #fff; border: 1px solid #8a96a6; color: var(--deep); font: 700 .6rem/11px sans-serif; text-align: center; vertical-align: 1px; padding: 0; box-shadow: none; }
+@media (max-width: 640px), (pointer: coarse) { .ib .ib-k, .hintbtn .no5, .calcbtn .no5 { display: none; } }
 .ib .ib-t { font-size: .66rem; font-weight: 700; white-space: nowrap; line-height: 1.3; }
 .ib .ib-n { position: absolute; top: -6px; right: -4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--deep); color: #fff; font-size: .7rem; line-height: 18px; text-align: center; }
 .ib.ready { background: #fff6d6; border-color: #ffc53d; animation: ibglow 1.6s ease-in-out infinite; }
@@ -823,7 +825,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     </div>
     <button type="button" class="jump" id="btnJump">점프</button>
   </div>
-  <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동, <kbd>스페이스</kbd> 점프(공중에서 한 번 더 누르면 이단 점프), 문제는 <kbd>1</kbd>~<kbd>4</kbd>, 넘어가기는 <kbd>5</kbd> 숫자로도 고를 수 있어요.</p>
+  <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동, <kbd>스페이스</kbd> 점프(공중에서 한 번 더 누르면 이단 점프), 아이템은 <kbd>1</kbd> 거대화 · <kbd>2</kbd> 시간 멈춤 · <kbd>3</kbd> 하트 · <kbd>4</kbd> 보호막. 문제 창에서는 <kbd>1</kbd>~<kbd>4</kbd> 보기, <kbd>5</kbd> 넘어가기, <kbd>6</kbd> 힌트, <kbd>7</kbd> 계산기.</p>
 </div>
 
 <div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
@@ -1350,6 +1352,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       return;
     }
     if (state === 'question' && e.key === '5') { e.preventDefault(); $('qSkip').click(); return; }
+    // 문제 창: 6 힌트 뽑기, 7 계산기
+    if (state === 'question' && e.key === '6') { e.preventDefault(); if (!$('hintBtn').disabled) $('hintBtn').click(); else showToast('힌트가 없어요. 코인 상점에서 살 수 있어요'); return; }
+    if (state === 'question' && e.key === '7') { e.preventDefault(); if (!$('calcBtn').hidden && !$('calcBtn').disabled) $('calcBtn').click(); else showToast((M.items.calc || 0) <= 0 && !stats.calc ? '계산기가 없어요. 코인 상점에서 살 수 있어요' : '계산기는 식을 세우는 문제에서만 쓸 수 있어요'); return; }
+    // 달리는 중: 1 거대화, 2 시간 멈춤, 3 하트 +1, 4 보호막 (로블록스·마인크래프트 아이템 칸처럼)
+    if (state === 'play' && /^[1-4]$/.test(e.key) && !e.repeat) { e.preventDefault(); const el = $(IB[Number(e.key) - 1].bid); if (el) el.click(); return; }
     if (state === 'question' && /^[1-4]$/.test(e.key)) {
       const btn = $('qChoices').querySelectorAll('button')[Number(e.key) - 1];
       if (btn && !btn.disabled) btn.click();
@@ -3162,16 +3169,16 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const itemIcon = it => `<svg viewBox="0 0 52 52" aria-hidden="true">${it.icon}</svg>`;
   // ---------- 게임 중 '내 아이템' 바: 산 아이템을 언제든 바로 써요 ----------
   const IB = [
-    { id: 'giant', bid: 'giantBtn', lab: '거대화', when: '달리는 중', can: () => state === 'play' && !(stats.star > 0) },
-    { id: 'freeze', bid: 'freezeBtn', lab: '시간 멈춤', when: '달리는 중·문제 중', can: () => (state === 'play' || state === 'question') && stats.freeze <= 0 },
-    { id: 'heart', bid: 'ibHeart', lab: '하트 +1', when: '달리는 중', can: () => state === 'play' && stats.hearts < 5 },
-    { id: 'shield', bid: 'ibShield', lab: '보호막', when: '달리는 중', can: () => state === 'play' && !stats.shield },
-    { id: 'calc', bid: 'ibCalc', lab: '계산기', when: '문제 창에서', info: true },
-    { id: 'hint', bid: 'ibHint', lab: '힌트', when: '문제 창에서', info: true }
+    { id: 'giant', bid: 'giantBtn', key: '1', lab: '거대화', when: '달리는 중', can: () => state === 'play' && !(stats.star > 0) },
+    { id: 'freeze', bid: 'freezeBtn', key: '2', lab: '시간 멈춤', when: '달리는 중·문제 중', can: () => (state === 'play' || state === 'question') && stats.freeze <= 0 },
+    { id: 'heart', bid: 'ibHeart', key: '3', lab: '하트 +1', when: '달리는 중', can: () => state === 'play' && stats.hearts < 5 },
+    { id: 'shield', bid: 'ibShield', key: '4', lab: '보호막', when: '달리는 중', can: () => state === 'play' && !stats.shield },
+    { id: 'hint', bid: 'ibHint', key: '6', lab: '힌트', when: '문제 창에서', info: true },
+    { id: 'calc', bid: 'ibCalc', key: '7', lab: '계산기', when: '문제 창에서', info: true }
   ];
   function buildItemBar() {
     $('itemBar').innerHTML = `<span class="ib-lab">내 아이템</span>` + IB.map(b => { const it = ITEMS.find(x => x.id === b.id);
-      return `<button type="button" class="ib${b.info ? ' info' : ''}" id="${b.bid}" data-ib="${b.id}" title="${it ? esc(it.desc) : ''}">${it ? itemIcon(it) : ''}<b class="ib-n">0</b><span class="ib-t">${b.lab}</span></button>`; }).join('');
+      return `<button type="button" class="ib${b.info ? ' info' : ''}" id="${b.bid}" data-ib="${b.id}" title="${it ? esc(it.desc) : ''} (키보드 ${b.key})">${it ? itemIcon(it) : ''}<b class="ib-n">0</b><span class="ib-t"><kbd class="ib-k">${b.key}</kbd>${b.lab}</span></button>`; }).join('');
   }
   buildItemBar();
   let ibSig = '';
@@ -3181,7 +3188,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     if (st === ibSig) return; ibSig = st;
     IB.forEach(b => { const el = $(b.bid), n = M.items[b.id] || 0, ok = b.info ? n > 0 : n > 0 && b.can();
       el.querySelector('.ib-n').textContent = n; el.classList.toggle('ready', ok && !b.info); el.classList.toggle('empty', n <= 0);
-      el.setAttribute('aria-label', `${b.lab} ${n}개${n <= 0 ? ', 없어요 (코인 상점에서 사요)' : b.info ? `, ${b.when} 써요` : ok ? ', 누르면 바로 써요' : ', 지금은 못 써요'}`); });
+      el.setAttribute('aria-label', `${b.lab} (키 ${b.key}) ${n}개${n <= 0 ? ', 없어요 (코인 상점에서 사요)' : b.info ? `, ${b.when} 써요` : ok ? ', 누르면 바로 써요' : ', 지금은 못 써요'}`); });
   }
   $('itemBar').addEventListener('click', e => {
     const el = e.target.closest('[data-ib]'); if (!el) return;
@@ -3259,7 +3266,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function updateCalcBtn() {
     const has = !!(stats && stats.calc), n = M.items.calc || 0, ok = current && calcOK(), on = has || (n > 0 && ok);
     $('calcBtn').hidden = !on;
-    $('calcBtn').textContent = has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`;
+    $('calcBtn').innerHTML = '<span class="no5">7</span> ' + (has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`);
     $('calcBtn').disabled = !ok || !$('calcPad').hidden;
   }
   function calcEval(str) {
@@ -3305,7 +3312,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function updateHintBtn() {
     updateCalcBtn();
     const n = M.items.hint || 0;
-    $('hintBtn').textContent = `🎲 힌트 뽑기 (${n})`;
+    $('hintBtn').innerHTML = `<span class="no5">6</span> 🎲 힌트 뽑기 (${n})`;
     $('hintBtn').disabled = n <= 0;
   }
   // 힌트 뽑기: 이 문제에 쓸 수 있는 힌트 중 하나가 룰렛처럼 랜덤으로 나와요
