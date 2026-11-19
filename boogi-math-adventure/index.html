@@ -550,6 +550,25 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .wear-soon { opacity: .6; }
 .wear-ic { font-size: 2.2rem; width: 52px; text-align: center; }
 .ctlbtn.giant { color: #b07800; border-color: #b07800; background: #fff3c4; }
+.ctl { flex-wrap: wrap; align-items: center; }
+#ctl { width: 100%; justify-content: flex-end; }
+.itembar { display: flex; align-items: center; gap: 5px; margin-right: auto; padding: 4px 8px 4px 12px; background: #fff; border: 2px solid var(--deep); border-radius: 18px; box-shadow: 0 3px 0 var(--deep); }
+.ib-lab { font-family: var(--display); font-size: .9rem; color: var(--deep); margin-right: 2px; white-space: nowrap; }
+.ib { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0; width: 54px; padding: 3px 2px 2px; border: 2px solid transparent; border-radius: 12px; background: #f3f6fa; cursor: pointer; font: inherit; color: var(--deep); }
+.ib svg { width: 28px; height: 28px; }
+.ib .ib-t { font-size: .66rem; font-weight: 700; white-space: nowrap; line-height: 1.3; }
+.ib .ib-n { position: absolute; top: -6px; right: -4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--deep); color: #fff; font-size: .7rem; line-height: 18px; text-align: center; }
+.ib.ready { background: #fff6d6; border-color: #ffc53d; animation: ibglow 1.6s ease-in-out infinite; }
+.ib.info { background: #eef7ff; }
+.ib.empty svg { filter: grayscale(1); opacity: .35; } .ib.empty .ib-n { background: #b8c2cf; } .ib.empty .ib-t { color: #9aa6b4; }
+.ib:not(.ready):not(.info):not(.empty) svg { opacity: .55; }
+.ib:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+@keyframes ibglow { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,197,61,0); } 50% { box-shadow: 0 0 0 4px rgba(255,197,61,.35); } }
+@media (prefers-reduced-motion: reduce) { .ib.ready { animation: none; } }
+@media (max-width: 640px) { .ib-lab { display: none; } .itembar { margin-right: 0; width: 100%; justify-content: space-between; padding: 4px 6px; } .ib { width: auto; flex: 1; } #ctl { justify-content: center; } }
+.btn.pass { background: #ffc53d; color: #3a2a00; }
+.btn.pass small { font-size: .78em; opacity: .85; }
+.vn-inv { font-size: .9rem; color: #1f2a40; line-height: 1.5; } .vn-inv small { color: #6b7a8c; }
 /* 메인 화면 고도화: 하늘, 프로필, 코인 */
 .homefs { background: linear-gradient(180deg, #46a9f2 0%, #86cffc 36%, #c9ecff 66%, #fff1cf 100%); }
 .hsun { position: absolute; right: 7%; top: 5%; width: 16vmin; height: 16vmin; border-radius: 50%; background: radial-gradient(circle, #fffbe0 0 34%, rgba(255,240,170,.55) 35% 52%, rgba(255,240,170,0) 72%); }
@@ -790,7 +809,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="top">
     <h1>스쿨플랫 : 매스 아일랜드</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
-    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><button type="button" class="ctlbtn giant" id="giantBtn" hidden>거대화</button><button type="button" class="ctlbtn freeze" id="freezeBtn" hidden>시간 멈추기</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
+    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><div class="itembar" id="itemBar" role="group" aria-label="내 아이템 바로 쓰기"></div><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
   <div class="stage" id="stage">
     <canvas id="game" width="960" height="540" aria-label="부기가 달리는 수학 모험 게임 화면"></canvas>
@@ -975,7 +994,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     <div class="explain" id="qExplain" hidden>
       <p class="ex-title">이렇게 풀어요</p>
       <p id="qExText"></p>
-      <button type="button" class="btn" id="twinBtn">비슷한 문제로 다시 도전</button>
+      <button type="button" class="btn" id="twinBtn">비슷한 문제로 다시 도전</button><button type="button" class="btn pass" id="qPass" hidden>통과하고 계속 가기 ▶</button>
     </div>
   </div>
 </div>
@@ -1378,7 +1397,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('qText').innerHTML = qh.replace(/⟦/g, clueMode ? '<u class="clue">' : '').replace(/⟧/g, clueMode ? '</u>' : '');
     $('clueNote').hidden = !(clueMode && item.q.includes('{{'));
     clearInterval(qTimerId); $('qTimer').hidden = !speedMode; $('qTimerBar').style.width = '100%';
-    $('qExplain').hidden = true;
+    $('qExplain').hidden = true; $('qPass').hidden = true;
     const box = $('qChoices');
     box.innerHTML = ''; box.classList.remove('erasing'); current.erasing = 0;
     item.c.forEach((txt, idx) => {
@@ -1434,23 +1453,31 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       if (!stats.wrongUnits.includes(set.unit)) stats.wrongUnits.push(set.unit);
       $('qExText').innerHTML = fmt(item.e);
       $('qExplain').hidden = false;
-      $('twinBtn').focus({ preventScroll: true });
+      // 같은 문제를 2번 이상 틀리면 통과할 수 있어요 (그 문제는 5단계 샌디 기지에 다시 나와요)
+      if (current.attempts >= 2) {
+        $('qPass').hidden = false;
+        $('qPass').innerHTML = pick.i === NSTG - 1 ? '2번 틀렸어요 · 통과하고 계속 가기 ▶' : '2번 틀렸어요 · 통과하기 ▶ <small>(5단계에서 다시 풀어요)</small>';
+        $('qPass').focus({ preventScroll: true });
+      } else $('twinBtn').focus({ preventScroll: true });
     }
   }
 
   $('twinBtn').addEventListener('click', () => { current.twin = !current.twin; renderQuestion(); });
   // 모르는 문제 넘어가기: 문은 열리지만 '한 번에 맞히기' 별은 놓치고, 5단계 샌디 기지에 쌍둥이 문제로 다시 나와요
-  $('qSkip').addEventListener('click', () => {
+  function passGate(msg, countRetry) {
     if (state !== 'question' || !current || current.erasing > 0) return;
     const set = QUESTIONS[current.gate.i];
     clearInterval(qTimerId);
     if (current.attempts === 0 && !current.twin) recordWrong(set.src);
-    stats.retries++; current.gate.solved = true; onGateSolved(current.gate.i); checkpointX = current.gate.x + 80;
+    if (countRetry) stats.retries++;
+    current.gate.solved = true; onGateSolved(current.gate.i); checkpointX = current.gate.x + 80;
     if (!stats.wrongUnits.includes(set.unit)) stats.wrongUnits.push(set.unit);
     try { tone([392, 330], 0.06, 'triangle', 0.05); } catch (_) {}
     if (pick.i === NSTG - 1 && gates.every(g => g.solved)) { state = 'finishing'; setTimeout(() => { hideModals(); finish(); }, 300); return; }
-    hideModals(); state = 'play'; showToast('넘어갔어요! 샌디 기지에서 다시 만나요');
-  });
+    hideModals(); state = 'play'; showToast(msg);
+  }
+  $('qSkip').addEventListener('click', () => passGate('넘어갔어요! 샌디 기지에서 다시 만나요', true));
+  $('qPass').addEventListener('click', () => passGate(pick.i === NSTG - 1 ? '통과! 다음 문으로 가요' : '통과! 이 문제는 5단계 샌디 기지에서 다시 만나요', false));
   $('startBtn').addEventListener('click', () => {
     if (useHeart && M.items.heart > 0) { M.items.heart--; stats.hearts = diffCfg().hearts + 1; }
     if (useShield && M.items.shield > 0) { M.items.shield--; stats.shield = true; }
@@ -2153,12 +2180,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     }
     if (state === 'play' && surprise && !surprise.done && stats.time >= surprise.at && !gates.every(g => g.solved)) { surprise.done = true; startSurprise();
     }
-    const fz = (state === 'play' || state === 'question') && (M.items.freeze || 0) > 0 && stats.freeze <= 0;
-    if ($('freezeBtn').hidden === fz) $('freezeBtn').hidden = !fz;
-    if (fz) { const ft = '시간 멈추기 (' + M.items.freeze + ')'; if ($('freezeBtn').textContent !== ft) $('freezeBtn').textContent = ft; }
-    const gzz = state === 'play' && (M.items.giant || 0) > 0 && !(stats.star > 0);
-    if ($('giantBtn').hidden === gzz) $('giantBtn').hidden = !gzz;
-    if (gzz) { const gt = '⭐ 거대화 (' + M.items.giant + ')'; if ($('giantBtn').textContent !== gt) $('giantBtn').textContent = gt; }
+    updateItemBar();
     if (state === 'ending') {
       updateEnding(dt);
       if (state === 'ending') drawEnding();
@@ -3138,6 +3160,41 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       icon: '<path d="M26 4l18 7v13c0 12-8 20-18 24C16 44 8 36 8 24V11z" fill="#8aa2d8"/><path d="M18 25l6 6 11-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' }
   ];
   const itemIcon = it => `<svg viewBox="0 0 52 52" aria-hidden="true">${it.icon}</svg>`;
+  // ---------- 게임 중 '내 아이템' 바: 산 아이템을 언제든 바로 써요 ----------
+  const IB = [
+    { id: 'giant', bid: 'giantBtn', lab: '거대화', when: '달리는 중', can: () => state === 'play' && !(stats.star > 0) },
+    { id: 'freeze', bid: 'freezeBtn', lab: '시간 멈춤', when: '달리는 중·문제 중', can: () => (state === 'play' || state === 'question') && stats.freeze <= 0 },
+    { id: 'heart', bid: 'ibHeart', lab: '하트 +1', when: '달리는 중', can: () => state === 'play' && stats.hearts < 5 },
+    { id: 'shield', bid: 'ibShield', lab: '보호막', when: '달리는 중', can: () => state === 'play' && !stats.shield },
+    { id: 'calc', bid: 'ibCalc', lab: '계산기', when: '문제 창에서', info: true },
+    { id: 'hint', bid: 'ibHint', lab: '힌트', when: '문제 창에서', info: true }
+  ];
+  function buildItemBar() {
+    $('itemBar').innerHTML = `<span class="ib-lab">내 아이템</span>` + IB.map(b => { const it = ITEMS.find(x => x.id === b.id);
+      return `<button type="button" class="ib${b.info ? ' info' : ''}" id="${b.bid}" data-ib="${b.id}" title="${it ? esc(it.desc) : ''}">${it ? itemIcon(it) : ''}<b class="ib-n">0</b><span class="ib-t">${b.lab}</span></button>`; }).join('');
+  }
+  buildItemBar();
+  let ibSig = '';
+  function updateItemBar() {
+    if (!$('itemBar').firstChild) buildItemBar();
+    const st = IB.map(b => { const n = M.items[b.id] || 0; return n + (b.info ? (n ? 'i' : 'x') : (n && b.can() ? 'y' : 'x')); }).join(',');
+    if (st === ibSig) return; ibSig = st;
+    IB.forEach(b => { const el = $(b.bid), n = M.items[b.id] || 0, ok = b.info ? n > 0 : n > 0 && b.can();
+      el.querySelector('.ib-n').textContent = n; el.classList.toggle('ready', ok && !b.info); el.classList.toggle('empty', n <= 0);
+      el.setAttribute('aria-label', `${b.lab} ${n}개${n <= 0 ? ', 없어요 (코인 상점에서 사요)' : b.info ? `, ${b.when} 써요` : ok ? ', 누르면 바로 써요' : ', 지금은 못 써요'}`); });
+  }
+  $('itemBar').addEventListener('click', e => {
+    const el = e.target.closest('[data-ib]'); if (!el) return;
+    const b = IB.find(x => x.id === el.dataset.ib), n = M.items[b.id] || 0;
+    if ((b.id === 'giant' || b.id === 'freeze') && el.dataset.used === '1') { el.dataset.used = ''; return; }
+    if (n <= 0) { showToast(`${b.lab}이(가) 없어요. 코인 상점에서 살 수 있어요`); return; }
+    if (b.info) { showToast(b.id === 'calc' ? '계산기는 식을 세우는 문제 창에서 [🧮 계산기 쓰기]로 꺼내요' : '힌트는 문제 창의 [🎲 힌트 뽑기]로 써요'); return; }
+    if (!b.can()) { showToast(b.id === 'giant' && stats.star > 0 ? '이미 거대화 중이에요!' : b.id === 'shield' && stats.shield ? '이미 보호막이 있어요' : b.id === 'heart' && stats.hearts >= 5 ? '하트가 가득 찼어요' : b.id === 'freeze' && stats.freeze > 0 ? '이미 시간이 멈춰 있어요' : `${b.lab}은(는) ${b.when}에 쓸 수 있어요`); return; }
+    if (b.id === 'heart') { M.items.heart--; stats.hearts++; saveM(); showToast('하트 +1!'); try { tone([660, 990], 0.1, 'triangle'); } catch (_) {} }
+    else if (b.id === 'shield') { M.items.shield--; stats.shield = true; saveM(); showToast('보호막! 헷갈이에 한 번 부딪혀도 괜찮아요'); try { tone([523, 784], 0.1, 'triangle'); } catch (_) {} }
+    // 거대화·시간 멈춤은 원래 버튼 동작(아래 리스너)이 처리해요
+    ibSig = ''; canvas.focus && canvas.focus();
+  });
   let shopReturn = 'mapModal';
   let shopTab = 'game';
   function renderShop(msg) {
@@ -3200,9 +3257,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const calcOK = () => { const set = QUESTIONS[current.gate.i]; return !!(set && set.src && set.src[0] >= 3); };
   let calcExpr = '', calcDone = false;
   function updateCalcBtn() {
-    const on = !!(stats && stats.calc), ok = current && calcOK();
+    const has = !!(stats && stats.calc), n = M.items.calc || 0, ok = current && calcOK(), on = has || (n > 0 && ok);
     $('calcBtn').hidden = !on;
-    $('calcBtn').textContent = ok ? '계산기 꺼내기' : '계산기 (연산 문제는 직접!)';
+    $('calcBtn').textContent = has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`;
     $('calcBtn').disabled = !ok || !$('calcPad').hidden;
   }
   function calcEval(str) {
@@ -3232,7 +3289,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     tone([520], 0.03, 'square', 0.03);
   });
   $('calcBtn').addEventListener('click', () => {
-    if (state !== 'question' || !calcOK() || !stats.calc) return;
+    if (state !== 'question' || !calcOK()) return;
+    if (!stats.calc) { if ((M.items.calc || 0) <= 0) return; M.items.calc--; stats.calc = true; runCalc = true; saveM(); ibSig = ''; }
     openCalcPad();
     showToast('계산기 등장! 식은 직접 세워요');
   });
@@ -3327,12 +3385,12 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   });
   $('giantBtn').addEventListener('click', () => {
     if (state !== 'play' || (M.items.giant || 0) <= 0 || stats.star > 0) return;
-    M.items.giant--; saveM(); stats.star = STAR_T; showToast('거대화! 10초 동안 5배 거인!'); tone([523, 659, 784, 1047, 1319], 0.07);
+    M.items.giant--; saveM(); stats.star = STAR_T; $('giantBtn').dataset.used = '1'; ibSig = ''; showToast('거대화! 10초 동안 5배 거인!'); tone([523, 659, 784, 1047, 1319], 0.07);
     canvas.focus && canvas.focus();
   });
   $('freezeBtn').addEventListener('click', () => {
     if (!(state === 'play' || state === 'question') || (M.items.freeze || 0) <= 0 || stats.freeze > 0) return;
-    M.items.freeze--; saveM(); stats.freeze = 20; showToast('시간 멈춤! 20초');
+    M.items.freeze--; saveM(); stats.freeze = 20; $('freezeBtn').dataset.used = '1'; ibSig = ''; showToast('시간 멈춤! 20초');
   });
   // ---------- 화면: 상단 바 · 섬 지도 · 수호자 카드 ----------
   function renderNews() {
@@ -3497,9 +3555,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('vnMore').hidden = last;
     $('vnGo').hidden = !last;
     if (last) {
-      $('vnItems').innerHTML = `<button type="button" class="useitem" data-vuse="heart" aria-pressed="${useHeart}" ${M.items.heart ? '' : 'disabled'}>하트 +1 (${M.items.heart})</button>
-        <button type="button" class="useitem" data-vuse="shield" aria-pressed="${useShield}" ${M.items.shield ? '' : 'disabled'}>보호막 (${M.items.shield})</button>
-        <button type="button" class="useitem" data-vuse="calc" aria-pressed="${useCalc}" ${M.items.calc ? '' : 'disabled'}>계산기 (${M.items.calc || 0})</button>`;
+      const inv = IB.filter(b => (M.items[b.id] || 0) > 0).map(b => `${b.lab} ${M.items[b.id]}`);
+      $('vnItems').innerHTML = `<span class="vn-inv"><b>🎒 내 아이템</b> ${inv.length ? inv.join(' · ') : '없어요 (코인 상점에서 살 수 있어요)'}<br><small>게임 화면 위쪽 [내 아이템]에서 필요할 때 바로 눌러 써요</small></span>`;
       $('vnStart').focus({ preventScroll: true });
     } else $('vnBox').focus({ preventScroll: true });
   }
