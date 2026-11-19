@@ -1460,10 +1460,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       if (!stats.wrongUnits.includes(set.unit)) stats.wrongUnits.push(set.unit);
       $('qExText').innerHTML = fmt(item.e);
       $('qExplain').hidden = false;
-      // 같은 문제를 2번 이상 틀리면 통과할 수 있어요 (그 문제는 5단계 샌디 기지에 다시 나와요)
-      if (current.attempts >= 2) {
+      // 같은 문제를 3번 이상 틀리면 통과할 수 있어요 (그 문제는 5단계 샌디 기지에 다시 나와요)
+      if (current.attempts >= 3) {
         $('qPass').hidden = false;
-        $('qPass').innerHTML = pick.i === NSTG - 1 ? '2번 틀렸어요 · 통과하고 계속 가기 ▶' : '2번 틀렸어요 · 통과하기 ▶ <small>(5단계에서 다시 풀어요)</small>';
+        $('qPass').innerHTML = pick.i === NSTG - 1 ? '3번 틀렸어요 · 통과하고 계속 가기 ▶' : '3번 틀렸어요 · 통과하기 ▶ <small>(5단계에서 다시 풀어요)</small>';
         $('qPass').focus({ preventScroll: true });
       } else $('twinBtn').focus({ preventScroll: true });
     }
