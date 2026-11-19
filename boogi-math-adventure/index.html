@@ -884,7 +884,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 </div>
 <div class="modal toplayer" id="meModal" role="dialog" aria-modal="true" aria-labelledby="meTitle" hidden>
   <div class="card me-card">
-    <div class="tagrow"><h2 id="meTitle" class="sum-h"><span aria-hidden="true">🙂</span> 내 정보 · 모험 요약</h2><button type="button" class="xbtn" id="meClose">닫기 ✕</button></div>
+    <div class="tagrow"><h2 id="meTitle" class="sum-h"><span aria-hidden="true">🙂</span> 내 정보</h2><button type="button" class="xbtn" id="meClose">닫기 ✕</button></div>
     <div id="meBody"></div>
   </div>
 </div>
@@ -4445,7 +4445,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function setQn(v) { M.set.qn = Math.max(3, Math.min(20, v)); saveM(); drawSettings(); }
   function openSettings() { drawSettings(); $('setModal').hidden = false; $('setClose').focus({ preventScroll: true }); }
   $('homeWallet').addEventListener('click', e => { if (e.target.closest('#badgeOpen')) openBadges(); else if (e.target.closest('#setOpen')) openSettings(); });
-  $('homeAtt').addEventListener('click', () => openMe());
+  $('homeAtt').addEventListener('click', openSummary);
   $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('homeAtt'); if (b) b.focus({ preventScroll: true }); });
   $('storyOpen').addEventListener('click', () => { $('setModal').hidden = true; storyBack = 'home'; openStory(); });
   $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
