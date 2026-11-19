@@ -3176,17 +3176,19 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     { id: 'hint', bid: 'ibHint', key: '6', lab: '힌트', when: '문제 창에서', info: true },
     { id: 'calc', bid: 'ibCalc', key: '7', lab: '계산기', when: '문제 창에서', info: true }
   ];
+  // 힌트(6)·계산기(7)는 문제 창에서만 쓰므로 게임 화면 아이템 바에는 달리는 중 아이템 4개만 보여요
+  const IB_BAR = () => IB.filter(b => !b.info);
   function buildItemBar() {
-    $('itemBar').innerHTML = `<span class="ib-lab">내 아이템</span>` + IB.map(b => { const it = ITEMS.find(x => x.id === b.id);
+    $('itemBar').innerHTML = `<span class="ib-lab">내 아이템</span>` + IB_BAR().map(b => { const it = ITEMS.find(x => x.id === b.id);
       return `<button type="button" class="ib${b.info ? ' info' : ''}" id="${b.bid}" data-ib="${b.id}" title="${it ? esc(it.desc) : ''} (키보드 ${b.key})">${it ? itemIcon(it) : ''}<b class="ib-n">0</b><span class="ib-t"><kbd class="ib-k">${b.key}</kbd>${b.lab}</span></button>`; }).join('');
   }
   buildItemBar();
   let ibSig = '';
   function updateItemBar() {
     if (!$('itemBar').firstChild) buildItemBar();
-    const st = IB.map(b => { const n = M.items[b.id] || 0; return n + (b.info ? (n ? 'i' : 'x') : (n && b.can() ? 'y' : 'x')); }).join(',');
+    const st = IB_BAR().map(b => { const n = M.items[b.id] || 0; return n + (b.info ? (n ? 'i' : 'x') : (n && b.can() ? 'y' : 'x')); }).join(',');
     if (st === ibSig) return; ibSig = st;
-    IB.forEach(b => { const el = $(b.bid), n = M.items[b.id] || 0, ok = b.info ? n > 0 : n > 0 && b.can();
+    IB_BAR().forEach(b => { const el = $(b.bid), n = M.items[b.id] || 0, ok = b.info ? n > 0 : n > 0 && b.can();
       el.querySelector('.ib-n').textContent = n; el.classList.toggle('ready', ok && !b.info); el.classList.toggle('empty', n <= 0);
       el.setAttribute('aria-label', `${b.lab} (키 ${b.key}) ${n}개${n <= 0 ? ', 없어요 (코인 상점에서 사요)' : b.info ? `, ${b.when} 써요` : ok ? ', 누르면 바로 써요' : ', 지금은 못 써요'}`); });
   }
