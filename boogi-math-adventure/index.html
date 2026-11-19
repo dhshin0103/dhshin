@@ -334,9 +334,10 @@ body.story-on { overflow: hidden; }
 .home-chap .chap-u .cu-n { left: 7px; top: 7px; }
 .home-chap .chap-u .cu-nm { width: 100%; font-weight: 700; }
 .home-chap .chap-u.on { border-color: #ffb627; }
-.home-acts { display: grid; grid-template-columns: 1fr 2.2fr 1fr; gap: 10px; }
+.home-acts { display: grid; grid-template-columns: 2.6fr 1fr; gap: 10px; }
 .home-acts .btn.ghost { min-height: 58px; font-size: 1.1rem; padding: 0 10px; }
 .home-acts .home-start { min-height: 58px; }
+.set-story { min-height: 40px; font-size: 1rem; padding: 0 14px; white-space: nowrap; }
 .home-chap button { font: inherit; cursor: pointer; }
 .home-chap button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 .cg-av { flex: none; display: grid; place-items: center; }
@@ -373,7 +374,7 @@ body.story-on { overflow: hidden; }
 .home-sub .btn { flex: 1; min-height: 48px; font-size: 1.1rem; }
 .homeback { font-size: .95rem; padding: 4px 12px; }
 @media (max-width: 860px) { .homefs { overflow-y: auto; grid-template-rows: auto auto auto; } .homefs { grid-template-rows: none; grid-auto-rows: auto; grid-template-columns: minmax(0, 1fr); align-content: start; } .home-box { min-width: 0; } .home-mid, .home-body { display: contents; } .homefs .sf-top { order: 0; } .home-title { order: 1; } .home-map { order: 2; flex: none; } .home-box { order: 3; } .home-map svg { width: 100%; height: auto; max-height: none; } .home-chap .chap-units { display: flex; flex-direction: row; overflow-x: auto; padding-bottom: 4px; } .home-chap .chap-u { flex: 0 0 132px; } .cb-pct { flex-basis: 100%; } }
-@media (max-width: 520px) { .home-acts { grid-template-columns: 1fr 1fr; } .home-acts .home-start { grid-column: 1 / -1; grid-row: 1; } }
+@media (max-width: 520px) { .home-acts { grid-template-columns: 1.6fr 1fr; } }
 @media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
 @media (max-width: 860px) { .homefs .home-map { min-height: auto; } }
 @media (max-width: 520px) { .home-title { font-size: 1.9rem; gap: 2px 8px; } .home-title .ht-brand { font-size: .9rem; } }
@@ -854,7 +855,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   </div>
   <div class="sf-box home-box">
     <div class="home-chap" id="homeChap" role="group" aria-label="챕터 진행 현황"></div>
-    <div class="home-acts"><button type="button" class="btn ghost" id="sumOpen2"><span aria-hidden="true">⭐</span> 모험 요약</button><button type="button" class="btn home-start" id="homeStart">모험 시작 ▶</button><button type="button" class="btn ghost" id="homeShop">코인 상점</button></div>
+    <div class="home-acts"><button type="button" class="btn home-start" id="homeStart">모험 시작 ▶</button><button type="button" class="btn ghost" id="homeShop">코인 상점</button></div>
   </div>
 </div>
 
@@ -882,7 +883,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 </div>
 <div class="modal toplayer" id="meModal" role="dialog" aria-modal="true" aria-labelledby="meTitle" hidden>
   <div class="card me-card">
-    <div class="tagrow"><h2 id="meTitle" class="sum-h"><span aria-hidden="true">🙂</span> 내 정보</h2><button type="button" class="xbtn" id="meClose">닫기 ✕</button></div>
+    <div class="tagrow"><h2 id="meTitle" class="sum-h"><span aria-hidden="true">🙂</span> 내 정보 · 모험 요약</h2><button type="button" class="xbtn" id="meClose">닫기 ✕</button></div>
     <div id="meBody"></div>
   </div>
 </div>
@@ -906,6 +907,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     <div class="set-row"><div class="set-lb"><b>게임 속도</b></div><div class="seg" id="segSpeed" role="radiogroup" aria-label="게임 속도"></div></div>
     <div class="set-row"><div class="set-lb"><b>효과음</b></div><div class="seg" id="segSound" role="radiogroup" aria-label="효과음"></div></div>
     <div class="set-row"><div class="set-lb"><b>소리 크기</b></div><input type="range" id="volRange" min="0" max="100" step="5" value="80" aria-label="소리 크기" class="vol"></div>
+    <h3 class="set-sec">이야기</h3>
+    <div class="set-row"><div class="set-lb"><b>매스 아일랜드 이야기</b><small>시계탑과 황금 나침반 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
     <p class="note" id="setNote"></p>
   </div>
 </div>
@@ -945,7 +948,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="modal" id="compassModal" role="dialog" aria-modal="true" aria-labelledby="cmpTitle" hidden>
   <div class="card cmp-card">
-    <div class="tagrow"><h2 id="cmpTitle">황금 나침반 수집 현황</h2><button type="button" class="xbtn" id="cmpClose">닫기 ✕</button></div>
+    <div class="tagrow"><h2 id="cmpTitle">퍼즐 조각 수집 현황</h2><button type="button" class="xbtn" id="cmpClose">닫기 ✕</button></div>
     <div class="cmp-big" id="cmpBig"></div>
     <div id="cmpInfo"></div>
   </div>
@@ -3443,7 +3446,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function renderBar() {
     const gs = M.sel.gs, us = unitsOf(gs);
     try { markAttend(); renderAttend(); } catch (_) {}
-    $('homeWallet').innerHTML = `<button type="button" class="chip chip-btn" id="badgeOpen" aria-label="내 배지 보기, ${M.badges.length}개 보유"><span aria-hidden="true">🏅</span>배지 ${M.badges.length}</button><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="storyOpen"><span aria-hidden="true">📖</span>이야기 보기</button><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
+    $('homeWallet').innerHTML = `<button type="button" class="chip chip-btn" id="badgeOpen" aria-label="내 배지 보기, ${M.badges.length}개 보유"><span aria-hidden="true">🏅</span>배지 ${M.badges.length}</button><span class="chip" title="코인으로 캐릭터, 상품, 스킨을 살 수 있어요">${COIN_SVG}코인 ${M.coins}</span><button type="button" class="chip chip-btn" id="setOpen"><span aria-hidden="true">⚙️</span>설정</button>`; homeDeco();
   }
   // 단원별 미션 한 줄 ("왜 이 방에 가야 하는지")
   const QUEST = {
@@ -3542,6 +3545,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     saveM();
   }
   // 나침반 위젯을 누르면: 상세 수집 현황
+  let cmpBack = 'map';
   function openCompass() {
     const key = ukey(M.sel.gs, M.sel.u), P = prog(key), n = pieceCount(key);
     $('cmpBig').innerHTML = compassSVG(key, null);
@@ -3678,7 +3682,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     if (Number(b.dataset.qz) === qz.cur.a) { qz.ok++; qz.cur = null; quizDraw(); const f = $('qzBody').querySelector('[data-qz]'); if (f) f.focus({ preventScroll: true }); }
     else { b.classList.add('wrong'); b.disabled = true; }
   });
-  $('cmpClose').addEventListener('click', () => { render(); showModal('mapModal'); });
+  $('cmpClose').addEventListener('click', () => { if (cmpBack === 'home') { cmpBack = 'map'; openHome(); return; } render(); showModal('mapModal'); });
   // ---------- 8/8 완성 시네마틱: 나침반 각성 → 시계탑 부활 → 축하 파티 → 마스터 배지 ----------
   let cineCtx = null, cineTimers = [], confettiRAF = 0;
   // 소리 크기: 모든 효과음을 마스터 볼륨 노드로 모아요
@@ -3802,7 +3806,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('storyTitle').textContent = t;
     $('storyText').textContent = d;
     // 메인 화면과 같은 섬·시계탑 그림을 써요: 1쪽 평화로운 섬(시계탑이 움직임), 2쪽 망가진 시계탑 + 흩어진 나침반
-    const isl = n => villageSVG(M.sel.gs, { n }).replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"').replace(/ role="button" tabindex="0"/g, '').replace(/cursor:pointer/g, '').replace(/(id="|url\(#)vg/g, '$1sv');
+    const isl = n => villageSVG(M.sel.gs, { n }).replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"').replace(/ role="button" tabindex="0"/g, '').replace(/cursor:pointer/g, '').replace(/ data-cmp="1"/g, '').replace(/(id="|url\(#)vg/g, '$1sv');
     $('storyArt').innerHTML = storyI === 0 ? `<div class="sf-isl">${isl(5)}</div>`
       : storyI === 1 ? `<div class="sf-broken"><div class="sf-isl zoom">${isl(0).replace('viewBox="0 0 1000 600"', 'viewBox="300 20 300 320"')}</div><div class="sf-cmp">${compassSVG(null, null)}</div></div>`
       : `<div class="crew">${GUARD.map(G => `<span style="background:${G.bg}">${charSVG(G.art)}</span>`).join('')}</div>`;
@@ -4115,7 +4119,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <g class="vg-sail"><g transform="translate(62,470) rotate(-6)"><path d="M-34 6 q34 12 68 0" stroke="#fff" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round" transform="translate(0,16)"/><path d="M-32 0 H32 L22 18 H-22 Z" fill="#c9713f" stroke="${OL}" stroke-width="2.500" stroke-linejoin="round"/><path d="M-29 5 H29" stroke="#fff3dc" stroke-width="3"/><path d="M0 0 V-52" stroke="${OL}" stroke-width="3" stroke-linecap="round"/><path d="M3 -48 L30 -8 H3 Z" fill="#fff" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M-3 -40 L-24 -8 H-3 Z" fill="#ffe9a8" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M0 -52 h14 l-4 4 4 4 h-14 z" fill="#e5484d"/></g></g>
       <g transform="translate(948,140)"><path d="M-9 0 a9 9 0 0 1 18 0 z" fill="#e5484d" stroke="${OL}" stroke-width="2"/><rect x="-9" y="0" width="18" height="6" fill="#fff" stroke="${OL}" stroke-width="2"/><path d="M0 -9 v-8" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="-19" r="3" fill="#ffd34d"/><path d="M-18 10 q9 -6 18 0 t18 0" stroke="#fff" stroke-width="2.500" fill="none" opacity=".8"/></g>
       <path d="M828 60 q7 -8 14 0 q7 -8 14 0 M870 44 q5 -6 10 0 q5 -6 10 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <g transform="translate(922,520)"><circle r="54" fill="#2b3a55" opacity=".18" cy="4"/><circle r="52" fill="#f2c94c" stroke="${OL}" stroke-width="3"/><circle r="45" fill="#fff8e6" stroke="#b98a1f" stroke-width="2"/>${cticks}<circle r="30" fill="none" stroke="#e3d4a8" stroke-width="1.500"/>${rose}<circle r="5" fill="#f2c94c" stroke="${OL}" stroke-width="2"/>
+      ${story ? '' : `<g class="vg-cmp" data-cmp="1" style="cursor:pointer" aria-hidden="true"><rect x="876" y="573" width="92" height="21" rx="10.5" fill="#2b3a55" stroke="#fff" stroke-width="2"/><text x="922" y="588.5" text-anchor="middle" font-family="Jua" font-size="13" fill="#fff">🧩 퍼즐 ${pcs[M.sel.u] || 0}/${NSTG}</text></g>`}<g transform="translate(922,512)" class="vg-cmp" data-cmp="1" role="button" tabindex="0" aria-label="나침반: 조각 ${pcs[M.sel.u] || 0}/${NSTG}. 눌러서 퍼즐 수집 현황 보기" style="cursor:pointer"><circle r="54" fill="#2b3a55" opacity=".18" cy="4"/><circle r="52" fill="#f2c94c" stroke="${OL}" stroke-width="3"/><circle r="45" fill="#fff8e6" stroke="#b98a1f" stroke-width="2"/>${cticks}<circle r="30" fill="none" stroke="#e3d4a8" stroke-width="1.500"/>${rose}<circle r="5" fill="#f2c94c" stroke="${OL}" stroke-width="2"/>
         <g font-family="Jua" font-size="13" text-anchor="middle" fill="#2b3a55"><circle cy="-52" r="11" fill="#e5484d" stroke="${OL}" stroke-width="2.500"/><text y="-47.500" fill="#fff">N</text><text x="39" y="4.500" font-size="10">E</text><text y="43" font-size="10">S</text><text x="-39" y="4.500" font-size="10">W</text></g></g>
       </g>
       <rect x="2" y="2" width="996" height="596" rx="34" fill="none" stroke="${OL}" stroke-width="4"/>
@@ -4337,7 +4341,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('meBody').innerHTML = `<div class="me-top"><span class="me-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span>
         <div class="me-id"><span class="pf-lv">Lv.${lv.L}</span><b>${PROFILE.name}</b><small>${lv.title}</small>${repBadgeLine()}
           <span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span><small>다음 레벨까지 ${lv.need - lv.into}문제${nx ? ` · Lv.${nx[0]} ‘${nx[1]}’` : ''}</small></div></div>
-      <div class="me-chips"><span>📖 <b>${L.solved}</b>문제</span><span>🎯 정답률 <b>${acc}%</b></span><span>⏱️ <b>${mins}</b>분</span><span>🔥 연속 <b>${st.cur}</b>일</span><span>🪙 코인 <b>${M.coins}</b></span></div>
+      <div class="me-chips"><span>📖 <b>${L.solved}</b>문제</span><span>🎯 정답률 <b>${acc}%</b></span><span>⏱️ <b>${mins}</b>분</span><span>📅 출석 <b>${L.days.length}</b>일</span><span>🔥 연속 <b>${st.cur}</b>일</span><span>⭐ 최장 <b>${st.best}</b>일</span><span>🪙 코인 <b>${M.coins}</b></span></div>
       <h3 class="set-sec">탐험 현황 <small class="me-note">집 번호 = 단원 · 노란 집 = 정복(조각 5개)</small></h3>${grades}
       <h3 class="set-sec">내 캐릭터 고르기</h3><div class="me-chars">${chars}</div>`;
     $('meModal').hidden = false; $('meClose').focus({ preventScroll: true });
@@ -4431,10 +4435,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
   function setQn(v) { M.set.qn = Math.max(3, Math.min(20, v)); saveM(); drawSettings(); }
   function openSettings() { drawSettings(); $('setModal').hidden = false; $('setClose').focus({ preventScroll: true }); }
-  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#badgeOpen')) openBadges(); else if (e.target.closest('#storyOpen')) { storyBack = 'home'; openStory(); } else if (e.target.closest('#setOpen')) openSettings(); });
-  $('sumOpen2').addEventListener('click', openSummary);
-  $('homeAtt').addEventListener('click', openSummary);
-  $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('sumOpen2'); if (b) b.focus({ preventScroll: true }); });
+  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#badgeOpen')) openBadges(); else if (e.target.closest('#setOpen')) openSettings(); });
+  $('homeAtt').addEventListener('click', () => openMe());
+  $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('homeAtt'); if (b) b.focus({ preventScroll: true }); });
+  $('storyOpen').addEventListener('click', () => { $('setModal').hidden = true; storyBack = 'home'; openStory(); });
   $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
   $('setModal').addEventListener('click', e => {
     const q = e.target.closest('[data-qc]'); if (q && !q.disabled) { setQn(qCount() + +q.dataset.qc); return; }
@@ -4467,8 +4471,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   });
   $('homeStart').addEventListener('click', () => { if (!$('homeStart').disabled) openMap(); });
   const pickHouse = u => { M.sel.u = u; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); if (hasContent(ukey(M.sel.gs, u))) { openMap(); return; } const h = $('homeMap').querySelector(`[data-house="${u}"]`); if (h) h.focus({ preventScroll: true }); };
-  $('homeMap').addEventListener('click', e => { const h = e.target.closest('[data-house]'); if (h) pickHouse(+h.dataset.house); });
-  $('homeMap').addEventListener('keydown', e => { const h = e.target.closest('[data-house]'); if (h && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickHouse(+h.dataset.house); } });
+  $('homeMap').addEventListener('click', e => { if (e.target.closest('[data-cmp]')) { cmpBack = 'home'; openCompass(); return; } const h = e.target.closest('[data-house]'); if (h) pickHouse(+h.dataset.house); });
+  $('homeMap').addEventListener('keydown', e => { if (e.target.closest('[data-cmp]') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); cmpBack = 'home'; openCompass(); return; } const h = e.target.closest('[data-house]'); if (h && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickHouse(+h.dataset.house); } });
   $('homeShop').addEventListener('click', () => openShop('homeModal'));
   function openMap() {
     runCalc = false; timeAtk = false; surprise = null;
