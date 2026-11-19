@@ -247,6 +247,12 @@ body.story-on { overflow: hidden; }
 .sf-art { position: relative; display: grid; place-items: center; min-height: 0; animation: artin .5s ease-out both; }
 @keyframes artin { from { opacity: 0; transform: translateY(18px) scale(.96); } }
 .sf-art > svg { width: auto; height: min(100%, 56vh); max-width: min(78vw, 520px); filter: drop-shadow(0 10px 0 rgba(0,0,0,.08)); }
+.sf-art .sf-isl { width: min(92vw, 900px); max-height: 56vh; aspect-ratio: 1000 / 600; }
+.sf-art .sf-isl svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 8px 0 rgba(0,58,92,.18)); }
+.sf-art .sf-broken { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 4vw, 48px); max-height: 56vh; }
+.sf-art .sf-isl.zoom { width: min(46vw, 360px); aspect-ratio: 300 / 320; border-radius: 28px; overflow: hidden; border: 4px solid #fff; box-shadow: 0 8px 0 rgba(0,58,92,.18); }
+.sf-art .sf-isl.zoom svg { filter: none; }
+.sf-art .sf-cmp svg { width: min(34vw, 240px); height: auto; filter: drop-shadow(0 8px 0 rgba(0,0,0,.1)); animation: vgbob 2.6s ease-in-out infinite; }
 .sf-art .crew { gap: clamp(6px, 2vw, 18px); max-width: 900px; }
 .sf-art .crew span { width: clamp(70px, 13vw, 130px); height: clamp(70px, 13vw, 130px); border-radius: 26px; border: 3px solid #fff; box-shadow: 0 6px 0 rgba(0,58,92,.25); animation: hop .6s ease-in-out infinite alternate; }
 .sf-art .crew span:nth-child(2n) { animation-delay: .2s; }
@@ -488,12 +494,23 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .pf-rep svg { width: 22px; height: 22px; }
 .me-id .me-rep b { font-family: inherit; font-weight: 700; font-size: .86rem; color: var(--deep); line-height: 1.3; }
 .me-rep { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; color: #6b5a2a; } .me-rep svg { width: 26px; height: 26px; } .me-rep.none { font-size: .76rem; color: #9a8c6a; }
+.wc-sec { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--deep); display: flex; align-items: baseline; gap: 8px; }
+.wc-sec small { font-family: var(--body); font-size: .78rem; color: #6b7a8c; } .wc-sec.rare { color: #7b5ce0; }
+.wc-grid { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 8px; }
+.wc { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 6px 8px; border-radius: 14px; background: #f5fbff; border: 2px solid #e1ecf5; text-align: center; }
+.wc.rare { background: #faf6ff; border-color: #e2d6ff; } .wc.on { border-color: #b995f5; box-shadow: 0 0 0 3px rgba(185,149,245,.4); }
+.wc-ic { width: 60px; height: 52px; display: grid; place-items: center; } .wc-ic svg { width: 58px; height: 50px; }
+.wc b { font-size: .8rem; color: var(--deep); line-height: 1.25; word-break: keep-all; min-height: 2.5em; display: grid; place-items: center; }
+.wc .buy { font-size: .82rem; padding: 4px 12px; } .wc.rare.locked .wc-ic svg { filter: grayscale(1); opacity: .45; }
+.wc-how { font-size: .68rem; color: #7a6aa8; line-height: 1.3; word-break: keep-all; }
+.wc-tag { position: absolute; top: 5px; left: 5px; font-style: normal; font-size: .62rem; font-weight: 700; background: #7b5ce0; color: #fff; border-radius: 999px; padding: 1px 6px; }
 .wd-info { display: flex; flex-direction: column; gap: 6px; min-width: 0; } .wd-info small { color: #6b5a8a; }
 .wd-cur { display: flex; flex-wrap: wrap; gap: 6px; } .wd-on { font-size: .8rem; background: #fff; border-radius: 999px; padding: 3px 10px; border: 1px solid #e2d6ff; } .wd-on.muted { color: #9a90b0; }
 .wd-off { border: 0; background: #ede5ff; color: #5b3fb5; border-radius: 999px; padding: 1px 8px; font: inherit; font-size: .74rem; cursor: pointer; margin-left: 2px; }
 .wd-ic { position: relative; flex: none; width: 60px; height: 56px; display: grid; place-items: center; background: #f5efff; border-radius: 14px; } .wd-ic svg { width: 54px; height: 48px; }
 .wd-item.locked .wd-ic svg { filter: grayscale(1); opacity: .45; } .wd-lock { position: absolute; right: -4px; bottom: -4px; font-style: normal; font-size: .9rem; }
 .wd-item.on { box-shadow: 0 0 0 3px #b995f5; }
+.bd-more { margin-top: 4px; } .bd-more summary { cursor: pointer; font-size: .86rem; font-weight: 700; color: #4f6680; padding: 8px 12px; border-radius: 12px; background: #f1f5f9; list-style: none; text-align: center; } .bd-more summary::-webkit-details-marker { display: none; } .bd-more[open] summary { margin-bottom: 4px; }
 .bd-empty { padding: 14px; border-radius: 14px; background: #f7f8fa; color: #6b7a8c; font-size: .88rem; text-align: center; }
 .me-card { width: min(640px, 100%); gap: 12px; max-height: calc(100dvh - 32px); overflow-y: auto; }
 .me-top { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 18px; background: linear-gradient(90deg, #f5efff, #fff); border: 2px solid #e2d6ff; }
@@ -825,7 +842,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     </div>
     <button type="button" class="jump" id="btnJump">점프</button>
   </div>
-  <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동, <kbd>스페이스</kbd> 점프(공중에서 한 번 더 누르면 이단 점프), 아이템은 <kbd>1</kbd> 거대화 · <kbd>2</kbd> 시간 멈춤 · <kbd>3</kbd> 하트 · <kbd>4</kbd> 보호막. 문제 창에서는 <kbd>1</kbd>~<kbd>4</kbd> 보기, <kbd>5</kbd> 넘어가기, <kbd>6</kbd> 힌트, <kbd>7</kbd> 계산기.</p>
+  <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동 · <kbd>스페이스</kbd> 점프(두 번 누르면 이단 점프) · <kbd>1</kbd>~<kbd>4</kbd> 아이템</p>
 </div>
 
 <div class="storyfs homefs" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeTitle" hidden>
@@ -2975,7 +2992,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const KEY = 'mathland-v2';
   const NSTG = GUARD.length;
   function defaultsM() {
-    return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0, calc: 1 }, badges: [], wear: { head: null, back: null }, ms: [], rep: null, set: { qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80, learn: 'std' }, profile: { art: 2 }, log: { solved: 0, first: 0, sec: 0, days: [] }, sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
+    return { prog: {}, coins: 150, items: { hint: 2, freeze: 1, heart: 0, shield: 0, calc: 1 }, badges: [], wear: { head: null, back: null }, wearOwn: [], ms: [], rep: null, set: { qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80, learn: 'std' }, profile: { art: 2 }, log: { solved: 0, first: 0, sec: 0, days: [] }, sel: { gs: '3-1', u: 4 }, last: null, justBadge: '',
       news: { good: false, text: '시계탑 3층 [분수와 소수]의 방에 도착했어요! 1단계부터 황금 나침반 조각을 모아 볼까요?' }, seenStory: false, popPiece: null, justCompass: false, quizBest: 0 };
   }
   let M;
@@ -3012,6 +3029,12 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     { id: 'butterfly_wings', slot: 'back', name: '대칭 나비 날개', key: '5-2-2', svg: `<path d="M0 0 C-14 -26 -44 -20 -36 2 C-44 16 -20 28 0 6 Z" fill="#ff8fab" ${OLW}/><path d="M0 0 C14 -26 44 -20 36 2 C44 16 20 28 0 6 Z" fill="#ff8fab" ${OLW}/><circle cx="-22" cy="-6" r="5" fill="#ffd34d"/><circle cx="22" cy="-6" r="5" fill="#ffd34d"/><circle cx="-20" cy="12" r="3.4" fill="#fff"/><circle cx="20" cy="12" r="3.4" fill="#fff"/>` },
     { id: 'dot_bow', slot: 'head', name: '소수점 땡땡이 리본', key: '5-2-3', svg: `<path d="M0 -8 L-18 -18 L-18 2 Z M0 -8 L18 -18 L18 2 Z" fill="#e5484d" ${OLW}/><circle cy="-8" r="5" fill="#c0392b" ${OLW}/><circle cx="-12" cy="-10" r="1.8" fill="#fff"/><circle cx="-13" cy="-3" r="1.6" fill="#fff"/><circle cx="12" cy="-10" r="1.8" fill="#fff"/><circle cx="13" cy="-3" r="1.6" fill="#fff"/>` },
     { id: 'dice_hat', slot: 'head', name: '주사위 모자', key: '5-2-4', svg: `<path d="M-12 -2 L-12 -20 L0 -26 L12 -20 L12 -2 L0 4 Z" fill="#fff" ${OLW}/><path d="M-12 -20 L0 -14 L12 -20 M0 -14 V4" stroke="#2b3a55" stroke-width="1.4" fill="none"/><circle cy="-20" r="1.8" fill="#e5484d"/><circle cx="-8" cy="-12" r="1.5" fill="#2b3a55"/><circle cx="-4" cy="-4" r="1.5" fill="#2b3a55"/><circle cx="4" cy="-10" r="1.5" fill="#2b3a55"/><circle cx="8" cy="-4" r="1.5" fill="#2b3a55"/>` },
+    { id: 'c_cap', slot: 'head', name: '빨간 야구 모자', price: 80, svg: `<path d="M-17 0 A17 16 0 0 1 17 0 Z" fill="#e5484d" ${OLW}/><path d="M6 0 H27 Q25 -7 12 -6 Z" fill="#c0392b" ${OLW}/><circle cy="-16" r="2.4" fill="#fff"/>` },
+    { id: 'c_ribbon', slot: 'head', name: '노란 리본', price: 60, svg: `<path d="M0 -7 L-16 -16 L-16 2 Z M0 -7 L16 -16 L16 2 Z" fill="#ffd34d" ${OLW}/><circle cy="-7" r="4.5" fill="#f2b01e" ${OLW}/>` },
+    { id: 'c_flower', slot: 'head', name: '꽃 화관', price: 100, svg: `<path d="M-19 0 Q0 -12 19 0" stroke="#30a46c" stroke-width="4" fill="none" stroke-linecap="round"/>${[[-15, -4, '#ff8fab'], [-6, -8, '#fff'], [4, -8, '#ffd34d'], [14, -4, '#c79bff']].map(([x, y, c]) => `<circle cx="${x}" cy="${y}" r="5" fill="${c}" ${OLW}/><circle cx="${x}" cy="${y}" r="1.6" fill="#f2b01e"/>`).join('')}` },
+    { id: 'c_party', slot: 'head', name: '파티 고깔', price: 70, svg: `<path d="M-13 0 L0 -28 L13 0 Z" fill="#ff8fab" ${OLW}/><circle cx="-4" cy="-8" r="2.4" fill="#fff"/><circle cx="4" cy="-14" r="2" fill="#ffd34d"/><circle cx="3" cy="-4" r="2" fill="#4fc3f7"/><circle cy="-29" r="3.6" fill="#ffd34d" ${OLW}/>` },
+    { id: 'c_bag', slot: 'back', name: '파란 책가방', price: 120, svg: `<rect x="-36" y="-6" width="24" height="30" rx="7" fill="#4f8de0" ${OLW}/><rect x="-33" y="6" width="18" height="10" rx="3" fill="#bfe4ff" ${OLW}/><path d="M-30 -6 q6 -8 12 0" stroke="#2b3a55" stroke-width="2" fill="none"/>` },
+    { id: 'c_cape', slot: 'back', name: '빨간 영웅 망토', price: 150, svg: cape('#e5484d', `<path d="M0 6 l2.4 5 5.4 .8 -3.9 3.8 .9 5.4 -4.8 -2.6 -4.8 2.6 .9 -5.4 -3.9 -3.8 5.4 -.8 z" fill="#ffd34d"/>`) },
     { id: 'gold_crown', slot: 'head', name: '황금 왕관', ms: 5, svg: `<path d="M-18 0 V-18 L-9 -9 L0 -24 L9 -9 L18 -18 V0 Z" fill="#ffc53d" ${OLW}/><rect x="-18" y="-5" width="36" height="5" fill="#e8a317" ${OLW}/><circle cy="-13" r="3" fill="#e5484d" ${OLW}/><circle cx="-18" cy="-19" r="2.4" fill="#4fc3f7"/><circle cx="18" cy="-19" r="2.4" fill="#30a46c"/><circle cy="-25" r="2.4" fill="#fff"/>` },
     { id: 'rainbow_cape', slot: 'back', name: '전설의 무지개 망토', ms: 20, svg: cape('#ff6b6b', `<path d="M-21 5 Q0 0 21 5 L26 13 Q0 8 -26 13 Z" fill="#ffc53d"/><path d="M-26 13 Q0 8 26 13 L29 21 Q0 16 -29 21 Z" fill="#30a46c"/><path d="M-29 21 Q0 16 29 21 L30 29 Q0 34 -30 29 Z" fill="#4f8de0"/>`) }
   ];
@@ -3019,7 +3042,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const MILESTONES = [{ n: 3, coins: 200, text: '코인 200개' }, { n: 5, item: 'gold_crown', text: '황금 왕관' }, { n: 10, coins: 500, text: '코인 500개' }, { n: 20, item: 'rainbow_cape', text: '전설의 무지개 망토' }];
   M.wear = Object.assign({ head: null, back: null }, M.wear || {});
   M.ms = Array.isArray(M.ms) ? M.ms : [];
-  const ownsWear = w => w.key ? M.badges.includes((CONTENT[w.key] || {}).badge) : M.badges.length >= w.ms;
+  M.wearOwn = Array.isArray(M.wearOwn) ? M.wearOwn : [];
+  const ownsWear = w => w.price ? M.wearOwn.includes(w.id) : w.key ? M.badges.includes((CONTENT[w.key] || {}).badge) : M.badges.length >= w.ms;
   const wearFrom = w => w.key ? `${(CONTENT[w.key] || {}).badge || ''}로 받아요` : `배지 ${w.ms}개 모으기 보상`;
   // 배지 개수 마일스톤: 새로 달성한 보상을 지급하고 문구 목록을 돌려줘요
   function claimMilestones() {
@@ -3212,11 +3236,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     if (shopTab === 'wear') {
       const slotName = { head: '머리', back: '등' };
       const cur = sl => { const w = WEAR_BY(M.wear[sl]); return w ? `<span class="wd-on">${slotName[sl]}: <b>${w.name}</b> <button type="button" class="wd-off" data-unwear="${sl}">벗기</button></span>` : `<span class="wd-on muted">${slotName[sl]}: 비어 있어요</span>`; };
-      const nOwn = WEAR.filter(ownsWear).length;
-      $('shopGrid').innerHTML = `<div class="wear-pre"><span class="pf-av big" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span><div class="wd-info"><p><b>${PROFILE.name}의 옷장</b> · 모은 옷 ${nOwn}/${WEAR.length}<br><small>옷은 코인으로 살 수 없어요. 단원 배지를 받거나 배지를 많이 모으면 생겨요. 입은 옷은 게임 속 친구들도 함께 입어요!</small></p><div class="wd-cur">${cur('head')}${cur('back')}</div></div></div>`
-        + WEAR.map(w => { const own = ownsWear(w), on = M.wear[w.slot] === w.id;
-          return `<div class="item wd-item${own ? '' : ' locked'}${on ? ' on' : ''}"><span class="wd-ic">${wearIcon(w)}${own ? '' : '<i class="wd-lock" aria-hidden="true">🔒</i>'}</span><div><b>${w.name}</b><p>${slotName[w.slot]} · ${wearFrom(w)}</p>
-            <div class="row"><small>${own ? (on ? '입는 중 ✓' : '가지고 있어요') : '아직 잠겨 있어요'}</small>${own ? `<button type="button" class="buy" data-wear="${w.id}">${on ? '벗기' : '입어 보기'}</button>` : `<button type="button" class="buy" disabled>🔒 잠김</button>`}</div></div></div>`; }).join('');
+      const card = w => { const own = ownsWear(w), on = M.wear[w.slot] === w.id, rare = !w.price;
+        const btn = own ? `<button type="button" class="buy" data-wear="${w.id}">${on ? '벗기' : '입기'}</button>`
+          : rare ? `<small class="wc-how">🔒 ${w.key ? esc((CONTENT[w.key] || {}).badge || '') : `배지 ${w.ms}개 모으기`}</small>`
+          : `<button type="button" class="buy" data-buywear="${w.id}" ${M.coins < w.price ? 'disabled' : ''}>코인 ${w.price}</button>`;
+        return `<div class="wc${rare ? ' rare' : ''}${own ? '' : ' locked'}${on ? ' on' : ''}">${rare ? '<i class="wc-tag">희귀</i>' : ''}<span class="wc-ic">${wearIcon(w)}</span><b>${w.name}</b>${btn}</div>`; };
+      const coinW = WEAR.filter(w => w.price), rareW = WEAR.filter(w => !w.price);
+      $('shopGrid').innerHTML = `<div class="wear-pre"><span class="pf-av big" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span><div class="wd-info"><p><b>${PROFILE.name}의 옷장</b></p><div class="wd-cur">${cur('head')}${cur('back')}</div></div></div>
+        <h3 class="wc-sec">🪙 코인으로 사는 옷 <small>${coinW.filter(ownsWear).length}/${coinW.length}</small></h3><div class="wc-grid">${coinW.map(card).join('')}</div>
+        <h3 class="wc-sec rare">🏅 배지로 받는 희귀 옷 <small>${rareW.filter(ownsWear).length}/${rareW.length} · 코인으로 살 수 없어요</small></h3><div class="wc-grid">${rareW.map(card).join('')}</div>`;
       $('shopMsg').textContent = msg || ''; return;
     }
     $('shopGrid').innerHTML = ITEMS.map(it => `<div class="item">${itemIcon(it)}<div><b>${it.name}</b><p>${it.desc}</p>
@@ -3234,6 +3262,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       const nb = $('shopGrid').querySelector(`[data-buy="${it.id}"]`); if (nb && !nb.disabled) nb.focus({ preventScroll: true });
       return;
     }
+    const bw = e.target.closest('[data-buywear]');
+    if (bw) { const w = WEAR_BY(bw.dataset.buywear); if (!w || !w.price || ownsWear(w)) return;
+      if (M.coins < w.price) { renderShop('코인이 모자라요. 게임에서 코인을 더 모아 볼까요?'); return; }
+      M.coins -= w.price; M.wearOwn.push(w.id); M.wear[w.slot] = w.id; saveM(); renderShop(`${w.name}을(를) 사서 바로 입었어요!`); try { renderBar(); } catch (_) {} const nb = $('shopGrid').querySelector(`[data-wear="${w.id}"]`); if (nb) nb.focus({ preventScroll: true }); return; }
     const wb = e.target.closest('[data-wear]');
     if (wb) { const w = WEAR_BY(wb.dataset.wear); if (!w || !ownsWear(w)) return; M.wear[w.slot] = M.wear[w.slot] === w.id ? null : w.id; saveM(); renderShop(M.wear[w.slot] ? `${w.name}을(를) 입었어요!` : `${w.name}을(를) 벗었어요.`); try { renderBar(); } catch (_) {} const nb = $('shopGrid').querySelector(`[data-wear="${w.id}"]`); if (nb) nb.focus({ preventScroll: true }); return; }
     const ub = e.target.closest('[data-unwear]'); if (ub) { M.wear[ub.dataset.unwear] = null; saveM(); renderShop('옷을 벗었어요.'); try { renderBar(); } catch (_) {} return; }
@@ -3405,6 +3437,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function renderNews() {
     const n = $('news');
     n.className = 'news' + (M.news.good ? ' good' : '');
+    n.hidden = !M.news.good && /도착했어요|올라왔어요/.test(M.news.text);
     n.innerHTML = `<span class="ic">${M.news.good ? '✓' : 'i'}</span><span>${esc(M.news.text)}</span>`;
   }
   function renderBar() {
@@ -3472,7 +3505,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         : `<path d="M${CX} ${CY} L${CX + 6} ${CY + 46}" stroke="#c9d3df" stroke-width="5" stroke-linecap="round"/><path d="M${CX} ${CY} l-20 12" stroke="#c9d3df" stroke-width="7" stroke-linecap="round"/>`}
       <circle cx="${CX}" cy="${CY}" r="8" fill="${GDc}" stroke="${NVc}" stroke-width="2.5"/>
       ${n === NSTG ? `<g class="vg-spark" fill="#fff6c2"><path d="M${CX - 112} ${CY - 70} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${CX + 108} ${CY - 40} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/></g>` : ''}
-      <rect x="${CX - 134}" y="${CY + 108}" width="268" height="30" rx="15" fill="${n === NSTG ? '#b07800' : NVc}" stroke="#fff" stroke-width="2"/><text x="${CX}" y="${CY + 129}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${n === NSTG ? '시계 수리 완료! 다시 움직여요' : `시계 퍼즐 ${n}/${NSTG} · 별 3개로 한 조각`}</text></g>`;
+      <rect id="hudBtn" role="button" tabindex="0" aria-label="시계 퍼즐 ${n}/${NSTG}조각. 눌러서 수집 현황 보기" style="cursor:pointer" x="${CX - 134}" y="${CY + 108}" width="268" height="30" rx="15" fill="${n === NSTG ? '#b07800' : NVc}" stroke="#fff" stroke-width="2"/><text pointer-events="none" x="${CX}" y="${CY + 129}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${n === NSTG ? '시계 수리 완료! 다시 움직여요' : `시계 퍼즐 ${n}/${NSTG} · 별 3개로 한 조각`}</text></g>`;
     return `<svg viewBox="0 0 1000 640" role="group" aria-label="시계탑 ${floorOf(M.sel.gs)}층 ${unitName(M.sel.gs, M.sel.u)}의 방 지도, 황금 나침반 ${n}/${NSTG}조각">
       <defs><filter id="jgs"><feColorMatrix type="saturate" values="0"/></filter><filter id="fogblur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.5"/></filter>
         <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf3df"/><stop offset="1" stop-color="#f1dcb2"/></linearGradient></defs>
@@ -3504,7 +3537,6 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const n = pieceCount(key);
     $('homeBody').innerHTML = `<div class="mapwrap"><div class="mapscroll">${islandSVG(key, popI)}</div>
       <div class="zone"><b>[${floorOf(M.sel.gs)}학년]</b> 시계탑 ${floorOf(M.sel.gs)}층 : ${esc(unitName(M.sel.gs, M.sel.u))}의 방</div>
-      <button type="button" class="hud${popI != null ? ' pulse' : ''}" id="hudBtn" aria-label="황금 나침반 ${n}/${NSTG}조각. 눌러서 수집 현황 보기">${hudSVG(key)}<span>황금 나침반</span></button>
       <button type="button" class="quizbtn" id="quizBtn">⚡ 로키의 돌발 퀴즈 <small>30초 보너스</small></button>
       </div>`;
     saveM();
@@ -3769,8 +3801,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('storyModal').dataset.page = storyI;
     $('storyTitle').textContent = t;
     $('storyText').textContent = d;
-    $('storyArt').innerHTML = storyI === 0 ? towerSVG(true)
-      : storyI === 1 ? compassSVG(null, null)
+    // 메인 화면과 같은 섬·시계탑 그림을 써요: 1쪽 평화로운 섬(시계탑이 움직임), 2쪽 망가진 시계탑 + 흩어진 나침반
+    const isl = n => villageSVG(M.sel.gs, { n }).replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"').replace(/ role="button" tabindex="0"/g, '').replace(/cursor:pointer/g, '').replace(/(id="|url\(#)vg/g, '$1sv');
+    $('storyArt').innerHTML = storyI === 0 ? `<div class="sf-isl">${isl(5)}</div>`
+      : storyI === 1 ? `<div class="sf-broken"><div class="sf-isl zoom">${isl(0).replace('viewBox="0 0 1000 600"', 'viewBox="300 20 300 320"')}</div><div class="sf-cmp">${compassSVG(null, null)}</div></div>`
       : `<div class="crew">${GUARD.map(G => `<span style="background:${G.bg}">${charSVG(G.art)}</span>`).join('')}</div>`;
     $('storyNext').textContent = storyI < STORY.length - 1 ? '다음 ▶' : '모험 시작!';
   }
@@ -3851,10 +3885,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const pf = $('homeProfile');
     if (pf) pf.innerHTML = `<span class="pf-avw"><span class="pf-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span>${repBadgeMini()}</span><span class="pf-tx"><span class="pf-lv">Lv.${levelInfo(M.log.solved).L}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
   }
-  function villageSVG(gs) {
-    const names = unitsOf(gs), pcs = names.map((_, u) => piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
+  // story = { n }: 이야기 화면용. 진행 상황과 상관없이 집 n채가 켜진 섬을 그려요 (자물쇠·선택 표시·안내 띠 없음)
+  function villageSVG(gs, story) {
+    const names = unitsOf(gs), pcs = names.map((_, u) => story ? (u < story.n ? NSTG : 0) : piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
     // 방금 정복한 집: 캐릭터가 점프하고 축하 팝업이 떠요 (한 번만)
-    const won = M.won || (M.won = {}), fresh = lit.map((v, u) => v && !won[ukey(gs, u)]), fi = fresh.indexOf(true);
+    const won = M.won || (M.won = {}), fresh = lit.map((v, u) => !story && v && !won[ukey(gs, u)]), fi = fresh.indexOf(true);
     fresh.forEach((f, u) => { if (f) won[ukey(gs, u)] = 1; });
     if (fi >= 0) setTimeout(() => homeCheer(gs, fi, n), 700);
     const H = [[190, 400], [340, 490], [540, 482], [800, 420], [770, 235]], T = [450, 268], OL = '#2b3a55';
@@ -3937,7 +3972,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     ];
     const stars = names.map((_, u) => ((M.prog[ukey(gs, u)] || {}).st || []).reduce((a, v) => a + v, 0));
     const houses = H.map(([x, y], i) => {
-      const G = GUARD[i], on = lit[i], cur = i === M.sel.u, nm = names[i];
+      const G = GUARD[i], on = lit[i], cur = !story && i === M.sel.u, nm = names[i];
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
       const [body, hw, top] = HOUSE[i](x, y, on), cx = x + hw - 6;
       return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(nm)}, 나침반 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
@@ -3945,7 +3980,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         ${cur ? `<ellipse class="vg-cur" cx="${x + 16}" cy="${y + 24}" rx="${hw + 52}" ry="22" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
         <ellipse cx="${x}" cy="${y + 25}" rx="${hw + 10}" ry="9" fill="#2f7d3c" opacity=".25"/>
         ${on ? body : `<g filter="url(#vgDim)" opacity=".9">${body}</g>`}
-        ${on ? '' : lock(x, y - top * 0.42, stars[i])}<ellipse cx="${cx + 31}" cy="${y + 25}" rx="21" ry="5.500" fill="#2f7d3c" opacity=".28"/>
+        ${on || story ? '' : lock(x, y - top * 0.42, stars[i])}<ellipse cx="${cx + 31}" cy="${y + 25}" rx="21" ry="5.500" fill="#2f7d3c" opacity=".28"/>
         <g class="${fresh[i] ? 'vg-jump' : 'vg-bob'}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 36}) scale(.62)">${art}</g></g>
         <circle cx="${x - hw - 2}" cy="${y - top + 12}" r="14" fill="${OL}" stroke="#fff" stroke-width="2.500"/><text x="${x - hw - 2}" y="${y - top + 17.500}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text>
         ${on ? `<g class="vg-spark" fill="${fresh[i] ? '#ffd34d' : '#fff'}"><path d="M${x - hw - 14} ${y - top + 40} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${x + hw + 4} ${y - top + 6} l2.500 6 6 2.500 -6 2.500 -2.500 6 -2.500 -6 -6 -2.500 6 -2.500z"/></g>` : ''}
@@ -3995,7 +4030,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       ${fix(2) ? '' : `<g transform="translate(${tx - 52},${B + 2})"><circle r="9" fill="#c9a548" stroke="#8a6a1f" stroke-width="4.500" stroke-dasharray="3.600 3.470"/><circle r="6.500" fill="#c9a548"/><circle r="2.500" fill="#8a6a1f"/></g>`}
       ${fix(1) ? '' : `<g fill="#bfa06c" stroke="${OL}" stroke-width="1.800" stroke-linejoin="round"><path d="M${tx + 36} ${B + 8} l7 -9 l10 2 l3 8 z"/><path d="M${tx - 34} ${B + 10} l5 -6 l8 1 l2 6 z"/><path d="M${tx + 20} ${B + 12} l4 -5 l6 1 l1 5 z"/></g>`}
       ${done ? `<g class="vg-spark" fill="#fff6c2"><path d="M${tx - 58} ${B - 150} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${tx + 54} ${B - 200} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${tx + 50} ${B - 110} l2.500 6 6 2.500 -6 2.500 -2.500 6 -2.500 -6 -6 -2.500 6 -2.500z"/></g>` : ''}
-      <rect x="${tx - 66}" y="${ty + 42}" width="132" height="30" rx="15" fill="${done ? '#b07800' : '#2b3a55'}" stroke="#fff" stroke-width="2"/><text x="${tx}" y="${ty + 63}" text-anchor="middle" font-family="Jua" font-size="17" fill="#fff">${done ? '시계탑 수리 완료!' : `시계탑 수리 ${n}/5`}</text>
+      ${story ? '<g display="none">' : '<g>'}<rect x="${tx - 66}" y="${ty + 42}" width="132" height="30" rx="15" fill="${done ? '#b07800' : '#2b3a55'}" stroke="#fff" stroke-width="2"/><text x="${tx}" y="${ty + 63}" text-anchor="middle" font-family="Jua" font-size="17" fill="#fff">${done ? '시계탑 수리 완료!' : `시계탑 수리 ${n}/5`}</text></g>
     </g>`;
     const towerOld = `<g>
       <ellipse cx="${tx}" cy="${B + 2}" rx="70" ry="14" fill="#2f7d3c" opacity=".28"/>
@@ -4293,7 +4328,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   // ---------- 내 정보 ----------
   function openMe() {
     const L = M.log, lv = levelInfo(L.solved), nx = TITLES.find(([l]) => l > lv.L), acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, st = streaks(), mins = Math.floor(L.sec / 60);
-    const grades = [3, 5].map(g => {
+    const grades = [+M.sel.gs[0]].map(g => {
       const sems = ['1', '2'].map(sm => { const gs = `${g}-${sm}`, us = unitsOf(gs); const lit = us.filter((_, u) => piecesOf(ukey(gs, u)) >= NSTG).length, pcs = us.reduce((a, _, u) => a + piecesOf(ukey(gs, u)), 0);
         return `<div class="me-sem"><b>${sm}학기</b><span class="me-houses">${us.map((nm, u) => `<i class="${piecesOf(ukey(gs, u)) >= NSTG ? 'on' : piecesOf(ukey(gs, u)) ? 'mid' : ''}" title="${u + 1}단원 ${esc(nm)} · 조각 ${piecesOf(ukey(gs, u))}/${NSTG}">${u + 1}</i>`).join('')}</span><small>정복 ${lit}/5 · 조각 ${pcs}/25</small></div>`; }).join('');
       return `<div class="me-grade"><h4>${g}학년</h4>${sems}</div>`; }).join('');
@@ -4304,7 +4339,6 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
           <span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span><small>다음 레벨까지 ${lv.need - lv.into}문제${nx ? ` · Lv.${nx[0]} ‘${nx[1]}’` : ''}</small></div></div>
       <div class="me-chips"><span>📖 <b>${L.solved}</b>문제</span><span>🎯 정답률 <b>${acc}%</b></span><span>⏱️ <b>${mins}</b>분</span><span>🔥 연속 <b>${st.cur}</b>일</span><span>🪙 코인 <b>${M.coins}</b></span></div>
       <h3 class="set-sec">탐험 현황 <small class="me-note">집 번호 = 단원 · 노란 집 = 정복(조각 5개)</small></h3>${grades}
-      <h3 class="set-sec">내 아이템</h3><div class="me-items">${itemsHTML}</div>
       <h3 class="set-sec">내 캐릭터 고르기</h3><div class="me-chars">${chars}</div>`;
     $('meModal').hidden = false; $('meClose').focus({ preventScroll: true });
   }
@@ -4333,9 +4367,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const gotHTML = got.length ? `<div class="bd-grid">${got.map(b => { const isRep = M.rep === b.key, w = WEAR.find(x => x.key === b.key);
         return `<div class="bd-item got${isRep ? ' rep' : ''}">${isRep ? '<span class="bd-crown">대표</span>' : ''}${medalSVG(b.gs, b.u)}<b>${short(b.name)}</b><small>${where(b)}</small>${w ? `<small class="bd-gift">👕 ${w.name}</small>` : ''}<button type="button" class="bd-rep" data-rep="${b.key}" aria-pressed="${isRep}">${isRep ? '★ 대표 배지' : '대표로 달기'}</button></div>`; }).join('')}</div>`
       : `<p class="bd-empty">아직 받은 배지가 없어요. 한 단원의 1~5단계를 모두 별 3개로 통과하면 첫 배지를 받아요!</p>`;
-    const groups = [...new Set(todo.map(b => b.gs))].map(gs => `<p class="bd-gs">${gsLabel(gs)}</p><div class="bd-grid">${todo.filter(b => b.gs === gs).map(b =>
+    const grp = list => [...new Set(list.map(b => b.gs))].map(gs => `<p class="bd-gs">${gsLabel(gs)}</p><div class="bd-grid">${list.filter(b => b.gs === gs).map(b =>
       `<button type="button" class="bd-item todo${b.pcs ? ' going' : ''}" data-bkey="${b.key}" title="눌러서 이 단원으로 가기">${medalSVG(b.gs, b.u)}<b>${short(b.name)}</b><small>${b.u + 1}단원 ${esc(unitName(b.gs, b.u))}</small>
         <span class="bd-p"><span class="bd-bar"><i style="width:${b.pcs / NSTG * 100}%"></i></span>${b.pcs ? `조각 ${b.pcs}/${NSTG} · ${NSTG - b.pcs}단계 남음` : '아직 시작 전'}</span></button>`).join('')}</div>`).join('');
+    const myG = M.sel.gs[0], mine = todo.filter(b => b.gs[0] === myG), others = todo.filter(b => b.gs[0] !== myG);
+    const groups = grp(mine) + (others.length ? `<details class="bd-more"><summary>다른 학년 배지 ${others.length}개 보기</summary>${grp(others)}</details>` : '');
     $('badgeBody').innerHTML = `<div class="bd-sum"><span class="bd-big">${got.length}<small> / ${all.length}</small></span><span class="bd-txt"><b>모은 배지</b><span class="bd-bar"><i style="width:${got.length / all.length * 100}%"></i></span>단원의 1~5단계를 모두 별 3개로 통과하면(조각 5개) 그 단원의 마스터 배지를 받아요.</span></div>
       ${next ? `<button type="button" class="bd-next" data-bkey="${next.key}">${medalSVG(next.gs, next.u)}<span>다음 목표 · <b>${short(next.name)}</b><br>${where(next)} — ${next.pcs ? `조각 ${next.pcs}/${NSTG}, 앞으로 ${NSTG - next.pcs}단계만 별 3개로 통과하면 돼요!` : '1단계부터 별 3개에 도전해 보세요!'}</span></button>` : ''}
       <h3 class="bd-sec">배지 모으기 보상</h3><div class="bd-ms">${MILESTONES.map(m => { const done = got.length >= m.n, w = m.item && WEAR_BY(m.item);
