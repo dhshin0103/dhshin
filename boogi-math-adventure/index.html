@@ -924,7 +924,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     <div class="set-row"><div class="set-lb"><b>효과음</b></div><div class="seg" id="segSound" role="radiogroup" aria-label="효과음"></div></div>
     <div class="set-row"><div class="set-lb"><b>소리 크기</b></div><input type="range" id="volRange" min="0" max="100" step="5" value="80" aria-label="소리 크기" class="vol"></div>
     <h3 class="set-sec">이야기</h3>
-    <div class="set-row"><div class="set-lb"><b>매스 아일랜드 이야기</b><small>멈춰 버린 시계탑 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
+    <div class="set-row"><div class="set-lb"><b>매쓰 아일랜드 이야기</b><small>멈춰 버린 시계탑 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
     <p class="note" id="setNote"></p>
   </div>
 </div>
@@ -979,7 +979,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="storyfs" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
-  <div class="sf-top"><span class="sf-tag">매스 아일랜드 이야기</span><span class="sf-dots" id="storyStep"></span></div>
+  <div class="sf-top"><span class="sf-tag">매쓰 아일랜드 이야기</span><span class="sf-dots" id="storyStep"></span></div>
   <div class="sf-art" id="storyArt"></div>
   <div class="sf-box">
     <h2 id="storyTitle"></h2>
@@ -1737,8 +1737,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   // 배경(하늘·언덕·땅·풀)과 날리는 장식만 바뀌어요. 코인·블록·헷갈이·문은 그대로라 헷갈리지 않아요
   const SEASONS = [
     { name: '봄', ic: '🌸', sky: ['#ffc9de', '#fff3f7'], hill: '#c9ecb4', mark: '#ff9dbf', dirt: '#c9955f', spot: '#b5824e', grass: '#8fd96a', line: '#5fbf45', fx: 'petal' },
-    { name: '여름(화창)', ic: '☀️', sky: ['#3fa9f5', '#c9f0ff'], hill: '#8fd9a8', mark: '#5bb8f5', dirt: '#c58a55', spot: '#ad7443', grass: '#2fa858', line: '#1f8a45', fx: 'sun', acc: 'sun' },
-    { name: '여름(비)', ic: '🌧️', sky: ['#7f97b5', '#d3deea'], hill: '#8fbfa3', mark: '#8a9db5', cloud: '#c3cedb', dirt: '#a97a52', spot: '#8f6440', grass: '#3f9a63', line: '#2c7d4d', fx: 'rain', acc: 'umb' },
+    { name: '여름(화창)', ic: '☀️', sky: ['#3fa9f5', '#c9f0ff'], hill: '#8fd9a8', mark: '#5bb8f5', dirt: '#c58a55', spot: '#ad7443', grass: '#2fa858', line: '#1f8a45', fx: 'sun' },
+    { name: '여름(비)', ic: '🌧️', sky: ['#7f97b5', '#d3deea'], hill: '#8fbfa3', mark: '#8a9db5', cloud: '#c3cedb', dirt: '#a97a52', spot: '#8f6440', grass: '#3f9a63', line: '#2c7d4d', fx: 'rain' },
     { name: '가을', ic: '🍁', sky: ['#ffb36b', '#fff0d6'], hill: '#f3c98a', mark: '#f09a4a', dirt: '#b97a4a', spot: '#a0663a', grass: '#d9a441', line: '#b8822a', fx: 'leaf' },
     { name: '겨울', ic: '❄️', sky: ['#9fb8d6', '#eef4fb'], hill: '#dfe9f5', mark: '#a9bfda', dirt: '#b9a48f', spot: '#a38e79', grass: '#f6fbff', line: '#c9dcee', fx: 'snow', acc: 'scarf' }
   ];
@@ -2012,7 +2012,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const stageHero = i => { const G = GUARD[i] || GUARD[0]; return { name: G.name, art: G.art, bg: G.bg, foot: FOOT[G.art] || '#8a5a33' }; };
   const curHero = () => stageHero(pick ? pick.i : 0);
   const heroImg = {};
-  // 계절 소품: 2단계 선글라스, 3단계 우산, 5단계 목도리. 캐릭터 그림 좌표(0~100) 기준 [눈 가운데 x, y, 두 눈 사이], [목 x, y, 폭]
+  // 계절 소품: 5단계(겨울)에만 목도리. 캐릭터 그림 좌표(0~100) 기준 [눈 가운데 x, y, 두 눈 사이], [목 x, y, 폭]
   const EYE_AT = { 1: [50, 45, 14], 2: [50, 50, 10], 3: [50, 32, 14], 4: [48, 43, 16], 5: [48, 42, 14], 6: [50, 45, 13], 7: [50, 45, 13] };
   const NECK_AT = { 1: [48, 63, 40], 2: [50, 63, 32], 3: [50, 49, 24], 4: [48, 60, 32], 5: [47, 60, 30], 6: [51, 60, 30], 7: [50, 62, 36] };
   const GAME_VB = [-24, -44, 148, 148];
@@ -2314,7 +2314,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
   resetAll();
   requestAnimationFrame(frame);
-  // ---------- 매스 아일랜드: 단원별 탐험 일지 ----------
+  // ---------- 매쓰 아일랜드: 단원별 탐험 일지 ----------
   // 단원 하나 = 미지의 섬. 7명의 수호자 연구소(관문)를 차례로 통과하며 열쇠를 모으고, 보물지도(단원평가)에서 보물 상자를 열어요.
   const UNITS = {
     1: ['9까지의 수', '여러 가지 모양', '덧셈', '뺄셈', '50까지의 수', '100까지의 수', '덧셈(받아올림)', '뺄셈(받아내림)', '시각', '규칙 찾기'],
@@ -3155,7 +3155,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   claimMilestones();
   const qCount = () => Math.max(3, Math.min(20, +M.set.qn || 5));
   // 레벨: 푼 문제 수로 올라가요. Lv.1→2는 10문제, 그다음부터 5문제씩 더 필요해요
-  const TITLES = [[1, '새싹 탐험가'], [3, '꼬마 탐험가'], [5, '숲속 탐험가'], [8, '용감한 탐험가'], [12, '시계탑 수리공'], [16, '매스 아일랜드 영웅'], [20, '전설의 탐험가']];
+  const TITLES = [[1, '새싹 탐험가'], [3, '꼬마 탐험가'], [5, '숲속 탐험가'], [8, '용감한 탐험가'], [12, '시계탑 수리공'], [16, '매쓰 아일랜드 영웅'], [20, '전설의 탐험가']];
   function levelInfo(n) { let L = 1, acc = 0, need = 10; while (n >= acc + need) { acc += need; L++; need = 10 + 5 * (L - 1); } const t = TITLES.filter(([l]) => l <= L).pop()[1]; return { L, into: n - acc, need, title: t }; }
   // 난이도·게임 속도
   const DIFF = { easy: { label: '쉬움', hearts: 5, foe: 0.7, erase: true, desc: '틀린 보기 1개를 미리 지워 줘요 · 하트 5개 · 헷갈이가 느리게 움직여요' },
@@ -3884,7 +3884,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   });
   window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('cine').hidden && !$('cine').classList.contains('s4')) { cineTimers.forEach(clearTimeout); cineTimers = []; cineScene(4); } });
   const STORY = [
-    ['평화로운 동물 섬, 매스 아일랜드', '매스 아일랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
+    ['평화로운 동물 섬, 매쓰 아일랜드', '매쓰 아일랜드에는 세상의 모든 규칙과 균형, 그리고 시각을 지켜 주는 거대한 숫자 시계탑이 있었어요.'],
     ['시계가 멈춰 버렸어요!', '어느 날 갑작스러운 오류로 시계탑의 심장인 시계판이 다섯 조각으로 깨져 흩어졌어요. 시계가 멈추자 마을의 숫자와 질서가 뒤죽박죽이 되어 버렸어요.'],
     ['수학 탐험가의 모험', '지도 한 장을 들고 시계탑의 층마다 친구들을 차례로 만나요. 5개 단계를 별 3개로 통과할 때마다 시계 퍼즐 조각을 되찾고, 다섯 조각을 모두 맞추면 시계가 다시 움직여요!']
   ];
@@ -3941,7 +3941,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   });
   $('tReset').addEventListener('click', () => { M = defaultsM(); openHome(); });
 
-  // 메인 화면의 매스 아일랜드 지도 (선택한 단원의 진행 상황이 집마다 표시됨)
+  // 메인 화면의 매쓰 아일랜드 지도 (선택한 단원의 진행 상황이 집마다 표시됨)
   // 집 5채 = 선택한 학기의 단원 5개. 단원의 나침반 5조각을 모두 모으면 그 집에 불이 켜져요
   const ROOFS = ['#e5484d', '#4f8de0', '#30a46c', '#b67cf2', '#f59e2b'];
   // 메인 화면 꾸미기: 떠다니는 구름 하늘, 내 프로필, 코인 아이콘
@@ -4179,7 +4179,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const mtn = (x, w, h, c, d, snow) => `<path d="M${x - w} 208 L${x} ${208 - h} L${x + w} 208 Z" fill="${c}"/><path d="M${x} ${208 - h} L${x + w} 208 H${x + w * 0.15} Z" fill="${d}"/>${snow ? `<path d="M${x} ${208 - h} l${-w * 0.3} ${h * 0.3} l${w * 0.14} ${-h * 0.06} l${w * 0.12} ${h * 0.1} l${w * 0.12} ${-h * 0.1} l${w * 0.16} ${h * 0.08} l${w * 0.06} ${-h * 0.02} Z" fill="#fff"/>` : ''}`;
     const rose = Array.from({ length: 8 }, (_, k) => { const a = k * 45, L = k % 2 ? 22 : 36; return `<g transform="rotate(${a})"><path d="M0 ${-L} L${k % 2 ? 5 : 7} 0 L0 0 Z" fill="${k === 0 ? '#e5484d' : k % 2 ? '#c9a23a' : '#2b3a55'}"/><path d="M0 ${-L} L${k % 2 ? -5 : -7} 0 L0 0 Z" fill="${k === 0 ? '#b8302f' : k % 2 ? '#f2c94c' : '#56658a'}"/></g>`; }).join('');
     const cticks = Array.from({ length: 24 }, (_, k) => `<path d="M0 -44 v${k % 6 ? 4 : 0}" stroke="#8a6a1f" stroke-width="1.500" transform="rotate(${k * 15})"/>`).join('');
-    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 아일랜드 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
+    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매쓰 아일랜드 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
       <defs><radialGradient id="vgGlow"><stop offset="0" stop-color="#fff6a8" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient>
         <radialGradient id="vgSea" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="#7fdcf2"/><stop offset=".55" stop-color="#4fb9ea"/><stop offset="1" stop-color="#2f8fd6"/></radialGradient>
         <linearGradient id="vgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9de86"/><stop offset="1" stop-color="#86c96a"/></linearGradient>
@@ -4261,7 +4261,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <rect x="${tx - 62}" y="${ty + 38}" width="124" height="30" rx="15" fill="#2b3a55"/><text x="${tx}" y="${ty + 59}" text-anchor="middle" font-family="Jua" font-size="17" fill="#fff">숫자 시계탑 ${n}/5</text>
     </g>`;
     const waves = [[60, 90], [900, 80], [70, 560], [930, 560], [520, 40], [960, 260]].map(([x, y]) => `<path d="M${x - 18} ${y} q9 -8 18 0 t18 0" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/>`).join('');
-    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매스 아일랜드 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
+    return `<svg viewBox="0 0 1000 600" role="img" aria-label="매쓰 아일랜드 지도. ${gsLabel(gs)} 단원 집 5채 중 ${n}채에 불이 켜졌어요">
       <defs><radialGradient id="vgGlow"><stop offset="0" stop-color="#fff6a8" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient><filter id="vgGray"><feColorMatrix type="matrix" values="0.25 0.25 0.25 0 0.05  0.25 0.25 0.25 0 0.05  0.25 0.25 0.25 0 0.05  0 0 0 1 0"/></filter>
         <linearGradient id="vgSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd0f5"/><stop offset="1" stop-color="#4fb3e8"/></linearGradient></defs>
       <rect x="2" y="2" width="996" height="596" rx="34" fill="url(#vgSea)" stroke="#2b3a55" stroke-width="4"/>
