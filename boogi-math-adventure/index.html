@@ -50,6 +50,22 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; }
 }
 .pad button.jump { background: var(--sky); color: #fff; min-width: 140px; }
 .pad button:active, .pad button.on { transform: translateY(3px); box-shadow: 0 1px 0 var(--deep); }
+/* 가상 키보드: 숫자 1~4 는 문제가 열렸을 때만 눌러요. 문제 창 위로 떠올라요 */
+.pad .nums { display: flex; gap: 12px; }
+.pad button.num { min-width: 64px; padding: 0; background: #fff5d6; }
+.pad button.jump { display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+.pad button.jump small { font-size: .8rem; margin-top: 2px; }
+body:not(.q-on) .pad button.num { opacity: .4; }
+body.pad-on .pad { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 21; max-width: 1040px; margin: 0 auto; }
+body.pad-on .wrap { padding-bottom: 96px; }
+/* 게임 화면 위에 반투명으로 겹쳐요 (누르는 동안은 진하게) */
+body.pad-on .pad button { opacity: .3; min-width: 44px; width: auto; min-height: 44px; padding: 0 12px; font-size: 1.05rem; border-width: 2px; border-radius: 12px; box-shadow: 0 2px 0 var(--deep); }
+body.pad-on .pad .nums, body.pad-on .pad .dir { gap: 8px; }
+body.pad-on .pad button.jump small { font-size: .6rem; margin-top: 0; }
+.keyshow { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); background: rgba(0, 58, 92, .85); color: #fff; font-family: var(--display); font-size: 1rem; padding: 4px 14px; border-radius: 999px; white-space: nowrap; pointer-events: none; }
+.pad { position: relative; }
+body.pad-on .pad button.on, body.pad-on .pad button:active, body.q-on .pad button.num { opacity: .9; }
+body.q-on #qModal { padding-bottom: 100px; }
 .help { margin: 0; color: var(--muted); font-size: 0.9rem; }
 kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 1px 6px; background: var(--card); color: var(--ink); }
 
@@ -150,6 +166,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .jnode:focus { outline: none; }
 .jnode:focus-visible .ring { stroke: #ffc53d; stroke-width: 8; }
 .cards-title { margin: 6px 0 0; font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--deep); }
+.head-r { display: flex; align-items: center; gap: 8px; }
 .shop-card { width: min(640px, 100%); }
 .shop-card .tagrow h2 { margin: 0; }
 .shop-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -379,7 +396,7 @@ body.story-on { overflow: hidden; }
 .home-start:disabled { background: #dfe4ea; color: #6b7684; cursor: not-allowed; }
 .home-sub { display: flex; gap: 10px; }
 .home-sub .btn { flex: 1; min-height: 48px; font-size: 1.1rem; }
-.homeback { font-size: .95rem; padding: 4px 12px; }
+.homeback { font-size: 1.15rem; padding: 8px 20px; background: var(--deep); color: #fff; box-shadow: 0 3px 0 rgba(0, 0, 0, .35); }
 @media (max-width: 860px) { .homefs { overflow-y: auto; grid-template-rows: auto auto auto; } .homefs { grid-template-rows: none; grid-auto-rows: auto; grid-template-columns: minmax(0, 1fr); align-content: start; } .home-box { min-width: 0; } .home-mid, .home-body { display: contents; } .homefs .sf-top { order: 0; } .home-title { order: 1; } .home-map { order: 2; flex: none; } .home-box { order: 3; } .home-map svg { width: 100%; height: auto; max-height: none; } .home-chap .chap-units { display: flex; flex-direction: row; overflow-x: auto; padding-bottom: 4px; } .home-chap .chap-u { flex: 0 0 132px; } .cb-pct { flex-basis: 100%; } }
 @media (max-width: 520px) { .home-acts { grid-template-columns: 1.6fr 1fr; } }
 @media (max-width: 640px) { .home-mid { flex-direction: column; gap: 10px; } .home-row { flex-direction: column; align-items: stretch; } .home-row .selrow { display: grid; grid-template-columns: 1fr; } .home-row .sel select { width: 100%; } }
@@ -415,6 +432,7 @@ body.story-on { overflow: hidden; }
 .stamp .t.ph { visibility: hidden; }
 .set-card { width: min(520px, 100%); gap: 14px; }
 .set-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.set-row select { font: inherit; padding: 6px 10px; border: 2px solid var(--deep); border-radius: 10px; background: #fff; }
 .set-lb { display: flex; flex-direction: column; gap: 2px; }
 .set-lb b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; color: var(--deep); }
 .set-lb small { color: var(--muted); font-size: .82rem; }
@@ -844,8 +862,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 @media (max-width: 520px) {
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .choices { grid-template-columns: minmax(0, 1fr); }
-  .pad button { min-width: 72px; min-height: 60px; padding: 0 10px; font-size: 1.1rem; white-space: nowrap; }
-  .pad button.jump { min-width: 110px; }
+  .pad { gap: 6px; }
+  .pad .nums, .pad .dir { gap: 6px; }
+  .pad button, .pad button.num { min-width: 0; width: 44px; min-height: 56px; padding: 0; font-size: 1.2rem; white-space: nowrap; }
+  .pad button.jump { min-width: 0; width: 56px; }
 }
 @media (prefers-reduced-motion: reduce) { .btn:active, .pad button:active { transform: none; } }
 </style>
@@ -854,19 +874,26 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="top">
     <h1>스쿨플랫 - 매쓰 런</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
-    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><div class="itembar" id="itemBar" role="group" aria-label="내 아이템 바로 쓰기"></div><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
+    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><div class="itembar" id="itemBar" role="group" aria-label="내 아이템 바로 쓰기"></div><button type="button" class="ctlbtn" id="soundBtn">🔊 소리 켬</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
   <div class="stage" id="stage">
     <canvas id="game" width="960" height="540" aria-label="부기가 달리는 수학 모험 게임 화면"></canvas>
     <div class="toast" id="toast" hidden></div>
     <button type="button" class="skip" id="skipBtn" hidden>건너뛰기</button>
   </div>
-  <div class="pad" aria-label="조작 버튼">
-    <div class="dir">
-      <button type="button" id="btnLeft" aria-label="왼쪽으로 이동">← 왼쪽</button>
-      <button type="button" id="btnRight" aria-label="오른쪽으로 이동">오른쪽 →</button>
+  <div class="pad" aria-label="가상 키보드">
+    <div class="keyshow" id="keyShow" aria-live="polite" hidden></div>
+    <div class="nums" aria-label="문제 보기 고르기">
+      <button type="button" class="num" data-n="1">1</button>
+      <button type="button" class="num" data-n="2">2</button>
+      <button type="button" class="num" data-n="3">3</button>
+      <button type="button" class="num" data-n="4">4</button>
     </div>
-    <button type="button" class="jump" id="btnJump">점프</button>
+    <div class="dir">
+      <button type="button" id="btnLeft" aria-label="왼쪽으로 이동">←</button>
+      <button type="button" class="jump" id="btnJump" aria-label="점프">↑<small>점프</small></button>
+      <button type="button" id="btnRight" aria-label="오른쪽으로 이동">→</button>
+    </div>
   </div>
   <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동 · <kbd>스페이스</kbd> 점프(두 번 누르면 이단 점프) · <kbd>1</kbd>~<kbd>4</kbd> 아이템</p>
 </div>
@@ -925,6 +952,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="card set-card">
     <div class="tagrow"><h2 id="setTitle" class="sum-h"><span aria-hidden="true">⚙️</span> 설정</h2><button type="button" class="xbtn" id="setClose">닫기 ✕</button></div>
     <h3 class="set-sec">학습</h3>
+    <div class="set-row"><div class="set-lb"><b>우리 학교 교과서</b></div><select id="setBook" aria-label="우리 학교 교과서"></select></div>
     <p class="note">스쿨플랫 22개정 초등 수학 교과서 기준이에요. 1·2학년은 국정 교과서예요.</p>
     <div class="set-row">
       <div class="set-lb"><b>한 판 문항 수</b></div>
@@ -950,7 +978,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="card map-card">
     <div class="map-head">
       <h2 id="mapTitle"></h2>
-      <p id="mapDesc"></p>
+      <div class="head-r"><p id="mapDesc"></p></div>
     </div>
     <div class="news" id="news"></div>
     <div id="homeBody"></div>
@@ -1260,7 +1288,13 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   BANK['3-1'] = [0, 2, 3, 5, 9].map(i => ALL_QUESTIONS[i]);
   // 지금 고른 맵의 5문제 (맵을 고르면 바뀌어요)
   let QUESTIONS = BANK['3-1'];
-  let TOTAL = QUESTIONS.length;
+  let TOTAL = QUESTIONS.length, COIN_GOAL = 0;
+  // 미션 난이도: 게임 난이도(설정)에 따라 코인 목표·대왕 헷갈이 체력이 달라져요
+  const MIS = { easy: { coin: 0.5, boss: 2 }, normal: { coin: 0.7, boss: 3 }, hard: { coin: 0.85, boss: 4 } };
+  // 첫 resetAll() 은 M 선언 전에 불려서 try 로 감싸요
+  function dif() { try { return MIS[M.set.diff] || MIS.normal; } catch (_) { return { coin: 0.7, boss: 3 }; } }
+  const BOOKS = ['YBM', '동아', '디딤돌', '미래엔', '비상', '아이스크림', '지학사', '천재(박)', '천재(한)']; // 스쿨플랫 22개정 초등 수학 교과서(3~6학년)
+  const bookLabel = gs => +gs[0] <= 2 ? '국정' : (M.set.book || '선택 안 함');
 
   const esc = s => s.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
   const fmt = s => esc(s).replace(/\[(\d+)\/(\d+)\]/g, '<span class="fr" aria-label="$2분의 $1"><span>$1</span><span>$2</span></span>');
@@ -1343,6 +1377,20 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     GATE_X.slice(1).map((x, i) => [x, GATE_X[i + 2] || FLAG_X]).forEach(([a, b]) => {
       enemies.push({ x: a + 180, y: GROUND - 34, w: 44, h: 34, vx: -70, min: a + 120, max: b - 120, alive: true, squash: 0 });
     });
+    // 첫 resetAll() 은 pick 선언 전에 불려서 try 로 감싸요
+    let si = -1; try { si = pick.i; } catch (_) {}
+    // 3단계 미션: 앞쪽 두 구간에도 헷갈이를 더 놓아요
+    if (si === 2) [[140, GATE_X[0]], [GATE_X[0] + 60, GATE_X[1] || FLAG_X - 320]].forEach(([a, b]) => {
+      enemies.push({ x: a + 160, y: GROUND - 34, w: 44, h: 34, vx: -70, min: a + 100, max: b - 100, alive: true, squash: 0 });
+    });
+    // 5단계 미션: 깃발 앞 대왕 헷갈이 (위에서 3번 밟아야 물리쳐요)
+    if (si === 4) {
+      const pe = GROUND_SEGS.length > 1 ? GROUND_SEGS[1][0] : 0;
+      const min = Math.max(GATE_X[GATE_X.length - 1] + 100, pe + 20), max = onGroundAt(FLAG_X - 300) ? FLAG_X - 320 : FLAG_X - 40;
+      enemies.push({ type: 'boss', x: max - 88, y: GROUND - 68, w: 88, h: 68, vx: -80, min, max, alive: true, squash: 0, hp: dif().boss, hit: 0 });
+    }
+    // 4단계 미션: 길에 놓인 코인의 70%를 목표로 (5개 단위)
+    COIN_GOAL = Math.max(5, Math.floor(coins.length * dif().coin / 5) * 5);
     try { const f = diffCfg().foe; enemies.forEach(e => { e.vx *= f; }); } catch (_) {}
   }
 
@@ -1397,6 +1445,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
   // ---------- 입력 ----------
   const keyMap = { ArrowLeft: 'left', a: 'left', A: 'left', ArrowRight: 'right', d: 'right', D: 'right', ' ': 'jump', ArrowUp: 'jump', w: 'jump', W: 'jump' };
+  // 누른 키를 키보드 위에 잠깐 보여줘요 (화면 버튼·실제 키보드 모두)
+  const KEY_LABEL = { left: '← 왼쪽', right: '→ 오른쪽', jump: '↑ 점프' }, KEY_BTN = { left: 'btnLeft', right: 'btnRight', jump: 'btnJump' };
+  let keyShowT = 0;
+  function showKey(label) { const k = $('keyShow'); k.textContent = '누른 키: ' + label; k.hidden = false; clearTimeout(keyShowT); keyShowT = setTimeout(() => { k.hidden = true; }, 800); }
+  window.addEventListener('keydown', e => {
+    if (state === 'question' && /^[1-4]$/.test(e.key)) showKey(e.key + '번');
+    if (state === 'play' && keyMap[e.key]) { showKey(KEY_LABEL[keyMap[e.key]]); $(KEY_BTN[keyMap[e.key]]).classList.add('on'); }
+  });
+  window.addEventListener('keyup', e => { if (keyMap[e.key]) $(KEY_BTN[keyMap[e.key]]).classList.remove('on'); });
   window.addEventListener('keydown', e => {
     if (state === 'question' && !$('calcPad').hidden) {
       const m = { '*': '×', '/': '÷', Enter: '=', Backspace: '⌫', Escape: 'C', x: '×' }[e.key] || e.key;
@@ -1421,7 +1478,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   window.addEventListener('keyup', e => { const k = keyMap[e.key]; if (k) { keys[k] = false; if (k === 'jump') keys.jumpHeld = false; } });
   function bindPad(id, k) {
     const el = $(id);
-    const down = e => { e.preventDefault(); keys[k] = true; el.classList.add('on'); try { el.setPointerCapture(e.pointerId); } catch (_) {} };
+    const down = e => { e.preventDefault(); keys[k] = true; el.classList.add('on'); showKey(KEY_LABEL[k]); try { el.setPointerCapture(e.pointerId); } catch (_) {} };
     const up = () => { keys[k] = false; if (k === 'jump') keys.jumpHeld = false; el.classList.remove('on'); };
     el.addEventListener('pointerdown', down);
     el.addEventListener('pointerup', up);
@@ -1432,6 +1489,13 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   bindPad('btnLeft', 'left');
   bindPad('btnRight', 'right');
   bindPad('btnJump', 'jump');
+  // 가상 키보드 숫자 1~4: 키보드 숫자 키처럼 문제 보기를 골라요
+  document.querySelectorAll('.pad .num').forEach(b => b.addEventListener('click', () => {
+    if (state !== 'question') return;
+    showKey(b.dataset.n + '번');
+    const btn = $('qChoices').querySelectorAll('button')[Number(b.dataset.n) - 1];
+    if (btn && !btn.disabled) btn.click();
+  }));
 
   // ---------- 모달 ----------
   function showModal(id) { document.body.classList.toggle('story-on', id === 'storyModal' || id === 'homeModal' || id === 'wsModal' || (id === 'shopModal' && shopReturn === 'homeModal')); ['homeModal', 'wsModal', 'storyModal', 'compassModal', 'quizModal', 'mapModal', 'startModal', 'shopModal', 'qModal', 'overModal', 'doneModal'].forEach(m => { $(m).hidden = m !== id; }); }
@@ -1603,9 +1667,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('statTime').textContent = fmtTime(stats.time);
     $('reviewBox').hidden = true;
     $('taBox').hidden = false;
-    const chk = pick.i === 3
-      ? [[`${TOTAL}문제 중 ${R.first}문제를 한 번에 맞힘`, true], [`${TOTAL - 1}문제 이상 한 번에 맞히면 별 3개`, R.stars === 3], ['별 3개면 시계 퍼즐 조각', R.stars === 3]]
-      : [['깃발까지 완주', R.s1], ['문제를 한 번에 모두 맞히기', R.s2], ['하트 지키기 (한 번도 다치지 않기)', R.s3]];
+    const chk = R.checks;
     const pmsg = R.newPiece ? `<p class="piece-msg">시계 퍼즐 조각 ${pick.i + 1}번을 얻었어요! (${pieceCount(pick.key)}/${NSTG})${M.justCompass ? ' 시계 퍼즐 완성! 시계탑이 다시 움직여요.' : ''}</p>`
       : R.best < 3 ? `<p class="piece-msg no">별 3개로 통과하면 이 단계의 시계 퍼즐 조각을 얻어요. (지금 최고 별 ${R.best}개)</p>` : '';
     const omsg = R.opened.length ? `<p class="piece-msg">${R.opened.map(k => GUARD[k].place).join('·')}가 열렸어요!</p>` : '';
@@ -1726,11 +1788,24 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       if (e.x + e.w > e.max) { e.x = e.max - e.w; e.vx *= -1; }
       if (e.type === 'fly') { e.t += dt; e.y = e.by + Math.sin(e.t * 2.2) * 46; }
       else for (const q of solids) if (q.y + q.h >= GROUND - 1 && e.x + e.w > q.x && e.x < q.x + q.w) { e.x = e.vx > 0 ? q.x - e.w : q.x + q.w; e.vx *= -1; }
+      if (e.hit > 0) e.hit -= dt;
       const gs = stats.star > 0 ? heroScale() : 1, gw = gs > 1 ? 40 * gs : p.w, gh = gs > 1 ? 48 * gs : p.h, gx = p.x + p.w / 2 - gw / 2, gy = p.y + p.h - gh;
-      if (gs > 1 && gx + gw > e.x && gx < e.x + e.w && gy + gh > e.y && gy < e.y + e.h) { e.alive = false; addCoins(2); showToast('쿵! 거인으로 물리침 +2'); tone([196, 392], 0.06, 'square', 0.07); continue; }
+      if (gs > 1 && e.type !== 'boss' && gx + gw > e.x && gx < e.x + e.w && gy + gh > e.y && gy < e.y + e.h) { e.alive = false; addCoins(2); showToast('쿵! 거인으로 물리침 +2'); tone([196, 392], 0.06, 'square', 0.07); continue; }
       if (p.x + p.w > e.x + 4 && p.x < e.x + e.w - 4 && p.y + p.h > e.y && p.y < e.y + e.h) {
-        if (stats.star > 0) { e.alive = false; addCoins(2); showToast('반짝 별로 물리침 +2'); tone([1047, 1568], 0.05); }
-        else if (p.vy > 0 && prevBottom <= e.y + 14) { e.alive = false; p.vy = -520; addCoins(2); showToast('헷갈이 물리침 +2'); tone([330, 660], 0.06); }
+        const stomp = p.vy > 0 && prevBottom <= e.y + 14;
+        if (e.type === 'boss') {
+          // 밟으면 항상 튕겨 올라요(몸속으로 빠지지 않게). 맞은 직후 0.6초는 다시 맞지도, 다치게 하지도 않아요
+          if (stomp) p.vy = -620;
+          if (e.hit > 0) {}
+          else if (stats.star > 0 || stomp) {
+            e.hp--; e.hit = 0.6;
+            if (e.hp > 0) { showToast(`대왕 헷갈이! ${e.hp}번 더 밟아요`); tone([220, 330], 0.08); }
+            else { e.alive = false; addCoins(10); showToast('대왕 헷갈이 물리침 +10'); tone([523, 659, 784, 1047], 0.08); }
+          }
+          else if (state === 'play') hurt(p.x + p.w / 2 < e.x + e.w / 2 ? -1 : 1);
+        }
+        else if (stats.star > 0) { e.alive = false; addCoins(2); showToast('반짝 별로 물리침 +2'); tone([1047, 1568], 0.05); }
+        else if (stomp) { e.alive = false; p.vy = -520; addCoins(2); showToast('헷갈이 물리침 +2'); tone([330, 660], 0.06); }
         else if (state === 'play') hurt(p.x + p.w / 2 < e.x + e.w / 2 ? -1 : 1);
       }
     }
@@ -1960,8 +2035,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     for (const e of enemies) {
       if (!e.alive && e.squash > 0.5) continue;
       const x = e.x - camX; if (x + e.w < -10 || x > W + 10) continue;
+      // 대왕 헷갈이: 보통 헷갈이를 2배로 키워 그려요
+      const boss = e.type === 'boss', ew = boss ? e.w / 2 : e.w, eh = boss ? e.h / 2 : e.h, bot = e.y + e.h;
+      if (boss) { ctx.save(); ctx.translate(x, bot); ctx.scale(2, 2); ctx.translate(-x, -bot); }
       const sq = e.alive ? 1 : Math.max(0.15, 1 - e.squash * 2);
-      const hgt = e.h * sq, y = e.y + e.h - hgt;
+      const hgt = eh * sq, y = bot - hgt;
       const wob = e.alive ? Math.sin(t * 8 + e.x) * 2 : 0;
       if (e.type === 'fly' && e.alive) {
         const fl = Math.sin(t * 22) * 8;
@@ -1969,13 +2047,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         ctx.beginPath(); ctx.ellipse(x + 4, y + 6 - fl / 2, 14, 7 + fl / 3, -0.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
         ctx.beginPath(); ctx.ellipse(x + e.w - 4, y + 6 - fl / 2, 14, 7 + fl / 3, 0.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       }
-      ctx.fillStyle = e.type === 'fly' ? '#e0609a' : '#8e6bd8'; rr(x, y + wob, e.w, hgt - wob, 16); ctx.fill();
+      ctx.fillStyle = boss ? (e.hit > 0 && Math.floor(t * 20) % 2 ? '#fff' : '#d6455d') : e.type === 'fly' ? '#e0609a' : '#8e6bd8'; rr(x, y + wob, ew, hgt - wob, 16); ctx.fill();
+      if (boss && e.alive) { ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.moveTo(x + 10, y + wob); ctx.lineTo(x + 12, y + wob - 12); ctx.lineTo(x + 18, y + wob - 5); ctx.lineTo(x + 22, y + wob - 14); ctx.lineTo(x + 26, y + wob - 5); ctx.lineTo(x + 32, y + wob - 12); ctx.lineTo(x + 34, y + wob); ctx.closePath(); ctx.fill(); }
       if (e.alive) {
         const dir = e.vx < 0 ? -1 : 1;
         ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x + 14 + dir * 3, y + 14, 6, 0, Math.PI * 2); ctx.arc(x + 30 + dir * 3, y + 14, 6, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = '#1c2024'; ctx.beginPath(); ctx.arc(x + 15 + dir * 5, y + 15, 3, 0, Math.PI * 2); ctx.arc(x + 31 + dir * 5, y + 15, 3, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#fff'; ctx.font = '14px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', x + e.w / 2, y + 30);
+        ctx.fillStyle = '#fff'; ctx.font = '14px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', x + ew / 2, y + 30);
       }
+      if (boss) ctx.restore();
     }
   }
 
@@ -2271,6 +2351,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       ctx.fillStyle = '#fff'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('⏱ 타임어택 ' + fmtTime(Math.ceil(L)), W / 2, 97);
     }
+    const ms = timeAtk ? null : missionHUD();
+    if (ms) {
+      ctx.fillStyle = ms[1]; rr(W / 2 - 120, 68, 240, 38, 19); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '22px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(ms[0], W / 2, 95);
+    }
     if (runMode === 'ta') {
       ctx.fillStyle = '#e5484d'; rr(W / 2 - 86, 68, 172, 38, 19); ctx.fill();
       ctx.fillStyle = '#fff'; ctx.font = '24px Jua, sans-serif'; ctx.textAlign = 'center';
@@ -2296,6 +2381,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   });
 
   function frame(now) {
+    document.body.classList.toggle('q-on', state === 'question' && !$('qModal').hidden);
+    document.body.classList.toggle('pad-on', state === 'play' || document.body.classList.contains('q-on'));
     $('ctl').hidden = !(state === 'play' || state === 'question' || state === 'over' || state === 'ending' || state === 'done');
     $('reopenResult').hidden = state !== 'done' || !$('doneModal').hidden;
     const dt = Math.min(1 / 30, (now - last) / 1000);
@@ -3105,6 +3192,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   if (M.items && M.items.calc == null) M.items.calc = 1;
   // 설정과 모험 기록
   M.set = Object.assign({ qn: 5, sound: true, diff: 'normal', speed: 'normal', vol: 80, learn: 'std' }, M.set || {});
+  if (M.set.vol > 0 && M.set.vol <= 1) M.set.vol = Math.round(M.set.vol * 100);
   M.profile = Object.assign({ art: 3 }, M.profile || {});
   M.log = Object.assign({ solved: 0, first: 0, sec: 0, days: [] }, M.log || {});
   // ---------- 배지: 문제를 많이 풀거나 출석을 많이 하면 받아요 (단원 완료와는 따로) ----------
@@ -3228,11 +3316,27 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     return null;
   }
   // 점수: 1·2·3·5단계 = 완주 · 한 번에 모두 정답 · 하트 지키기 / 4단계(단원 총괄) = 정답 수
+  // 단계별 미션: 별 3개 조건 [설명, 달성 여부] 3개 (stats.tc = 테스트 도구로 바로 클리어)
+  function missionChecks(i) {
+    const tc = !!stats.tc, allFirst = stats.retries === 0, noHit = stats.hits === 0;
+    const kills = enemies.filter(e => !e.alive).length, boss = enemies.find(e => e.type === 'boss');
+    if (i === 2) return [['깃발까지 완주', true], [`헷갈이 ${enemies.length}마리 모두 물리치기`, tc || kills === enemies.length], ['문제를 한 번에 모두 맞히기', allFirst]];
+    if (i === 3) return [['깃발까지 완주', true], [`${TOTAL}문제 중 ${TOTAL - 1}문제 이상 한 번에 맞히기`, stats.first >= TOTAL - 1], [`코인 ${COIN_GOAL}개 모으기`, tc || stats.coins >= COIN_GOAL]];
+    if (i === 4) return [['대왕 헷갈이 물리치기', tc || (!!boss && !boss.alive)], ['문제를 한 번에 모두 맞히기', allFirst], ['하트 지키기 (한 번도 다치지 않기)', noHit]];
+    return [['깃발까지 완주', true], ['문제를 한 번에 모두 맞히기', allFirst], ['하트 지키기 (한 번도 다치지 않기)', noHit]];
+  }
+  function missionHUD() {
+    const i = pick.i;
+    if (i === 2) { const k = enemies.filter(e => !e.alive).length; return ['헷갈이 ' + k + ' / ' + enemies.length, k === enemies.length ? '#30a46c' : '#8e6bd8']; }
+    if (i === 3) return ['코인 ' + Math.min(stats.coins, COIN_GOAL) + ' / ' + COIN_GOAL, stats.coins >= COIN_GOAL ? '#30a46c' : '#b07800'];
+    if (i === 4) { const b = enemies.find(e => e.type === 'boss'); return b && b.alive ? ['대왕 헷갈이 ' + '♥'.repeat(b.hp), '#d6455d'] : ['대왕 헷갈이 물리침!', '#30a46c']; }
+    return null;
+  }
   function scoreStage() {
     const key = pick.key, i = pick.i, P = prog(key);
     const before = GUARD.map((_, k) => unlocked(key, k));
-    const s1 = true, s2 = stats.retries === 0, s3 = stats.hits === 0;
-    const got = i === 3 ? (stats.first >= TOTAL - 1 ? 3 : stats.first >= Math.ceil(TOTAL * 0.7) ? 2 : 1) : (s1 ? 1 : 0) + (s2 ? 1 : 0) + (s3 ? 1 : 0);
+    const checks = missionChecks(i);
+    const got = checks.filter(c => c[1]).length;
     const wasCleared = P.cl[i], hadPiece = P.st[i] >= 3, piecesBefore = pieceCount(key);
     P.st[i] = Math.max(P.st[i], got);
     P.pct[i] = Math.max(P.pct[i], Math.round(stats.first / TOTAL * 100));
@@ -3240,7 +3344,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     if (i === 4 && got === 3) P.wrong = [];
     const opened = GUARD.map((_, k) => k).filter(k => !before[k] && unlocked(key, k));
     const newPiece = !hadPiece && P.st[i] >= 3;
-    M.last = { stars: got, best: P.st[i], s1, s2, s3, first: stats.first, opened: wasCleared ? [] : opened, newPiece };
+    M.last = { stars: got, best: P.st[i], checks, first: stats.first, opened: wasCleared ? [] : opened, newPiece };
     M.popPiece = newPiece ? i : null;
     M.justCompass = newPiece && piecesBefore === NSTG - 1;
     M.coins = (M.coins || 0) + stats.coins;
@@ -3702,18 +3806,21 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('startStage').textContent = `${gsLabel(pick.gs)} · ${unitName(pick.gs, pick.u)}`;
     $('startMode').textContent = `${i + 1}단계 ${G.step}`;
     $('taRule').hidden = true;
-    $('subline').textContent = `시계탑 ${floorOf(pick.gs)}층 › ${unitName(pick.gs, pick.u)} › ${i + 1}단계 ${G.step} · 문제 문 ${QUESTIONS.length}개`;
+    $('subline').textContent = `시계탑 ${floorOf(pick.gs)}층 › ${unitName(pick.gs, pick.u)} › ${i + 1}단계 ${G.step} · 문제 문 ${QUESTIONS.length}개 · ${bookLabel(pick.gs)} 교과서 · 난이도 ${diffCfg().label}`;
     resetAll();
+    $('starRule').innerHTML = `<b>별 3개 조건</b>: ${missionText(i)}. 별 3개를 모으면 퍼즐 조각 1개!`;
     useHeart = useShield = useCalc = false; renderUseItems();
     openVN(i);
   }
+  const missionText = i => missionChecks(i).map((c, k) => '①②③'[k] + ' ' + c[0]).join(' ');
   // ---------- 풀스크린 이야기 (터치해서 계속) ----------
   let vnLines = [], vnI = 0, vnStage = 0;
   function vnRule(i) {
-    const n = QUESTIONS.length;
-    if (i === 3) return `문제는 모두 ${n}개야. ${n - 1}개 이상 한 번에 맞히면 별 3개, 그러면 시계 퍼즐 조각을 줄게!`;
-    if (i === 4) return `쌍둥이 문제와 도전 문제까지 ${n}개! 별 3개로 통과하면 마지막 조각을 얻을 수 있어.`;
+    const n = QUESTIONS.length, c = missionText(i);
     if (i === 1) return `여긴 타임어택 공방이야! 문제 ${n}개를 ${fmtTime(taLimit())} 안에 풀고 깃발까지 와야 해. 시간이 다 되면 처음부터야. 별 3개 조건도 잊지 마!`;
+    if (i === 2) return `헷갈이들이 단서를 숨기고 도망 다녀! 위에서 밟아서 모두 물리치자. 별 3개 조건은 ${c}!`;
+    if (i === 3) return `문제는 모두 ${n}개야. 길에 떨어진 코인도 ${COIN_GOAL}개 모아 줘! 별 3개 조건은 ${c}!`;
+    if (i === 4) return `쌍둥이 문제와 도전 문제까지 ${n}개! 깃발 앞 대왕 헷갈이는 위에서 ${dif().boss}번 밟아야 해. 별 3개 조건은 ${c}!`;
     return '별 3개 조건은 세 가지야. ① 깃발까지 완주 ② 문제를 한 번에 모두 맞히기 ③ 하트 지키기! 별 3개면 시계 퍼즐 조각이야.';
   }
   function openVN(i) {
@@ -3978,7 +4085,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     pick = { gs: M.sel.gs, u: M.sel.u, key, i: 0 };
     const i = nextStage(); if (i === null) { M.news = { good: true, text: '이 방의 모든 관문을 마쳤어요.' }; render(); return; }
     pick.i = i; QUESTIONS = stageQuestions(key, i); TOTAL = QUESTIONS.length;
-    stats = { hearts: 3, coins: 0, first: TOTAL, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false };
+    stats = { hearts: 3, coins: 0, first: TOTAL, retries: 0, hits: 0, wrongUnits: [], time: 0, freeze: 0, shield: false, tc: true };
     scoreStage(); M.justBadge = '';
     if (M.justCompass) { M.justCompass = false; render(); playCine({ key, fromGame: false, lastI: i }); return; }
     render();
@@ -4593,7 +4700,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     seg('segDiff', Object.entries(DIFF).map(([k, v]) => [k, v.label]), M.set.diff);
     seg('segSpeed', Object.entries(GSPEED).map(([k, v]) => [k, v.label]), M.set.speed);
     seg('segSound', [['on', '켜기'], ['off', '끄기']], M.set.sound === false ? 'off' : 'on');
-    $('diffDesc').textContent = diffCfg().desc;
+    $('diffDesc').textContent = diffCfg().desc; drawSound();
     $('volRange').value = M.set.vol; $('volRange').disabled = M.set.sound === false;
     $('setNote').textContent = `다음 판부터 문제 문 ${n}개 · 학습 ${(LEARN[M.set.learn] || LEARN.std).label} · 게임 ${diffCfg().label} · 게임 속도 ${(GSPEED[M.set.speed] || GSPEED.normal).label}로 시작해요. 4단계(단원 총괄)는 ${n}문제 중 ${n - 1}개 이상 한 번에 맞히면 별 3개예요.`;
   }
@@ -4638,6 +4745,13 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   $('homeMap').addEventListener('click', e => { if (e.target.closest('[data-cmp]')) { cmpBack = 'home'; openCompass(); return; } const h = e.target.closest('[data-house]'); if (h) pickHouse(+h.dataset.house); });
   $('homeMap').addEventListener('keydown', e => { if (e.target.closest('[data-cmp]') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); cmpBack = 'home'; openCompass(); return; } const h = e.target.closest('[data-house]'); if (h && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickHouse(+h.dataset.house); } });
   $('homeShop').addEventListener('click', () => openShop('homeModal'));
+  // ---------- 설정 ----------
+  // 게임 중 소리 버튼 · 교과서 선택
+  function drawSound() { $('soundBtn').textContent = M.set.sound === false ? '🔇 소리 끔' : '🔊 소리 켬'; }
+  $('soundBtn').addEventListener('click', () => { M.set.sound = M.set.sound === false; saveM(); drawSound(); tone([660, 880], 0.08); });
+  drawSound();
+  $('setBook').innerHTML = '<option value="">선택 안 함</option>' + BOOKS.map(b => `<option${b === M.set.book ? ' selected' : ''}>${b}</option>`).join('');
+  $('setBook').addEventListener('change', e => { M.set.book = e.target.value; saveM(); });
   function openMap() {
     runCalc = false; timeAtk = false; surprise = null;
     state = 'start'; runMode = 'normal'; speedMode = clueMode = false;
@@ -4652,6 +4766,5 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   openHome();
 })();
 </script>
-
 
 </body></html>
