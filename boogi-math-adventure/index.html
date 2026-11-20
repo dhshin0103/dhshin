@@ -1,6 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 
-<title>스쿨플랫 - 매쓰 런</title>
+<title>플랫 런</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap">
@@ -872,7 +872,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="wrap">
   <div class="top">
-    <h1>스쿨플랫 - 매쓰 런</h1>
+    <h1>플랫 런</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
     <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><div class="itembar" id="itemBar" role="group" aria-label="내 아이템 바로 쓰기"></div><button type="button" class="ctlbtn" id="soundBtn">🔊 소리 켬</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
@@ -902,14 +902,14 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
   <div class="sf-top"><button type="button" class="profile" id="homeProfile" aria-label="내 정보 보기"></button><button type="button" class="att" id="homeAtt" aria-label="이번 주 출석 도장"></button><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
-    <h1 id="homeTitle" class="home-title" aria-label="스쿨플랫 - 매쓰 런"><b class="ht-brand"><svg class="sf-logo" viewBox="0 0 140 175" aria-hidden="true"><path d="M5 60 L48 42 L65 55 L135 73 V145 L5 170 Z" fill="#00abff"/><path d="M48 42 V3" stroke="#00abff" stroke-width="6"/><path d="M51 3 L85 17 L51 28 Z" fill="#00abff"/></svg>스쿨플랫</b><svg class="ht-logo" viewBox="0 0 470 132" aria-hidden="true"><defs><linearGradient id="htG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff27a"/><stop offset=".55" stop-color="#ffc53d"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient></defs>
+    <h1 id="homeTitle" class="home-title" aria-label="플랫 런"><svg class="ht-logo" viewBox="0 0 470 132" aria-hidden="true"><defs><linearGradient id="htG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff27a"/><stop offset=".55" stop-color="#ffc53d"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient></defs>
       <g class="ht-speed" stroke-linecap="round"><path d="M14 44 H86" stroke="#fff" stroke-width="10"/><path d="M40 70 H96" stroke="#bfe9ff" stroke-width="8"/><path d="M4 94 H78" stroke="#fff" stroke-width="7" opacity=".85"/></g>
       <g transform="translate(278 96) skewX(-10)" font-family="Jua, sans-serif" font-size="100" text-anchor="middle" stroke-linejoin="round">
-        <text y="7" fill="none" stroke="#002a44" stroke-width="26" opacity=".25">매쓰 런</text>
-        <text fill="none" stroke="#fff" stroke-width="26">매쓰 런</text>
-        <text fill="none" stroke="#003a5c" stroke-width="15">매쓰 런</text>
-        <text fill="url(#htG)">매쓰 런</text>
-        <text fill="none" stroke="#fff" stroke-width="2.5" opacity=".55" transform="translate(-2 -3)" clip-path="inset(0 0 55% 0)">매쓰 런</text></g>
+        <text y="7" fill="none" stroke="#002a44" stroke-width="26" opacity=".25">플랫 런</text>
+        <text fill="none" stroke="#fff" stroke-width="26">플랫 런</text>
+        <text fill="none" stroke="#003a5c" stroke-width="15">플랫 런</text>
+        <text fill="url(#htG)">플랫 런</text>
+        <text fill="none" stroke="#fff" stroke-width="2.5" opacity=".55" transform="translate(-2 -3)" clip-path="inset(0 0 55% 0)">플랫 런</text></g>
       <path d="M430 14 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#fff"/><path d="M118 20 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#ffe066"/></svg></h1>
     <div class="home-body"><div class="home-map" id="homeMap"></div></div>
   </div>
@@ -3198,11 +3198,12 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   // ---------- 배지: 문제를 많이 풀거나 출석을 많이 하면 받아요 (단원 완료와는 따로) ----------
   const BADGE_CAT = { solve: { lab: '문제 풀이', unit: '문제', how: n => `문제 ${n}개 풀기` }, att: { lab: '출석', unit: '일', how: n => `출석 ${n}일 채우기` }, streak: { lab: '연속 출석', unit: '일', how: n => `${n}일 연속 출석` } };
   const BADGES = [
-    ...[[10, '첫걸음'], [30, '꾸준한 풀이'], [50, '문제 사냥꾼'], [100, '백 문제 돌파'], [150, '수학 탐험가'], [200, '이백 문제 달인'], [300, '문제 정복자'], [500, '전설의 풀이왕']].map(([n, name]) => ({ id: 's' + n, cat: 'solve', n, name: name + ' 배지' })),
-    ...[[1, '첫 출석'], [3, '사흘 출석'], [5, '닷새 출석'], [7, '일주일 출석'], [10, '열흘 출석'], [14, '2주 출석'], [20, '스무 날 출석'], [30, '한 달 출석']].map(([n, name]) => ({ id: 'a' + n, cat: 'att', n, name: name + ' 배지' })),
-    ...[[2, '이틀 연속'], [3, '사흘 연속'], [5, '닷새 연속'], [7, '일주일 연속']].map(([n, name]) => ({ id: 'k' + n, cat: 'streak', n, name: name + ' 배지' }))
+    ...[[50, '첫걸음'], [100, '백 문제 돌파'], [200, '문제 사냥꾼'], [300, '꾸준한 풀이'], [500, '수학 탐험가'], [700, '문제 달인'], [1000, '천 문제 정복자'], [1500, '전설의 풀이왕']].map(([n, name]) => ({ id: 's' + n, cat: 'solve', n, name: name + ' 배지' })),
+    ...[[3, '사흘 출석'], [7, '일주일 출석'], [14, '2주 출석'], [21, '3주 출석'], [30, '한 달 출석'], [50, '쉰 날 출석'], [70, '일흔 날 출석'], [100, '백일 출석']].map(([n, name]) => ({ id: 'a' + n, cat: 'att', n, name: name + ' 배지' })),
+    ...[[3, '사흘 연속'], [7, '일주일 연속'], [14, '2주 연속'], [30, '한 달 연속']].map(([n, name]) => ({ id: 'k' + n, cat: 'streak', n, name: name + ' 배지' }))
   ];
   const BADGE_BY = id => BADGES.find(b => b.id === id);
+  if (M.bver !== 2) { M.badges = []; M.badgeQ = []; M.rep = null; M.bver = 2; }   // 배지 조건이 바뀌어 한 번 새로 계산해요
   M.badges = (Array.isArray(M.badges) ? M.badges : []).filter(id => BADGE_BY(id));   // 예전 단원 배지는 정리
   M.badgeQ = (Array.isArray(M.badgeQ) ? M.badgeQ : []).filter(id => BADGE_BY(id));
   if (M.rep && !M.badges.includes(M.rep)) M.rep = null;
@@ -3217,7 +3218,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   // ---------- 캐릭터: 부기는 기본, 단계 친구들은 코인으로, 나머지는 미션을 채우면 열리는 히든 캐릭터 ----------
   const CHARS = [
     { art: 3, free: true },
-    { art: 1, price: 200 }, { art: 5, price: 300 }, { art: 4, price: 400 }, { art: 7, price: 500 },
+    { art: 1, price: 2000 }, { art: 5, price: 3000 }, { art: 4, price: 4000 }, { art: 7, price: 5000 },
     { art: 2, hidden: true, need: () => M.badges.length >= 5, mission: '배지 5개 모으기', prog: () => `${Math.min(5, M.badges.length)}/5` },
     { art: 6, hidden: true, need: () => M.badges.length >= 10, mission: '배지 10개 모으기', prog: () => `${Math.min(10, M.badges.length)}/10` }
   ];
@@ -4617,7 +4618,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const next = [...todo].sort((a, b) => b.cur / b.n - a.cur / a.n)[0];
     const gotHTML = got.length ? `<div class="bd-grid">${got.map(b => { const isRep = M.rep === b.id, w = WEAR.find(x => x.bid === b.id);
         return `<div class="bd-item got${isRep ? ' rep' : ''}">${isRep ? '<span class="bd-crown">대표</span>' : ''}${medalSVG(b)}<b>${short(b.name)}</b><small>${how(b)}</small>${w ? `<small class="bd-gift">👕 ${w.name}</small>` : ''}<button type="button" class="bd-rep" data-rep="${b.id}" aria-pressed="${isRep}">${isRep ? '★ 대표 배지' : '대표로 달기'}</button></div>`; }).join('')}</div>`
-      : `<p class="bd-empty">아직 받은 배지가 없어요. 문제를 10개 풀거나 출석을 하면 첫 배지를 받아요!</p>`;
+      : `<p class="bd-empty">아직 받은 배지가 없어요. 문제를 50개 풀거나 3일 출석하면 첫 배지를 받아요!</p>`;
     const groups = Object.keys(BADGE_CAT).filter(c => todo.some(b => b.cat === c)).map(c => `<p class="bd-gs">${BADGE_CAT[c].lab} · 지금 ${badgeStat(c)}${BADGE_CAT[c].unit}</p><div class="bd-grid">${todo.filter(b => b.cat === c).map(b =>
       `<div class="bd-item todo${b.cur ? ' going' : ''}">${medalSVG(b)}<b>${short(b.name)}</b><small>${how(b)}</small>
         <span class="bd-p"><span class="bd-bar"><i style="width:${b.cur / b.n * 100}%"></i></span>${b.cur}/${b.n}${BADGE_CAT[b.cat].unit}</span></div>`).join('')}</div>`).join('');
