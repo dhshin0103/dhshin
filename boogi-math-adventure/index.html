@@ -1,6 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 
-<title>스쿨플랫 : 매스 아일랜드</title>
+<title>스쿨플랫 - 매쓰 런</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap">
@@ -310,6 +310,13 @@ body.story-on { overflow: hidden; }
 .home-title { margin: 0; flex: none; font-family: var(--display); font-weight: 400; color: var(--deep); font-size: clamp(2rem, 5.6vw, 3.4rem); line-height: 1.1; text-align: center; text-shadow: 0 3px 0 #fff, 0 5px 0 rgba(0,58,92,.18); display: flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 4px 14px; }
 .home-title .ht-brand { align-self: center; display: inline-flex; align-items: center; gap: .3em; font-family: "Noto Sans KR", sans-serif; font-weight: 700; letter-spacing: -.02em; font-size: clamp(1rem, 2.2vw, 1.35rem); color: #00abff; background: #fff; border-radius: 999px; padding: .3em .85em .3em .7em; margin-right: .45em; text-shadow: none; box-shadow: 0 3px 0 rgba(0,58,92,.18); }
 .home-title .sf-logo { width: 1.05em; height: 1.3em; display: block; }
+.home-title { align-items: center; gap: 0 4px; text-shadow: none; }
+.home-title .ht-brand { margin-right: -.3em; transform: rotate(-5deg) translateY(-.3em); position: relative; z-index: 1; }
+.home-title .ht-logo { height: clamp(56px, 9vh, 88px); margin: -4px 0; width: auto; display: block; overflow: visible; }
+.home-title .ht-speed { animation: htspeed 1.8s ease-in-out infinite; }
+@keyframes htspeed { 0%, 100% { transform: translateX(0); opacity: 1; } 50% { transform: translateX(-10px); opacity: .6; } }
+@media (prefers-reduced-motion: reduce) { .home-title .ht-speed { animation: none; } }
+@media (max-width: 520px) { .home-title .ht-logo { height: 62px; } .home-title .ht-brand { transform: rotate(-5deg) translateY(-.4em); } }
 .home-title span { font-size: clamp(1.1rem, 2.8vw, 1.6rem); color: #b07800; }
 .home-body { flex: 1; min-height: 0; width: min(1240px, 100%); display: flex; gap: 14px; align-items: stretch; }
 .home-map { flex: 1; min-height: 0; min-width: 0; display: grid; place-items: center; }
@@ -828,7 +835,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 
 <div class="wrap">
   <div class="top">
-    <h1>스쿨플랫 : 매스 아일랜드</h1>
+    <h1>스쿨플랫 - 매쓰 런</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
     <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><div class="itembar" id="itemBar" role="group" aria-label="내 아이템 바로 쓰기"></div><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
@@ -851,7 +858,15 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   <div class="sf-sky" aria-hidden="true"><span class="sf-cloud c1"></span><span class="sf-cloud c2"></span><span class="sf-cloud c3"></span><span class="sf-hill"></span></div>
   <div class="sf-top"><button type="button" class="profile" id="homeProfile" aria-label="내 정보 보기"></button><button type="button" class="att" id="homeAtt" aria-label="이번 주 출석 도장"></button><div class="wallet" id="homeWallet"></div></div>
   <div class="home-mid">
-    <h1 id="homeTitle" class="home-title" aria-label="스쿨플랫 : 매스 아일랜드"><b class="ht-brand"><svg class="sf-logo" viewBox="0 0 140 175" aria-hidden="true"><path d="M5 60 L48 42 L65 55 L135 73 V145 L5 170 Z" fill="#00abff"/><path d="M48 42 V3" stroke="#00abff" stroke-width="6"/><path d="M51 3 L85 17 L51 28 Z" fill="#00abff"/></svg>스쿨플랫</b>매스 아일랜드</h1>
+    <h1 id="homeTitle" class="home-title" aria-label="스쿨플랫 - 매쓰 런"><b class="ht-brand"><svg class="sf-logo" viewBox="0 0 140 175" aria-hidden="true"><path d="M5 60 L48 42 L65 55 L135 73 V145 L5 170 Z" fill="#00abff"/><path d="M48 42 V3" stroke="#00abff" stroke-width="6"/><path d="M51 3 L85 17 L51 28 Z" fill="#00abff"/></svg>스쿨플랫</b><svg class="ht-logo" viewBox="0 0 470 132" aria-hidden="true"><defs><linearGradient id="htG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff27a"/><stop offset=".55" stop-color="#ffc53d"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient></defs>
+      <g class="ht-speed" stroke-linecap="round"><path d="M14 44 H86" stroke="#fff" stroke-width="10"/><path d="M40 70 H96" stroke="#bfe9ff" stroke-width="8"/><path d="M4 94 H78" stroke="#fff" stroke-width="7" opacity=".85"/></g>
+      <g transform="translate(278 96) skewX(-10)" font-family="Jua, sans-serif" font-size="100" text-anchor="middle" stroke-linejoin="round">
+        <text y="7" fill="none" stroke="#002a44" stroke-width="26" opacity=".25">매쓰 런</text>
+        <text fill="none" stroke="#fff" stroke-width="26">매쓰 런</text>
+        <text fill="none" stroke="#003a5c" stroke-width="15">매쓰 런</text>
+        <text fill="url(#htG)">매쓰 런</text>
+        <text fill="none" stroke="#fff" stroke-width="2.5" opacity=".55" transform="translate(-2 -3)" clip-path="inset(0 0 55% 0)">매쓰 런</text></g>
+      <path d="M430 14 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#fff"/><path d="M118 20 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#ffe066"/></svg></h1>
     <div class="home-body"><div class="home-map" id="homeMap"></div></div>
   </div>
   <div class="sf-box home-box">
@@ -1721,11 +1736,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   // ---------- 단계별 계절 테마: 1단계 기본 → 2 봄 → 3 여름 → 4 가을 → 5 겨울 ----------
   // 배경(하늘·언덕·땅·풀)과 날리는 장식만 바뀌어요. 코인·블록·헷갈이·문은 그대로라 헷갈리지 않아요
   const SEASONS = [
-    { name: '기본', ic: '', sky: ['#8fd3ff', '#e9f7ff'], hill: '#bde5ff', mark: '#82ccff', dirt: '#c98d5a', spot: '#b77b4a', grass: '#5bb98b', line: '#30a46c' },
     { name: '봄', ic: '🌸', sky: ['#ffc9de', '#fff3f7'], hill: '#c9ecb4', mark: '#ff9dbf', dirt: '#c9955f', spot: '#b5824e', grass: '#8fd96a', line: '#5fbf45', fx: 'petal' },
-    { name: '여름', ic: '☀️', sky: ['#3fa9f5', '#c9f0ff'], hill: '#8fd9a8', mark: '#5bb8f5', dirt: '#c58a55', spot: '#ad7443', grass: '#2fa858', line: '#1f8a45', fx: 'sun' },
+    { name: '여름(화창)', ic: '☀️', sky: ['#3fa9f5', '#c9f0ff'], hill: '#8fd9a8', mark: '#5bb8f5', dirt: '#c58a55', spot: '#ad7443', grass: '#2fa858', line: '#1f8a45', fx: 'sun', acc: 'sun' },
+    { name: '여름(비)', ic: '🌧️', sky: ['#7f97b5', '#d3deea'], hill: '#8fbfa3', mark: '#8a9db5', cloud: '#c3cedb', dirt: '#a97a52', spot: '#8f6440', grass: '#3f9a63', line: '#2c7d4d', fx: 'rain', acc: 'umb' },
     { name: '가을', ic: '🍁', sky: ['#ffb36b', '#fff0d6'], hill: '#f3c98a', mark: '#f09a4a', dirt: '#b97a4a', spot: '#a0663a', grass: '#d9a441', line: '#b8822a', fx: 'leaf' },
-    { name: '겨울', ic: '❄️', sky: ['#9fb8d6', '#eef4fb'], hill: '#dfe9f5', mark: '#a9bfda', dirt: '#b9a48f', spot: '#a38e79', grass: '#f6fbff', line: '#c9dcee', fx: 'snow' }
+    { name: '겨울', ic: '❄️', sky: ['#9fb8d6', '#eef4fb'], hill: '#dfe9f5', mark: '#a9bfda', dirt: '#b9a48f', spot: '#a38e79', grass: '#f6fbff', line: '#c9dcee', fx: 'snow', acc: 'scarf' }
   ];
   const curSeason = () => SEASONS[pick ? pick.i : 0] || SEASONS[0];
   function drawSeasonFx(S, t) {
@@ -1738,6 +1753,14 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       ctx.restore();
       ctx.fillStyle = '#ffe066'; ctx.beginPath(); ctx.arc(sx, sy, 44, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = '#fff3b0'; ctx.beginPath(); ctx.arc(sx - 10, sy - 10, 22, 0, Math.PI * 2); ctx.fill();
+      return;
+    }
+    if (S.fx === 'rain') { // 빗줄기 + 땅에 튀는 물방울
+      ctx.strokeStyle = 'rgba(235,245,255,.75)'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.beginPath();
+      for (let k = 0; k < 70; k++) { const x = ((k * 97.3 - tt * 90 - camX * 0.3) % (W + 60) + W + 60) % (W + 60) - 30, y = (k * 61.7 + tt * (520 + (k % 5) * 40)) % (GROUND + 10); ctx.moveTo(x, y); ctx.lineTo(x - 5, y + 15); }
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(235,245,255,.6)'; ctx.lineWidth = 1.5;
+      for (let k = 0; k < 9; k++) { const ph = (tt * 1.6 + k * 0.37) % 1, x = ((k * 173 - camX) % W + W) % W; ctx.beginPath(); ctx.ellipse(x, GROUND + 4, 4 + ph * 10, 1.5 + ph * 2.5, 0, 0, Math.PI * 2); ctx.globalAlpha = 1 - ph; ctx.stroke(); ctx.globalAlpha = 1; }
       return;
     }
     const n = S.fx === 'snow' ? 46 : 22;
@@ -1772,7 +1795,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     for (let i = -1; i < 7; i++) {
       const x = i * 220 - (camX * 0.45) % 220;
       const y = 70 + (i % 3) * 38;
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = S.cloud || '#ffffff';
       ctx.beginPath(); ctx.ellipse(x + 60, y, 46, 20, 0, 0, Math.PI * 2); ctx.ellipse(x + 92, y - 8, 30, 20, 0, 0, Math.PI * 2); ctx.ellipse(x + 30, y - 4, 26, 16, 0, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = S.mark; ctx.textAlign = 'center';
       ctx.fillText(marks[(i + 10) % marks.length], x + 64, y + 8);
@@ -1989,9 +2012,30 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   const stageHero = i => { const G = GUARD[i] || GUARD[0]; return { name: G.name, art: G.art, bg: G.bg, foot: FOOT[G.art] || '#8a5a33' }; };
   const curHero = () => stageHero(pick ? pick.i : 0);
   const heroImg = {};
+  // 계절 소품: 2단계 선글라스, 3단계 우산, 5단계 목도리. 캐릭터 그림 좌표(0~100) 기준 [눈 가운데 x, y, 두 눈 사이], [목 x, y, 폭]
+  const EYE_AT = { 1: [50, 45, 14], 2: [50, 50, 10], 3: [50, 32, 14], 4: [48, 43, 16], 5: [48, 42, 14], 6: [50, 45, 13], 7: [50, 45, 13] };
+  const NECK_AT = { 1: [48, 63, 40], 2: [50, 63, 32], 3: [50, 49, 24], 4: [48, 60, 32], 5: [47, 60, 30], 6: [51, 60, 30], 7: [50, 62, 36] };
+  const GAME_VB = [-24, -44, 148, 148];
+  function seasonAcc(art, acc) {
+    const O = 'stroke="#2b3a55" stroke-width="1.6" stroke-linejoin="round"';
+    if (acc === 'sun') { const [x, y, g] = EYE_AT[art] || EYE_AT[2], r = Math.max(5.5, g * 0.52);
+      return ['', `<g><path d="M${x - g / 2 - r} ${y - 1} H${x + g / 2 + r}" stroke="#2b3a55" stroke-width="2.4"/><rect x="${x - g / 2 - r}" y="${y - r * 0.75}" width="${r * 2}" height="${r * 1.6}" rx="${r * 0.7}" fill="#1f2a40" ${O}/><rect x="${x + g / 2 - r}" y="${y - r * 0.75}" width="${r * 2}" height="${r * 1.6}" rx="${r * 0.7}" fill="#1f2a40" ${O}/><path d="M${x - g / 2 - r * 0.5} ${y - r * 0.3} l${r * 0.7} 0 M${x + g / 2 - r * 0.5} ${y - r * 0.3} l${r * 0.7} 0" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".7"/></g>`]; }
+    if (acc === 'umb') { const [hx, hy] = HEAD_AT[art] || HEAD_AT[2], cx = hx + 4, cy = hy - 10, R = 40;
+      const pole = `<path d="M${cx} ${cy - 6} L${cx + 22} ${hy + 52} q2 7 -5 7" stroke="#8a5a33" stroke-width="3.4" fill="none" stroke-linecap="round"/>`;
+      const can = `<g transform="rotate(-8 ${cx} ${cy})"><path d="M${cx - R} ${cy} A${R} ${R * 0.8} 0 0 1 ${cx + R} ${cy} q-6.7 -7 -13.3 0 q-6.7 -7 -13.3 0 q-6.7 -7 -13.4 0 q-6.7 -7 -13.3 0 q-6.7 -7 -13.3 0 q-6.7 -7 -13.4 0 Z" fill="#ffd34d" ${O}/><path d="M${cx - 13.4} ${cy} Q${cx - 12} ${cy - 26} ${cx} ${cy - R * 0.8} Q${cx + 12} ${cy - 26} ${cx + 13.4} ${cy} q-6.7 -7 -13.4 0 q-6.7 -7 -13.4 0 Z" fill="#ff8a3d"/><path d="M${cx - R} ${cy} A${R} ${R * 0.8} 0 0 1 ${cx + R} ${cy}" fill="none" ${O}/><circle cx="${cx}" cy="${cy - R * 0.8 - 2}" r="2.6" fill="#e5484d" ${O}/></g>`;
+      return [pole, can]; }
+    if (acc === 'scarf') { const [x, y, w] = NECK_AT[art] || NECK_AT[2], h = w / 2;
+      return ['', `<g><path d="M${x - h} ${y - 3} Q${x} ${y + 6} ${x + h} ${y - 3} L${x + h} ${y + 5} Q${x} ${y + 14} ${x - h} ${y + 5} Z" fill="#e5484d" ${O}/><path d="M${x + h * 0.35} ${y + 5} l7 17 l-9 2 l-5 -16 Z" fill="#e5484d" ${O}/><path d="M${x - h * 0.5} ${y + 2.5} l0 7 M${x} ${y + 5} l0 7 M${x + h * 0.55} ${y + 2.5} l0 7 M${x + h * 0.35 + 3} ${y + 15} l-8 2" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".9"/></g>`]; }
+    return ['', ''];
+  }
   function heroImage(h) {
-    const ck = h.art + '|' + (M.wear.head || '') + '|' + (M.wear.back || '');
-    if (!heroImg[ck]) { const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(dressSVG(h.art, M.wear, 'xmlns="http://www.w3.org/2000/svg" width="480" height="464"')); heroImg[ck] = im; }
+    const acc = (pick && SEASONS[pick.i] && SEASONS[pick.i].acc) || '';
+    const ck = h.art + '|' + (M.wear.head || '') + '|' + (M.wear.back || '') + '|' + acc;
+    if (!heroImg[ck]) {
+      const [bk, fr] = seasonAcc(h.art, acc);
+      const svg = dressSVG(h.art, M.wear, 'xmlns="http://www.w3.org/2000/svg"').replace(/viewBox="[^"]*"/, `viewBox="${GAME_VB.join(' ')}" width="${GAME_VB[2] * 4}" height="${GAME_VB[3] * 4}"`).replace(/(<svg[^>]*>)/, '$1' + bk).replace(/<\/svg>\s*$/, fr + '</svg>');
+      const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); heroImg[ck] = im;
+    }
     return heroImg[ck];
   }
   function drawHero(x, y, f, bob, s, armUp, medal) {
@@ -2002,7 +2046,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     ctx.save(); ctx.translate(cx, y + 24 - bob);
     if (armUp) ctx.rotate(f * -0.12); else if (s) ctx.rotate(s * 0.02);
     ctx.scale(f < 0 ? -1 : 1, 1);
-    if (im.complete && im.naturalWidth) ctx.drawImage(im, -32 + DRESS_VB[0] * 0.64, -36 + DRESS_VB[1] * 0.64, DRESS_VB[2] * 0.64, DRESS_VB[3] * 0.64);
+    if (im.complete && im.naturalWidth) ctx.drawImage(im, -32 + GAME_VB[0] * 0.64, -36 + GAME_VB[1] * 0.64, GAME_VB[2] * 0.64, GAME_VB[3] * 0.64);
     else { ctx.fillStyle = h.bg; ctx.beginPath(); ctx.arc(0, -4, 24, 0, Math.PI * 2); ctx.fill(); }
     ctx.restore();
     if (medal) { ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.arc(cx, y + 34 - bob, 7, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#ab6400'; ctx.lineWidth = 1.5; ctx.stroke(); }
@@ -3545,7 +3589,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         <circle class="ring" cx="${x}" cy="${y}" r="62" fill="${G.bg}" stroke="${open ? '#ffffff' : '#cfd6de'}" stroke-width="7"/>
         <g transform="translate(${x - 47},${y - 50}) scale(0.94)" ${open ? '' : 'filter="url(#jgs)" opacity=".5"'}>${art}</g>
         <rect x="${x - 94}" y="${y + 72}" width="188" height="72" rx="16" fill="#fff" stroke="${open ? '#2b3a55' : '#cfd6de'}" stroke-width="2"/>
-        <text x="${x}" y="${y + 97}" text-anchor="middle" font-family="Jua" font-size="20" fill="${open ? '#1f2a40' : '#8b95a3'}">${title}</text>${sea.ic && open ? `<g aria-hidden="true"><circle cx="${x + 84}" cy="${y + 74}" r="13" fill="#fff" stroke="#2b3a55" stroke-width="2"/><text x="${x + 84}" y="${y + 79.5}" text-anchor="middle" font-size="14">${sea.ic}</text></g>` : ''}
+        <text x="${x}" y="${y + 97}" text-anchor="middle" font-family="Jua" font-size="20" fill="${open ? '#1f2a40' : '#8b95a3'}">${title}</text>${sea.ic ? `<g aria-hidden="true" opacity="${open ? 1 : .5}"><circle cx="${x + 84}" cy="${y + 74}" r="13" fill="#fff" stroke="#2b3a55" stroke-width="2"/><text x="${x + 84}" y="${y + 79.5}" text-anchor="middle" font-size="14">${sea.ic}</text></g>` : ''}
         <text x="${x}" y="${y + 130}" text-anchor="middle" font-family="Jua" font-size="18" fill="${open ? '#b07800' : '#a3acb8'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : '잠김'}</text>
         </g>
         ${fog ? `<g pointer-events="none" transform="translate(${x - 17},${y - 20})"><rect x="0" y="15" width="34" height="27" rx="6" fill="#5b6672"/><path d="M7 16v-6a10 10 0 0 1 20 0v6" stroke="#5b6672" stroke-width="5.5" fill="none"/></g>` : ''}
