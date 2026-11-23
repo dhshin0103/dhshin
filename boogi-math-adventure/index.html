@@ -191,6 +191,30 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .qtools { gap: 8px; flex-wrap: wrap; }
 .calcbtn { border-color: #2f6fc0; background: #e6f1ff; color: #1d4f8f; }
 #qModal .card { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); overflow-y: auto; }
+.guide-card { width: min(640px, 100%); gap: 12px; max-height: calc(100dvh - 32px); overflow-y: auto; }
+.guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.gd { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; padding: 12px 8px; border-radius: 16px; background: #f3f9ff; border: 2px solid #d6e8f7; }
+.gd-k { min-height: 40px; display: flex; align-items: center; gap: 4px; } .gd-k kbd { font-size: 1.05rem; padding: 4px 10px; border-bottom-width: 3px; background: #fff; } .gd-k kbd.wide { padding: 4px 16px; }
+.gd-ic { font-size: 1.8rem; line-height: 1; }
+.gd b { font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--deep); } .gd small { font-size: .78rem; color: #4f5d70; line-height: 1.35; word-break: keep-all; }
+.guide-mis { margin: 0; padding: 8px 12px; border-radius: 12px; background: #fff6d6; border: 1.5px solid #f3d27a; color: #6b4a00; font-size: .86rem; line-height: 1.5; }
+.guide-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.guide-chk { display: inline-flex; align-items: center; gap: 6px; font-size: .86rem; color: #4f5d70; cursor: pointer; } .guide-chk input { width: 18px; height: 18px; }
+@media (max-width: 560px) { .guide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.qwrap { display: flex; align-items: stretch; justify-content: center; gap: 12px; width: 100%; max-width: 1100px; max-height: calc(100dvh - 24px); }
+.qwrap > .card { flex: 0 1 560px; min-width: 0; }
+.notepane { flex: 0 1 380px; min-width: 260px; display: flex; flex-direction: column; gap: 6px; background: #fffdf2; border: 3px solid var(--deep); border-radius: 22px; box-shadow: 0 6px 0 var(--deep); padding: 12px; animation: notein .22s ease-out both; }
+.notepane[hidden] { display: none; }
+@keyframes notein { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.note-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; font-family: var(--display); color: var(--deep); font-size: 1.1rem; }
+.note-top b { font-weight: 400; } .note-tools { display: flex; gap: 4px; flex-wrap: wrap; }
+.nt { font: inherit; font-family: var(--body); font-size: .78rem; font-weight: 700; padding: 4px 9px; border-radius: 999px; border: 2px solid #c9b77a; background: #fff; color: #5b4a12; cursor: pointer; white-space: nowrap; }
+.nt.on { background: var(--sun); border-color: var(--deep); color: var(--deep); } .nt.x { border-color: var(--deep); color: var(--deep); }
+#noteCv { flex: 1; min-height: 240px; width: 100%; border-radius: 12px; border: 2px solid #e6d9a8; touch-action: none; cursor: crosshair; background: #fffef8 repeating-linear-gradient(#fffef8 0 31px, #e9e2c4 31px 32px); display: block; }
+.note-tip { margin: 0; font-size: .74rem; color: #7a6a3a; }
+.notebtn[aria-expanded="true"] { background: var(--sun); }
+@media (max-width: 860px) { .qwrap { flex-direction: column; align-items: center; overflow-y: auto; } .qwrap > .card { flex: none; width: 100%; max-height: none !important; overflow: visible !important; } .notepane { flex: none; width: 100%; min-width: 0; box-sizing: border-box; } #noteCv { min-height: 220px; flex: none; height: 220px; } }
+@media (prefers-reduced-motion: reduce) { .notepane { animation: none; } }
 .hintroll { align-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 8px 18px; border-radius: 999px; border: 3px solid #b07a00; background: #fff7c2; font-family: var(--display); font-size: 1.15rem; color: #6b4300; }
 .hintroll.rolling { animation: hrshake .12s linear infinite alternate; }
 .hintroll.done { background: #ffd34d; animation: hrpop .35s cubic-bezier(.2, 1.5, .4, 1); }
@@ -989,6 +1013,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     <div class="set-row"><div class="set-lb"><b>게임 속도</b></div><div class="seg" id="segSpeed" role="radiogroup" aria-label="게임 속도"></div></div>
     <div class="set-row"><div class="set-lb"><b>효과음</b></div><div class="seg" id="segSound" role="radiogroup" aria-label="효과음"></div></div>
     <div class="set-row"><div class="set-lb"><b>소리 크기</b></div><input type="range" id="volRange" min="0" max="100" step="5" value="80" aria-label="소리 크기" class="vol"></div>
+    <div class="set-row"><div class="set-lb"><b>조작법 안내</b><small>단계를 시작할 때 보여 줘요</small></div><div class="seg" id="segGuide" role="radiogroup" aria-label="조작법 안내"><button type="button" role="radio" data-guide="on">보기</button><button type="button" role="radio" data-guide="off">안 보기</button></div></div>
     <h3 class="set-sec">이야기</h3>
     <div class="set-row"><div class="set-lb"><b>매쓰 아일랜드 이야기</b><small>멈춰 버린 시계탑 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
     <p class="note" id="setNote"></p>
@@ -1081,14 +1106,29 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   </div>
 </div>
 
+<div class="modal toplayer" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle" hidden>
+  <div class="card guide-card">
+    <h2 id="guideTitle" class="sum-h"><span aria-hidden="true">🎮</span> 이렇게 움직여요</h2>
+    <div class="guide-grid">
+      <div class="gd"><span class="gd-k"><kbd>←</kbd><kbd>→</kbd></span><b>이동</b><small>화면 아래 ← → 버튼도 돼요</small></div>
+      <div class="gd"><span class="gd-k"><kbd class="wide">스페이스</kbd></span><b>점프</b><small>공중에서 한 번 더 누르면 이단 점프! (화면 ↑ 버튼)</small></div>
+      <div class="gd"><span class="gd-k"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></span><b>아이템 쓰기</b><small>달리는 중: 거대화 · 시간 멈춤 · 하트 · 보호막</small></div>
+      <div class="gd"><span class="gd-k"><span class="gd-ic">🚪</span></span><b>문제 문</b><small>문에 닿으면 문제가 나와요. 보기를 한 번만 누르면 답!</small></div>
+      <div class="gd"><span class="gd-k"><span class="gd-ic">👾</span></span><b>헷갈이</b><small>위에서 밟으면 물리쳐요. 옆에서 부딪히면 하트가 줄어요</small></div>
+      <div class="gd"><span class="gd-k"><span class="gd-ic">📒</span></span><b>배움노트</b><small>문제 창에서 펼쳐서 풀이를 적을 수 있어요</small></div>
+    </div>
+    <p class="guide-mis" id="guideMis"></p>
+    <div class="guide-foot"><label class="guide-chk"><input type="checkbox" id="guideSkip"> 다음부터 보지 않기</label><button type="button" class="btn" id="guideGo">알겠어요, 출발! ▶</button></div>
+  </div>
+</div>
 <div class="modal" id="qModal" role="dialog" aria-modal="true" aria-labelledby="qText" hidden>
-  <div class="card">
+  <div class="qwrap"><div class="card">
     <div class="tagrow"><span class="tag" id="qNum"></span><span class="tag" id="qUnit"></span><span class="tag twin" id="qTwin" hidden>비슷한 문제</span><span class="tag ta" id="qTA" hidden></span><button type="button" class="ctlbtn mini" data-act="quit">그만하기</button></div>
     <h2 id="qText"></h2>
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip"><span class="no5">5</span> 모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn">힌트 뽑기</button></div>
+    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip"><span class="no5">5</span> 모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn" hidden>힌트 뽑기</button><button type="button" class="hintbtn notebtn" id="noteBtn" aria-expanded="false" aria-controls="notePane">📒 배움노트 펼치기</button></div>
     <div class="hintroll" id="hintRoll" hidden aria-live="polite"></div>
     <div class="calc" id="calcPad" hidden>
       <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
@@ -1101,6 +1141,11 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <button type="button" class="btn" id="twinBtn">비슷한 문제로 다시 도전</button><button type="button" class="btn pass" id="qPass" hidden>통과하고 계속 가기 ▶</button>
     </div>
   </div>
+  <aside class="notepane" id="notePane" aria-label="배움노트" hidden>
+    <div class="note-top"><b>📒 배움노트</b><span class="note-tools"><button type="button" class="nt on" data-nt="pen" aria-pressed="true">✏️ 펜</button><button type="button" class="nt" data-nt="erase" aria-pressed="false">🧽 지우개</button><button type="button" class="nt" data-nt="clear">🗑 모두 지우기</button><button type="button" class="nt x" id="noteClose" aria-label="배움노트 닫기">✕</button></span></div>
+    <canvas id="noteCv" aria-label="손으로 풀이를 적는 칸"></canvas>
+    <p class="note-tip">마우스나 손가락으로 풀이를 적어 보세요. 다음 문제로 넘어가면 새 종이가 돼요.</p>
+  </aside></div>
 </div>
 
 <div class="modal" id="overModal" role="dialog" aria-modal="true" aria-labelledby="overTitle" hidden>
@@ -1484,8 +1529,8 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     }
     if (state === 'question' && e.key === '5') { e.preventDefault(); $('qSkip').click(); return; }
     // 문제 창: 6 힌트 뽑기, 7 계산기
-    if (state === 'question' && e.key === '6') { e.preventDefault(); if (!$('hintBtn').disabled) $('hintBtn').click(); else showToast('힌트가 없어요. 코인 상점에서 살 수 있어요'); return; }
-    if (state === 'question' && e.key === '7') { e.preventDefault(); if (!$('calcBtn').hidden && !$('calcBtn').disabled) $('calcBtn').click(); else showToast((M.items.calc || 0) <= 0 && !stats.calc ? '계산기가 없어요. 코인 상점에서 살 수 있어요' : '계산기는 식을 세우는 문제에서만 쓸 수 있어요'); return; }
+    if (state === 'question' && (e.key === 'n' || e.key === 'N' || e.key === 'ㅜ')) { e.preventDefault(); $('noteBtn').click(); return; }
+    if (state === 'question' && e.key === '6') { e.preventDefault(); if (!$('calcBtn').hidden && !$('calcBtn').disabled) $('calcBtn').click(); else showToast((M.items.calc || 0) <= 0 && !stats.calc ? '계산기가 없어요. 코인 상점에서 살 수 있어요' : '계산기는 식을 세우는 문제에서만 쓸 수 있어요'); return; }
     // 달리는 중: 1 거대화, 2 시간 멈춤, 3 하트 +1, 4 보호막 (로블록스·마인크래프트 아이템 칸처럼)
     if (state === 'play' && /^[1-4]$/.test(e.key) && !e.repeat) { e.preventDefault(); const el = $(IB[Number(e.key) - 1].bid); if (el) el.click(); return; }
     if (state === 'question' && /^[1-4]$/.test(e.key)) {
@@ -1526,6 +1571,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     state = 'question';
     keys.left = keys.right = keys.jump = false;
     current = { gate, twin: false, attempts: 0 };
+    try { if (NOTE.gate !== gate.i) { NOTE.gate = gate.i; noteClear(); } if (NOTE.open) setTimeout(() => noteFit(true), 30); } catch (_) {}
     $('calcPad').hidden = true; $('hintRoll').hidden = true;
     renderQuestion();
     showModal('qModal');
@@ -1555,7 +1601,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     });
     // 쉬움: 틀린 보기 1개를 미리 지워 줘요
     if (diffCfg().erase && item.c.length >= 3) { const wr = [...box.querySelectorAll('button')].filter((_, i) => i !== item.a); const g = wr[Math.floor(Math.random() * wr.length)]; if (g) g.classList.add('gone'); }
-    // 찍기 방지: 보기는 1.2초 동안 문제를 읽은 뒤에 열려요
+    // 보기는 한 번만 누르면 바로 답이 돼요 (문이 열리는 순간 눌려 있던 키로 잘못 고르지 않게 0.25초만 기다려요)
     const bs = box.querySelectorAll('button');
     bs.forEach(b => { b.disabled = true; });
     setTimeout(() => {
@@ -1570,7 +1616,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
           if (left <= 0) { clearInterval(qTimerId); answer(-1); }
         }, 100);
       }
-    }, 1200);
+    }, 250);
   }
 
   function answer(idx) {
@@ -1608,6 +1654,36 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
 
   $('twinBtn').addEventListener('click', () => { current.twin = !current.twin; renderQuestion(); });
+  // ---------- 배움노트: 문제 옆에 펼쳐 쓰는 손글씨 메모장 ----------
+  const NOTE = { open: false, tool: 'pen', down: false, lx: 0, ly: 0, gate: -1 };
+  function noteFit(keep) {
+    const cv = $('noteCv'), r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    const w = Math.max(10, Math.round(r.width * dpr)), h = Math.max(10, Math.round(r.height * dpr));
+    if (cv.width === w && cv.height === h) return;
+    let old = null; if (keep && cv.width > 10) { old = document.createElement('canvas'); old.width = cv.width; old.height = cv.height; old.getContext('2d').drawImage(cv, 0, 0); }
+    cv.width = w; cv.height = h; if (old) cv.getContext('2d').drawImage(old, 0, 0);
+  }
+  function noteClear() { const cv = $('noteCv'); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); }
+  function noteShow(on) {
+    NOTE.open = on; $('notePane').hidden = !on;
+    $('noteBtn').setAttribute('aria-expanded', String(on)); $('noteBtn').textContent = on ? '📒 배움노트 접기' : '📒 배움노트 펼치기';
+    if (on) noteFit(true);
+  }
+  $('noteBtn').addEventListener('click', () => noteShow(!NOTE.open));
+  $('noteClose').addEventListener('click', () => { noteShow(false); $('noteBtn').focus({ preventScroll: true }); });
+  $('notePane').addEventListener('click', e => {
+    const b = e.target.closest('[data-nt]'); if (!b) return;
+    if (b.dataset.nt === 'clear') { noteClear(); return; }
+    NOTE.tool = b.dataset.nt; $('notePane').querySelectorAll('[data-nt="pen"],[data-nt="erase"]').forEach(x => { const on = x.dataset.nt === NOTE.tool; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); });
+  });
+  { const cv = $('noteCv'), pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+    const line = (x0, y0, x1, y1) => { const c = cv.getContext('2d'), k = cv.width / cv.getBoundingClientRect().width; c.lineCap = 'round'; c.lineJoin = 'round';
+      if (NOTE.tool === 'erase') { c.globalCompositeOperation = 'destination-out'; c.lineWidth = 26 * k; } else { c.globalCompositeOperation = 'source-over'; c.strokeStyle = '#1f2a40'; c.lineWidth = 3.2 * k; }
+      c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke(); c.globalCompositeOperation = 'source-over'; };
+    cv.addEventListener('pointerdown', e => { e.preventDefault(); noteFit(true); NOTE.down = true; [NOTE.lx, NOTE.ly] = pos(e); line(NOTE.lx, NOTE.ly, NOTE.lx + 0.01, NOTE.ly); try { cv.setPointerCapture(e.pointerId); } catch (_) {} });
+    cv.addEventListener('pointermove', e => { if (!NOTE.down) return; const [x, y] = pos(e); line(NOTE.lx, NOTE.ly, x, y); NOTE.lx = x; NOTE.ly = y; });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => cv.addEventListener(t, () => { NOTE.down = false; }));
+    window.addEventListener('resize', () => { if (NOTE.open && !$('qModal').hidden) noteFit(true); }); }
   // 모르는 문제 넘어가기: 문은 열리지만 '한 번에 맞히기' 별은 놓치고, 5단계 샌디 기지에 쌍둥이 문제로 다시 나와요
   function passGate(msg, countRetry) {
     if (state !== 'question' || !current || current.erasing > 0) return;
@@ -1623,7 +1699,18 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   }
   $('qSkip').addEventListener('click', () => passGate('넘어갔어요! 샌디 기지에서 다시 만나요', true));
   $('qPass').addEventListener('click', () => passGate(pick.i === NSTG - 1 ? '통과! 다음 문으로 가요' : '통과! 이 문제는 5단계 샌디 기지에서 다시 만나요', false));
+  // 단계를 시작할 때 조작법 안내를 먼저 보여 줘요 ('다음부터 보지 않기'를 고르면 건너뜀)
+  let guidePass = false;
+  function openGuide() {
+    let mis = ''; try { mis = `<b>이번 단계 별 3개 조건</b> ${missionText(pick.i)}`; } catch (_) {}
+    $('guideMis').innerHTML = mis; $('guideMis').hidden = !mis;
+    $('guideSkip').checked = false; $('guideModal').hidden = false; $('guideGo').focus({ preventScroll: true });
+  }
+  $('guideGo').addEventListener('click', () => { if ($('guideSkip').checked) { M.set.noGuide = true; saveM(); } $('guideModal').hidden = true; guidePass = true; $('startBtn').click(); });
+  $('guideModal').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { if (e.target.id === 'guideSkip') return; e.preventDefault(); e.stopPropagation(); $('guideGo').click(); } });
   $('startBtn').addEventListener('click', () => {
+    if (!guidePass && !M.set.noGuide && $('guideModal').hidden) { let t = false; try { t = !!localStorage.getItem('mathland-noparty'); } catch (_) {} if (!t) { openGuide(); return; } }
+    guidePass = false;
     if (useHeart && M.items.heart > 0) { M.items.heart--; stats.hearts = diffCfg().hearts + 1; }
     if (useShield && M.items.shield > 0) { M.items.shield--; stats.shield = true; }
     if (useCalc && (M.items.calc || 0) > 0) { M.items.calc--; runCalc = true; stats.calc = true; }
@@ -3455,8 +3542,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     { id: 'freeze', bid: 'freezeBtn', key: '2', lab: '시간 멈춤', when: '달리는 중·문제 중', can: () => (state === 'play' || state === 'question') && stats.freeze <= 0 },
     { id: 'heart', bid: 'ibHeart', key: '3', lab: '하트 +1', when: '달리는 중', can: () => state === 'play' && stats.hearts < 5 },
     { id: 'shield', bid: 'ibShield', key: '4', lab: '보호막', when: '달리는 중', can: () => state === 'play' && !stats.shield },
-    { id: 'hint', bid: 'ibHint', key: '6', lab: '힌트', when: '문제 창에서', info: true },
-    { id: 'calc', bid: 'ibCalc', key: '7', lab: '계산기', when: '문제 창에서', info: true }
+    { id: 'calc', bid: 'ibCalc', key: '6', lab: '계산기', when: '문제 창에서', info: true }
   ];
   // 힌트(6)·계산기(7)는 문제 창에서만 쓰므로 게임 화면 아이템 바에는 달리는 중 아이템 4개만 보여요
   const IB_BAR = () => IB.filter(b => !b.info);
@@ -3479,7 +3565,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     const b = IB.find(x => x.id === el.dataset.ib), n = M.items[b.id] || 0;
     if ((b.id === 'giant' || b.id === 'freeze') && el.dataset.used === '1') { el.dataset.used = ''; return; }
     if (n <= 0) { showToast(`${b.lab}이(가) 없어요. 코인 상점에서 살 수 있어요`); return; }
-    if (b.info) { showToast(b.id === 'calc' ? '계산기는 식을 세우는 문제 창에서 [🧮 계산기 쓰기]로 꺼내요' : '힌트는 문제 창의 [🎲 힌트 뽑기]로 써요'); return; }
+    if (b.info) { showToast(b.id === 'calc' ? '계산기는 식을 세우는 문제 창에서 [🧮 계산기 쓰기]로 꺼내요' : ''); return; }
     if (!b.can()) { showToast(b.id === 'giant' && stats.star > 0 ? '이미 거대화 중이에요!' : b.id === 'shield' && stats.shield ? '이미 보호막이 있어요' : b.id === 'heart' && stats.hearts >= 5 ? '하트가 가득 찼어요' : b.id === 'freeze' && stats.freeze > 0 ? '이미 시간이 멈춰 있어요' : `${b.lab}은(는) ${b.when}에 쓸 수 있어요`); return; }
     if (b.id === 'heart') { M.items.heart--; stats.hearts++; saveM(); showToast('하트 +1!'); try { tone([660, 990], 0.1, 'triangle'); } catch (_) {} }
     else if (b.id === 'shield') { M.items.shield--; stats.shield = true; saveM(); showToast('보호막! 헷갈이에 한 번 부딪혀도 괜찮아요'); try { tone([523, 784], 0.1, 'triangle'); } catch (_) {} }
@@ -3505,7 +3591,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
         <h3 class="wc-sec rare">🏅 배지로 받는 희귀 옷 <small>${rareW.filter(ownsWear).length}/${rareW.length} · 코인으로 살 수 없어요</small></h3><div class="wc-grid">${rareW.map(card).join('')}</div>`;
       $('shopMsg').textContent = msg || ''; return;
     }
-    $('shopGrid').innerHTML = ITEMS.map(it => `<div class="item">${itemIcon(it)}<div><b>${it.name}</b><p>${it.desc}</p>
+    $('shopGrid').innerHTML = ITEMS.filter(it => it.id !== 'hint').map(it => `<div class="item">${itemIcon(it)}<div><b>${it.name}</b><p>${it.desc}</p>
       <div class="row"><small>가진 개수 ${M.items[it.id] || 0}</small><button type="button" class="buy" data-buy="${it.id}" ${M.coins < it.price ? 'disabled' : ''}>코인 ${it.price}</button></div></div></div>`).join('');
     $('shopMsg').textContent = msg || '';
   }
@@ -3558,7 +3644,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function updateCalcBtn() {
     const has = !!(stats && stats.calc), n = M.items.calc || 0, ok = current && calcOK(), on = has || (n > 0 && ok);
     $('calcBtn').hidden = !on;
-    $('calcBtn').innerHTML = '<span class="no5">7</span> ' + (has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`);
+    $('calcBtn').innerHTML = '<span class="no5">6</span> ' + (has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`);
     $('calcBtn').disabled = !ok || !$('calcPad').hidden;
   }
   function calcEval(str) {
@@ -3604,8 +3690,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   function updateHintBtn() {
     updateCalcBtn();
     const n = M.items.hint || 0;
-    $('hintBtn').innerHTML = `<span class="no5">6</span> 🎲 힌트 뽑기 (${n})`;
-    $('hintBtn').disabled = n <= 0;
+    $('hintBtn').hidden = true; $('hintBtn').disabled = true;   // 힌트 뽑기는 없앴어요
   }
   // 힌트 뽑기: 이 문제에 쓸 수 있는 힌트 중 하나가 룰렛처럼 랜덤으로 나와요
   const HINTS = [
@@ -4731,6 +4816,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   $('homeWallet').addEventListener('click', e => { if (e.target.closest('#badgeOpen')) openBadges(); else if (e.target.closest('#setOpen')) openSettings(); });
   $('homeAtt').addEventListener('click', openSummary);
   $('sumClose').addEventListener('click', () => { $('sumModal').hidden = true; const b = $('homeAtt'); if (b) b.focus({ preventScroll: true }); });
+  const drawGuideSeg = () => $('segGuide').querySelectorAll('button').forEach(b => { const on = (b.dataset.guide === 'off') === !!M.set.noGuide; b.setAttribute('aria-checked', String(on)); b.classList.toggle('on', on); });
+  $('segGuide').addEventListener('click', e => { const b = e.target.closest('[data-guide]'); if (!b) return; M.set.noGuide = b.dataset.guide === 'off'; saveM(); drawGuideSeg(); });
+  document.addEventListener('click', e => { if (e.target.closest('#setOpen')) drawGuideSeg(); });
+  drawGuideSeg();
   $('storyOpen').addEventListener('click', () => { $('setModal').hidden = true; storyBack = 'home'; openStory(); });
   $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
   $('setModal').addEventListener('click', e => {
