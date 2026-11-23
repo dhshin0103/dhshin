@@ -218,6 +218,7 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .guide-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .guide-chk { display: inline-flex; align-items: center; gap: 6px; font-size: .86rem; color: #4f5d70; cursor: pointer; } .guide-chk input { width: 18px; height: 18px; }
 @media (max-width: 560px) { .guide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.qwrap > .card { align-self: flex-start; }
 .qwrap { display: flex; align-items: stretch; justify-content: center; gap: 12px; width: 100%; max-width: 1100px; max-height: calc(100dvh - 24px); }
 .qwrap > .card { flex: 0 1 560px; min-width: 0; }
 .notepane { flex: 0 1 380px; min-width: 260px; display: flex; flex-direction: column; gap: 6px; background: #fffdf2; border: 3px solid var(--deep); border-radius: 22px; box-shadow: 0 6px 0 var(--deep); padding: 12px; animation: notein .22s ease-out both; }
@@ -915,6 +916,77 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   .pad button.jump { min-width: 0; width: 56px; }
 }
 @media (prefers-reduced-motion: reduce) { .btn:active, .pad button:active { transform: none; } }
+
+/* ================= 디자인 고도화 (덧입힘) ================= */
+:root { --shadow-soft: 0 18px 40px rgba(0, 46, 74, .22); --gloss: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0) 55%); }
+body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(217,241,255,0) 70%), linear-gradient(180deg, #eaf7ff 0, #f6fcff 45%, #eef9f0 100%); background-attachment: fixed; }
+/* 카드·창 */
+.card { border-radius: 26px; background: linear-gradient(180deg, #ffffff 0, #f8fbfe 100%); box-shadow: 0 8px 0 var(--deep), var(--shadow-soft); }
+.modal { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.tag { border: 1.5px solid #b5ddf5; background: linear-gradient(180deg, #e6f5ff, #cfeaff); }
+.tag.twin { border-color: #f3d27a; } .tag.ta { border-color: #ffb199; }
+/* 버튼: 윤기 + 눌림 */
+.btn { position: relative; background: linear-gradient(180deg, #33bdff 0, #0098e6 100%); text-shadow: 0 1.5px 0 rgba(0, 58, 92, .35); transition: transform .08s ease, box-shadow .08s ease, filter .12s ease; overflow: hidden; }
+.btn::before { content: ''; position: absolute; inset: 0 0 50% 0; background: var(--gloss); border-radius: inherit; pointer-events: none; }
+.btn:hover:not(:disabled) { filter: brightness(1.05); transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--deep); }
+.btn.ghost { background: linear-gradient(180deg, #ffffff, #eef5fb); text-shadow: none; }
+.btn.pass, .cheer-ok { background: linear-gradient(180deg, #ffd96b, #ffb82e); text-shadow: none; }
+.home-start { background: linear-gradient(180deg, #ffd96b 0, #ffb52a 100%); text-shadow: 0 1.5px 0 rgba(255,255,255,.5); }
+.home-start:not(:disabled)::after { content: ''; position: absolute; top: 0; bottom: 0; left: -40%; width: 30%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.65), transparent); transform: skewX(-18deg); animation: btnshine 3.2s ease-in-out infinite; pointer-events: none; }
+@keyframes btnshine { 0%, 55% { left: -40%; } 85%, 100% { left: 120%; } }
+.xbtn, .ctlbtn, .chip-btn { transition: transform .08s ease, box-shadow .08s ease, background .12s ease; }
+.xbtn:hover, .ctlbtn:hover { background: #eef7ff; } .ctlbtn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--deep); }
+.ctlbtn { background: linear-gradient(180deg, #ffffff, #eef5fb); }
+.chip { background: linear-gradient(180deg, #ffffff, #f1f7fc); border-color: #cfdbe6; box-shadow: 0 2px 0 rgba(0, 58, 92, .14); }
+.chip-btn:hover { transform: translateY(-1px); }
+/* 게임 화면 틀 */
+.top h1 { color: #ffd23a; -webkit-text-stroke: 6px #16305c; paint-order: stroke fill; letter-spacing: .02em; text-shadow: 0 4px 0 rgba(22, 48, 92, .25); padding: 0 4px; }
+.top p { background: #fff; border: 1.5px solid #cfdbe6; border-radius: 999px; padding: 3px 14px; font-size: .86rem; box-shadow: 0 2px 0 rgba(0, 58, 92, .1); }
+.stage { border-radius: 24px; box-shadow: 0 0 0 4px var(--deep), 0 9px 0 4px rgba(0, 58, 92, .28), var(--shadow-soft); }
+.pad button { background: linear-gradient(180deg, #ffffff, #e9f3fb); transition: transform .06s ease, box-shadow .06s ease; }
+.pad button.jump { background: linear-gradient(180deg, #33bdff, #0098e6); }
+.pad button.num { background: linear-gradient(180deg, #fffaf0, #ffe9b8); }
+.pad button:active, .pad button.on { transform: translateY(3px); box-shadow: 0 1px 0 var(--deep); }
+.itembar { background: linear-gradient(180deg, #ffffff, #f1f7fc); }
+.toast { box-shadow: 0 5px 0 rgba(0, 58, 92, .35); background: linear-gradient(180deg, #2fae6f, #1f8a52); }
+/* 문제 창 */
+#qModal .card { padding-top: 20px; }
+#qText { background: linear-gradient(180deg, #f1f9ff, #e4f3ff); border: 2px solid #c7e3f7; border-radius: 18px; padding: 14px 18px; position: relative; }
+#qText::before { content: 'Q'; position: absolute; left: -10px; top: -12px; width: 34px; height: 34px; border-radius: 50%; background: var(--sun); border: 3px solid var(--deep); color: var(--deep); font-family: var(--display); font-size: 1.15rem; line-height: 28px; text-align: center; box-shadow: 0 2px 0 var(--deep); }
+.choices { gap: 12px; }
+.choices button { min-height: 70px; background: linear-gradient(180deg, #ffffff, #f2f9ff); border: 2.5px solid #cfdbe6; border-radius: 18px; box-shadow: 0 4px 0 #cfdbe6; justify-content: flex-start; padding: 8px 14px; gap: 12px; transition: transform .08s ease, box-shadow .08s ease, border-color .12s ease; }
+.choices button .no { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-size: 1.05rem; color: #fff; background: #3a9df0; box-shadow: inset 0 -3px 0 rgba(0,0,0,.18); }
+.choices button:nth-child(2) .no { background: #2fae6f; } .choices button:nth-child(3) .no { background: #f08a2e; } .choices button:nth-child(4) .no { background: #8e6bd8; }
+.choices button:hover:not(:disabled) { border-color: var(--sky); box-shadow: 0 4px 0 #9fd6f7; transform: translateY(-2px); }
+.choices button:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 #cfdbe6; }
+.choices button.right { background: linear-gradient(180deg, #f0fbf4, #dff4e7); box-shadow: 0 4px 0 #9fd9b6; }
+.choices button.wrong { background: linear-gradient(180deg, #fff3f3, #fde3e4); box-shadow: 0 4px 0 #f1b3b6; }
+.choices button.right .no { background: var(--good); } .choices button.wrong .no { background: var(--bad); }
+.choices button.gone { box-shadow: none; }
+.hintbtn { background: linear-gradient(180deg, #fffbe0, #ffefa8); box-shadow: 0 2px 0 rgba(138, 90, 0, .25); transition: transform .08s ease; }
+.hintbtn:hover:not(:disabled) { transform: translateY(-1px); } .hintbtn.skipq { background: linear-gradient(180deg, #ffffff, #eef2f6); }
+.explain { border: 2px solid #f3dc8a; background: linear-gradient(180deg, #fffbe0, #fff4bd); border-radius: 18px; }
+.nt.ntcalc { border-color: #3a8fd6; color: #14507f; background: #eaf5ff; } .nt.ntcalc.off { opacity: .5; }
+#noteCalcSlot .calc { margin-top: 2px; }
+/* 메인 화면 아래 판 */
+.home-box { background: linear-gradient(180deg, #ffffff 0, #f6fbff 100%); box-shadow: 0 8px 0 var(--deep), var(--shadow-soft); }
+.chap-u { transition: transform .08s ease, box-shadow .1s ease, border-color .1s ease; }
+.chap-u:hover { transform: translateY(-2px); box-shadow: 0 4px 0 rgba(0, 58, 92, .14); }
+.cu-n { background: linear-gradient(180deg, #1b5f8c, #003a5c); box-shadow: inset 0 -2px 0 rgba(0,0,0,.25); }
+.cu-dots i.got { box-shadow: 0 0 0 2px rgba(255, 197, 61, .3); }
+.profile, .att { box-shadow: 0 4px 0 rgba(0, 58, 92, .28), 0 10px 24px rgba(0, 46, 74, .16); }
+/* 상점·설정 */
+.item { border: 2px solid #dcebf6; background: linear-gradient(180deg, #ffffff, #f2f9ff); transition: transform .08s ease, box-shadow .1s ease; }
+.item:hover { transform: translateY(-2px); box-shadow: 0 5px 0 rgba(0, 58, 92, .12); }
+.buy { transition: transform .08s ease; } .buy:hover:not(:disabled) { transform: translateY(-1px); }
+.shop-tabs { border: 2px solid #dbe6ef; } .shop-tabs button[aria-selected="true"] { box-shadow: 0 3px 0 rgba(0,58,92,.22); }
+.set-sec { border-bottom: 2px dashed #dbe6ef; padding-bottom: 4px; }
+.seg { box-shadow: 0 2px 0 rgba(0, 58, 92, .2); }
+.gd { background: linear-gradient(180deg, #ffffff, #eef7ff); }
+/* 단계 지도 */
+.jnode { transition: filter .12s ease; } .jnode:hover { filter: brightness(1.06) drop-shadow(0 4px 6px rgba(0,58,92,.25)); }
+@media (prefers-reduced-motion: reduce) { .btn, .choices button, .cu, .item, .pad button { transition: none; } .home-start::after { animation: none; display: none; } }
 </style>
 
 <div class="wrap">
@@ -1161,8 +1233,9 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     </div>
   </div>
   <aside class="notepane" id="notePane" aria-label="배움노트" hidden>
-    <div class="note-top"><b>📒 배움노트</b><span class="note-tools"><button type="button" class="nt on" data-nt="pen" aria-pressed="true">✏️ 펜</button><button type="button" class="nt" data-nt="erase" aria-pressed="false">🧽 지우개</button><button type="button" class="nt" data-nt="clear">🗑 모두 지우기</button><button type="button" class="nt x" id="noteClose" aria-label="배움노트 닫기">✕</button></span></div>
+    <div class="note-top"><b>📒 배움노트</b><span class="note-tools"><button type="button" class="nt on" data-nt="pen" aria-pressed="true">✏️ 펜</button><button type="button" class="nt" data-nt="erase" aria-pressed="false">🧽 지우개</button><button type="button" class="nt" data-nt="clear">🗑 모두 지우기</button><button type="button" class="nt ntcalc" id="noteCalc">🧮 계산기</button><button type="button" class="nt x" id="noteClose" aria-label="배움노트 닫기">✕</button></span></div>
     <canvas id="noteCv" aria-label="손으로 풀이를 적는 칸"></canvas>
+    <div id="noteCalcSlot"></div>
     <p class="note-tip">마우스나 손가락으로 풀이를 적어 보세요. 다음 문제로 넘어가면 새 종이가 돼요.</p>
   </aside></div>
 </div>
@@ -1703,8 +1776,16 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     $('noteBtn').setAttribute('aria-expanded', String(on)); $('noteBtn').textContent = on ? '📒 배움노트 접기' : '📒 배움노트 펼치기';
     if (on) noteFit(true);
   }
-  $('noteBtn').addEventListener('click', () => noteShow(!NOTE.open));
-  $('noteClose').addEventListener('click', () => { noteShow(false); $('noteBtn').focus({ preventScroll: true }); });
+  $('noteBtn').addEventListener('click', () => { noteShow(!NOTE.open); try { placeCalcPad(); } catch (_) {} });
+  // 배움노트 안의 계산기 버튼: 계산기 아이템을 여기서 바로 꺼내요
+  $('noteCalc').addEventListener('click', () => {
+    if (state !== 'question') return;
+    if (!$('calcPad').hidden) { $('calcPad').hidden = true; updateCalcBtn(); return; }
+    if (!stats.calc && (M.items.calc || 0) <= 0) { showToast('계산기가 없어요. 코인 상점에서 살 수 있어요'); return; }
+    if (!stats.calc) { M.items.calc--; stats.calc = true; runCalc = true; saveM(); ibSig = ''; }
+    openCalcPad(); showToast('계산기 등장! 식은 직접 세워요');
+  });
+  $('noteClose').addEventListener('click', () => { noteShow(false); try { placeCalcPad(); } catch (_) {} $('noteBtn').focus({ preventScroll: true }); });
   $('notePane').addEventListener('click', e => {
     const b = e.target.closest('[data-nt]'); if (!b) return;
     if (b.dataset.nt === 'clear') { noteClear(); return; }
@@ -3710,9 +3791,10 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   let calcExpr = '', calcDone = false;
   function updateCalcBtn() {
     const has = !!(stats && stats.calc), n = M.items.calc || 0, ok = current && calcOK(), on = has || (n > 0 && ok);
-    $('calcBtn').hidden = !on;
+    $('calcBtn').hidden = !on || !ok;
     $('calcBtn').innerHTML = '<span class="no5">6</span> ' + (has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`);
     $('calcBtn').disabled = !ok || !$('calcPad').hidden;
+    try { const nc = $('noteCalc'); nc.textContent = has ? '🧮 계산기' : `🧮 계산기 (${n})`; const can = has || n > 0; nc.classList.toggle('off', !can); nc.setAttribute('aria-disabled', String(!can)); } catch (_) {}
   }
   function calcEval(str) {
     const t = str.match(/\d+(?:\.\d+)?|[+\-×÷]/g); if (!t) return '0';
@@ -3746,7 +3828,13 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     openCalcPad();
     showToast('계산기 등장! 식은 직접 세워요');
   });
+  function placeCalcPad() {
+    const pad = $('calcPad'), inNote = NOTE.open;
+    if (inNote && pad.parentNode !== $('noteCalcSlot')) $('noteCalcSlot').appendChild(pad);
+    else if (!inNote && pad.parentNode === $('noteCalcSlot')) $('qExplain').parentNode.insertBefore(pad, $('qExplain'));
+  }
   function openCalcPad() {
+    placeCalcPad();
     calcExpr = ''; calcDone = false; $('calcDisp').textContent = '0';
     $('calcPad').hidden = false; $('calcPad').classList.remove('pop'); void $('calcPad').offsetWidth; $('calcPad').classList.add('pop');
     updateCalcBtn();
