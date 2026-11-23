@@ -1113,7 +1113,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
       <div class="gd"><span class="gd-k"><kbd>←</kbd><kbd>→</kbd></span><b>이동</b><small>화면 아래 ← → 버튼도 돼요</small></div>
       <div class="gd"><span class="gd-k"><kbd class="wide">스페이스</kbd></span><b>점프</b><small>공중에서 한 번 더 누르면 이단 점프! (화면 ↑ 버튼)</small></div>
       <div class="gd"><span class="gd-k"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></span><b>아이템 쓰기</b><small>달리는 중: 거대화 · 시간 멈춤 · 하트 · 보호막</small></div>
-      <div class="gd"><span class="gd-k"><svg class="gd-art" viewBox="0 0 56 70" aria-hidden="true"><rect x="20" y="0" width="16" height="14" fill="#8fd3ff" opacity=".7"/><rect x="12" y="10" width="32" height="58" rx="9" fill="#003a5c"/><rect x="16" y="14" width="24" height="50" rx="6" fill="#0077b6"/><circle cx="28" cy="27" r="8.500" fill="#ffc53d"/><text x="28" y="31.500" text-anchor="middle" font-family="Jua" font-size="12" fill="#003a5c">1</text><path d="M23.500 45 v-3.500 a4.500 4.500 0 0 1 9 0 v3.500" stroke="#fff" stroke-width="2.600" fill="none"/><rect x="21" y="44.500" width="14" height="11" rx="2.500" fill="#fff"/></svg></span><b>문제의 문</b><small>문에 닿으면 문제가 나와요. 보기를 한 번만 누르면 답!</small></div>
+      <div class="gd"><span class="gd-k"><svg class="gd-art" viewBox="0 0 64 78" aria-hidden="true"><rect x="6" y="12" width="52" height="66" rx="9" fill="#5b6472"/><rect x="9" y="15" width="46" height="63" rx="7" fill="#8a94a3"/><rect x="13" y="19" width="38" height="59" rx="5" fill="#7a4420"/><rect x="15" y="21" width="34" height="57" rx="4" fill="#b5703a"/><rect x="19" y="25" width="26" height="19" rx="3" fill="#9a5a2b"/><rect x="19" y="49" width="26" height="24" rx="3" fill="#9a5a2b"/><circle cx="43" cy="47" r="2.600" fill="#ffd34d"/><path d="M28 55 v-3 a4 4 0 0 1 8 0 v3" stroke="#fcfcfd" stroke-width="2.200" fill="none"/><rect x="26" y="54.500" width="12" height="9.500" rx="2.200" fill="#ffd34d"/><circle cx="32" cy="11" r="10" fill="#003a5c"/><circle cx="32" cy="11" r="8" fill="#ffc53d"/><text x="32" y="15" text-anchor="middle" font-family="Jua" font-size="11" fill="#003a5c">1</text></svg></span><b>문제의 문</b><small>문에 닿으면 문제가 나와요. 맞히면 문이 열려요! 보기는 한 번만 누르면 답</small></div>
       <div class="gd"><span class="gd-k"><svg class="gd-art" viewBox="0 0 60 62" aria-hidden="true"><path d="M30 20 q3 -7 4 -10" stroke="#6a4bbd" stroke-width="2.800" fill="none" stroke-linecap="round"/><circle cx="34" cy="7" r="7" fill="#ffd34d"/><text x="34" y="11" text-anchor="middle" font-family="Jua" font-size="11" fill="#7a4a00">?</text><ellipse cx="18" cy="57" rx="8" ry="4.500" fill="#6a4bbd"/><ellipse cx="42" cy="57" rx="8" ry="4.500" fill="#6a4bbd"/><path d="M6 52 C2 30 14 18 30 18 C46 18 58 30 54 52 Q46 60 38 53 Q30 60 22 53 Q14 60 6 52 Z" fill="#8e6bd8"/><ellipse cx="19" cy="27" rx="7" ry="3.500" fill="#fff" opacity=".28" transform="rotate(-25 19 27)"/><circle cx="21" cy="36" r="7.500" fill="#fff"/><circle cx="39" cy="36" r="7.500" fill="#fff"/><circle cx="23" cy="37" r="3.600" fill="#1c2024"/><circle cx="41" cy="37" r="3.600" fill="#1c2024"/><path d="M13 26 L25 23 M35 27 L47 25" stroke="#3b2a78" stroke-width="2.600" stroke-linecap="round"/><path d="M24 48 q3 -4 6 0 q3 4 6 0" stroke="#3b2a78" stroke-width="2.200" fill="none" stroke-linecap="round"/><ellipse cx="12" cy="45" rx="4" ry="2.500" fill="#ffaabe" opacity=".6"/><ellipse cx="48" cy="45" rx="4" ry="2.500" fill="#ffaabe" opacity=".6"/></svg></span><b>헷갈이</b><small>위에서 밟으면 물리쳐요. 옆에서 부딪히면 하트가 줄어요</small></div>
       <div class="gd"><span class="gd-k"><span class="gd-ic">📒</span></span><b>배움노트</b><small>문제 창에서 펼쳐서 풀이를 적을 수 있어요</small></div>
     </div>
@@ -2105,28 +2105,39 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
     }
   }
 
+  // 문제의 문: 나무 문이 길을 막고 있어요. 문제를 풀면 자물쇠가 풀리고 문이 활짝 열려 지나갈 수 있어요
   function drawGates(t) {
     for (const g of gates) {
-      const x = g.x - camX; if (x + g.w < -10 || x > W + 10) continue;
-      const lift = g.open * (g.h + 20);
-      const top = GROUND - g.h - lift;
-      if (g.open >= 1) {
-        ctx.fillStyle = '#d5efff'; rr(x - 6, GROUND - 16, g.w + 12, 16, 6); ctx.fill();
-        continue;
-      }
-      // 문 위로 이어지는 빛 기둥: 뛰어넘을 수 없다는 표시
-      ctx.fillStyle = 'rgba(0,171,255,0.18)'; ctx.fillRect(x + 6, 0, g.w - 12, Math.max(0, top));
-      ctx.save();
-      ctx.beginPath(); ctx.rect(x - 10, 0, g.w + 20, GROUND); ctx.clip();
-      ctx.fillStyle = '#003a5c'; rr(x, top, g.w, g.h, 12); ctx.fill();
-      ctx.fillStyle = '#0077b3'; rr(x + 7, top + 10, g.w - 14, g.h - 20, 8); ctx.fill();
-      // 번호 배지
-      ctx.fillStyle = '#ffc53d'; ctx.beginPath(); ctx.arc(x + g.w / 2, top + 48, 18, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#003a5c'; ctx.font = '22px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(String(g.i + 1), x + g.w / 2, top + 56);
-      // 자물쇠
-      ctx.strokeStyle = '#fcfcfd'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(x + g.w / 2, top + 118, 9, Math.PI, 0); ctx.stroke();
-      ctx.fillStyle = '#fcfcfd'; rr(x + g.w / 2 - 13, top + 118, 26, 20, 4); ctx.fill();
+      const cx = g.x - camX + g.w / 2; if (cx < -90 || cx > W + 90) continue;
+      const DW = 86, DH = 156, fx = cx - DW / 2, top = GROUND - DH, o = Math.min(1, g.open), ez = 1 - Math.pow(1 - o, 3);
+      // 닫혀 있을 때: 문 위로 이어지는 빛 기둥 (뛰어넘을 수 없다는 표시)
+      if (o < 1) { ctx.fillStyle = `rgba(0,171,255,${0.18 * (1 - o)})`; ctx.fillRect(cx - 20, 0, 40, top - 26); }
+      // 문틀 (돌 아치)
+      ctx.fillStyle = '#5b6472'; rr(fx - 12, top - 14, DW + 24, DH + 14, 16); ctx.fill();
+      ctx.fillStyle = '#8a94a3'; rr(fx - 8, top - 10, DW + 16, DH + 10, 13); ctx.fill();
+      ctx.fillStyle = '#6f7887'; for (let k = 0; k < 4; k++) { ctx.fillRect(fx - 8, top + 22 + k * 36, 8, 3); ctx.fillRect(fx + DW, top + 40 + k * 36, 8, 3); }
+      // 문 안쪽: 열릴수록 밝은 빛이 새어 나와요
+      const ig = ctx.createLinearGradient(0, top, 0, GROUND); ig.addColorStop(0, o > 0 ? '#fff6c8' : '#2b2233'); ig.addColorStop(1, o > 0 ? '#ffe08a' : '#3a2f45');
+      ctx.fillStyle = ig; rr(fx, top, DW, DH, 9); ctx.fill(); ctx.fillRect(fx, GROUND - 12, DW, 12);
+      if (o > 0 && o < 1) { ctx.fillStyle = `rgba(255,240,170,${0.5 * Math.sin(o * Math.PI)})`; ctx.beginPath(); ctx.ellipse(cx, GROUND - DH / 2, DW * 0.9, DH * 0.62, 0, 0, Math.PI * 2); ctx.fill(); }
+      // 문짝: 왼쪽 경첩을 축으로 돌며 열려요 (옆에서 보면 점점 좁아짐)
+      const lw = DW * (1 - 0.86 * ez);
+      ctx.save(); ctx.beginPath(); ctx.rect(fx, top, DW, DH); ctx.clip();
+      ctx.fillStyle = '#7a4420'; rr(fx, top, lw, DH + 8, 8); ctx.fill();
+      ctx.fillStyle = '#b5703a'; rr(fx + 3, top + 3, Math.max(2, lw - 7), DH, 6); ctx.fill();
+      if (lw > 30) { const pw = lw - 22; ctx.fillStyle = '#9a5a2b'; rr(fx + 11, top + 14, pw, 52, 5); ctx.fill(); rr(fx + 11, top + 76, pw, 66, 5); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,.12)'; ctx.fillRect(fx + 11, top + 14, pw, 4); ctx.fillRect(fx + 11, top + 76, pw, 4); }
+      ctx.fillStyle = '#ffd34d'; ctx.beginPath(); ctx.arc(fx + lw - 10, top + DH * 0.52, 5, 0, Math.PI * 2); ctx.fill();   // 손잡이
+      ctx.fillStyle = '#5b3a1c'; ctx.fillRect(fx, top + 26, 5, 12); ctx.fillRect(fx, top + DH - 44, 5, 12);                 // 경첩
       ctx.restore();
+      // 자물쇠: 닫혀 있을 때만. 풀리면 아래로 떨어지며 사라져요
+      if (o < 0.5) { const la = 1 - o * 2, ly = top + 96 + o * 60;
+        ctx.globalAlpha = la; ctx.strokeStyle = '#fcfcfd'; ctx.lineWidth = 4.5; ctx.beginPath(); ctx.arc(cx, ly, 10, Math.PI, 0); ctx.stroke();
+        ctx.fillStyle = '#ffd34d'; rr(cx - 15, ly, 30, 23, 5); ctx.fill(); ctx.fillStyle = '#7a4a00'; ctx.beginPath(); ctx.arc(cx, ly + 10, 3.2, 0, Math.PI * 2); ctx.fill(); ctx.fillRect(cx - 1.5, ly + 10, 3, 7); ctx.globalAlpha = 1; }
+      // 번호판 (풀면 초록 체크)
+      ctx.fillStyle = '#003a5c'; ctx.beginPath(); ctx.arc(cx, top - 14, 23, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = g.solved ? '#30a46c' : '#ffc53d'; ctx.beginPath(); ctx.arc(cx, top - 14, 19, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = g.solved ? '#fff' : '#003a5c'; ctx.font = '22px Jua, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(g.solved ? '✓' : String(g.i + 1), cx, top - 6);
     }
   }
 
