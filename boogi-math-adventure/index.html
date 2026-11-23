@@ -922,7 +922,7 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(217,241,255,0) 70%), linear-gradient(180deg, #eaf7ff 0, #f6fcff 45%, #eef9f0 100%); background-attachment: fixed; }
 /* 카드·창 */
 .card { border-radius: 26px; background: linear-gradient(180deg, #ffffff 0, #f8fbfe 100%); box-shadow: 0 8px 0 var(--deep), var(--shadow-soft); }
-.modal { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+/* 배경 흐림(backdrop-filter)은 게임 화면이 끊겨서 쓰지 않아요 */
 .tag { border: 1.5px solid #b5ddf5; background: linear-gradient(180deg, #e6f5ff, #cfeaff); }
 .tag.twin { border-color: #f3d27a; } .tag.ta { border-color: #ffb199; }
 /* 버튼: 윤기 + 눌림 */
@@ -4089,6 +4089,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     const G = GUARD[i];
     vnStage = i; vnI = 0;
     vnLines = [G.line, `오늘의 미션: ${questOf(pick.key, i)}`, vnRule(i)];
+    try { const im = heroImage(curHero()); if (im.decode) im.decode().catch(() => {}); } catch (_) {}   // 주인공 그림을 미리 불러 둬요 (출발 순간 끊김 방지)
     $('vn').style.setProperty('--vnbg', G.bg); $('vn').style.setProperty('--vnfloor', G.floor);
     $('vnChar').innerHTML = charSVG(G.art);
     $('vnName').textContent = G.name;
