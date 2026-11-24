@@ -228,10 +228,14 @@ kbd { font-family: var(--body); font-size: 0.85em; border: 1px solid var(--line)
 .note-top b { font-weight: 400; } .note-tools { display: flex; gap: 4px; flex-wrap: wrap; }
 .nt { font: inherit; font-family: var(--body); font-size: .78rem; font-weight: 700; padding: 4px 9px; border-radius: 999px; border: 2px solid #c9b77a; background: #fff; color: #5b4a12; cursor: pointer; white-space: nowrap; }
 .nt.on { background: var(--sun); border-color: var(--deep); color: var(--deep); } .nt.x { border-color: var(--deep); color: var(--deep); }
+.note-paper { position: relative; flex: 1; display: flex; min-height: 240px; }
+.note-clear { position: absolute; right: 8px; bottom: 8px; font-family: var(--display); font-size: .95rem; color: #fff; background: #e5484d; border: 2px solid #8f1d22; border-radius: 999px; padding: 5px 14px; cursor: pointer; box-shadow: 0 3px 0 #8f1d22; }
+.note-clear:hover { filter: brightness(1.08); } .note-clear:active { transform: translateY(2px); box-shadow: 0 1px 0 #8f1d22; }
+.note-clear:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 #noteCv { flex: 1; min-height: 240px; width: 100%; border-radius: 12px; border: 2px solid #e6d9a8; touch-action: none; cursor: crosshair; background: #fffef8 repeating-linear-gradient(#fffef8 0 31px, #e9e2c4 31px 32px); display: block; }
 .note-tip { margin: 0; font-size: .74rem; color: #7a6a3a; }
 .notebtn[aria-expanded="true"] { background: var(--sun); }
-@media (max-width: 860px) { .qwrap { flex-direction: column; align-items: center; overflow-y: auto; } .qwrap > .card { flex: none; width: 100%; max-height: none !important; overflow: visible !important; } .notepane { flex: none; width: 100%; min-width: 0; box-sizing: border-box; } #noteCv { min-height: 220px; flex: none; height: 220px; } }
+@media (max-width: 860px) { .note-paper { flex: none; min-height: 0; } .qwrap { flex-direction: column; align-items: center; overflow-y: auto; } .qwrap > .card { flex: none; width: 100%; max-height: none !important; overflow: visible !important; } .notepane { flex: none; width: 100%; min-width: 0; box-sizing: border-box; } #noteCv { min-height: 220px; flex: none; height: 220px; } }
 @media (prefers-reduced-motion: reduce) { .notepane { animation: none; } }
 .hintroll { align-self: center; display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 8px 18px; border-radius: 999px; border: 3px solid #b07a00; background: #fff7c2; font-family: var(--display); font-size: 1.15rem; color: #6b4300; }
 .hintroll.rolling { animation: hrshake .12s linear infinite alternate; }
@@ -1327,8 +1331,8 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     </div>
   </div>
   <aside class="notepane" id="notePane" aria-label="배움노트" hidden>
-    <div class="note-top"><b>📒 배움노트</b><span class="note-tools"><button type="button" class="nt on" data-nt="pen" aria-pressed="true">✏️ 펜</button><button type="button" class="nt" data-nt="erase" aria-pressed="false">🧽 지우개</button><button type="button" class="nt" data-nt="clear">🗑 모두 지우기</button><button type="button" class="nt ntcalc" id="noteCalc">🧮 계산기</button><button type="button" class="nt x" id="noteClose" aria-label="배움노트 닫기">✕</button></span></div>
-    <canvas id="noteCv" aria-label="손으로 풀이를 적는 칸"></canvas>
+    <div class="note-top"><b>📒 배움노트</b><span class="note-tools"><button type="button" class="nt on" data-nt="pen" aria-pressed="true">✏️ 펜</button><button type="button" class="nt" data-nt="erase" aria-pressed="false">🧽 지우개</button><button type="button" class="nt ntcalc" id="noteCalc">🧮 계산기</button><button type="button" class="nt x" id="noteClose" aria-label="배움노트 닫기">✕</button></span></div>
+    <div class="note-paper"><canvas id="noteCv" aria-label="손으로 풀이를 적는 칸"></canvas><button type="button" class="note-clear" data-nt="clear" aria-label="배움노트에 쓴 것을 모두 지우기">🗑 전체 삭제</button></div>
     <div id="noteCalcSlot"></div>
     <p class="note-tip">마우스나 손가락으로 풀이를 적어 보세요. 다음 문제로 넘어가면 새 종이가 돼요.</p>
   </aside></div>
@@ -1883,7 +1887,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   $('noteClose').addEventListener('click', () => { noteShow(false); try { placeCalcPad(); } catch (_) {} $('noteBtn').focus({ preventScroll: true }); });
   $('notePane').addEventListener('click', e => {
     const b = e.target.closest('[data-nt]'); if (!b) return;
-    if (b.dataset.nt === 'clear') { noteClear(); return; }
+    if (b.dataset.nt === 'clear') { noteClear(); showToast('배움노트를 모두 지웠어요'); return; }
     NOTE.tool = b.dataset.nt; $('notePane').querySelectorAll('[data-nt="pen"],[data-nt="erase"]').forEach(x => { const on = x.dataset.nt === NOTE.tool; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); });
   });
   { const cv = $('noteCv'), pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
