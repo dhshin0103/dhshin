@@ -497,7 +497,7 @@ body.story-on { overflow: hidden; }
 .qc-presets button { border: 2px solid #dfe4ea; background: #fff; border-radius: 999px; padding: 4px 12px; font-family: var(--display); color: var(--deep); cursor: pointer; }
 .qc-presets button.on { border-color: #f2b705; background: #fff3c4; }
 .tag.ta { background: #ffe1d2; color: #c2410c; font-variant-numeric: tabular-nums; }
-.hintbtn .no5, .calcbtn .no5, .skipq .no5 { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; background: #fff; border: 1px solid #b8c0ca; font-size: .75rem; margin-right: 2px; }
+.hintbtn .no5, .calcbtn .no5, .skipq .no5, .notebtn .no5 { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; background: #fff; border: 1px solid #b8c0ca; font-size: .75rem; margin-right: 2px; }
 .skipq { border-color: #8b95a3; background: #f1f3f6; color: #4a5563; margin-right: auto; }
 .qz-pop { display: flex; align-items: center; gap: 12px; }
 .qz-roki { flex: none; width: 84px; height: 84px; border-radius: 20px; background: #c9c8ff; display: grid; place-items: center; animation: hopS .5s ease-in-out infinite alternate; }
@@ -1085,6 +1085,34 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
 /* 단계 지도 */
 .jnode { transition: filter .12s ease; } .jnode:hover { filter: brightness(1.06) drop-shadow(0 4px 6px rgba(0,58,92,.25)); }
 @media (prefers-reduced-motion: reduce) { .btn, .choices button, .cu, .item, .pad button { transition: none; } .home-start::after { animation: none; display: none; } }
+
+/* 가상 키보드: 게임 화면 안 아래쪽에 반투명으로 (넓은 화면). 문제 창이 열리면 화면 맨 아래로 */
+.stage .pad { display: none; }
+body.pad-on .stage .pad { display: flex; }
+@media (min-width: 641px) {
+  body.pad-on:not(.q-on) .stage .pad { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 3; max-width: none; margin: 0; }
+  body.pad-on:not(.q-on) .wrap { padding-bottom: 0; }
+  body.pad-on:not(.q-on) .stage .pad button { opacity: .42; background: rgba(255,255,255,.92); }
+  body.pad-on:not(.q-on) .stage .pad button.jump { background: rgba(0,152,230,.95); color: #fff; }
+  body.pad-on:not(.q-on) .stage .pad button.num { background: rgba(255,244,214,.95); }
+  body.pad-on:not(.q-on) .stage .pad button.on, body.pad-on:not(.q-on) .stage .pad button:active { opacity: .95; }
+}
+.pad button.tut-hl { opacity: 1 !important; box-shadow: 0 0 0 4px var(--sun), 0 2px 0 var(--deep) !important; animation: tuthl 1s ease-in-out infinite; }
+@keyframes tuthl { 50% { transform: scale(1.12); } }
+/* 튜토리얼 안내 띠 */
+.tutbar { position: absolute; left: 50%; top: 20%; transform: translateX(-50%); z-index: 4; display: flex; align-items: center; gap: 10px; max-width: calc(100% - 24px); padding: 8px 10px 8px 12px; border-radius: 999px; background: #fff; border: 3px solid var(--deep); box-shadow: 0 5px 0 var(--deep); font-family: var(--display); color: var(--deep); font-size: clamp(.9rem, 2.1vw, 1.25rem); }
+.tutbar[hidden] { display: none; } .tutbar.pop { animation: tutpop .35s cubic-bezier(.2,1.5,.4,1); }
+@keyframes tutpop { from { transform: translateX(-50%) scale(.7); opacity: 0; } to { transform: translateX(-50%) scale(1); opacity: 1; } }
+.tut-n { flex: none; background: var(--deep); color: #fff; border-radius: 999px; padding: 2px 10px; font-size: .85em; }
+.tut-k { flex: none; font-family: var(--display); font-size: 1em; background: var(--sun); border: 2px solid var(--deep); border-bottom-width: 4px; border-radius: 10px; padding: 2px 12px; color: var(--deep); white-space: nowrap; }
+.tut-t { min-width: 0; line-height: 1.3; } .tut-skip { flex: none; font: inherit; font-family: var(--body); font-size: .72em; font-weight: 700; color: #5b6878; background: #eef2f6; border: 0; border-radius: 999px; padding: 4px 10px; cursor: pointer; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .pad button.tut-hl, .tutbar.pop { animation: none; } }
+/* 돌발 퀴즈 선택 버튼 */
+.keyno { display: inline-grid; place-items: center; width: 26px; height: 26px; margin-right: 6px; border-radius: 8px; background: #fff; color: var(--deep); border: 2px solid var(--deep); font-family: var(--display); font-size: .95rem; text-shadow: none; vertical-align: 2px; }
+.keyno.wide { width: auto; padding: 0 9px; font-size: .82rem; }
+@media (max-width: 640px), (pointer: coarse) { #twinBtn .keyno { display: none; } }
+.qz-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .qz-keytip { text-align: center; margin: 0; }
+@media (max-width: 640px), (pointer: coarse) { .qz-keytip { display: none; } }
 </style>
 
 <div class="wrap">
@@ -1097,7 +1125,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     <canvas id="game" width="960" height="540" aria-label="부기가 달리는 수학 모험 게임 화면"></canvas>
     <div class="toast" id="toast" hidden></div>
     <button type="button" class="skip" id="skipBtn" hidden>건너뛰기</button>
-  </div>
+    <div class="tutbar" id="tutBar" hidden></div>
   <div class="pad" aria-label="가상 키보드">
     <div class="keyshow" id="keyShow" aria-live="polite" hidden></div>
     <div class="nums" aria-label="문제 보기 고르기">
@@ -1111,6 +1139,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
       <button type="button" class="jump" id="btnJump" aria-label="점프">↑<small>점프</small></button>
       <button type="button" id="btnRight" aria-label="오른쪽으로 이동">→</button>
     </div>
+  </div>
   </div>
   <p class="help">키보드: <kbd>←</kbd> <kbd>→</kbd> 이동 · <kbd>스페이스</kbd> 점프(두 번 누르면 이단 점프) · <kbd>1</kbd>~<kbd>4</kbd> 아이템</p>
 </div>
@@ -1201,6 +1230,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     <div class="set-row"><div class="set-lb"><b>효과음</b></div><div class="seg" id="segSound" role="radiogroup" aria-label="효과음"></div></div>
     <div class="set-row"><div class="set-lb"><b>소리 크기</b></div><input type="range" id="volRange" min="0" max="100" step="5" value="80" aria-label="소리 크기" class="vol"></div>
     <div class="set-row"><div class="set-lb"><b>조작법 안내</b><small>단계를 시작할 때 보여 줘요</small></div><div class="seg" id="segGuide" role="radiogroup" aria-label="조작법 안내"><button type="button" role="radio" data-guide="on">보기</button><button type="button" role="radio" data-guide="off">안 보기</button></div></div>
+    <div class="set-row"><div class="set-lb"><b>조작법 튜토리얼</b><small>직접 눌러 보며 배우는 연습이에요</small></div><button type="button" class="btn ghost set-story" id="tutReset">다음 판에 다시 하기</button></div>
     <h3 class="set-sec">이야기</h3>
     <div class="set-row"><div class="set-lb"><b>매쓰 아일랜드 이야기</b><small>멈춰 버린 시계탑 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
     <p class="note" id="setNote"></p>
@@ -1316,7 +1346,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip"><span class="no5">5</span> 모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn" hidden>힌트 뽑기</button><button type="button" class="hintbtn notebtn" id="noteBtn" aria-expanded="false" aria-controls="notePane">📒 배움노트 펼치기</button></div>
+    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip"><span class="no5">5</span> 모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn" hidden>힌트 뽑기</button><button type="button" class="hintbtn notebtn" id="noteBtn" aria-expanded="false" aria-controls="notePane"><span class="no5">6</span> 📒 배움노트 펼치기</button></div>
     <div class="hintroll" id="hintRoll" hidden aria-live="polite"></div>
     <div class="calc" id="calcPad" hidden>
       <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
@@ -1327,7 +1357,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
       <p class="ex-wrong" id="exWrong"></p>
       <p class="ex-title">이렇게 풀어요</p>
       <p id="qExText"></p>
-      <button type="button" class="btn" id="twinBtn">비슷한 문제로 다시 도전</button><button type="button" class="btn pass" id="qPass" hidden>통과하고 계속 가기 ▶</button>
+      <button type="button" class="btn" id="twinBtn"><span class="keyno wide">스페이스</span> 비슷한 문제로 다시 도전</button><button type="button" class="btn pass" id="qPass" hidden>통과하고 계속 가기 ▶</button>
     </div>
   </div>
   <aside class="notepane" id="notePane" aria-label="배움노트" hidden>
@@ -1695,7 +1725,8 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     taTime = 0; segStart = 0; taSplits = [];
     stats.taLeft = timeAtk ? taLimit() : 0;
     // 로키의 돌발 퀴즈: 판마다 70% 확률로, 출발 12~35초 사이 아무 때나 한 번 나타나요
-    surprise = Math.random() < 0.7 ? { at: 12 + Math.random() * 23, done: false } : null;
+    surprise = null;
+    try { const sp = sqPlan(pick.key); if (pick.i === 0 && sp.shown) { delete M.sq[pick.key]; } const sp2 = sqPlan(pick.key); if (sp2.i === pick.i && !sp2.shown) surprise = { at: 6 + Math.random() * 12, done: false }; } catch (_) {}
     state = 'start';
   }
 
@@ -1712,6 +1743,14 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   });
   window.addEventListener('keyup', e => { if (keyMap[e.key]) $(KEY_BTN[keyMap[e.key]]).classList.remove('on'); });
   window.addEventListener('keydown', e => {
+    if ((state === 'quiz' || !$('quizModal').hidden) && /^[1-4]$/.test(e.key) && !e.repeat) {
+      const go = $('qzGo'), ps = $('qzPass'), bk = $('qzBack'), ag = $('qzAgain');
+      if (go && e.key === '1') { e.preventDefault(); go.click(); return; }
+      if (ps && e.key === '2') { e.preventDefault(); ps.click(); return; }
+      if (bk && e.key === '1') { e.preventDefault(); bk.click(); return; }
+      if (ag && e.key === '1') { e.preventDefault(); ag.click(); return; }
+      const bs = $('qzBody').querySelectorAll('[data-qz]'); if (bs.length) { e.preventDefault(); const b2 = bs[Number(e.key) - 1]; if (b2 && !b2.disabled) b2.click(); return; }
+    }
     if (state === 'question' && !$('calcPad').hidden) {
       const m = { '*': '×', '/': '÷', Enter: '=', Backspace: '⌫', Escape: 'C', x: '×' }[e.key] || e.key;
       const b = $('calcKeys').querySelector(`[data-ck="${m}"]`);
@@ -1719,9 +1758,10 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
       return;
     }
     if (state === 'question' && e.key === '5') { e.preventDefault(); $('qSkip').click(); return; }
+    if (state === 'question' && e.key === '6') { e.preventDefault(); $('noteBtn').click(); return; }
+    if (state === 'question' && e.key === ' ' && !$('qExplain').hidden && !e.repeat) { e.preventDefault(); $('twinBtn').click(); return; }
     // 문제 창: 6 힌트 뽑기, 7 계산기
-    if (state === 'question' && (e.key === 'n' || e.key === 'N' || e.key === 'ㅜ')) { e.preventDefault(); $('noteBtn').click(); return; }
-    if (state === 'question' && e.key === '6') { e.preventDefault(); if (!$('calcBtn').hidden && !$('calcBtn').disabled) $('calcBtn').click(); else showToast((M.items.calc || 0) <= 0 && !stats.calc ? '계산기가 없어요. 코인 상점에서 살 수 있어요' : '계산기는 식을 세우는 문제에서만 쓸 수 있어요'); return; }
+    if (state === 'question' && e.key === '7') { e.preventDefault(); if (!$('calcBtn').hidden && !$('calcBtn').disabled) $('calcBtn').click(); else showToast((M.items.calc || 0) <= 0 && !stats.calc ? '계산기가 없어요. 코인 상점에서 살 수 있어요' : '계산기는 식을 세우는 문제에서만 쓸 수 있어요'); return; }
     // 달리는 중: 1 거대화, 2 시간 멈춤, 3 하트 +1, 4 보호막 (로블록스·마인크래프트 아이템 칸처럼)
     if (state === 'play' && /^[1-4]$/.test(e.key) && !e.repeat) { e.preventDefault(); const el = $(IB[Number(e.key) - 1].bid); if (el) el.click(); return; }
     if (state === 'question' && /^[1-4]$/.test(e.key)) {
@@ -1872,7 +1912,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   function noteClear() { const cv = $('noteCv'); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); }
   function noteShow(on) {
     NOTE.open = on; $('notePane').hidden = !on;
-    $('noteBtn').setAttribute('aria-expanded', String(on)); $('noteBtn').textContent = on ? '📒 배움노트 접기' : '📒 배움노트 펼치기';
+    $('noteBtn').setAttribute('aria-expanded', String(on)); $('noteBtn').innerHTML = '<span class="no5">6</span> ' + (on ? '📒 배움노트 접기' : '📒 배움노트 펼치기');
     if (on) noteFit(true);
   }
   $('noteBtn').addEventListener('click', () => { noteShow(!NOTE.open); try { placeCalcPad(); } catch (_) {} });
@@ -1913,6 +1953,36 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   }
   $('qSkip').addEventListener('click', () => passGate('넘어갔어요! 샌디 기지에서 다시 만나요', true));
   $('qPass').addEventListener('click', () => passGate(pick.i === NSTG - 1 ? '통과! 다음 문으로 가요' : '통과! 이 문제는 5단계 샌디 기지에서 다시 만나요', false));
+  // ---------- 조작법 튜토리얼: 처음 한 번, 직접 눌러 보며 배워요 ----------
+  const TUT = { on: false, step: 0, x0: 0, t: 0 };
+  const TUT_STEPS = [
+    { key: '→', btn: 'btnRight', text: '오른쪽 화살표를 눌러 앞으로 가 보세요', done: () => player.x > TUT.x0 + 140 },
+    { key: '←', btn: 'btnLeft', text: '왼쪽 화살표를 누르면 뒤로 돌아가요', done: () => keys.left && player.vx < -20 && (TUT.t += 1) > 12 },
+    { key: '스페이스', btn: 'btnJump', text: '스페이스(또는 ↑ 점프 버튼)를 눌러 점프!', done: () => (player.jumps || 0) >= 1 && !player.onGround },
+    { key: '스페이스 ×2', btn: 'btnJump', text: '공중에서 한 번 더! 이단 점프를 해 보세요', done: () => player.jumps === 2 },
+    { key: '🚪', btn: 'btnRight', text: '코인을 모으며 문제의 문까지 가요. 문에 닿으면 문제가 나와요', done: () => state === 'question' }
+  ];
+  function tutDraw() {
+    const st = TUT_STEPS[TUT.step], bar = $('tutBar');
+    bar.innerHTML = `<span class="tut-n">${TUT.step + 1}/${TUT_STEPS.length}</span><kbd class="tut-k">${st.key}</kbd><span class="tut-t">${st.text}</span><button type="button" class="tut-skip" id="tutSkip">건너뛰기</button>`;
+    bar.hidden = false; bar.classList.remove('pop'); void bar.offsetWidth; bar.classList.add('pop');
+    document.querySelectorAll('.pad .tut-hl').forEach(b => b.classList.remove('tut-hl')); const hb = $(st.btn); if (hb) hb.classList.add('tut-hl');
+  }
+  function tutStart() { TUT.on = true; TUT.step = 0; TUT.x0 = player.x; TUT.t = 0; tutDraw(); }
+  function tutEnd(done) {
+    TUT.on = false; $('tutBar').hidden = true; document.querySelectorAll('.pad .tut-hl').forEach(b => b.classList.remove('tut-hl'));
+    M.set.tutDone = true; saveM(); if (done) { showToast('튜토리얼 완료! 이제 모험을 떠나요'); try { tone([523, 659, 784, 1047], 0.08, 'triangle', 0.08); } catch (_) {} }
+  }
+  function tutTick() {
+    if (!TUT.on) return;
+    if (state !== 'play' && state !== 'question') { if (state === 'over' || state === 'done' || state === 'start') { TUT.on = false; $('tutBar').hidden = true; } return; }
+    if (TUT_STEPS[TUT.step].done()) {
+      try { tone([784, 1047], 0.06, 'triangle', 0.06); } catch (_) {}
+      TUT.step++; TUT.t = 0; TUT.x0 = player.x;
+      if (TUT.step >= TUT_STEPS.length) tutEnd(true); else tutDraw();
+    }
+  }
+  $('tutBar').addEventListener('click', e => { if (e.target.closest('#tutSkip')) { tutEnd(false); canvas.focus && canvas.focus(); } });
   // 단계를 시작할 때 조작법 안내를 먼저 보여 줘요 ('다음부터 보지 않기'를 고르면 건너뜀)
   let guidePass = false;
   function openGuide() {
@@ -1931,6 +2001,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     if (useHeart || useShield || useCalc) { saveM(); showToast([useHeart && '하트 +1', useShield && '보호막', useCalc && '계산기'].filter(Boolean).join(', ') + ' 챙겨서 출발!'); }
     useHeart = useShield = useCalc = false;
     hideModals(); state = 'play'; canvas.focus && canvas.focus();
+    try { let t = false; try { t = !!localStorage.getItem('mathland-noparty'); } catch (_) {} if (!M.set.tutDone && !t) tutStart(); } catch (_) {}
   });
   $('retryBtn').addEventListener('click', () => { if (overReason === 'time') { resetAll(); hideModals(); state = 'play'; showToast('타임어택 다시 출발!'); return; } stats.hearts = diffCfg().hearts; respawn(); hideModals(); state = 'play'; });
   $('againBtn').addEventListener('click', () => { resetAll(); hideModals(); state = 'play'; });
@@ -2749,9 +2820,9 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
       if (timeAtk && stats.freeze <= 0 && stats.taLeft > 0) { stats.taLeft = Math.max(0, stats.taLeft - dt); if (stats.taLeft <= 0) showOver('time'); }
       if (timeAtk && !$('qModal').hidden) { const tt = `⏱ ${fmtTime(Math.ceil(stats.taLeft))}`; if ($('qTA').textContent !== tt) $('qTA').textContent = tt; }
     }
-    if (state === 'play' && surprise && !surprise.done && stats.time >= surprise.at && !gates.every(g => g.solved)) { surprise.done = true; startSurprise();
+    if (state === 'play' && !TUT.on && surprise && !surprise.done && stats.time >= surprise.at && !gates.every(g => g.solved)) { surprise.done = true; startSurprise();
     }
-    updateItemBar();
+    updateItemBar(); tutTick();
     if (state === 'ending') {
       updateEnding(dt);
       if (state === 'ending') drawEnding();
@@ -3789,7 +3860,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     { id: 'freeze', bid: 'freezeBtn', key: '2', lab: '시간 멈춤', when: '달리는 중·문제 중', can: () => (state === 'play' || state === 'question') && stats.freeze <= 0 },
     { id: 'heart', bid: 'ibHeart', key: '3', lab: '하트 +1', when: '달리는 중', can: () => state === 'play' && stats.hearts < 5 },
     { id: 'shield', bid: 'ibShield', key: '4', lab: '보호막', when: '달리는 중', can: () => state === 'play' && !stats.shield },
-    { id: 'calc', bid: 'ibCalc', key: '6', lab: '계산기', when: '문제 창에서', info: true }
+    { id: 'calc', bid: 'ibCalc', key: '7', lab: '계산기', when: '문제 창에서', info: true }
   ];
   // 힌트(6)·계산기(7)는 문제 창에서만 쓰므로 게임 화면 아이템 바에는 달리는 중 아이템 4개만 보여요
   const IB_BAR = () => IB.filter(b => !b.info);
@@ -3891,7 +3962,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   function updateCalcBtn() {
     const has = !!(stats && stats.calc), n = M.items.calc || 0, ok = current && calcOK(), on = has || (n > 0 && ok);
     $('calcBtn').hidden = !on || !ok;
-    $('calcBtn').innerHTML = '<span class="no5">6</span> ' + (has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`);
+    $('calcBtn').innerHTML = '<span class="no5">7</span> ' + (has ? (ok ? '🧮 계산기 꺼내기' : '계산기 (연산 문제는 직접!)') : `🧮 계산기 쓰기 (${n})`);
     $('calcBtn').disabled = !ok || !$('calcPad').hidden;
     try { const nc = $('noteCalc'); nc.textContent = has ? '🧮 계산기' : `🧮 계산기 (${n})`; const can = has || n > 0; nc.classList.toggle('off', !can); nc.setAttribute('aria-disabled', String(!can)); } catch (_) {}
   }
@@ -4105,7 +4176,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
         ${done ? `<circle cx="${x + 46}" cy="${y - 44}" r="15" fill="#30a46c"/><path d="M${x + 39} ${y - 44}l5 6 9-11" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>` : ''}
         ${got ? `<g class="${popI === i ? 'piece-got' : ''}"><circle cx="${x - 46}" cy="${y - 44}" r="17" fill="#ffd34d" stroke="#b07800" stroke-width="2.5"/><path d="M${x - 46} ${y - 56} L${x - 40} ${y - 44} L${x - 46} ${y - 32} L${x - 52} ${y - 44} Z" fill="#e5484d"/></g>` : ''}</g>`;
     }).join('');
-    const pin = cur === null ? '' : (() => { const [px, py] = P[cur]; return `<g pointer-events="none" class="pinbounce"><path d="M${px} ${py - 96} c-14 -17 -17 -26 -17 -33 a17 17 0 0 1 34 0 c0 7 -3 16 -17 33z" fill="#e5484d"/><circle cx="${px}" cy="${py - 129}" r="6" fill="#fff"/></g>`; })();
+    const pin = cur === null ? '' : (() => { const [px, py] = P[cur]; return `<g pointer-events="none" class="pinbounce"><g transform="translate(${px} ${py - 66}) scale(.78)"><path d="M0 0 c-14 -17 -17 -26 -17 -33 a17 17 0 0 1 34 0 c0 7 -3 16 -17 33z" fill="#e5484d" stroke="#fff" stroke-width="3"/><circle cx="0" cy="-33" r="6" fill="#fff"/></g></g>`; })();
     const CX = 560, CY = 138, NVc = '#2b3a55';
     const heart = clockHeart(key, popI, CX, CY) + `<g><rect id="hudBtn" role="button" tabindex="0" aria-label="시계 퍼즐 ${n}/${NSTG}조각. 눌러서 수집 현황 보기" style="cursor:pointer" x="${CX - 134}" y="${CY + 108}" width="268" height="30" rx="15" fill="${n === NSTG ? '#b07800' : NVc}" stroke="#fff" stroke-width="2"/><text pointer-events="none" x="${CX}" y="${CY + 129}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${n === NSTG ? '시계 수리 완료! 다시 움직여요' : `시계 퍼즐 ${n}/${NSTG} · 별 3개로 한 조각`}</text></g>`;
     return `<svg viewBox="0 0 1000 640" role="group" aria-label="시계탑 ${floorOf(M.sel.gs)}층 ${unitName(M.sel.gs, M.sel.u)}의 방 지도, 시계 퍼즐 ${n}/${NSTG}조각">
@@ -4237,7 +4308,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     if (!qz.cur) qz.cur = quizQ();
     $('qzBody').innerHTML = `<div class="qtimer"><i id="qzBar" style="width:${(qz.left / qz.dur * 100).toFixed(1)}%"></i></div>
       <p class="qzscore">맞힌 문제 <b>${qz.ok}</b> · 남은 시간 <b id="qzLeft">${Math.ceil(qz.left)}</b>초</p>
-      <h2 class="qzq">${qz.cur.q} = ?</h2><div class="choices">${qz.cur.opts.map(o => `<button type="button" data-qz="${o}">${o}</button>`).join('')}</div>`;
+      <h2 class="qzq">${qz.cur.q} = ?</h2><div class="choices">${qz.cur.opts.map((o, k) => `<button type="button" data-qz="${o}"><span class="no">${k + 1}</span><span>${o}</span></button>`).join('')}</div>`;
   }
   function quizStart() {
     const dur = qzCtx === 'game' ? 15 : 30;
@@ -4257,16 +4328,20 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     M.coins = (M.coins || 0) + coins; if (best) M.quizBest = qz.ok; saveM();
     if (qzCtx === 'game') { try { addCoins(coins); } catch (_) {} M.coins -= coins; }
     $('qzBody').innerHTML = `<p class="bigstars" style="color:#1f2a40">${qz.ok}문제!</p><p class="lead">${qz.dur}초 동안 ${qz.ok}문제를 맞혔어요. 코인 <b>+${coins}</b>${best ? ' · 내 최고 기록!' : ` · 내 최고 기록 ${M.quizBest}문제`}</p>
-      <div class="btnrow">${qzCtx === 'game' ? '<button type="button" class="btn" id="qzBack">모험으로 돌아가기 ▶</button>' : '<button type="button" class="btn ghost" id="qzClose2">지도로</button><button type="button" class="btn" id="qzAgain">다시 도전</button>'}</div>`;
+      <div class="btnrow">${qzCtx === 'game' ? '<button type="button" class="btn" id="qzBack"><span class="keyno">1</span> 모험으로 돌아가기 ▶</button>' : '<button type="button" class="btn ghost" id="qzClose2">지도로</button><button type="button" class="btn" id="qzAgain">다시 도전</button>'}</div>`;
     const f = $('qzBody').querySelector('.btn:last-child'); if (f) f.focus({ preventScroll: true });
     qz = null;
   }
   // 게임 중 갑자기 나타나는 로키의 돌발 퀴즈 (15초)
+  // 돌발 퀴즈는 한 단원의 5단계 가운데 한 단계에서만 나와요 (어느 단계인지는 비밀). 1단계를 다시 시작하면 새로 뽑아요
+  function sqPlan(key) { M.sq = M.sq || {}; if (!M.sq[key]) { const pool = [0, 2, 3, 4]; M.sq[key] = { i: pool[Math.floor(Math.random() * pool.length)], shown: false }; } return M.sq[key]; }
   function startSurprise() {
     qzCtx = 'game'; state = 'quiz'; keys.left = keys.right = keys.jump = false;
     $('qzTitle').textContent = '⚡ 앗! 로키의 돌발 퀴즈!';
     $('qzBody').innerHTML = `<div class="qz-pop"><span class="qz-roki">${charSVG(4)}</span><p class="lead"><b>로키</b>가 길을 막았어요! <b>15초</b> 동안 구구단·덧셈을 최대한 많이 풀어 봐요. 정답마다 코인 2개!</p></div>
-      <div class="btnrow"><button type="button" class="btn ghost" id="qzPass">다음에 할게요</button><button type="button" class="btn" id="qzGo">도전!</button></div>`;
+      <div class="btnrow qz-pick"><button type="button" class="btn" id="qzGo"><span class="keyno">1</span> 도전하기!</button><button type="button" class="btn ghost" id="qzPass"><span class="keyno">2</span> 다음에 하기</button></div>
+      <p class="note qz-keytip">키보드 <kbd>1</kbd> 도전 · <kbd>2</kbd> 다음에</p>`;
+    try { const sp = sqPlan(pick.key); sp.shown = true; saveM(); } catch (_) {}
     showModal('quizModal'); try { tone([880, 660, 880, 1175], 0.07, 'square', 0.06); } catch (_) {}
     $('qzGo').focus({ preventScroll: true });
   }
@@ -5342,6 +5417,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   $('segGuide').addEventListener('click', e => { const b = e.target.closest('[data-guide]'); if (!b) return; M.set.noGuide = b.dataset.guide === 'off'; saveM(); drawGuideSeg(); });
   document.addEventListener('click', e => { if (e.target.closest('#setOpen')) drawGuideSeg(); });
   drawGuideSeg();
+  $('tutReset').addEventListener('click', () => { M.set.tutDone = false; saveM(); $('tutReset').textContent = '✓ 다음 판에 나와요'; });
   $('storyOpen').addEventListener('click', () => { $('setModal').hidden = true; storyBack = 'home'; openStory(); });
   $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
   $('setModal').addEventListener('click', e => {
