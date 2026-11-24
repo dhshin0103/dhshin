@@ -721,6 +721,100 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .cheer-ok { position: relative; min-width: 180px; min-height: 52px; font-size: 1.25rem; background: var(--sun); color: var(--deep); }
 @media (prefers-reduced-motion: reduce) { .vg-jump, .vg-flow, .cheer-conf i, .cheer-char svg, .cheer, .cheer-box { animation: none !important; } }
 .vg-house, .vg-house:focus { outline: none; -webkit-tap-highlight-color: transparent; } .vg-house:focus-visible rect:first-of-type { stroke: #2b3a55; } .vg-house:focus-visible { filter: drop-shadow(0 0 6px #ffb627); }
+/* 내 정보: 탭 2개(내 정보 / 내 캐릭터)로 나눈 단순한 화면 */
+.me-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; border-radius: 999px; background: #e9f0f6; }
+.me-tabs button { border: 0; border-radius: 999px; background: transparent; font-family: var(--display); font-size: 1.15rem; color: #5b6878; padding: 9px 0; cursor: pointer; }
+.me-tabs button[aria-selected="true"] { background: #fff; color: var(--deep); box-shadow: 0 2px 0 rgba(0,58,92,.2); }
+.me2-top { display: flex; align-items: center; gap: 18px; padding: 16px; border-radius: 20px; background: linear-gradient(90deg, #f5efff, #fff); border: 2px solid #e2d6ff; }
+.me2-avw { position: relative; flex: none; }
+.me2-edit { position: absolute; right: -8px; bottom: -4px; border: 2px solid var(--deep); background: #fff; color: var(--deep); border-radius: 999px; font-family: var(--display); font-size: .82rem; padding: 3px 10px; cursor: pointer; box-shadow: 0 2px 0 var(--deep); white-space: nowrap; }
+.me2-id { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.me2-lv { font-family: var(--display); font-size: .95rem; color: var(--deep); background: var(--sun); border-radius: 999px; padding: 2px 12px; white-space: nowrap; }
+.me2-name { font-family: var(--display); font-size: 2.1rem; line-height: 1.05; color: var(--deep); }
+.me2-xp { width: 100%; display: flex; align-items: center; gap: 10px; }
+.me2-xp .lv-bar { flex: 1; height: 14px; border-radius: 7px; }
+.me2-xp b { flex: none; font-family: var(--display); font-weight: 400; font-size: 1rem; color: #c2410c; white-space: nowrap; }
+.me2-badge { flex: none; width: 58px; height: 58px; border-radius: 50%; border: 2px dashed #c4ccd6; background: #fff; color: #8b95a3; font-size: 1.6rem; line-height: 1; display: grid; place-items: center; cursor: pointer; padding: 0; }
+.me2-badge.has { border: 2px solid #f3d27a; background: #fff8e1; } .me2-badge svg { width: 46px; height: 46px; display: block; }
+.me2-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.me2-head h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.25rem; color: var(--deep); }
+.me2-head .chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.me2-more { border: 0; background: none; color: #2f6fdb; font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; padding: 4px 2px; }
+.me2-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.me2-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 6px 14px; border-radius: 18px; border: 2px solid #e3e8ee; background: #fff; }
+.me2-stat .ic { font-size: 2rem; line-height: 1; height: 36px; display: grid; place-items: center; } .me2-stat .ic svg { width: 36px; height: 36px; margin: 0; }
+.me2-stat .v { font-family: var(--display); font-size: 2rem; line-height: 1; color: var(--deep); font-variant-numeric: tabular-nums; } .me2-stat .v small { font-size: 1rem; margin-left: 2px; }
+.me2-stat .lb { font-size: .9rem; font-weight: 700; color: #6b7684; }
+.me2-seg { display: inline-flex; border: 2px solid var(--deep); border-radius: 999px; overflow: hidden; }
+.me2-seg button { border: 0; background: #fff; color: var(--deep); font-family: var(--display); font-size: 1rem; padding: 5px 18px; cursor: pointer; }
+.me2-seg button + button { border-left: 2px solid var(--deep); }
+.me2-seg button[aria-pressed="true"] { background: var(--deep); color: #fff; }
+.me2-houses { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 14px 8px 12px; border-radius: 18px; background: #eef8ea; border: 2px solid #cfe8c4; }
+.me2-house { display: flex; flex-direction: column; align-items: center; gap: 6px; font-family: var(--display); font-size: 1rem; color: var(--deep); }
+.me2-house i { width: min(64px, 100%); aspect-ratio: 1 / .92; display: grid; place-items: center; padding-top: 22%; font-style: normal; font-size: 1.5rem; color: #fff; text-shadow: 0 2px 0 #b07800; clip-path: polygon(50% 0, 100% 42%, 100% 100%, 0 100%, 0 42%); background: linear-gradient(to top, #ffc53d var(--p), #dfe5ec var(--p)); }
+.me2-count { margin: 0; text-align: center; font-family: var(--display); font-size: 1.15rem; color: var(--deep); } .me2-count b { font-weight: 400; font-size: 1.5rem; color: #b07800; }
+#meModal .me-chars { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+#meModal .me-char { padding: 8px 4px; } #meModal .me-char svg { max-width: 84px; } #meModal .me-char span { font-size: 1.05rem; } #meModal .me-char small { font-size: .74rem; } #meModal .me-buy { font-size: .8rem; padding: 3px 10px; }
+.me-tabs button:focus-visible, .me2-edit:focus-visible, .me2-badge:focus-visible, .me2-more:focus-visible, .me2-seg button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+@media (max-width: 560px) { .me2-top { gap: 12px; padding: 12px; } .me2-lv { font-size: .8rem; padding: 2px 9px; } .me2-name { font-size: 1.7rem; } .me2-badge { width: 48px; height: 48px; } .me2-badge svg { width: 38px; height: 38px; } .me2-stat .v { font-size: 1.6rem; } #meModal .me-chars { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* 2-허브 모달: 내 정보(배지 도감) · 꾸미기 상점, 홈 지도 상점 버튼 */
+#homeShop { display: none !important; } .home-acts { grid-template-columns: 1fr !important; }
+.vg-shop { transition: transform .12s ease; transform-box: fill-box; transform-origin: center; } .vg-shop:hover { transform: translateY(-3px); } .vg-shop:active { transform: translateY(2px); } .vg-shop:focus { outline: none; } .vg-shop:focus-visible { filter: drop-shadow(0 0 6px #fff); }
+.vg-shopdot { animation: vgpulse 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.hub-dot { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin-left: 5px; border-radius: 999px; background: #e5484d; color: #fff; font: 700 .68rem/1 var(--body); font-style: normal; vertical-align: middle; }
+#badgeOpen { position: relative; } #badgeOpen .hub-dot { position: absolute; top: -7px; right: -5px; margin: 0; border: 2px solid #fff; }
+.me-tabs.three { grid-template-columns: repeat(3, 1fr); } .me-tabs button { white-space: nowrap; }
+.me2-stat.tap { font: inherit; cursor: pointer; border-color: #f3d27a; background: #fffbea; box-shadow: 0 3px 0 #f3d27a; } .me2-stat.tap .lb { color: #8a5a00; }
+.me2-stats.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.me2-gsel select { font-family: var(--display); font-size: 1.15rem; color: var(--deep); border: 2px solid var(--deep); border-radius: 999px; padding: 2px 8px; background: #fff; cursor: pointer; }
+.hub-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.hub-chip { border: 2px solid #cfd8e3; background: #fff; color: #4a5563; border-radius: 999px; padding: 5px 14px; font-family: var(--display); font-size: .98rem; cursor: pointer; }
+.hub-chip[aria-pressed="true"] { border-color: var(--deep); background: var(--deep); color: #fff; }
+.hb-sum { display: flex; align-items: center; gap: 16px; padding: 14px 16px 12px; border-radius: 18px; background: linear-gradient(90deg, #fff6d6, #fff); border: 2px solid #f3d27a; }
+.hb-sumtx { flex: none; display: flex; flex-direction: column; } .hb-sumtx b { font-size: .86rem; color: #6b5a2a; } .hb-big { font-family: var(--display); font-size: 2rem; line-height: 1; color: #8a5a00; } .hb-big small { font-size: 1rem; color: #b08a3a; }
+.hb-track { position: relative; flex: 1; padding: 30px 0 14px; } .hb-track .bd-bar { height: 14px; }
+.hb-pin { position: absolute; top: 0; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; } .hb-pin small { position: absolute; top: 46px; font-size: .68rem; font-weight: 700; color: #8a5a00; white-space: nowrap; }
+.hb-pinav { width: 30px; height: 30px; border-radius: 50%; background: #fff; border: 2px solid #c4ccd6; display: grid; place-items: center; overflow: hidden; } .hb-pinav svg { width: 24px; height: 24px; filter: brightness(0); opacity: .3; }
+.hb-pin.on .hb-pinav { border-color: #f2b705; } .hb-pin.on .hb-pinav svg { filter: none; opacity: 1; }
+.hb-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.hb-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 6px 10px; min-width: 0; border-radius: 16px; border: 2px solid #e6e9ef; background: #fff; font: inherit; color: inherit; cursor: pointer; text-align: center; }
+.hb-card b { font-size: .84rem; color: var(--deep); line-height: 1.25; word-break: keep-all; }
+.hb-medal svg { width: 58px; height: 58px; display: block; } .hb-card:not(.got) .hb-medal svg { filter: grayscale(1); opacity: .45; }
+.hb-card.got { background: linear-gradient(180deg, #fffbea, #fff); border-color: #f3d27a; } .hb-card.rep { border-color: #ffb300; box-shadow: 0 0 0 3px rgba(255,197,61,.4); }
+.hb-card.hl { animation: hbhl 1.1s ease-in-out 3; } @keyframes hbhl { 50% { box-shadow: 0 0 0 5px #7b5ce0; border-color: #7b5ce0; } }
+.hb-rep { position: absolute; top: 6px; left: 6px; font-style: normal; font-size: .64rem; font-weight: 700; background: #ffc53d; color: #4a3000; border-radius: 999px; padding: 1px 7px; } .hb-rep.new { background: #e5484d; color: #fff; }
+.hb-gift { position: absolute; top: 5px; right: 5px; width: 30px; height: 28px; border-radius: 9px; background: #f5efff; border: 1.5px solid #e2d6ff; display: grid; place-items: center; } .hb-gift svg { width: 24px; height: 22px; } .hb-gift.off svg { filter: grayscale(1); opacity: .5; }
+.hb-prog { width: 100%; display: flex; flex-direction: column; gap: 3px; font-size: .72rem; color: #4f6680; } .hb-prog .bd-bar { height: 6px; } .hb-prog .bd-bar i { background: #4f9de0; }
+.hub-pop { z-index: 10060; background: rgba(0,30,50,.45); }
+.hub-popcard { width: min(360px, 100%); align-items: center; text-align: center; gap: 10px; }
+.hp-medal svg { width: 96px; height: 96px; display: block; } .hp-medal.off svg { filter: grayscale(1); opacity: .5; }
+.hp-t { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--deep); } .hp-d { margin: 0; color: #1f2a40; line-height: 1.5; } .hp-bar { width: 100%; }
+.hp-reward { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 14px; background: #faf6ff; border: 2px solid #e2d6ff; font-size: .86rem; color: #5b4a8a; text-align: left; } .hp-reward b { color: var(--deep); font-size: .95rem; }
+.hp-ric { width: 56px; height: 48px; display: grid; place-items: center; } .hp-ric svg { width: 54px; height: 46px; } .hp-ric.off svg { filter: grayscale(1); opacity: .55; }
+.hp-btns { width: 100%; display: flex; flex-direction: column; gap: 8px; } .hp-btns .btn { min-height: 46px; font-size: 1.1rem; } .hub-popcard .btn.hp-main { background: var(--sun); color: var(--deep); }
+.hub-popcard .me2-stats { width: 100%; }
+.hs-coin { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; border-color: var(--deep); } .hs-card .xbtn { margin-left: 0; } .hs-card .tagrow { flex-wrap: nowrap; } .hs-card .sum-h { white-space: nowrap; }
+.hs-fit { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 20px; background: linear-gradient(90deg, #f5efff, #fff); border: 2px solid #e2d6ff; }
+.hs-av { flex: none; width: 120px; height: 120px; border-radius: 24px; border: 4px solid #fff; box-shadow: 0 0 0 3px #b995f5; display: grid; place-items: center; } .hs-av svg { width: 108px; height: 108px; }
+.hs-fitinfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.hs-fitname { font-family: var(--display); font-weight: 400; font-size: 1.35rem; color: var(--deep); }
+.hs-try { font-style: normal; font-family: var(--body); font-size: .7rem; font-weight: 700; background: #7b5ce0; color: #fff; border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: middle; }
+.hs-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 100%; }
+.hs-buy { display: inline-flex; align-items: center; gap: 4px; font-size: 1.05rem; padding: 7px 14px; box-shadow: 0 3px 0 var(--deep); } .hs-buy .coin-ic { margin: -3px 2px -3px -4px; } .hs-buy.lock { background: #ede5ff; }
+.hs-need { font-size: .78rem; color: #6b5a8a; font-weight: 700; }
+.hs-reset { margin-left: auto; border: 2px solid #cfd8e3; background: #fff; color: #4a5563; border-radius: 999px; padding: 4px 12px; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; } .hs-reset:disabled { opacity: .4; cursor: default; }
+.hs-goal { margin: 0; padding: 8px 14px; border-radius: 12px; background: #eef7ff; border: 2px dashed #8cc8f5; color: #1f4f78; font-size: .92rem; } .hs-goal.ok { background: #fff8e1; border-color: #f3d27a; color: #6b4a00; } .hs-goal b { color: var(--deep); }
+#hubShop .me-chars { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+#hubShop .me-char { padding: 8px 4px; cursor: pointer; } #hubShop .me-char svg { max-width: 78px; } #hubShop .me-char span { font-size: 1.05rem; } #hubShop .me-char small { font-size: .74rem; }
+#hubShop .me-char.on { border-color: #2f6fdb; box-shadow: 0 3px 0 #2f6fdb; } #hubShop .me-char.pv, .hs-wc.pv { border-color: #7b5ce0; box-shadow: 0 0 0 3px rgba(123,92,224,.35); }
+.hs-wc { font: inherit; color: inherit; cursor: pointer; } .hs-wc.locked:not(.rare) .wc-ic svg { opacity: .85; }
+.hs-foot { font-family: var(--display); font-size: .86rem; color: #8a5a00; background: #fff3c4; border-radius: 999px; padding: 2px 10px; line-height: 1.3; word-break: keep-all; } .hs-foot.own { background: #e3f6ec; color: #1d7a4a; } .hs-wc.rare.locked .hs-foot { background: #ede5ff; color: #5b3fb5; font-family: var(--body); font-size: .68rem; font-weight: 700; }
+.hs-bag { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 16px; background: #f4fbff; border: 2px solid #dcebf6; } .hs-bag b { font-family: var(--display); font-weight: 400; color: var(--deep); font-size: 1.05rem; margin-right: 4px; }
+.hs-bagit { position: relative; display: inline-grid; place-items: center; width: 44px; height: 44px; background: #fff; border-radius: 12px; border: 1.5px solid #dcebf6; } .hs-bagit svg { width: 34px; height: 34px; } .hs-bagit i { position: absolute; right: -6px; bottom: -6px; min-width: 20px; height: 20px; border-radius: 999px; background: var(--deep); color: #fff; font: 700 .72rem/20px var(--body); font-style: normal; text-align: center; }
+.hs-msg { min-height: 1.4em; font-size: .9rem; color: #1d7a4a; font-weight: 700; text-align: center; }
+.hub-chip:focus-visible, .hb-card:focus-visible, .hs-wc:focus-visible, .hs-reset:focus-visible, .me2-stat.tap:focus-visible, #coinOpen:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+@media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } #hubShop .me-chars { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hs-av { width: 92px; height: 92px; } .hs-av svg { width: 82px; height: 82px; } .hs-fit { gap: 10px; padding: 10px; } .me-tabs.three button { font-size: .95rem; } .hs-card .sum-h { font-size: 1.25rem; } .hb-sum { flex-direction: column; align-items: stretch; gap: 4px; } }
+@media (prefers-reduced-motion: reduce) { .vg-shopdot, .hb-card.hl { animation: none !important; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -4849,7 +4943,263 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     el.setAttribute('aria-label', `이번 주 출석 ${DN.filter((_, k) => { const d = new Date(mon); d.setDate(mon.getDate() + k); return have.has(dayKey(d)); }).length}일, 연속 ${st.cur}일. 눌러서 모험 요약 보기`);
   }
   // ---------- 내 정보 ----------
-  function openMe() {
+  // 탭 2개: [내 정보] 프로필 · 핵심 기록 3개 · 지금 학기 단원 현황 / [내 캐릭터] 캐릭터 고르기
+  let meTab = 'info', meSem = '1';
+  // ===== 2-허브 모달: [내 정보](내 정보 · 배지 도감) / [꾸미기 상점](캐릭터 · 옷장·꾸미기 · 게임 아이템) =====
+  const modalState = { activeModal: null, activeTab: null, previewItemId: null, highlightBadgeId: null };
+  const HUB = { grade: 3, sem: '1', bf: 'all', wf: 'all', pv: null, sel: null, msg: '' };
+  const hubSeenB = () => Array.isArray(M.seenB) ? M.seenB : (M.seenB = M.badges.slice());
+  const hubUnlocks = () => [...WEAR.filter(w => !w.price && ownsWear(w)).map(w => w.id), ...CHARS.filter(c => c.hidden && c.need()).map(c => 'c' + c.art)];
+  const hubCheap = () => WEAR.filter(w => w.price && !ownsWear(w)).sort((a, b) => a.price - b.price)[0] || null;
+  const hubShopSeen = () => (M.shopSeen && Array.isArray(M.shopSeen.ids)) ? M.shopSeen : (M.shopSeen = { ids: hubUnlocks(), afford: false });
+  const notifications = {
+    get hasNewBadge() { const s = hubSeenB(); return M.badges.some(id => !s.includes(id)); },
+    get hasShopNotice() { const s = hubShopSeen(), c = hubCheap(); return hubUnlocks().some(id => !s.ids.includes(id)) || (!!c && M.coins >= c.price && !s.afford); }
+  };
+  const hubDot = '<i class="hub-dot" aria-label="새 소식">N</i>';
+  const hubShop = document.createElement('div');
+  hubShop.id = 'hubShop'; hubShop.className = 'modal toplayer'; hubShop.hidden = true; hubShop.setAttribute('role', 'dialog'); hubShop.setAttribute('aria-modal', 'true'); hubShop.setAttribute('aria-labelledby', 'hsTitle');
+  const hubPopEl = document.createElement('div');
+  hubPopEl.id = 'hubPop'; hubPopEl.className = 'modal toplayer hub-pop'; hubPopEl.hidden = true; hubPopEl.setAttribute('role', 'dialog'); hubPopEl.setAttribute('aria-modal', 'true');
+  document.body.appendChild(hubShop); document.body.appendChild(hubPopEl);
+  function hubPop(html) { if (!html) { hubPopEl.hidden = true; hubPopEl.innerHTML = ''; return; } hubPopEl.innerHTML = `<div class="card hub-popcard">${html}</div>`; hubPopEl.hidden = false; const f = hubPopEl.querySelector('button'); if (f) f.focus({ preventScroll: true }); }
+  function openModal(kind, opts = {}) {
+    $('meModal').hidden = true; hubShop.hidden = true; hubPop(null);
+    modalState.activeModal = kind || null; modalState.activeTab = opts.tab || (kind === 'shop' ? 'closet' : 'info');
+    modalState.previewItemId = opts.previewItemId || null; modalState.highlightBadgeId = opts.highlightBadgeId || null;
+    if (kind === 'profile') {
+      HUB.grade = +M.sel.gs[0]; HUB.sem = M.sel.gs[2] === '2' ? '2' : '1'; HUB.bf = 'all';
+      drawProfile(); $('meModal').hidden = false; $('meClose').focus({ preventScroll: true });
+    } else if (kind === 'shop') {
+      HUB.pv = { art: PROFILE.art, head: M.wear.head, back: M.wear.back }; HUB.sel = null; HUB.msg = ''; HUB.wf = 'all';
+      const w = WEAR_BY(modalState.previewItemId); if (w) { HUB.pv[w.slot] = w.id; if (!ownsWear(w)) HUB.sel = { t: 'wear', id: w.id }; }
+      const s = hubShopSeen(), c = hubCheap(); M.shopSeen = { ids: hubUnlocks(), afford: s.afford || (!!c && M.coins >= c.price) }; saveM();
+      const d = $('homeMap').querySelector('[data-shopbtn] .vg-shopdot'); if (d) d.remove();
+      drawShop(); hubShop.hidden = false; const x = hubShop.querySelector('[data-hs="close"]'); if (x) x.focus({ preventScroll: true });
+    }
+  }
+  function closeHub() { modalState.activeModal = null; $('meModal').hidden = true; hubShop.hidden = true; hubPop(null); try { renderBar(); } catch (_) {} }
+  function openMe(arg) { openModal('profile', { tab: arg === 'badges' ? 'badges' : 'info' }); }
+  function openBadges() { openModal('profile', { tab: 'badges' }); }
+
+  // ---------- 모달 ①: 내 정보 ----------
+  function drawProfile() {
+    try { checkBadges(); } catch (_) {}
+    const tab = modalState.activeTab, got = M.badges.length;
+    const tabs = `<div class="me-tabs" role="tablist"><button type="button" role="tab" data-pt="info" aria-selected="${tab === 'info'}">내 정보</button><button type="button" role="tab" data-pt="badges" aria-selected="${tab === 'badges'}">배지 도감 (${got}/${BADGES.length})${tab !== 'badges' && notifications.hasNewBadge ? hubDot : ''}</button></div>`;
+    $('meBody').innerHTML = tabs + (tab === 'badges' ? profileBadges() : profileInfo());
+    if (tab === 'badges') {
+      M.seenB = M.badges.slice(); saveM();
+      const id = modalState.highlightBadgeId; modalState.highlightBadgeId = null;
+      const el = id && $('meBody').querySelector(`[data-badge="${id}"]`); if (el) { el.classList.add('hl'); try { el.scrollIntoView({ block: 'center' }); } catch (_) {} }
+    }
+  }
+  function profileInfo() {
+    const L = M.log, lv = levelInfo(L.solved), st = streaks(), g = HUB.grade, gs = `${g}-${HUB.sem}`, us = unitsOf(gs), rep = repBadge();
+    const lit = us.filter((_, u) => piecesOf(ukey(gs, u)) >= NSTG).length;
+    const houses = us.map((nm, u) => { const pc = piecesOf(ukey(gs, u)), on = pc >= NSTG;
+      return `<div class="me2-house" title="${u + 1}단원 ${esc(nm)}" aria-label="${u + 1}단원 ${esc(nm)}, ${on ? '정복 완료' : pc ? '도전 중' : '아직 시작 전'}"><i style="--p:${Math.round(pc / NSTG * 100)}%">${on ? '★' : ''}</i>${u + 1}단원</div>`; }).join('');
+    return `<div class="me2-top"><span class="me2-avw"><span class="me-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span><button type="button" class="me2-edit" data-go="shop:character" aria-label="캐릭터 바꾸기">✏️ 바꾸기</button></span>
+        <div class="me2-id"><span class="me2-lv">Lv.${lv.L} ${lv.title}</span><span class="me2-name">${PROFILE.name}</span>
+          <span class="me2-xp"><span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span><b>${lv.need - lv.into}문제 남음!</b></span></div>
+        <button type="button" class="me2-badge${rep ? ' has' : ''}" data-pt="badges" aria-label="${rep ? `대표 배지: ${esc(BADGE_BY(rep).name)}. 배지 도감 열기` : '대표 배지 고르기'}">${rep ? medalSVG(rep) : '+'}</button></div>
+      <div class="me2-head"><h3>오늘의 기록</h3><button type="button" class="me2-more" data-more="1">학습 기록 더보기 ›</button></div>
+      <div class="me2-stats"><div class="me2-stat"><span class="ic" aria-hidden="true">🔥</span><span class="v">${st.cur}<small>일</small></span><span class="lb">연속 공부</span></div>
+        <div class="me2-stat"><span class="ic" aria-hidden="true">📖</span><span class="v">${L.solved}<small>문제</small></span><span class="lb">푼 문제</span></div>
+        <button type="button" class="me2-stat tap" data-go="shop:closet" aria-label="코인 ${M.coins}개. 꾸미기 상점 열기"><span class="ic">${COIN_SVG}</span><span class="v">${M.coins}</span><span class="lb">코인 ›</span></button></div>
+      <div class="me2-head"><h3><label class="me2-gsel"><span class="vh">학년 선택</span><select data-pgrade="1">${[1, 2, 3, 4, 5, 6].map(x => `<option value="${x}"${x === g ? ' selected' : ''}>${x}학년</option>`).join('')}</select></label> 탐험 현황</h3><span class="me2-seg">${['1', '2'].map(sm => `<button type="button" data-psem="${sm}" aria-pressed="${sm === HUB.sem}">${sm}학기</button>`).join('')}</span></div>
+      <div class="me2-houses">${houses}</div><p class="me2-count">정복한 단원 <b>${lit}</b> / ${us.length}</p>`;
+  }
+  const hubBadgeRows = () => BADGES.map(b => ({ ...b, got: M.badges.includes(b.id), cur: Math.min(b.n, badgeStat(b.cat)), wear: WEAR.find(w => w.bid === b.id) }));
+  function profileBadges() {
+    const all = hubBadgeRows(), got = all.filter(b => b.got), fresh = M.badges.filter(id => !hubSeenB().includes(id));
+    const list = HUB.bf === 'got' ? got : HUB.bf === 'todo' ? all.filter(b => !b.got).sort((a, b) => b.cur / b.n - a.cur / a.n) : all;
+    const pin = (n, art) => `<span class="hb-pin${got.length >= n ? ' on' : ''}" style="left:${n / all.length * 100}%" title="배지 ${n}개: ${got.length >= n ? CHAR_NAMES[art] : '비밀 친구'} 열림"><span class="hb-pinav">${charSVG(art)}</span><small>${n}개</small></span>`;
+    const chip = (k, lb) => `<button type="button" class="hub-chip" data-bf="${k}" aria-pressed="${HUB.bf === k}">${lb}</button>`;
+    const card = b => `<button type="button" class="hb-card${b.got ? ' got' : ''}${M.rep === b.id ? ' rep' : ''}" data-badge="${b.id}" aria-label="${esc(b.name)}, ${b.got ? '모은 배지' : `도전 중 ${b.cur}/${b.n}`}">
+        ${M.rep === b.id ? '<i class="hb-rep">대표 ★</i>' : fresh.includes(b.id) ? '<i class="hb-rep new">NEW</i>' : ''}${b.wear ? `<i class="hb-gift${b.got ? '' : ' off'}" title="보상: ${esc(b.wear.name)}">${wearIcon(b.wear)}</i>` : ''}
+        <span class="hb-medal">${medalSVG(b)}</span><b>${esc(b.name)}</b>${b.got ? '' : `<span class="hb-prog"><span class="bd-bar"><i style="width:${b.cur / b.n * 100}%"></i></span>${b.cur}/${b.n}</span>`}</button>`;
+    return `<div class="hb-sum"><div class="hb-sumtx"><b>모은 배지</b><span class="hb-big">${got.length}<small> / ${all.length}</small></span></div>
+        <div class="hb-track"><span class="bd-bar"><i style="width:${got.length / all.length * 100}%"></i></span>${pin(5, 2)}${pin(10, 6)}</div></div>
+      <div class="hub-chips">${chip('all', '전체')}${chip('got', `모은 배지 ${got.length}`)}${chip('todo', `도전 중 ${all.length - got.length}`)}</div>
+      ${list.length ? `<div class="hb-grid">${list.map(card).join('')}</div>` : `<p class="bd-empty">${HUB.bf === 'got' ? '아직 모은 배지가 없어요. 문제를 풀고 출석하면 첫 배지를 받아요!' : '모든 배지를 모았어요! 🎉'}</p>`}`;
+  }
+  function badgePop(id) {
+    const b = hubBadgeRows().find(x => x.id === id); if (!b) return;
+    const C = BADGE_CAT[b.cat], isRep = M.rep === b.id, w = b.wear;
+    const reward = w ? `<div class="hp-reward"><span class="hp-ric${b.got ? '' : ' off'}">${wearIcon(w)}</span><span>보상 옷<br><b>${esc(w.name)}</b></span></div>` : '';
+    hubPop(`<span class="hp-medal${b.got ? '' : ' off'}">${medalSVG(b)}</span><h3 class="hp-t">${esc(b.name)}</h3>
+      <p class="hp-d">${b.got ? '모은 배지예요! 🎉' : `${C.how(b.n)} · 지금 <b>${b.cur}/${b.n}</b>${C.unit}`}</p>
+      ${b.got ? '' : `<span class="bd-bar hp-bar"><i style="width:${b.cur / b.n * 100}%"></i></span>`}${reward}
+      <div class="hp-btns">${b.got ? `<button type="button" class="btn hp-main" data-pp="rep:${b.id}">${isRep ? '대표 배지 빼기' : '대표 배지로 달기'}</button>${w ? `<button type="button" class="btn ghost" data-pp="try:${w.id}">보상 옷 입어보기</button>` : ''}`
+        : `<button type="button" class="btn hp-main" data-pp="play">문제 풀러 가기 ▶</button>`}<button type="button" class="btn ghost" data-pp="close">닫기</button></div>`);
+  }
+  function morePop() {
+    const L = M.log, acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, mins = Math.floor(L.sec / 60), st = streaks();
+    const t = (ic, lb, v) => `<div class="me2-stat"><span class="ic" aria-hidden="true">${ic}</span><span class="v">${v}</span><span class="lb">${lb}</span></div>`;
+    hubPop(`<h3 class="hp-t">학습 기록 더보기</h3><div class="me2-stats two">${t('🎯', '정답률', `${acc}<small>%</small>`)}${t('⏱️', '공부 시간', mins >= 60 ? `${Math.floor(mins / 60)}<small>시간</small> ${mins % 60}<small>분</small>` : `${mins}<small>분</small>`)}${t('📅', '총 출석', `${L.days.length}<small>일</small>`)}${t('⭐', '최장 연속', `${st.best}<small>일</small>`)}</div>
+      <div class="hp-btns"><button type="button" class="btn hp-main" data-pp="close">확인</button></div>`);
+  }
+  const hubGo = s => { const [k, tab, id] = s.split(':'); openModal(k, { tab, previewItemId: id || null }); };
+  $('meModal').addEventListener('click', e => {
+    const q = a => e.target.closest(`[${a}]`); let t;
+    if ((t = q('data-pt'))) { modalState.activeTab = t.dataset.pt; drawProfile(); const f = $('meBody').querySelector(`.me-tabs [data-pt="${modalState.activeTab}"]`); if (f) f.focus({ preventScroll: true }); }
+    else if ((t = q('data-go'))) hubGo(t.dataset.go);
+    else if (q('data-more')) morePop();
+    else if ((t = q('data-psem'))) { HUB.sem = t.dataset.psem; drawProfile(); const f = $('meBody').querySelector(`[data-psem="${HUB.sem}"]`); if (f) f.focus({ preventScroll: true }); }
+    else if ((t = q('data-bf'))) { HUB.bf = t.dataset.bf; drawProfile(); const f = $('meBody').querySelector(`[data-bf="${HUB.bf}"]`); if (f) f.focus({ preventScroll: true }); }
+    else if ((t = q('data-badge'))) badgePop(t.dataset.badge);
+  });
+  $('meModal').addEventListener('change', e => { if (e.target.matches('[data-pgrade]')) { HUB.grade = +e.target.value; drawProfile(); const f = $('meBody').querySelector('[data-pgrade]'); if (f) f.focus({ preventScroll: true }); } });
+  hubPopEl.addEventListener('click', e => {
+    if (e.target === hubPopEl) { hubPop(null); return; }
+    const t = e.target.closest('[data-pp]'); if (!t) return; const [c, id] = t.dataset.pp.split(':');
+    if (c === 'close') hubPop(null);
+    else if (c === 'play') closeHub();
+    else if (c === 'try') openModal('shop', { tab: 'closet', previewItemId: id });
+    else if (c === 'rep') { M.rep = M.rep === id ? null : id; saveM(); try { renderBar(); } catch (_) {} hubPop(null); drawProfile(); const f = $('meBody').querySelector(`[data-badge="${id}"]`); if (f) f.focus({ preventScroll: true }); }
+  });
+  hubPopEl.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); hubPop(null); } });
+
+  // ---------- 모달 ②: 꾸미기 상점 ----------
+  const hubOwnedSel = () => { const s = HUB.sel; if (!s) return true; if (s.t === 'wear') { const w = WEAR_BY(s.id); return !w || ownsWear(w); } return ownsChar(s.id); };
+  function drawShop() {
+    const tab = modalState.activeTab, pv = HUB.pv, slotName = { head: '머리', back: '등' };
+    const tabs = `<div class="me-tabs three" role="tablist">${[['character', '캐릭터'], ['closet', '옷장·꾸미기'], ['items', '게임 아이템']].map(([k, lb]) => `<button type="button" role="tab" data-hs="tab:${k}" aria-selected="${tab === k}">${lb}</button>`).join('')}</div>`;
+    let top = '', body = '';
+    if (tab !== 'items') {
+      const trying = pv.art !== PROFILE.art || pv.head !== M.wear.head || pv.back !== M.wear.back;
+      const slot = sl => { const w = WEAR_BY(pv[sl]); if (!w) return `<span class="wd-on muted">${slotName[sl]}: 비어 있어요</span>`;
+        return `<span class="wd-on">${slotName[sl]}: <b>${esc(w.name)}</b> ${M.wear[sl] === w.id ? `<button type="button" class="wd-off" data-hs="off:${sl}">벗기</button>` : '<i class="hs-try">입어보는 중</i>'}</span>`; };
+      let act = '';
+      if (HUB.sel && !hubOwnedSel()) {
+        if (HUB.sel.t === 'wear') { const w = WEAR_BY(HUB.sel.id);
+          act = w.price ? `<button type="button" class="buy hs-buy" data-hs="buywear:${w.id}" ${M.coins < w.price ? 'disabled' : ''}>${COIN_SVG}${w.price}코인으로 사기</button>${M.coins < w.price ? `<small class="hs-need">${w.price - M.coins}코인이 더 필요해요</small>` : ''}`
+            : `<button type="button" class="buy hs-buy lock" data-hs="cond:${w.bid || ''}">🔒 배지 조건 보기</button><small class="hs-need">${w.bid ? esc(BADGE_BY(w.bid).name) : `배지 ${w.ms}개 모으기`}로 받아요</small>`; }
+        else { const c = CHARS.find(x => x.art === HUB.sel.id);
+          act = c.price ? `<button type="button" class="buy hs-buy" data-hs="buychar:${c.art}" ${M.coins < c.price ? 'disabled' : ''}>${COIN_SVG}${c.price}코인으로 사기</button>${M.coins < c.price ? `<small class="hs-need">${c.price - M.coins}코인이 더 필요해요</small>` : ''}`
+            : `<button type="button" class="buy hs-buy lock" data-hs="cond:">🔒 배지 도감 보기</button><small class="hs-need">${c.mission} (${c.prog()})</small>`; }
+      }
+      top = `<div class="hs-fit"><span class="hs-av" style="background:${CHAR_BG[pv.art]}">${dressSVG(pv.art, { head: pv.head, back: pv.back })}</span>
+          <div class="hs-fitinfo"><b class="hs-fitname">${CHAR_NAMES[pv.art]}${trying ? '<i class="hs-try">미리보기</i>' : '의 피팅룸'}</b><div class="wd-cur">${slot('head')}${slot('back')}</div>
+            <div class="hs-acts">${act}<button type="button" class="hs-reset" data-hs="reset" ${trying || HUB.sel ? '' : 'disabled'}>↺ 초기화</button></div></div></div>`;
+      const c = hubCheap();
+      top += c ? `<p class="hs-goal${M.coins >= c.price ? ' ok' : ''}">${M.coins >= c.price ? `🎉 지금 <b>‘${esc(c.name)}’</b>을(를) 살 수 있어요!` : `💡 <b>${c.price - M.coins}코인</b>만 더 모으면 <b>‘${esc(c.name)}’</b>을(를) 살 수 있어요!`}</p>` : `<p class="hs-goal ok">🎉 코인으로 사는 옷을 모두 모았어요!</p>`;
+    }
+    if (tab === 'character') {
+      const rank = c => ownsChar(c.art) ? 0 : c.price ? 1 : 2;
+      body = `<div class="me-chars">${[...CHARS].sort((a, b) => rank(a) - rank(b) || (a.price || 0) - (b.price || 0)).map(c => { const a = c.art, own = ownsChar(a), on = a === PROFILE.art, sel = HUB.sel && HUB.sel.t === 'char' && HUB.sel.id === a;
+        const foot = own ? (on ? '사용 중' : '선택') : c.price ? `🪙 ${c.price}` : `🔒 ${c.mission} (${c.prog()})`;
+        return `<button type="button" class="me-char${on ? ' on' : ''}${own ? '' : c.hidden ? ' lock hid' : ' lock sil'}${sel ? ' pv' : ''}" data-hs="char:${a}" aria-pressed="${on}" style="background:${own ? CHAR_BG[a] : '#e9edf3'}">${charSVG(a)}<span>${own || !c.hidden ? CHAR_NAMES[a] : '???'}</span><small>${foot}</small></button>`; }).join('')}</div>`;
+    } else if (tab === 'closet') {
+      const f = HUB.wf, pass = w => f === 'own' ? ownsWear(w) : f === 'head' || f === 'back' ? w.slot === f : true;
+      const chip = (k, lb) => `<button type="button" class="hub-chip" data-hs="wf:${k}" aria-pressed="${f === k}">${lb}</button>`;
+      const card = w => { const own = ownsWear(w), on = M.wear[w.slot] === w.id, rare = !w.price, pvOn = !on && pv[w.slot] === w.id;
+        const foot = own ? (on ? '입는 중 ✓' : '입기') : rare ? `🔒 ${w.bid ? esc(BADGE_BY(w.bid).name) : `배지 ${w.ms}개 모으기`}` : `🪙 ${w.price}`;
+        return `<button type="button" class="wc hs-wc${rare ? ' rare' : ''}${own ? '' : ' locked'}${on ? ' on' : ''}${pvOn ? ' pv' : ''}" data-hs="wear:${w.id}" aria-pressed="${on}">${rare ? '<i class="wc-tag">희귀</i>' : ''}<span class="wc-ic">${wearIcon(w)}</span><b>${esc(w.name)}</b><small class="hs-foot${own ? ' own' : ''}">${foot}</small></button>`; };
+      const coinAll = WEAR.filter(w => w.price).sort((a, b) => a.price - b.price), rareAll = WEAR.filter(w => !w.price).sort((a, b) => ownsWear(b) - ownsWear(a));
+      const coinW = coinAll.filter(pass), rareW = rareAll.filter(pass);
+      body = `<div class="hub-chips">${chip('all', '전체')}${chip('own', '내 옷장')}${chip('head', '머리')}${chip('back', '등')}</div>
+        ${coinW.length ? `<h3 class="wc-sec">🪙 코인으로 사는 옷 <small>${coinAll.filter(ownsWear).length}/${coinAll.length}</small></h3><div class="wc-grid">${coinW.map(card).join('')}</div>` : ''}
+        ${rareW.length ? `<h3 class="wc-sec rare">🏅 배지로 받는 희귀 옷 <small>${rareAll.filter(ownsWear).length}/${rareAll.length}</small></h3><div class="wc-grid">${rareW.map(card).join('')}</div>` : ''}
+        ${coinW.length + rareW.length ? '' : '<p class="bd-empty">아직 가진 옷이 없어요. 코인으로 사거나 배지를 모아 보세요!</p>'}`;
+    } else {
+      body = `<div class="hs-bag"><b>내 가방</b>${ITEMS.map(it => `<span class="hs-bagit" title="${it.name}">${itemIcon(it)}<i>${M.items[it.id] || 0}</i></span>`).join('')}</div>
+        <div class="shop-grid">${ITEMS.filter(it => it.id !== 'hint').map(it => `<div class="item">${itemIcon(it)}<div><b>${it.name}</b><p>${it.desc.split('. ')[0].replace(/\.$/, '')}.</p>
+          <div class="row"><small>가진 개수 ${M.items[it.id] || 0}</small><button type="button" class="buy" data-hs="buyitem:${it.id}" ${M.coins < it.price ? 'disabled' : ''}>🪙 ${it.price}</button></div></div></div>`).join('')}</div>`;
+    }
+    hubShop.innerHTML = `<div class="card me-card hs-card"><div class="tagrow"><h2 id="hsTitle" class="sum-h"><span aria-hidden="true">🏪</span> 꾸미기 상점</h2><span class="chip hs-coin" aria-label="내 코인 ${M.coins}개">${COIN_SVG}${M.coins}</span><button type="button" class="xbtn" data-hs="close">닫기 ✕</button></div>
+      ${tabs}${top}${body}<p class="note hs-msg" role="status">${esc(HUB.msg)}</p></div>`;
+  }
+  function hubShopAct(cmd, id) {
+    const pv = HUB.pv; HUB.msg = '';
+    if (cmd === 'close') { closeHub(); return; }
+    if (cmd === 'tab') { modalState.activeTab = id; }
+    else if (cmd === 'wf') HUB.wf = id;
+    else if (cmd === 'reset') { HUB.pv = { art: PROFILE.art, head: M.wear.head, back: M.wear.back }; HUB.sel = null; }
+    else if (cmd === 'off') { M.wear[id] = null; pv[id] = null; saveM(); HUB.msg = '옷을 벗었어요.'; }
+    else if (cmd === 'cond') { openModal('profile', { tab: 'badges', highlightBadgeId: id || null }); return; }
+    else if (cmd === 'char') { const a = +id, c = CHARS.find(x => x.art === a); if (!c) return;
+      if (ownsChar(a)) { M.profile.art = a; pv.art = a; HUB.sel = null; saveM(); HUB.msg = `${CHAR_NAMES[a]}(으)로 바꿨어요!`; }
+      else if (HUB.sel && HUB.sel.t === 'char' && HUB.sel.id === a) { HUB.sel = null; pv.art = PROFILE.art; }
+      else { HUB.sel = { t: 'char', id: a }; pv.art = c.price ? a : PROFILE.art; } }
+    else if (cmd === 'wear') { const w = WEAR_BY(id); if (!w) return;
+      if (ownsWear(w)) { M.wear[w.slot] = M.wear[w.slot] === w.id ? null : w.id; pv[w.slot] = M.wear[w.slot]; if (HUB.sel && HUB.sel.t === 'wear') HUB.sel = null; saveM(); HUB.msg = M.wear[w.slot] ? `${w.name}을(를) 입었어요!` : `${w.name}을(를) 벗었어요.`; }
+      else if (pv[w.slot] === w.id) { pv[w.slot] = M.wear[w.slot]; HUB.sel = null; }
+      else { pv[w.slot] = w.id; HUB.sel = { t: 'wear', id: w.id }; } }
+    else if (cmd === 'buywear') { const w = WEAR_BY(id); if (!w || !w.price || ownsWear(w)) return;
+      if (M.coins < w.price) HUB.msg = '코인이 모자라요. 게임에서 코인을 더 모아 볼까요?';
+      else { M.coins -= w.price; M.wearOwn.push(w.id); M.wear[w.slot] = w.id; pv[w.slot] = w.id; HUB.sel = null; saveM(); HUB.msg = `${w.name}을(를) 사서 바로 입었어요!`; try { tone([523, 784, 1047], 0.08, 'triangle'); } catch (_) {} } }
+    else if (cmd === 'buychar') { const a = +id, c = CHARS.find(x => x.art === a); if (!c || !c.price || ownsChar(a)) return;
+      if (M.coins < c.price) HUB.msg = '코인이 모자라요. 게임에서 코인을 더 모아 볼까요?';
+      else { M.coins -= c.price; M.chars.push(a); M.profile.art = a; pv.art = a; HUB.sel = null; saveM(); HUB.msg = `${CHAR_NAMES[a]}와(과) 친구가 됐어요!`; try { tone([523, 784, 1047], 0.08, 'triangle'); } catch (_) {} } }
+    else if (cmd === 'buyitem') { const it = ITEMS.find(x => x.id === id); if (!it) return;
+      if (M.coins < it.price) HUB.msg = '코인이 모자라요. 게임에서 코인을 더 모아 볼까요?';
+      else { M.coins -= it.price; M.items[it.id] = (M.items[it.id] || 0) + 1; saveM(); HUB.msg = `${it.name}을(를) 샀어요! (가진 개수 ${M.items[it.id]})`; } }
+    const card = hubShop.querySelector('.hs-card'), sc = card ? card.scrollTop : 0;
+    drawShop(); try { renderBar(); } catch (_) {}
+    const nc = hubShop.querySelector('.hs-card'); if (nc) nc.scrollTop = sc;
+    const f = hubShop.querySelector(`[data-hs="${cmd}:${id}"]`) || hubShop.querySelector('.hs-buy:not(:disabled)') || hubShop.querySelector('[data-hs="close"]'); if (f) f.focus({ preventScroll: true });
+  }
+  hubShop.addEventListener('click', e => { if (e.target === hubShop) { closeHub(); return; } const t = e.target.closest('[data-hs]'); if (!t || t.disabled) return; const k = t.dataset.hs, i = k.indexOf(':'); hubShopAct(i < 0 ? k : k.slice(0, i), i < 0 ? '' : k.slice(i + 1)); });
+  hubShop.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); closeHub(); } });
+
+  // ---------- 홈: 지도 안 상점 버튼, 상단 바 알림 점·코인 버튼 ----------
+  const hubShopBtnSVG = () => `<g class="vg-shop" data-shopbtn="1" role="button" tabindex="0" aria-label="꾸미기 상점 열기${notifications.hasShopNotice ? ', 새 소식 있음' : ''}" style="cursor:pointer">
+      <rect x="896" y="25" width="84" height="88" rx="22" fill="#2b3a55" opacity=".3"/><rect x="896" y="18" width="84" height="88" rx="22" fill="#ffc53d" stroke="#2b3a55" stroke-width="4"/><rect x="902" y="24" width="72" height="26" rx="13" fill="#fff" opacity=".28"/>
+      <rect x="918" y="50" width="40" height="24" rx="2" fill="#fff7e6" stroke="#2b3a55" stroke-width="2.5"/><rect x="923" y="57" width="12" height="10" rx="1.5" fill="#bfe6ff" stroke="#2b3a55" stroke-width="1.8"/><rect x="941" y="56" width="11" height="18" rx="1.5" fill="#8a5a33" stroke="#2b3a55" stroke-width="1.8"/>
+      <path d="M914 52 L920 34 H956 L962 52 Z" fill="#e5484d" stroke="#2b3a55" stroke-width="2.5" stroke-linejoin="round"/><path d="M929 35.500 L926.500 51 H933.500 L934.500 35.500 Z M941.500 35.500 L942.500 51 H949.500 L947 35.500 Z" fill="#fff"/>
+      <path d="M914 52 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0" fill="#e5484d" stroke="#2b3a55" stroke-width="2.2" stroke-linejoin="round"/>
+      <text x="938" y="97" text-anchor="middle" font-family="Jua" font-size="21" fill="#2b3a55">상점</text>
+      ${notifications.hasShopNotice ? '<g class="vg-shopdot"><circle cx="976" cy="22" r="12" fill="#e5484d" stroke="#fff" stroke-width="3"/><text x="976" y="27" text-anchor="middle" font-family="Jua" font-size="14" fill="#fff">N</text></g>' : ''}</g>`;
+  function hubDecoMap() { const svg = $('homeMap').querySelector('svg'); if (svg && !svg.querySelector('[data-shopbtn]')) svg.insertAdjacentHTML('beforeend', hubShopBtnSVG()); }
+  function hubDecoBar() {
+    const w = $('homeWallet'), bd = w.querySelector('#badgeOpen'), coin = w.querySelector('span.chip');
+    if (bd && notifications.hasNewBadge && !bd.querySelector('.hub-dot')) bd.insertAdjacentHTML('beforeend', hubDot);
+    if (coin && !coin.dataset.hub) { coin.dataset.hub = '1'; coin.id = 'coinOpen'; coin.classList.add('chip-btn'); coin.setAttribute('role', 'button'); coin.setAttribute('tabindex', '0'); coin.setAttribute('aria-label', `코인 ${M.coins}개. 꾸미기 상점 열기`); coin.removeAttribute('title'); }
+  }
+  new MutationObserver(hubDecoMap).observe($('homeMap'), { childList: true });
+  new MutationObserver(hubDecoBar).observe($('homeWallet'), { childList: true });
+  $('homeMap').addEventListener('click', e => { if (e.target.closest('[data-shopbtn]')) openModal('shop', { tab: 'closet' }); });
+  $('homeMap').addEventListener('keydown', e => { if (e.target.closest('[data-shopbtn]') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal('shop', { tab: 'closet' }); } });
+  $('homeWallet').addEventListener('click', e => { if (e.target.closest('#coinOpen')) openModal('shop', { tab: 'closet' }); });
+  $('homeWallet').addEventListener('keydown', e => { if (e.target.closest('#coinOpen') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal('shop', { tab: 'closet' }); } });
+  function openMeV2(tab) {
+    if (typeof tab === 'string') meTab = tab; else if (tab) { meTab = 'info'; meSem = M.sel.gs[2] === '2' ? '2' : '1'; }
+    const L = M.log, lv = levelInfo(L.solved), st = streaks(), g = +M.sel.gs[0], gs = `${g}-${meSem}`, us = unitsOf(gs), rep = repBadge();
+    const lit = us.filter((_, u) => piecesOf(ukey(gs, u)) >= NSTG).length;
+    const tabs = `<div class="me-tabs" role="tablist">${[['info', '내 정보'], ['char', '내 캐릭터']].map(([k, lb]) => `<button type="button" role="tab" data-metab="${k}" aria-selected="${meTab === k}">${lb}</button>`).join('')}</div>`;
+    let body;
+    if (meTab === 'char') {
+      const chars = CHARS.map(c => { const a = c.art, own = ownsChar(a), on = a === PROFILE.art;
+        if (own) return `<button type="button" class="me-char${on ? ' on' : ''}" data-art="${a}" aria-pressed="${on}" style="background:${CHAR_BG[a]}">${charSVG(a)}<span>${CHAR_NAMES[a]}</span><small>${on ? '사용 중' : c.hidden ? '히든 ✨' : '선택'}</small></button>`;
+        if (c.hidden) return `<div class="me-char lock hid" style="background:#e9edf3" aria-label="히든 캐릭터. ${c.mission}">${charSVG(a)}<span>???</span><small>🔒 ${c.mission} (${c.prog()})</small></div>`;
+        return `<div class="me-char lock sil" style="background:#e9edf3" aria-label="${CHAR_NAMES[a]}, 코인 ${c.price}으로 열 수 있어요">${charSVG(a)}<span>${CHAR_NAMES[a]}</span><button type="button" class="buy me-buy" data-buychar="${a}" ${M.coins < c.price ? 'disabled' : ''}>코인 ${c.price}</button></div>`; }).join('');
+      body = `<div class="me2-head"><h3>내 캐릭터 고르기</h3><span class="chip">${COIN_SVG}코인 ${M.coins}</span></div><div class="me-chars">${chars}</div><p class="note" id="meMsg" role="status"></p>`;
+    } else {
+      const houses = us.map((nm, u) => { const pc = piecesOf(ukey(gs, u)), on = pc >= NSTG;
+        return `<div class="me2-house" title="${u + 1}단원 ${esc(nm)}" aria-label="${u + 1}단원 ${esc(nm)}, ${on ? '정복 완료' : pc ? '도전 중' : '아직 시작 전'}"><i style="--p:${Math.round(pc / NSTG * 100)}%">${on ? '★' : ''}</i>${u + 1}단원</div>`; }).join('');
+      body = `<div class="me2-top"><span class="me2-avw"><span class="me-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span><button type="button" class="me2-edit" data-metab="char" aria-label="캐릭터 바꾸기">✏️ 바꾸기</button></span>
+          <div class="me2-id"><span class="me2-lv">Lv.${lv.L} ${lv.title}</span><span class="me2-name">${PROFILE.name}</span>
+            <span class="me2-xp"><span class="lv-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span><b>${lv.need - lv.into}문제 남음!</b></span></div>
+          <button type="button" class="me2-badge${rep ? ' has' : ''}" data-mego="badge" aria-label="${rep ? `대표 배지: ${esc(BADGE_BY(rep).name)}. 눌러서 바꾸기` : '대표 배지 고르기'}">${rep ? medalSVG(rep) : '+'}</button></div>
+        <div class="me2-head"><h3>오늘의 기록</h3><button type="button" class="me2-more" data-mego="sum">학습 기록 더보기 ›</button></div>
+        <div class="me2-stats"><div class="me2-stat"><span class="ic" aria-hidden="true">🔥</span><span class="v">${st.cur}<small>일</small></span><span class="lb">연속 공부</span></div>
+          <div class="me2-stat"><span class="ic" aria-hidden="true">📖</span><span class="v">${L.solved}<small>문제</small></span><span class="lb">푼 문제</span></div>
+          <div class="me2-stat"><span class="ic">${COIN_SVG}</span><span class="v">${M.coins}</span><span class="lb">코인</span></div></div>
+        <div class="me2-head"><h3>${g}학년 탐험 현황</h3><span class="me2-seg">${['1', '2'].map(sm => `<button type="button" data-mesem="${sm}" aria-pressed="${sm === meSem}">${sm}학기</button>`).join('')}</span></div>
+        <div class="me2-houses">${houses}</div><p class="me2-count">정복한 단원 <b>${lit}</b> / ${us.length}</p>`;
+    }
+    $('meBody').innerHTML = tabs + body;
+    if ($('meModal').hidden) { $('meModal').hidden = false; $('meClose').focus({ preventScroll: true }); }
+  }
+  $('meModal').addEventListener('click', e => {
+    const t = e.target.closest('[data-metab]'), s = e.target.closest('[data-mesem]'), go = e.target.closest('[data-mego]');
+    if (t) { openMe(t.dataset.metab); const f = $('meModal').querySelector(`.me-tabs [data-metab="${meTab}"]`); if (f) f.focus({ preventScroll: true }); }
+    else if (s) { meSem = s.dataset.mesem; openMe(); const f = $('meModal').querySelector(`[data-mesem="${meSem}"]`); if (f) f.focus({ preventScroll: true }); }
+    else if (go) { $('meModal').hidden = true; if (go.dataset.mego === 'badge') openBadges(); else openSummary(); }
+  });
+  function openMeOld() {
     const L = M.log, lv = levelInfo(L.solved), nx = TITLES.find(([l]) => l > lv.L), acc = L.solved ? Math.round(L.first / L.solved * 100) : 0, st = streaks(), mins = Math.floor(L.sec / 60);
     const grades = [+M.sel.gs[0]].map(g => {
       const sems = ['1', '2'].map(sm => { const gs = `${g}-${sm}`, us = unitsOf(gs); const lit = us.filter((_, u) => piecesOf(ukey(gs, u)) >= NSTG).length, pcs = us.reduce((a, _, u) => a + piecesOf(ukey(gs, u)), 0);
@@ -4884,7 +5234,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   const repBadge = () => (M.rep && BADGE_BY(M.rep) && M.badges.includes(M.rep)) ? M.rep : null;
   function repBadgeMini() { const k = repBadge(); return k ? `<span class="pf-rep" title="대표 배지: ${esc(BADGE_BY(k).name)}">${medalSVG(k)}</span>` : ''; }
   function repBadgeLine() { const k = repBadge(); return k ? `<span class="me-rep">${medalSVG(k)}<span>대표 배지 · <b>${esc(BADGE_BY(k).name.replace(/ 배지$/, ''))}</b></span></span>` : `<span class="me-rep none">대표 배지가 없어요 · 상단 🏅 배지에서 골라요</span>`; }
-  function openBadges() {
+  function openBadgesOld() {
     checkBadges();
     const all = BADGES.map(b => ({ ...b, got: M.badges.includes(b.id), cur: Math.min(b.n, badgeStat(b.cat)) })), got = all.filter(b => b.got), todo = all.filter(b => !b.got);
     const short = n => esc(n.replace(/ 배지$/, ''));
@@ -5048,5 +5398,6 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   openHome();
 })();
 </script>
+
 
 </body></html>
