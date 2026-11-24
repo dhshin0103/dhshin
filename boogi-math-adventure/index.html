@@ -819,6 +819,38 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 .hub-chip:focus-visible, .hb-card:focus-visible, .hs-wc:focus-visible, .hs-reset:focus-visible, .me2-stat.tap:focus-visible, #coinOpen:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 @media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } #hubShop .me-chars { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hs-av { width: 92px; height: 92px; } .hs-av svg { width: 82px; height: 82px; } .hs-fit { gap: 10px; padding: 10px; } .me-tabs.three button { font-size: .95rem; } .hs-card .sum-h { font-size: 1.25rem; } .hb-sum { flex-direction: column; align-items: stretch; gap: 4px; } }
 @media (prefers-reduced-motion: reduce) { .vg-shopdot, .hb-card.hl { animation: none !important; } }
+/* 홈 상단 바 v2: 프로필을 주인공 카드로, 우측은 [코인 숫자] [⚙️]만 */
+#badgeOpen { display: none !important; }
+.homefs .wallet .chip.set-round { width: 46px; height: 46px; padding: 0; justify-content: center; border-radius: 50%; font-size: 1.35rem; }
+.homefs .wallet #coinOpen { font-size: 1.15rem; padding: 6px 16px 6px 12px; }
+.homefs .profile { position: relative; gap: 12px; padding: 5px 12px 5px 5px; background: linear-gradient(90deg, #efe4ff, #fff8e6); border: 3px solid var(--deep); border-radius: 999px; box-shadow: 0 5px 0 rgba(0,58,92,.32), 0 10px 24px rgba(0,46,74,.18); }
+.homefs .profile .pf-av { width: 64px; height: 64px; border-width: 3px; margin: -10px 0 -10px -8px; background-clip: padding-box; box-shadow: 0 3px 0 rgba(0,58,92,.25); }
+.homefs .profile .pf-av svg { width: 58px; height: 58px; }
+.homefs .profile .pf-rep { right: -4px; bottom: -12px; width: 28px; height: 28px; } .homefs .profile .pf-rep svg { width: 26px; height: 26px; }
+.pf2 { gap: 5px; min-width: 112px; }
+.pf2-r1 { display: flex; align-items: center; gap: 7px; } .pf2 .pf-lv { font-size: .88rem; padding: 2px 10px; } .pf2 .pf-nm { font-size: 1.4rem; line-height: 1; }
+.pf2-r2 { display: flex; align-items: center; gap: 8px; width: 100%; }
+.pf2-bar { flex: 1; min-width: 56px; height: 8px; border-radius: 99px; background: #fff; border: 1px solid #e8c56a; overflow: hidden; } .pf2-bar i { display: block; height: 100%; background: linear-gradient(90deg, #ffc53d, #ff8a3d); border-radius: 99px; }
+.pf2-bd { display: inline-flex; align-items: center; gap: 2px; font-family: var(--display); font-size: .95rem; color: #8a5a00; white-space: nowrap; }
+.pf2-go { font-style: normal; font-family: var(--display); font-size: 1.7rem; line-height: 1; color: var(--deep); opacity: .5; }
+.homefs .profile .hub-dot { position: absolute; top: -9px; right: -7px; margin: 0; border: 2px solid #fff; min-width: 22px; height: 22px; font-size: .74rem; }
+.homefs .att { border: 1.5px solid #a9c1d3; background: rgba(255,255,255,.86); box-shadow: 0 2px 0 rgba(0,58,92,.12); }
+@media (max-width: 560px) { .homefs .profile .pf-av { width: 54px; height: 54px; } .homefs .profile .pf-av svg { width: 48px; height: 48px; } .pf2 .pf-nm { font-size: 1.2rem; } .pf2 { min-width: 96px; } }
+.vg-glow { display: none; }
+/* 프로필 HUD: 큰 캐릭터 원이 앞으로 튀어나오고, 오른쪽에 낮고 얇은 정보 바 */
+.homefs .profile { gap: 0; padding: 0; margin: 2px 0 10px; background: none; border: 0; border-radius: 0; box-shadow: none; overflow: visible; }
+.homefs .profile .pf-avw { z-index: 2; }
+.homefs .profile .pf-av { width: 68px; height: 68px; margin: 0; border: 3px solid #fff; box-shadow: 0 0 0 3px #a983ec, 0 6px 0 3px rgba(0,58,92,.3); overflow: hidden; }
+.homefs .profile .pf-av svg { width: 62px; height: 62px; transform: scale(1.32) translateY(4%); transform-origin: 50% 30%; }
+.pf-lv.pf3-lv { position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); z-index: 3; font-size: .8rem; padding: 1px 9px; border: 2px solid #fff; white-space: nowrap; box-shadow: 0 2px 0 rgba(0,58,92,.25); }
+.homefs .profile .pf-rep { top: -7px; right: -9px; bottom: auto; width: 26px; height: 26px; z-index: 3; } .homefs .profile .pf-rep svg { width: 24px; height: 24px; }
+.homefs .profile .pf2 { height: 48px; min-width: 0; margin-left: -24px; padding: 0 16px 0 34px; gap: 5px; justify-content: center; background: linear-gradient(90deg, #efe4ff, #fff8e6); border: 2.5px solid var(--deep); border-radius: 999px; box-shadow: 0 4px 0 rgba(0,58,92,.28), 0 8px 18px rgba(0,46,74,.14); }
+.homefs .profile .pf2 .pf-nm { font-size: .92rem; line-height: 1; } .homefs .profile .pf2-bd { font-size: .8rem; } .homefs .profile .pf2-r1 { gap: 8px; }
+.homefs .profile .pf2-bar { flex: none; width: 74px; min-width: 0; height: 6px; }
+.homefs .profile .pf2-go { display: none; }
+.homefs .profile .hub-dot { top: -4px; right: -6px; }
+@media (max-width: 860px) { .homefs .att { margin-top: 12px; } }
+@media (max-width: 560px) { .homefs .profile .pf-av { width: 60px; height: 60px; } .homefs .profile .pf-av svg { width: 54px; height: 54px; } .homefs .profile .pf2 { height: 44px; padding: 0 12px 0 32px; } .homefs .profile .pf2 .pf-nm { font-size: .88rem; } .homefs .profile .pf2-bar { width: 62px; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -4579,13 +4611,33 @@ body.pad-on .stage .pad { display: flex; }
     if (pf) pf.innerHTML = `<span class="pf-avw"><span class="pf-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span>${repBadgeMini()}</span><span class="pf-tx"><span class="pf-lv">Lv.${levelInfo(M.log.solved).L}</span><span class="pf-nm">${PROFILE.name}</span></span>`;
   }
   // story = { n }: 이야기 화면용. 진행 상황과 상관없이 집 n채가 켜진 섬을 그려요 (자물쇠·선택 표시·안내 띠 없음)
-  function villageSVG(gs, story) {
+  // 지도 톤다운: 다 그려진 지도에서 배경색을 은은한 파스텔로 바꾸고, 자잘한 장식과 배경의 검은 외곽선을 덜어내요
+  function hubSoftMap(s) {
+    s = s.replace(/(<linearGradient id="vgRiv"[^>]*>)<stop[^>]*\/><stop[^>]*\/>/, '$1<stop offset="0" stop-color="#c6e8fb"/><stop offset="1" stop-color="#b8e1fa"/>');
+    const C = { '#7fdcf2': '#b4dcf7', '#4fb9ea': '#9ed2f5', '#2f8fd6': '#90c9f0', '#a5ecf7': '#cbe8fa', '#d9fbff': '#e6f5fd', '#f6e3ae': '#f4e6c8', '#e3c887': '#eadbb8', '#a9de86': '#dff2cb', '#86c96a': '#d3ebbb', '#6fb85c': '#c3dfab', '#93d274': '#cde7b5',
+      '#e9dca6': '#f4e6c8', '#79b96a': '#c3dfab', '#bff0fb': '#e0f3fd', '#bdeefc': '#d8effc', '#d2ab6c': '#eadfc8', '#f0d9a6': '#f7eedb', '#7fc76a': '#bcdfa3', '#d6f3ff': '#eaf6fe' };
+    s = s.replace(/#[0-9a-f]{6}\b/g, m => C[m] || m);
+    s = s.replace(/<path d="M[\d.]+ [\d.]+ l3 -7 l3 7 l3 -9 l3 9"[^>]*\/>/g, '')
+      .replace(/<g><circle cx="[\d.]+" cy="[\d.]+" r="4\.500"[\s\S]*?<\/g>/g, '')
+      .replace(/<g transform="translate\(948,140\)">[\s\S]*?<\/g>/, '')
+      .replace(/<circle cx="-?\d+" cy="-?\d+" r="3" fill="#ff6b6b"\/>/g, '')
+      .replace(/<path d="[^"]*" stroke="#fff" stroke-width="3\.500" fill="none" stroke-dasharray="3 15"[^>]*\/>/, '');
+    let k = 0; s = s.replace(/<path d="M[\d.]+ [\d.]+ q10 -9 20 0 t20 0"[^>]*\/>/g, m => [0, 3, 5, 8].includes(k++) ? m : '');
+    s = s.replace(/<g transform="translate\(672,458\) rotate\(-12\)">[\s\S]*?<\/g>/, '<g transform="translate(681,461) rotate(-12)"><rect x="-36" y="-15" width="72" height="30" rx="6" fill="#d6b48f"/><path d="M-24 -15 v30 M-12 -15 v30 M0 -15 v30 M12 -15 v30 M24 -15 v30" stroke="#c39f78" stroke-width="2"/><path d="M-36 -17 q36 -13 72 0 M-36 17 q36 -13 72 0 M-36 -17 v-7 M36 -17 v-7 M-36 17 v-7 M36 17 v-7" stroke="#b98f66" stroke-width="4" fill="none" stroke-linecap="round"/></g>');
+    s = s.replace(/<g class="vg-sail">[\s\S]*?<\/g><\/g>/, m => m.replace('<path d="M0 0 V-52" stroke="#2b3a55"', '<path d="M0 0 V-52" stroke="#a5825f"').replace(/ stroke="#2b3a55" stroke-width="[\d.]+"( stroke-linejoin="round")?/g, ''));
+    s = s.replace(/(fill="#(?:9aa3ad|aab2bb)") stroke="#2b3a55" stroke-width="1\.500"/g, '$1');
+    const a = s.indexOf('<ellipse cx="450" cy="300" rx="70"'), b = s.indexOf('<g class="vg-house"');
+    if (a > 0 && b > a) s = s.slice(0, a) + s.slice(a, b).replace(/stroke="#2b3a55" stroke-width="(\d[\d.]*)"/g, (m, w) => `stroke="#566783" stroke-width="${Math.max(1.2, w * 0.7).toFixed(1)}"`) + s.slice(b);
+    return s;
+  }
+  function villageSVG(gs, story) { return hubSoftMap(villageSVGraw(gs, story)); }
+  function villageSVGraw(gs, story) {
     const names = unitsOf(gs), pcs = names.map((_, u) => story ? (u < story.n ? NSTG : 0) : piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
     // 방금 정복한 집: 캐릭터가 점프하고 축하 팝업이 떠요 (한 번만)
     const won = M.won || (M.won = {}), fresh = lit.map((v, u) => !story && v && !won[ukey(gs, u)]), fi = fresh.indexOf(true);
     fresh.forEach((f, u) => { if (f) won[ukey(gs, u)] = 1; });
     if (fi >= 0) setTimeout(() => homeCheer(gs, fi, n), 700);
-    const H = [[190, 400], [340, 490], [540, 482], [800, 420], [770, 235]], T = [450, 268], OL = '#2b3a55';
+    const H = [[190, 400], [340, 490], [512, 484], [788, 420], [770, 235]], T = [450, 268], OL = '#2b3a55';
     const rnd = (x, y, r, c = '#4fae5a', d = '#3c8f4a') => `<g><ellipse cx="${x}" cy="${y + r * 0.95}" rx="${r * 0.8}" ry="${r * 0.22}" fill="#2f7d3c" opacity=".22"/><rect x="${x - 3.500}" y="${y + r * 0.2}" width="7" height="${r * 0.75}" rx="3" fill="#8a5a33"/><circle cx="${x}" cy="${y}" r="${r}" fill="${d}"/><circle cx="${x - r * 0.12}" cy="${y - r * 0.14}" r="${r * 0.86}" fill="${c}"/><circle cx="${x - r * 0.38}" cy="${y - r * 0.42}" r="${r * 0.36}" fill="#fff" opacity=".22"/><circle cx="${x + r * 0.3}" cy="${y + r * 0.2}" r="${r * 0.14}" fill="#fff" opacity=".12"/></g>`;
     const pine = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="24" rx="15" ry="4.500" fill="#2f7d3c" opacity=".22"/><rect x="-3" y="12" width="6" height="12" rx="2" fill="#7a4d2b"/><path d="M0 -34 L14 -12 H-14 Z M0 -22 L18 4 H-18 Z M0 -8 L21 18 H-21 Z" fill="#2f8f5a"/><path d="M0 -34 L14 -12 H0 Z M0 -22 L18 4 H0 Z M0 -8 L21 18 H0 Z" fill="#257848"/></g>`;
     const bush = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><circle cx="-8" cy="0" r="8" fill="#5cb565"/><circle cx="6" cy="1" r="7" fill="#4aa457"/><circle cx="-1" cy="-5" r="8" fill="#6cc474"/></g>`;
@@ -4667,14 +4719,14 @@ body.pad-on .stage .pad { display: flex; }
     const houses = H.map(([x, y], i) => {
       const G = GUARD[i], on = lit[i], cur = !story && i === M.sel.u, nm = names[i];
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
-      const [body, hw, top] = HOUSE[i](x, y, on), cx = x + hw - 6;
+      const [body, hw, top] = HOUSE[i](x, y, on), cx = x + hw + (i === 3 ? 6 : 0), met = on || cur;
       return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(nm)}, 퍼즐 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
         ${on ? `<circle class="vg-glow" cx="${x}" cy="${y - 26}" r="84" fill="url(#vgGlow)"/>` : ''}
         ${cur ? `<ellipse class="vg-cur" cx="${x + 16}" cy="${y + 24}" rx="${hw + 52}" ry="22" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
         <ellipse cx="${x}" cy="${y + 25}" rx="${hw + 10}" ry="9" fill="#2f7d3c" opacity=".25"/>
         ${on ? body : `<g filter="url(#vgDim)" opacity=".9">${body}</g>`}
-        ${on || story ? '' : lock(x, y - top * 0.42, stars[i])}<ellipse cx="${cx + 31}" cy="${y + 25}" rx="21" ry="5.500" fill="#2f7d3c" opacity=".28"/>
-        <g class="${fresh[i] ? 'vg-jump' : 'vg-bob'}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 36}) scale(.62)">${art}</g></g>
+        ${on || story ? '' : `<g transform="translate(${x} ${y - top * 0.42}) scale(.8) translate(${-x} ${-(y - top * 0.42)})">${lock(x, y - top * 0.42, stars[i])}</g>`}<ellipse cx="${cx + 40}" cy="${y + 25}" rx="27" ry="6.500" fill="#2f7d3c" opacity="${met ? .28 : .14}"/>
+        <g class="${fresh[i] ? 'vg-jump' : met ? 'vg-bob' : ''}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 53}) scale(.8)" filter="url(#${met ? 'vgStick' : 'vgFog'})" opacity="${met ? 1 : .75}">${art}</g></g>
         <circle cx="${x - hw - 2}" cy="${y - top + 12}" r="14" fill="${OL}" stroke="#fff" stroke-width="2.500"/><text x="${x - hw - 2}" y="${y - top + 17.500}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text>
         ${on ? `<g class="vg-spark" fill="${fresh[i] ? '#ffd34d' : '#fff'}"><path d="M${x - hw - 14} ${y - top + 40} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M${x + hw + 4} ${y - top + 6} l2.500 6 6 2.500 -6 2.500 -2.500 6 -2.500 -6 -6 -2.500 6 -2.500z"/></g>` : ''}
       </g>`;
@@ -4782,7 +4834,7 @@ body.pad-on .stage .pad { display: flex; }
       <defs><radialGradient id="vgGlow"><stop offset="0" stop-color="#fff6a8" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient>
         <radialGradient id="vgSea" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="#7fdcf2"/><stop offset=".55" stop-color="#4fb9ea"/><stop offset="1" stop-color="#2f8fd6"/></radialGradient>
         <linearGradient id="vgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9de86"/><stop offset="1" stop-color="#86c96a"/></linearGradient>
-        <linearGradient id="vgRiv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe0f5"/><stop offset="1" stop-color="#4fb9ea"/></linearGradient><filter id="vgDim"><feColorMatrix type="matrix" values="0.22 0.22 0.22 0 0.34  0.22 0.22 0.22 0 0.34  0.22 0.22 0.22 0 0.34  0 0 0 1 0"/></filter><filter id="vgDull"><feColorMatrix type="saturate" values="${(0.35 + 0.13 * n).toFixed(2)}"/></filter><clipPath id="vgClip"><rect x="2" y="2" width="996" height="596" rx="34"/></clipPath></defs>
+        <linearGradient id="vgRiv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe0f5"/><stop offset="1" stop-color="#4fb9ea"/></linearGradient><filter id="vgDim"><feColorMatrix type="matrix" values="0.16 0.16 0.16 0 0.5  0.16 0.16 0.16 0 0.5  0.16 0.16 0.16 0 0.5  0 0 0 1 0"/></filter><filter id="vgStick" x="-25%" y="-25%" width="150%" height="150%"><feMorphology in="SourceAlpha" operator="dilate" radius="5" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="o"/><feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="vgFog" x="-25%" y="-25%" width="150%" height="150%"><feColorMatrix type="saturate" values=".45" result="s"/><feComponentTransfer in="s" result="b"><feFuncR type="linear" slope="1.08"/><feFuncG type="linear" slope="1.08"/><feFuncB type="linear" slope="1.08"/></feComponentTransfer><feMorphology in="SourceAlpha" operator="dilate" radius="4" result="d"/><feFlood flood-color="#fff" flood-opacity=".65"/><feComposite in2="d" operator="in" result="o"/><feMerge><feMergeNode in="o"/><feMergeNode in="b"/></feMerge></filter><filter id="vgDull"><feColorMatrix type="saturate" values="${(0.35 + 0.13 * n).toFixed(2)}"/></filter><clipPath id="vgClip"><rect x="2" y="2" width="996" height="596" rx="34"/></clipPath></defs>
       <rect x="2" y="2" width="996" height="596" rx="34" fill="url(#vgSea)"/>
       <g clip-path="url(#vgClip)">
       <path d="${ISL}" fill="none" stroke="#a5ecf7" stroke-width="54" opacity=".5" stroke-linejoin="round"/>
@@ -5058,7 +5110,7 @@ body.pad-on .stage .pad { display: flex; }
     }
   }
   function closeHub() { modalState.activeModal = null; $('meModal').hidden = true; hubShop.hidden = true; hubPop(null); try { renderBar(); } catch (_) {} }
-  function openMe(arg) { openModal('profile', { tab: arg === 'badges' ? 'badges' : 'info' }); }
+  function openMe(arg) { openModal('profile', { tab: arg === 'badges' || notifications.hasNewBadge ? 'badges' : 'info' }); }
   function openBadges() { openModal('profile', { tab: 'badges' }); }
 
   // ---------- 모달 ①: 내 정보 ----------
@@ -5243,6 +5295,21 @@ body.pad-on .stage .pad { display: flex; }
   $('homeMap').addEventListener('keydown', e => { if (e.target.closest('[data-shopbtn]') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal('shop', { tab: 'closet' }); } });
   $('homeWallet').addEventListener('click', e => { if (e.target.closest('#coinOpen')) openModal('shop', { tab: 'closet' }); });
   $('homeWallet').addEventListener('keydown', e => { if (e.target.closest('#coinOpen') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal('shop', { tab: 'closet' }); } });
+  // ---------- 홈 상단 바 v2: 프로필 카드(레벨 · 닉네임 / 경험치 바 · 배지 수), 우측은 [코인 숫자] [⚙️]만 ----------
+  function hubDecoProfile() {
+    const pf = $('homeProfile'); if (!pf || pf.querySelector('.pf2')) return;
+    const lv = levelInfo(M.log.solved), nb = notifications.hasNewBadge;
+    pf.innerHTML = `<span class="pf-avw"><span class="pf-av" style="background:${CHAR_BG[PROFILE.art]}">${dressSVG(PROFILE.art)}</span><span class="pf-lv pf3-lv">Lv.${lv.L}</span>${repBadgeMini()}</span><span class="pf-tx pf2"><span class="pf2-r1"><span class="pf-nm">${PROFILE.name}</span><span class="pf2-bd"><span aria-hidden="true">🏅</span>${M.badges.length}</span></span><span class="pf2-r2"><span class="pf2-bar"><i style="width:${Math.round(lv.into / lv.need * 100)}%"></i></span></span></span><i class="pf2-go" aria-hidden="true">›</i>${nb ? hubDot : ''}`;
+    pf.setAttribute('aria-label', `내 정보 보기. 레벨 ${lv.L} ${PROFILE.name}, 배지 ${M.badges.length}개${nb ? ', 새 배지 있음' : ''}`);
+  }
+  function hubDecoBar2() {
+    const w = $('homeWallet'), coin = w.querySelector('span.chip'), set = w.querySelector('#setOpen');
+    if (coin && !coin.dataset.hub2) { coin.dataset.hub2 = '1'; [...coin.childNodes].forEach(n => { if (n.nodeType === 3) n.textContent = n.textContent.replace('코인', '').trim(); }); }
+    if (set && !set.dataset.hub2) { set.dataset.hub2 = '1'; set.classList.add('set-round'); set.setAttribute('aria-label', '설정'); set.innerHTML = '<span aria-hidden="true">⚙️</span>'; }
+  }
+  new MutationObserver(hubDecoProfile).observe($('homeProfile'), { childList: true });
+  new MutationObserver(hubDecoBar2).observe($('homeWallet'), { childList: true });
+  new MutationObserver(() => { if ($('meModal').hidden && $('homeProfile').querySelector('.hub-dot') && !notifications.hasNewBadge) { try { renderBar(); } catch (_) {} } }).observe($('meModal'), { attributes: true, attributeFilter: ['hidden'] });
   function openMeV2(tab) {
     if (typeof tab === 'string') meTab = tab; else if (tab) { meTab = 'info'; meSem = M.sel.gs[2] === '2' ? '2' : '1'; }
     const L = M.log, lv = levelInfo(L.solved), st = streaks(), g = +M.sel.gs[0], gs = `${g}-${meSem}`, us = unitsOf(gs), rep = repBadge();
@@ -5478,6 +5545,7 @@ body.pad-on .stage .pad { display: flex; }
   openHome();
 })();
 </script>
+
 
 
 </body></html>
