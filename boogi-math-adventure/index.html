@@ -1609,6 +1609,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   function showKey(label) { const k = $('keyShow'); k.textContent = '누른 키: ' + label; k.hidden = false; clearTimeout(keyShowT); keyShowT = setTimeout(() => { k.hidden = true; }, 800); }
   window.addEventListener('keydown', e => {
     if (state === 'question' && /^[1-4]$/.test(e.key)) showKey(e.key + '번');
+    if (e.repeat) return;
     if (state === 'play' && keyMap[e.key]) { showKey(KEY_LABEL[keyMap[e.key]]); $(KEY_BTN[keyMap[e.key]]).classList.add('on'); }
   });
   window.addEventListener('keyup', e => { if (keyMap[e.key]) $(KEY_BTN[keyMap[e.key]]).classList.remove('on'); });
@@ -2181,13 +2182,14 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   function heartShape(x, y, r) { ctx.fillStyle = '#e5484d'; ctx.beginPath(); ctx.moveTo(x, y + r * 0.9); ctx.bezierCurveTo(x - r * 1.6, y - r * 0.2, x - r * 0.6, y - r * 1.3, x, y - r * 0.4); ctx.bezierCurveTo(x + r * 0.6, y - r * 1.3, x + r * 1.6, y - r * 0.2, x, y + r * 0.9); ctx.fill(); }
 
   // 웃는 얼굴 동전: 살짝 기우뚱 흔들리고 반짝 별이 깜빡여요
+  const COIN_GRAD = {};
   function drawSmileCoin(x, y, r, ph, still) {
     const wob = still ? 0 : Math.sin(ph * 2.6) * 0.18, sq = still ? 1 : 0.86 + Math.abs(Math.cos(ph * 1.7)) * 0.14;
     ctx.save(); ctx.translate(x, y); ctx.rotate(wob); ctx.scale(sq, 1);
     ctx.fillStyle = 'rgba(255,214,90,.35)'; ctx.beginPath(); ctx.arc(0, 0, r + 6, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#e09a00'; ctx.beginPath(); ctx.arc(0, 2, r, 0, Math.PI * 2); ctx.fill();
-    const g = ctx.createRadialGradient(-r * 0.35, -r * 0.4, 2, 0, 0, r);
-    g.addColorStop(0, '#fff6b0'); g.addColorStop(0.45, '#ffd23f'); g.addColorStop(1, '#f5a800');
+    let g = COIN_GRAD[r];
+    if (!g) { g = COIN_GRAD[r] = ctx.createRadialGradient(-r * 0.35, -r * 0.4, 2, 0, 0, r); g.addColorStop(0, '#fff6b0'); g.addColorStop(0.45, '#ffd23f'); g.addColorStop(1, '#f5a800'); }
     ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
     ctx.strokeStyle = '#b87300'; ctx.lineWidth = 2.2; ctx.stroke();
     ctx.strokeStyle = 'rgba(184,115,0,.45)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, 0, r - 4, 0, Math.PI * 2); ctx.stroke();
@@ -2387,7 +2389,9 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
     if (!heroImg[ck]) {
       const [bk, fr] = seasonAcc(h.art, acc);
       const svg = dressSVG(h.art, M.wear, 'xmlns="http://www.w3.org/2000/svg"').replace(/viewBox="[^"]*"/, `viewBox="${GAME_VB.join(' ')}" width="${GAME_VB[2] * 4}" height="${GAME_VB[3] * 4}"`).replace(/(<svg[^>]*>)/, '$1' + bk).replace(/<\/svg>\s*$/, fr + '</svg>');
-      const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); heroImg[ck] = im;
+      const im = new Image();
+      im.onload = () => { try { const c = document.createElement('canvas'); c.width = GAME_VB[2] * 4; c.height = GAME_VB[3] * 4; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); c.complete = true; c.naturalWidth = c.width; heroImg[ck] = c; } catch (_) {} };
+      im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); heroImg[ck] = im;
     }
     return heroImg[ck];
   }
@@ -2453,9 +2457,7 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   function playFanfare() {
     if (M && M.set && M.set.sound === false) return;
     try {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      const ac = new AC(); masterVol(ac);
+      const ac = audioCtx(); if (!ac) return;
       const notes = [[523.25, 0], [659.25, 0.16], [783.99, 0.32], [1046.5, 0.48], [783.99, 0.72], [1046.5, 0.88]];
       notes.forEach(([f, at], i) => {
         const o = ac.createOscillator(), g = ac.createGain();
@@ -2464,7 +2466,6 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
         g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.18, t0 + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + len);
         o.connect(g); g.connect(ac.destination); o.start(t0); o.stop(t0 + len + 0.05);
       });
-      setTimeout(() => { try { ac.close(); } catch (_) {} }, 3000);
     } catch (_) {}
   }
 
@@ -4190,8 +4191,19 @@ body { background: radial-gradient(1200px 500px at 50% -120px, #d9f1ff 0, rgba(2
   // ---------- 8/8 완성 시네마틱: 나침반 각성 → 시계탑 부활 → 축하 파티 → 마스터 배지 ----------
   let cineCtx = null, cineTimers = [], confettiRAF = 0;
   // 소리 크기: 모든 효과음을 마스터 볼륨 노드로 모아요
-  function masterVol(ac) { try { const g = ac.createGain(); g.gain.value = Math.max(0, Math.min(1, (M.set.vol == null ? 80 : M.set.vol) / 100)); g.connect(ac.destination); Object.defineProperty(ac, 'destination', { value: g, configurable: true }); } catch (_) {} }
-  function sfx(fn) { if (M && M.set && M.set.sound === false) return; try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; const ac = new AC(); masterVol(ac); fn(ac); setTimeout(() => { try { ac.close(); } catch (_) {} }, 4000); } catch (_) {} }
+  // 오디오 장치는 한 번만 만들어 계속 써요 (소리마다 새로 만들면 게임이 끊겨요)
+  let sharedAC = null, sharedGain = null;
+  function audioCtx() {
+    if (!sharedAC) {
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
+      sharedAC = new AC(); sharedGain = sharedAC.createGain(); sharedGain.connect(sharedAC.destination);
+      try { Object.defineProperty(sharedAC, 'destination', { value: sharedGain, configurable: true }); } catch (_) {}
+    }
+    if (sharedAC.state === 'suspended') { try { sharedAC.resume(); } catch (_) {} }
+    sharedGain.gain.value = Math.max(0, Math.min(1, (M.set.vol == null ? 80 : M.set.vol) / 100));
+    return sharedAC;
+  }
+  function sfx(fn) { if (M && M.set && M.set.sound === false) return; try { const ac = audioCtx(); if (ac) fn(ac); } catch (_) {} }
   function playCharge() {    // 마법 차징 "위이잉- 챠르르륵"
     sfx(ac => {
       const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sawtooth';
