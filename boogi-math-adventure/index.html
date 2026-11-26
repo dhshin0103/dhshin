@@ -1145,6 +1145,29 @@ body.pad-on .stage .pad { display: flex; }
 @media (max-width: 640px), (pointer: coarse) { #twinBtn .keyno { display: none; } }
 .qz-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .qz-keytip { text-align: center; margin: 0; }
 @media (max-width: 640px), (pointer: coarse) { .qz-keytip { display: none; } }
+
+/* 조작법 안내: 숫자키 정답 입력이 주인공 */
+.gd-main { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 20px; background: linear-gradient(135deg, #fff6d6, #ffe9a8); border: 3px solid var(--deep); box-shadow: 0 5px 0 var(--deep); }
+.gd-main-tx { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.gd-main-tx b { font-family: var(--display); font-weight: 400; font-size: clamp(1.25rem, 3.2vw, 1.6rem); color: var(--deep); line-height: 1.2; }
+.gd-main-tx small { font-size: .9rem; color: #4a3a12; line-height: 1.45; word-break: keep-all; } .gd-main-tx strong { color: #c2410c; }
+.gd-more { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: .78rem; color: #5b4a12; } .gd-more kbd { font-size: .78rem; padding: 0 6px; margin-right: 2px; background: #fff; }
+.gd-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.gd-ch { display: flex; align-items: center; gap: 7px; padding: 6px 8px; border-radius: 12px; background: #fff; border: 2px solid #cfdbe6; font-family: var(--display); color: var(--deep); font-size: 1rem; }
+.gd-ch kbd { flex: none; width: 30px; height: 30px; padding: 0; display: grid; place-items: center; font-family: var(--display); font-size: 1.1rem; color: #fff; border: 0; border-bottom: 3px solid rgba(0,0,0,.25); border-radius: 9px; background: #3a9df0; }
+.gd-ch.c2 kbd { background: #2fae6f; } .gd-ch.c3 kbd { background: #f08a2e; } .gd-ch.c4 kbd { background: #8e6bd8; }
+.gd-ch.hit { border-color: var(--good); background: #e6f6eb; color: var(--good); animation: gdhit 1.6s ease-in-out infinite; }
+@keyframes gdhit { 0%, 55%, 100% { transform: none; } 65% { transform: translateY(3px); } 75% { transform: none; } }
+.guide-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+.guide-grid .gd { padding: 9px 6px; } .guide-grid .gd b { font-size: 1rem; } .guide-grid .gd small { font-size: .72rem; }
+.gd-sub { margin: 0; font-size: .82rem; color: #4f5d70; text-align: center; } .gd-sub kbd { font-size: .8rem; padding: 0 6px; }
+@media (max-width: 560px) { .gd-main { grid-template-columns: 1fr; } .guide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+/* 문제 창의 숫자키 안내 */
+.keytip { margin: -4px 0 0; text-align: center; font-size: .86rem; color: #4f5d70; }
+.keytip kbd { font-family: var(--display); font-size: .9rem; padding: 1px 8px; margin: 0 2px; background: #fff; border-color: #9fb3c6; color: var(--deep); }
+.keytip.tut { font-size: 1.05rem; color: #7a4a00; background: #fff3c4; border: 2px solid var(--sun); border-radius: 999px; padding: 6px 12px; animation: tuthl 1s ease-in-out infinite; }
+@media (max-width: 640px), (pointer: coarse) { .keytip:not(.tut) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .gd-ch.hit, .keytip.tut { animation: none; } }
 </style>
 
 <div class="wrap">
@@ -1357,15 +1380,19 @@ body.pad-on .stage .pad { display: flex; }
 
 <div class="modal toplayer" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle" hidden>
   <div class="card guide-card">
-    <h2 id="guideTitle" class="sum-h"><span aria-hidden="true">🎮</span> 이렇게 움직여요</h2>
-    <div class="guide-grid">
-      <div class="gd"><span class="gd-k"><kbd>←</kbd><kbd>→</kbd></span><b>이동</b><small>화면 아래 ← → 버튼도 돼요</small></div>
-      <div class="gd"><span class="gd-k"><kbd class="wide">스페이스</kbd></span><b>점프</b><small>공중에서 한 번 더 누르면 이단 점프! (화면 ↑ 버튼)</small></div>
-      <div class="gd"><span class="gd-k"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></span><b>아이템 쓰기</b><small>달리는 중: 거대화 · 시간 멈춤 · 하트 · 보호막</small></div>
-      <div class="gd"><span class="gd-k"><svg class="gd-art" viewBox="0 0 64 78" aria-hidden="true"><rect x="6" y="12" width="52" height="66" rx="9" fill="#5b6472"/><rect x="9" y="15" width="46" height="63" rx="7" fill="#8a94a3"/><rect x="13" y="19" width="38" height="59" rx="5" fill="#7a4420"/><rect x="15" y="21" width="34" height="57" rx="4" fill="#b5703a"/><rect x="19" y="25" width="26" height="19" rx="3" fill="#9a5a2b"/><rect x="19" y="49" width="26" height="24" rx="3" fill="#9a5a2b"/><circle cx="43" cy="47" r="2.600" fill="#ffd34d"/><path d="M28 55 v-3 a4 4 0 0 1 8 0 v3" stroke="#fcfcfd" stroke-width="2.200" fill="none"/><rect x="26" y="54.500" width="12" height="9.500" rx="2.200" fill="#ffd34d"/><circle cx="32" cy="11" r="10" fill="#003a5c"/><circle cx="32" cy="11" r="8" fill="#ffc53d"/><text x="32" y="15" text-anchor="middle" font-family="Jua" font-size="11" fill="#003a5c">1</text></svg></span><b>문제의 문</b><small>문에 닿으면 문제가 나와요. 맞히면 문이 열려요! 보기는 한 번만 누르면 답</small></div>
-      <div class="gd"><span class="gd-k"><svg class="gd-art" viewBox="0 0 60 62" aria-hidden="true"><path d="M30 20 q3 -7 4 -10" stroke="#6a4bbd" stroke-width="2.800" fill="none" stroke-linecap="round"/><circle cx="34" cy="7" r="7" fill="#ffd34d"/><text x="34" y="11" text-anchor="middle" font-family="Jua" font-size="11" fill="#7a4a00">?</text><ellipse cx="18" cy="57" rx="8" ry="4.500" fill="#6a4bbd"/><ellipse cx="42" cy="57" rx="8" ry="4.500" fill="#6a4bbd"/><path d="M6 52 C2 30 14 18 30 18 C46 18 58 30 54 52 Q46 60 38 53 Q30 60 22 53 Q14 60 6 52 Z" fill="#8e6bd8"/><ellipse cx="19" cy="27" rx="7" ry="3.500" fill="#fff" opacity=".28" transform="rotate(-25 19 27)"/><circle cx="21" cy="36" r="7.500" fill="#fff"/><circle cx="39" cy="36" r="7.500" fill="#fff"/><circle cx="23" cy="37" r="3.600" fill="#1c2024"/><circle cx="41" cy="37" r="3.600" fill="#1c2024"/><path d="M13 26 L25 23 M35 27 L47 25" stroke="#3b2a78" stroke-width="2.600" stroke-linecap="round"/><path d="M24 48 q3 -4 6 0 q3 4 6 0" stroke="#3b2a78" stroke-width="2.200" fill="none" stroke-linecap="round"/><ellipse cx="12" cy="45" rx="4" ry="2.500" fill="#ffaabe" opacity=".6"/><ellipse cx="48" cy="45" rx="4" ry="2.500" fill="#ffaabe" opacity=".6"/></svg></span><b>헷갈이</b><small>위에서 밟으면 물리쳐요. 옆에서 부딪히면 하트가 줄어요</small></div>
-      <div class="gd"><span class="gd-k"><span class="gd-ic">📒</span></span><b>배움노트</b><small>문제 창에서 펼쳐서 풀이를 적을 수 있어요</small></div>
+    <h2 id="guideTitle" class="sum-h"><span aria-hidden="true">🎮</span> 이렇게 해요</h2>
+    <div class="gd-main">
+      <div class="gd-main-tx"><b>정답은 키보드 숫자키로!</b><small>문제가 나오면 마우스 없이 <strong>1 · 2 · 3 · 4</strong> 중 하나를 누르면 바로 답이 돼요</small>
+        <span class="gd-more"><span><kbd>5</kbd> 넘어가기</span><span><kbd>6</kbd> 필기노트</span><span><kbd class="wide">스페이스</kbd> 다시 도전</span></span></div>
+      <div class="gd-demo" aria-hidden="true"><span class="gd-ch c1"><kbd>1</kbd>5개</span><span class="gd-ch c2"><kbd>2</kbd>3개</span><span class="gd-ch c3"><kbd>3</kbd>2개</span><span class="gd-ch c4 hit"><kbd>4</kbd>8개 ✓</span></div>
     </div>
+    <div class="guide-grid">
+      <div class="gd"><span class="gd-k"><kbd>←</kbd><kbd>→</kbd></span><b>이동</b><small>화면 ← → 버튼도 돼요</small></div>
+      <div class="gd"><span class="gd-k"><kbd class="wide">스페이스</kbd></span><b>점프</b><small>공중에서 한 번 더 누르면 이단 점프!</small></div>
+<div class="gd"><span class="gd-k"><svg class="gd-art" viewBox="0 0 64 78" aria-hidden="true"><rect x="6" y="12" width="52" height="66" rx="9" fill="#5b6472"/><rect x="9" y="15" width="46" height="63" rx="7" fill="#8a94a3"/><rect x="13" y="19" width="38" height="59" rx="5" fill="#7a4420"/><rect x="15" y="21" width="34" height="57" rx="4" fill="#b5703a"/><rect x="19" y="25" width="26" height="19" rx="3" fill="#9a5a2b"/><rect x="19" y="49" width="26" height="24" rx="3" fill="#9a5a2b"/><circle cx="43" cy="47" r="2.600" fill="#ffd34d"/><path d="M28 55 v-3 a4 4 0 0 1 8 0 v3" stroke="#fcfcfd" stroke-width="2.200" fill="none"/><rect x="26" y="54.500" width="12" height="9.500" rx="2.200" fill="#ffd34d"/><circle cx="32" cy="11" r="10" fill="#003a5c"/><circle cx="32" cy="11" r="8" fill="#ffc53d"/><text x="32" y="15" text-anchor="middle" font-family="Jua" font-size="11" fill="#003a5c">1</text></svg></span><b>문제의 문</b><small>문에 닿으면 문제가 나와요. 맞히면 문이 열려요!</small></div>
+<div class="gd"><span class="gd-k"><svg class="gd-art" viewBox="0 0 60 62" aria-hidden="true"><path d="M30 20 q3 -7 4 -10" stroke="#6a4bbd" stroke-width="2.800" fill="none" stroke-linecap="round"/><circle cx="34" cy="7" r="7" fill="#ffd34d"/><text x="34" y="11" text-anchor="middle" font-family="Jua" font-size="11" fill="#7a4a00">?</text><ellipse cx="18" cy="57" rx="8" ry="4.500" fill="#6a4bbd"/><ellipse cx="42" cy="57" rx="8" ry="4.500" fill="#6a4bbd"/><path d="M6 52 C2 30 14 18 30 18 C46 18 58 30 54 52 Q46 60 38 53 Q30 60 22 53 Q14 60 6 52 Z" fill="#8e6bd8"/><ellipse cx="19" cy="27" rx="7" ry="3.500" fill="#fff" opacity=".28" transform="rotate(-25 19 27)"/><circle cx="21" cy="36" r="7.500" fill="#fff"/><circle cx="39" cy="36" r="7.500" fill="#fff"/><circle cx="23" cy="37" r="3.600" fill="#1c2024"/><circle cx="41" cy="37" r="3.600" fill="#1c2024"/><path d="M13 26 L25 23 M35 27 L47 25" stroke="#3b2a78" stroke-width="2.600" stroke-linecap="round"/><path d="M24 48 q3 -4 6 0 q3 4 6 0" stroke="#3b2a78" stroke-width="2.200" fill="none" stroke-linecap="round"/><ellipse cx="12" cy="45" rx="4" ry="2.500" fill="#ffaabe" opacity=".6"/><ellipse cx="48" cy="45" rx="4" ry="2.500" fill="#ffaabe" opacity=".6"/></svg></span><b>헷갈이</b><small>위에서 밟으면 물리쳐요. 옆에서 부딪히면 하트가 줄어요</small></div>
+    </div>
+    <p class="gd-sub">달리는 중에는 <kbd>1</kbd>~<kbd>4</kbd> 로 아이템(거대화 · 시간 멈춤 · 하트 · 보호막)을 쓸 수 있어요.</p>
     <p class="guide-mis" id="guideMis"></p>
     <div class="guide-foot"><label class="guide-chk"><input type="checkbox" id="guideSkip"> 다음부터 보지 않기</label><button type="button" class="btn" id="guideGo">알겠어요, 출발! ▶</button></div>
   </div>
@@ -1378,7 +1405,8 @@ body.pad-on .stage .pad { display: flex; }
     <div class="qtimer" id="qTimer" hidden aria-label="남은 시간"><i id="qTimerBar"></i></div>
     <p class="cluenote" id="clueNote" hidden>밑줄 친 단서 2개를 찾아 식을 세워 봐요.</p>
     <div class="choices" id="qChoices"></div>
-    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip"><span class="no5">5</span> 모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn" hidden>힌트 뽑기</button><button type="button" class="hintbtn notebtn" id="noteBtn" aria-expanded="false" aria-controls="notePane"><span class="no5">6</span> 📒 배움노트 펼치기</button></div>
+    <p class="keytip" id="keyTip"><span aria-hidden="true">⌨️</span> 키보드 <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> 를 누르면 바로 답해요</p>
+    <div class="qtools"><button type="button" class="hintbtn skipq" id="qSkip"><span class="no5">5</span> 모르겠어요, 넘어가기 ⏭</button><button type="button" class="hintbtn calcbtn" id="calcBtn" hidden>계산기</button><button type="button" class="hintbtn" id="hintBtn" hidden>힌트 뽑기</button><button type="button" class="hintbtn notebtn" id="noteBtn" aria-expanded="false" aria-controls="notePane"><span class="no5">6</span> 📒 필기노트 펼치기</button></div>
     <div class="hintroll" id="hintRoll" hidden aria-live="polite"></div>
     <div class="calc" id="calcPad" hidden>
       <div class="calc-top"><span class="calc-name">부기의 계산기</span><button type="button" class="calc-x" id="calcClose" aria-label="계산기 닫기">✕</button></div>
@@ -1392,9 +1420,9 @@ body.pad-on .stage .pad { display: flex; }
       <button type="button" class="btn" id="twinBtn"><span class="keyno wide">스페이스</span> 비슷한 문제로 다시 도전</button><button type="button" class="btn pass" id="qPass" hidden>통과하고 계속 가기 ▶</button>
     </div>
   </div>
-  <aside class="notepane" id="notePane" aria-label="배움노트" hidden>
-    <div class="note-top"><b>📒 배움노트</b><span class="note-tools"><button type="button" class="nt on" data-nt="pen" aria-pressed="true">✏️ 펜</button><button type="button" class="nt" data-nt="erase" aria-pressed="false">🧽 지우개</button><button type="button" class="nt ntcalc" id="noteCalc">🧮 계산기</button><button type="button" class="nt x" id="noteClose" aria-label="배움노트 닫기">✕</button></span></div>
-    <div class="note-paper"><canvas id="noteCv" aria-label="손으로 풀이를 적는 칸"></canvas><button type="button" class="note-clear" data-nt="clear" aria-label="배움노트에 쓴 것을 모두 지우기">🗑 전체 삭제</button></div>
+  <aside class="notepane" id="notePane" aria-label="필기노트" hidden>
+    <div class="note-top"><b>📒 필기노트</b><span class="note-tools"><button type="button" class="nt on" data-nt="pen" aria-pressed="true">✏️ 펜</button><button type="button" class="nt" data-nt="erase" aria-pressed="false">🧽 지우개</button><button type="button" class="nt ntcalc" id="noteCalc">🧮 계산기</button><button type="button" class="nt x" id="noteClose" aria-label="필기노트 닫기">✕</button></span></div>
+    <div class="note-paper"><canvas id="noteCv" aria-label="손으로 풀이를 적는 칸"></canvas><button type="button" class="note-clear" data-nt="clear" aria-label="필기노트에 쓴 것을 모두 지우기">🗑 전체 삭제</button></div>
     <div id="noteCalcSlot"></div>
     <p class="note-tip">마우스나 손가락으로 풀이를 적어 보세요. 다음 문제로 넘어가면 새 종이가 돼요.</p>
   </aside></div>
@@ -1834,7 +1862,7 @@ body.pad-on .stage .pad { display: flex; }
     state = 'question';
     keys.left = keys.right = keys.jump = false;
     current = { gate, twin: false, attempts: 0 };
-    try { if (NOTE.gate !== gate.i) { NOTE.gate = gate.i; noteClear(); } if (NOTE.open) setTimeout(() => noteFit(true), 30); } catch (_) {}
+    try { if (NOTE.gate !== gate.i) { NOTE.gate = gate.i; noteClear(); } if (noteWanted() && !NOTE.open) noteShow(true); if (NOTE.open) setTimeout(() => noteFit(true), 30); } catch (_) {}
     $('calcPad').hidden = true; $('hintRoll').hidden = true;
     renderQuestion();
     showModal('qModal');
@@ -1932,8 +1960,10 @@ body.pad-on .stage .pad { display: flex; }
     showToast(msg + ' 풀이를 보고 다시 도전해요');
   }
   $('twinBtn').addEventListener('click', () => { current.twin = !current.twin; renderQuestion(); });
-  // ---------- 배움노트: 문제 옆에 펼쳐 쓰는 손글씨 메모장 ----------
+  // ---------- 필기노트: 문제 옆에 펼쳐 쓰는 손글씨 메모장 ----------
   const NOTE = { open: false, tool: 'pen', down: false, lx: 0, ly: 0, gate: -1 };
+  // 필기노트는 기본으로 펼쳐져 있어요. 접으면 그 선택을 기억해요 (좁은 화면에서는 문제를 가리지 않게 접힌 채로 시작)
+  const noteWanted = () => M.set.noteOpen !== false && window.matchMedia('(min-width: 861px)').matches;
   function noteFit(keep) {
     const cv = $('noteCv'), r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
     const w = Math.max(10, Math.round(r.width * dpr)), h = Math.max(10, Math.round(r.height * dpr));
@@ -1944,11 +1974,11 @@ body.pad-on .stage .pad { display: flex; }
   function noteClear() { const cv = $('noteCv'); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); }
   function noteShow(on) {
     NOTE.open = on; $('notePane').hidden = !on;
-    $('noteBtn').setAttribute('aria-expanded', String(on)); $('noteBtn').innerHTML = '<span class="no5">6</span> ' + (on ? '📒 배움노트 접기' : '📒 배움노트 펼치기');
+    $('noteBtn').setAttribute('aria-expanded', String(on)); $('noteBtn').innerHTML = '<span class="no5">6</span> ' + (on ? '📒 필기노트 접기' : '📒 필기노트 펼치기');
     if (on) noteFit(true);
   }
-  $('noteBtn').addEventListener('click', () => { noteShow(!NOTE.open); try { placeCalcPad(); } catch (_) {} });
-  // 배움노트 안의 계산기 버튼: 계산기 아이템을 여기서 바로 꺼내요
+  $('noteBtn').addEventListener('click', () => { noteShow(!NOTE.open); M.set.noteOpen = NOTE.open; saveM(); try { placeCalcPad(); } catch (_) {} });
+  // 필기노트 안의 계산기 버튼: 계산기 아이템을 여기서 바로 꺼내요
   $('noteCalc').addEventListener('click', () => {
     if (state !== 'question') return;
     if (!$('calcPad').hidden) { $('calcPad').hidden = true; updateCalcBtn(); return; }
@@ -1956,10 +1986,10 @@ body.pad-on .stage .pad { display: flex; }
     if (!stats.calc) { M.items.calc--; stats.calc = true; runCalc = true; saveM(); ibSig = ''; }
     openCalcPad(); showToast('계산기 등장! 식은 직접 세워요');
   });
-  $('noteClose').addEventListener('click', () => { noteShow(false); try { placeCalcPad(); } catch (_) {} $('noteBtn').focus({ preventScroll: true }); });
+  $('noteClose').addEventListener('click', () => { noteShow(false); M.set.noteOpen = false; saveM(); try { placeCalcPad(); } catch (_) {} $('noteBtn').focus({ preventScroll: true }); });
   $('notePane').addEventListener('click', e => {
     const b = e.target.closest('[data-nt]'); if (!b) return;
-    if (b.dataset.nt === 'clear') { noteClear(); showToast('배움노트를 모두 지웠어요'); return; }
+    if (b.dataset.nt === 'clear') { noteClear(); showToast('필기노트를 모두 지웠어요'); return; }
     NOTE.tool = b.dataset.nt; $('notePane').querySelectorAll('[data-nt="pen"],[data-nt="erase"]').forEach(x => { const on = x.dataset.nt === NOTE.tool; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); });
   });
   { const cv = $('noteCv'), pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
@@ -1992,17 +2022,19 @@ body.pad-on .stage .pad { display: flex; }
     { key: '←', btn: 'btnLeft', text: '왼쪽 화살표를 누르면 뒤로 돌아가요', done: () => keys.left && player.vx < -20 && (TUT.t += 1) > 12 },
     { key: '스페이스', btn: 'btnJump', text: '스페이스(또는 ↑ 점프 버튼)를 눌러 점프!', done: () => (player.jumps || 0) >= 1 && !player.onGround },
     { key: '스페이스 ×2', btn: 'btnJump', text: '공중에서 한 번 더! 이단 점프를 해 보세요', done: () => player.jumps === 2 },
-    { key: '🚪', btn: 'btnRight', text: '코인을 모으며 문제의 문까지 가요. 문에 닿으면 문제가 나와요', done: () => state === 'question' }
+    { key: '🚪', btn: 'btnRight', text: '코인을 모으며 문제의 문까지 가요. 문에 닿으면 문제가 나와요', done: () => state === 'question' },
+    { key: '1~4', btn: '', text: '숫자키 1~4 중 하나를 눌러 답해 보세요', inQ: true, done: () => !!current && (current.gate.solved || current.attempts > 0 || state === 'play') }
   ];
   function tutDraw() {
     const st = TUT_STEPS[TUT.step], bar = $('tutBar');
     bar.innerHTML = `<span class="tut-n">${TUT.step + 1}/${TUT_STEPS.length}</span><kbd class="tut-k">${st.key}</kbd><span class="tut-t">${st.text}</span><button type="button" class="tut-skip" id="tutSkip">건너뛰기</button>`;
     bar.hidden = false; bar.classList.remove('pop'); void bar.offsetWidth; bar.classList.add('pop');
-    document.querySelectorAll('.pad .tut-hl').forEach(b => b.classList.remove('tut-hl')); const hb = $(st.btn); if (hb) hb.classList.add('tut-hl');
+    document.querySelectorAll('.pad .tut-hl').forEach(b => b.classList.remove('tut-hl')); const hb = st.btn && $(st.btn); if (hb) hb.classList.add('tut-hl');
+    $('keyTip').classList.toggle('tut', !!st.inQ);
   }
   function tutStart() { TUT.on = true; TUT.step = 0; TUT.x0 = player.x; TUT.t = 0; tutDraw(); }
   function tutEnd(done) {
-    TUT.on = false; $('tutBar').hidden = true; document.querySelectorAll('.pad .tut-hl').forEach(b => b.classList.remove('tut-hl'));
+    TUT.on = false; $('tutBar').hidden = true; $('keyTip').classList.remove('tut'); document.querySelectorAll('.pad .tut-hl').forEach(b => b.classList.remove('tut-hl'));
     M.set.tutDone = true; saveM(); if (done) { showToast('튜토리얼 완료! 이제 모험을 떠나요'); try { tone([523, 659, 784, 1047], 0.08, 'triangle', 0.08); } catch (_) {} }
   }
   function tutTick() {
