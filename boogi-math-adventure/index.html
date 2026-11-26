@@ -5089,7 +5089,7 @@ body.touch .tutbar { top: 22%; }
     let x0 = 2, px = [];
     [['s', '#ffc53d'], ['k', '#ffc53d'], ['g', '#58c13c'], ['o', '#58c13c']].forEach(([ch, col]) => { G[ch].forEach((row, y) => [...row].forEach((c, x) => { if (c === '#') px.push([x0 + x, y + 2, col]); })); x0 += G[ch][0].length + 2; });
     const W = x0, rect = (dx, dy, f, grow = 0) => px.map(([x, y, c]) => `<rect x="${x + dx - grow}" y="${y + dy - grow}" width="${1 + grow * 2}" height="${1 + grow * 2}" fill="${f || c}"/>`).join('');
-    const t = $('homeTitle'); if (t && !t.querySelector('.px-logo')) t.insertAdjacentHTML('beforeend', `<svg class="px-logo" viewBox="0 0 ${W} 20" shape-rendering="crispEdges" aria-hidden="true">${rect(1, 1, 'rgba(30,58,95,.28)', .02)}${rect(0, 0, '', .02)}</svg>`);
+    const t = $('homeTitle'); if (t && !t.querySelector('.px-logo')) t.insertAdjacentHTML('beforeend', `<svg class="px-logo" viewBox="0 0 ${W} 20" shape-rendering="crispEdges" aria-hidden="true">${rect(.5, .7, '#0d2440', .55)}${rect(0, 0, '#12305a', .55)}${rect(0, 0, '#fff', .2)}${rect(0, 0)}</svg>`);
     // 설정 창: 낮/노을/밤 미리보기 (테스트용)
     const card = document.querySelector('#setModal .set-card');
     if (card && !card.querySelector('.sky-prev')) { card.insertAdjacentHTML('beforeend', `<div class="set-row sky-prev"><span class="set-lb"><b>하늘 미리보기</b><small>테스트용 · 평소에는 실제 시각을 따라요</small></span><span class="seg" role="radiogroup" aria-label="하늘 미리보기">${[['auto', '자동'], ['day', '낮'], ['dusk', '노을'], ['night', '밤']].map(([k, l]) => `<button type="button" role="radio" data-sky="${k}" aria-checked="${k === SKY.mode}">${l}</button>`).join('')}</span></div>`);
