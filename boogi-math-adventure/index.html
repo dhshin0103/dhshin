@@ -932,6 +932,92 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
   .homefs .home-box .cb-top { flex-wrap: wrap; }
 }
 @media (max-width: 560px) and (orientation: portrait) { .homefs .home-chap .chap-units { display: flex; flex-direction: row; overflow-x: auto; padding-bottom: 4px; } .homefs .home-chap .chap-u { flex: 0 0 132px; } .homefs .home-box .cb-pct { flex-basis: 100%; } }
+/* 낮·밤 바다 홈: 구름 삭제, 실시간 해/달, 파도, 도트 타이틀, 섬 안 상점 */
+.homefs { background: linear-gradient(180deg, var(--sk0, #CDEBFF) 0%, var(--sk1, #E6F6FF) 17%, var(--sk2, #B8E6FE) 25%, var(--sk3, #A9DFFC) 60%, var(--sk4, #9EDBFA) 100%); }
+.homefs .hcloud, .homefs .sf-cloud, .homefs .hsun, .homefs .sf-hill, .homefs .sf-top > .shop-fab { display: none !important; }
+.homefs .home-title .ht-logo { display: none !important; }
+.homefs .home-title .px-logo { display: block; height: clamp(40px, 7vh, 62px); width: auto; filter: drop-shadow(0 3px 0 rgba(0,30,60,.18)); }
+.daysky { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.homefs > .sf-top, .homefs > .home-box { z-index: 3; } .homefs .home-map { z-index: 1; }
+.daysky .orb { position: absolute; width: clamp(44px, 9vmin, 84px); aspect-ratio: 1; margin: calc(clamp(44px, 9vmin, 84px) / -2) 0 0 calc(clamp(44px, 9vmin, 84px) / -2); border-radius: 50%; background: radial-gradient(circle, #fffbe0 0 38%, #ffe680 39% 46%, rgba(255,230,128,.45) 47% 60%, rgba(255,230,128,0) 72%); transition: left 1.2s ease, top 1.2s ease; }
+.homefs.is-dusk .daysky .orb:not(.moon) { background: radial-gradient(circle, #fff1c2 0 36%, #ffb057 37% 46%, rgba(255,150,90,.5) 47% 62%, rgba(255,150,90,0) 74%); }
+.daysky .orb.moon { background: radial-gradient(circle, #fdf6d8 0 40%, rgba(253,246,216,.28) 41% 58%, rgba(253,246,216,0) 72%); }
+.daysky .orb.moon i { position: absolute; left: 31%; top: 22%; width: 34%; height: 34%; border-radius: 50%; background: var(--sk0, #121B45); opacity: .92; transform: translate(22%, -14%); }
+.daysky .star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; opacity: 0; transition: opacity 1.5s; }
+.homefs.is-night .daysky .star { opacity: .9; animation: startw 3.2s ease-in-out infinite; } .daysky .star:nth-child(3n) { width: 2px; height: 2px; }
+@keyframes startw { 50% { opacity: .25; } }
+.daysky .rip { position: absolute; width: 38px; height: 9px; border-top: 2px solid rgba(255,255,255,.75); border-radius: 50%; animation: ripmove 6s ease-in-out infinite; }
+.daysky .rip:nth-child(2n) { width: 24px; } .homefs.is-night .daysky .rip { border-top-color: rgba(190,215,255,.4); }
+@keyframes ripmove { 0%, 100% { transform: translateX(-10px); opacity: .15; } 50% { transform: translateX(12px); opacity: .9; } }
+.isle .wv { transform-box: view-box; transform-origin: 500px 325px; opacity: .8; }
+.isle .wv1 { animation: foam 5s ease-in-out infinite; } .isle .wv2 { animation: foam 5s ease-in-out -2.5s infinite; }
+@keyframes foam { 0%, 100% { transform: scale(1.02); opacity: .25; } 50% { transform: scale(1.062); opacity: .9; } }
+.isle .nl { opacity: 0; transition: opacity 1.2s; pointer-events: none; } .homefs.is-night .isle .nl { opacity: 1; } .homefs.is-dusk .isle .nl { opacity: .45; }
+.isle .is-night { opacity: 0; transition: opacity 1.2s; pointer-events: none; } .homefs.is-night .isle .is-night { opacity: .36; } .homefs.is-dusk .isle .is-night { opacity: .1; fill: #7a3b2e; stroke: #7a3b2e; }
+.isle .vg-fire { animation: fireflick .5s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; } @keyframes fireflick { to { transform: scale(1.08, .93) skewX(3deg); } }
+.isle .vg-smoke { animation: smokeup 3s ease-in-out infinite; } @keyframes smokeup { 0% { transform: translateY(4px); opacity: 0; } 40% { opacity: .8; } 100% { transform: translateY(-10px); opacity: 0; } }
+.isle .vg-shop:hover, .isle .vg-shop:focus-visible { animation: shopbob .5s ease-in-out infinite alternate; transform: none; } @keyframes shopbob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+.isle .vg-shop:active { animation: none; transform: translateY(2px) scale(.97); }
+.homefs .isle > svg { overflow: visible; }
+@media (max-height: 500px) { .homefs .home-title .px-logo { height: 34px; } }
+@media (max-height: 500px) and (max-width: 800px) { .homefs .home-title .px-logo { height: 28px; } }
+@media (max-width: 860px) and (orientation: portrait) { .homefs .home-title .px-logo { height: 48px; margin: 4px auto 0; } .homefs .home-map { padding-bottom: 0; } }
+@media (prefers-reduced-motion: reduce) { .daysky .rip, .daysky .star, .isle .wv, .isle .vg-fire, .isle .vg-smoke, .isle .vg-shop { animation: none !important; } }
+/* 탐험 지도 풀스크린 + 단원별 테마 배경 + 골드 시계 */
+#mapModal { padding: 0; background: #fdf3df; display: block; overflow: hidden; }
+#mapModal .mth { position: absolute; inset: 0; overflow: hidden; pointer-events: none; } #mapModal .mth > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+#mapModal .map-card { position: relative; width: 100vw; max-width: none; height: 100vh; height: 100dvh; max-height: none; border: 0; border-radius: 0; box-shadow: none; background: transparent; overflow: hidden; gap: 6px; padding: max(10px, env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px)); }
+#mapModal .map-head { flex: 0 0 auto; flex-wrap: nowrap; align-items: center; gap: 10px; }
+#mapModal #mapTitle { display: flex; align-items: center; gap: 10px; min-width: 0; font-size: 1rem; }
+#mapModal #toHome { flex: none; font-size: clamp(1.05rem, 2.4vw, 1.35rem); padding: 9px 22px; border: 3px solid #fff; border-radius: 999px; background: var(--deep); color: #fff; box-shadow: 0 4px 0 rgba(0,30,50,.35); white-space: nowrap; }
+#mapModal #mapTitle .zone { position: static; max-width: none; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: rgba(255,255,255,.94); border: 2px solid var(--deep); border-radius: 999px; padding: 6px 16px; font-size: clamp(.9rem, 2vw, 1.15rem); }
+#mapModal .head-r { flex: none; margin-left: auto; } #mapModal #mapDesc { margin: 0; }
+#mapModal .map-coin { font-size: 1.15rem; padding: 6px 16px 6px 12px; border: 2px solid var(--deep); background: #fff; box-shadow: 0 3px 0 rgba(0,58,92,.22); }
+#mapModal .news { flex: 0 0 auto; padding: 5px 12px; font-size: .86rem; background: rgba(255,247,194,.94); } #mapModal .news:empty { display: none; }
+#mapModal #homeBody { flex: 1 1 0; min-height: 0; display: flex; }
+#mapModal .mapwrap { flex: 1; min-height: 0; border: 0; border-radius: 0; background: transparent; overflow: visible; }
+#mapModal .mapscroll { height: 100%; overflow: visible; } #mapModal .mapscroll > svg { width: 100%; height: 100%; overflow: visible; }
+#mapModal .mapscroll .bggear, #mapModal .mapscroll > svg > rect[fill="url(#wall)"], #mapModal .mapscroll > svg > rect[y="600"] { display: none; }
+#mapModal .quizbtn { left: 0; bottom: 2px; } #mapModal .mapcine { right: 0; bottom: 44px; }
+#mapModal .tools { position: absolute; right: max(12px, env(safe-area-inset-right, 0px)); bottom: max(8px, env(safe-area-inset-bottom, 0px)); z-index: 4; justify-content: flex-end; max-width: 70%; padding: 4px; border-radius: 16px; }
+#mapModal .tools > :not(.tools-tg) { display: none; } #mapModal .tools.open > * { display: inline-block; } #mapModal .tools.open { background: rgba(255,255,255,.92); box-shadow: 0 4px 14px rgba(0,30,50,.2); }
+#mapModal .tools .tools-tg { order: 9; font-size: .78rem; opacity: .75; background: rgba(255,255,255,.85); }
+.mth .mt-p { position: absolute; width: 7px; height: 7px; border-radius: 50%; opacity: 0; }
+#mapModal[data-th="1"] .mt-p { background: #ffb347; box-shadow: 0 0 8px 2px rgba(255,170,70,.6); animation: mtrise 7s linear infinite; }
+#mapModal[data-th="2"] .mt-p { width: 10px; height: 7px; border-radius: 60% 40% 60% 40%; background: #ffc9d6; animation: mtfall 9s linear infinite; }
+#mapModal[data-th="3"] .mt-p { width: 5px; height: 5px; background: #f2c94c; box-shadow: 0 0 7px 2px rgba(242,201,76,.7); animation: mtfloat 6s ease-in-out infinite; }
+#mapModal[data-th="4"] .mt-p { width: 4px; height: 4px; background: #fff; box-shadow: 0 0 6px 2px rgba(255,255,255,.8); animation: mttw 3.4s ease-in-out infinite; }
+#mapModal[data-th="5"] .mt-p { width: 4px; height: 4px; background: #e9b93f; animation: mtfloat 7s ease-in-out infinite; }
+@keyframes mtrise { 0% { transform: translateY(40px); opacity: 0; } 20% { opacity: .9; } 100% { transform: translate(18px, -180px); opacity: 0; } }
+@keyframes mtfall { 0% { transform: translateY(-30px) rotate(0); opacity: 0; } 20% { opacity: .9; } 100% { transform: translate(-40px, 200px) rotate(300deg); opacity: 0; } }
+@keyframes mtfloat { 0%, 100% { transform: translateY(8px); opacity: .1; } 50% { transform: translate(10px, -14px); opacity: .9; } }
+@keyframes mttw { 0%, 100% { opacity: .15; } 50% { opacity: 1; } }
+.mth .mt-tw { animation: mttw 3s ease-in-out infinite; } .mth .mt-flick { animation: mttw 2.2s ease-in-out infinite; } .mth .mt-rays { animation: mtray 7s ease-in-out infinite; } @keyframes mtray { 50% { opacity: .55; } }
+.mth .mt-g1 { animation: spin 48s linear infinite; } .mth .mt-g1.rev { animation-direction: reverse; } .mth .mt-g2 { animation: spin 30s linear infinite reverse; } .mth .mt-g3 { animation: spin 36s linear infinite; }
+.mth .mt-pend { animation: mtpend 3.2s ease-in-out infinite alternate; transform-box: view-box; } @keyframes mtpend { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } }
+.ck-hr { animation: spin 720s linear infinite; transform-box: view-box; } .ck-mn { animation: spin 60s linear infinite; transform-box: view-box; } .ck-sec { animation: spin 10s linear infinite; transform-box: view-box; } .ck-ring { animation: spin 14s linear infinite; transform-box: view-box; opacity: .9; }
+#mapModal[data-th="5"] .mth > svg > g[transform] { opacity: .55; }
+@media (max-height: 500px) { #mapModal .map-card { gap: 3px; padding-top: 6px; padding-bottom: 4px; } #mapModal #toHome { font-size: 1rem; padding: 6px 16px; border-width: 2px; } #mapModal #mapTitle .zone { padding: 4px 12px; font-size: .86rem; } #mapModal .map-coin { font-size: 1rem; padding: 4px 12px 4px 10px; } #mapModal .news { display: none; } }
+@media (prefers-reduced-motion: reduce) { .mth *, .ck-hr, .ck-mn, .ck-sec, .ck-ring { animation: none !important; } }
+/* 홈 다듬기: 평일 5일 별 도장 출석 카드, 프로필 대비, 해·달 안전 궤도, 도트 타이틀 */
+.daysky { --ox0: 63%; --ox1: 80%; } .daysky .orb { width: 48px; margin: -24px 0 0 -24px; }
+.homefs .home-title .px-logo { filter: none; }
+.homefs .att { flex-direction: column; align-items: stretch; gap: 5px; padding: 7px 14px 6px; background: #fff; border: 2.5px solid var(--deep); border-radius: 18px; box-shadow: 0 5px 0 rgba(0,58,92,.3), 0 10px 22px rgba(0,46,74,.16); }
+.homefs .att .att-h { flex-direction: row; align-items: center; gap: 8px; } .homefs .att .att-h b { font-size: 1rem; }
+.homefs .att .att-h small { font-size: .72rem; color: #c2410c; background: #ffedd5; border-radius: 999px; padding: 2px 8px; }
+.homefs .att .att-row { gap: 10px; justify-content: space-between; } .homefs .att .att-d { gap: 2px; } .homefs .att .att-d:nth-child(n+6) { display: none; }
+.homefs .att .att-d i { width: 32px; height: 32px; font-size: 0; border: 2px dashed #cfd6de; background: #f7f9fb; transform: none; outline: 0; }
+.homefs .att .att-d i::before { content: '★'; font-size: 18px; line-height: 1; color: #dfe4ea; }
+.homefs .att .att-d.on i { border: 2px solid #c98a00; background: radial-gradient(circle at 35% 30%, #ffe680, #ffc21a 70%); box-shadow: inset 0 0 0 2px #fff3b8, 0 2px 0 #c98a00; transform: rotate(-8deg); }
+.homefs .att .att-d.on i::before { color: #fffbe0; text-shadow: 0 1px 0 #b87a00, 0 0 6px #fff; }
+.homefs .att .att-d.today i { outline: 3px solid #ff9f1a; outline-offset: 2px; } .homefs .att .att-d.today.on i { animation: attstamp .6s cubic-bezier(.2,1.6,.4,1) .4s both; }
+@keyframes attstamp { from { transform: scale(2) rotate(-24deg); opacity: 0; } to { transform: rotate(-8deg); opacity: 1; } }
+.homefs .att .att-d em { font-size: .7rem; } .homefs .att .att-d.today em { color: #c2410c; font-weight: 900; }
+.homefs .profile { border-radius: 18px; } .homefs .profile .pf2 .pf-nm { color: #0d2440; font-size: 1.04rem; } .homefs .profile .pf2 .pf-lv { color: #3a2400; background: #ffb81f; font-size: .72rem; font-weight: 700; }
+@media (max-height: 500px) { .homefs .att { gap: 3px; padding: 4px 10px; border-width: 2px; border-radius: 15px; margin-left: 8px; } .homefs .att .att-h b { font-size: .82rem; } .homefs .att .att-h small { font-size: .62rem; padding: 1px 6px; } .homefs .att .att-row { gap: 6px; } .homefs .att .att-d i { width: 24px; height: 24px; border-width: 1.5px; } .homefs .att .att-d i::before { font-size: 14px; } .homefs .att .att-d em { font-size: .58rem; } .homefs .profile .pf2 .pf-nm { font-size: .86rem; } .homefs .profile .pf2 .pf-lv { font-size: .62rem; } }
+@media (max-height: 500px) and (max-width: 800px) { .homefs .att { padding: 4px 8px; } .homefs .att .att-row { gap: 4px; } .homefs .att .att-d i { width: 22px; height: 22px; } }
+@media (max-width: 860px) and (orientation: portrait) { .daysky { --ox0: 34%; --ox1: 50%; } .homefs .att .att-row { justify-content: space-around; } }
+@media (prefers-reduced-motion: reduce) { .homefs .att .att-d.today.on i { animation: none; } }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -4356,7 +4442,28 @@ body.touch .tutbar { top: 22%; }
   const floorOf = gs => +gs[0];
   const fitText = (t, max) => t.length * 0.94 > max ? ` textLength="${max * 12.5}" lengthAdjust="spacingAndGlyphs"` : '';
   // 시계 퍼즐 그림 (단계 지도 가운데 + 퍼즐 수집 현황 창에서 같이 써요)
+  // 시계 퍼즐: 앤티크 골드 원형 시계
   function clockHeart(key, popI, CX, CY) {
+    const n = pieceCount(key), all = n === NSTG, RF = 64, NV = '#3b2f1a', id = CX > 200 ? 'ckA' : 'ckB';
+    const pt = (a, r) => `${(CX + r * Math.cos(a)).toFixed(1)} ${(CY + r * Math.sin(a)).toFixed(1)}`;
+    const pieces = GUARD.map((G, i) => { const a0 = -Math.PI / 2 + i * 2 * Math.PI / NSTG + 0.04, a1 = a0 + 2 * Math.PI / NSTG - 0.08, am = (a0 + a1) / 2, r0 = 15;
+      const d = `M${pt(a0, r0)} L${pt(a0, RF)} A${RF} ${RF} 0 0 1 ${pt(a1, RF)} L${pt(a1, r0)} A${r0} ${r0} 0 0 0 ${pt(a0, r0)} Z`, [tx, ty] = pt(am, RF * 0.63).split(' ').map(Number);
+      if (hasPiece(key, i)) return `<g class="${popI === i ? 'piece-got' : ''}"><path d="${d}" fill="${G.bg}" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#d9a93a" stroke-width="1.2" stroke-linejoin="round"/><g transform="translate(${tx - 16},${ty - 16}) scale(.32)">${charSVG(G.art).replace(/<\/?svg[^>]*>/g, '')}</g></g>`;
+      return `<g><path d="${d}" fill="#c9ced6" stroke="#9aa2ae" stroke-width="2" stroke-linejoin="round"/><path d="M${pt(a0 + 0.05, RF - 3)} A${RF - 3} ${RF - 3} 0 0 1 ${pt(a1 - 0.05, RF - 3)}" fill="none" stroke="#8d95a2" stroke-width="3" opacity=".6"/><path d="M${pt(a0 + 0.12, r0 + 4)} L${pt(a0 + 0.04, RF - 5)}" stroke="#eef0f4" stroke-width="2" opacity=".8"/><text x="${tx}" y="${ty + 6}" text-anchor="middle" font-family="Jua" font-size="17" fill="#8d95a2">${i + 1}</text></g>`; }).join('');
+    let marks = ''; for (let k = 0; k < 12; k++) { const a = k * Math.PI / 6 - Math.PI / 2, [x, y] = pt(a, 74).split(' ').map(Number); marks += k % 3 ? `<circle cx="${x}" cy="${y}" r="2.2" fill="#8a6a1f"/>` : `<path d="M${x} ${y - 5.5} l4 5.5 l-4 5.5 l-4 -5.5 z" fill="#7a5a12" transform="rotate(${k * 30} ${x} ${y})"/>`; }
+    const hand = (len, w, c) => `<path d="M${CX} ${CY + 8} L${CX - w} ${CY} L${CX - w * 0.5} ${CY - len * 0.55} L${CX - w * 1.5} ${CY - len * 0.7} L${CX} ${CY - len} L${CX + w * 1.5} ${CY - len * 0.7} L${CX + w * 0.5} ${CY - len * 0.55} L${CX + w} ${CY} Z" fill="${c}" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>`;
+    return `<g aria-hidden="true"><defs><linearGradient id="${id}z" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a8"/><stop offset=".3" stop-color="#e9b93f"/><stop offset=".55" stop-color="#b8892a"/><stop offset=".8" stop-color="#f3cf63"/><stop offset="1" stop-color="#a87a1e"/></linearGradient><radialGradient id="${id}h"><stop offset=".6" stop-color="#ffe680" stop-opacity=".75"/><stop offset="1" stop-color="#ffe680" stop-opacity="0"/></radialGradient></defs>
+      ${all ? `<circle class="vg-glow" cx="${CX}" cy="${CY}" r="122" fill="url(#${id}h)"/>` : ''}
+      <path d="M${CX - 12} ${CY - 92} l-5 -13 l8 5 l9 -9 l9 9 l8 -5 l-5 13 z" fill="url(#${id}z)" stroke="#7a5a12" stroke-width="2" stroke-linejoin="round"/><circle cx="${CX}" cy="${CY - 109}" r="3.5" fill="#e5484d" stroke="#7a5a12" stroke-width="1.5"/>
+      <circle cx="${CX}" cy="${CY}" r="94" fill="url(#${id}z)" stroke="#7a5a12" stroke-width="2.5"/><circle cx="${CX}" cy="${CY}" r="87" fill="none" stroke="#fff6c8" stroke-width="2" opacity=".7"/>
+      <circle cx="${CX}" cy="${CY}" r="83" fill="#8a6a1f"/><circle cx="${CX}" cy="${CY}" r="80" fill="${all ? '#fff6d6' : '#fffaf0'}" stroke="#d9a93a" stroke-width="2"/>
+      ${all ? `<circle class="ck-ring" cx="${CX}" cy="${CY}" r="90.500" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 34" style="transform-origin:${CX}px ${CY}px"/>` : ''}
+      ${marks}${pieces}
+      ${all ? `<g class="ck-hr" style="transform-origin:${CX}px ${CY}px">${hand(36, 4.5, NV)}</g><g class="ck-mn" style="transform-origin:${CX}px ${CY}px">${hand(54, 3.4, NV)}</g><g class="ck-sec" style="transform-origin:${CX}px ${CY}px"><path d="M${CX} ${CY + 14} V${CY - 60}" stroke="#e5484d" stroke-width="1.8" stroke-linecap="round"/></g>`
+        : `<g transform="rotate(-52 ${CX} ${CY})" opacity=".8">${hand(36, 4.5, '#8d95a2')}</g><g transform="rotate(100 ${CX} ${CY})" opacity=".8">${hand(54, 3.4, '#8d95a2')}</g>`}
+      <circle cx="${CX}" cy="${CY}" r="9" fill="url(#${id}z)" stroke="#7a5a12" stroke-width="2"/><circle cx="${CX}" cy="${CY}" r="4.5" fill="#e5484d"/><circle cx="${CX - 1.5}" cy="${CY - 1.5}" r="1.5" fill="#fff" opacity=".8"/></g>`;
+  }
+  function clockHeartOld(key, popI, CX, CY) {
     // 숫자 시계탑의 심장: 메인 시계탑의 시계판처럼 생긴 5조각 퍼즐. 단계를 별 3개로 깰 때마다 한 조각씩 끼워져요
     const n = pieceCount(key), RF = 74, GDc = '#f2c94c', NVc = '#2b3a55';
     const pieceP = (i, r0, r1) => { const a0 = -Math.PI / 2 + i * 2 * Math.PI / NSTG, a1 = a0 + 2 * Math.PI / NSTG, am = (a0 + a1) / 2;
@@ -4832,7 +4939,206 @@ body.touch .tutbar { top: 22%; }
     if (a > 0 && b > a) s = s.slice(0, a) + s.slice(a, b).replace(/stroke="#2b3a55" stroke-width="(\d[\d.]*)"/g, (m, w) => `stroke="#566783" stroke-width="${Math.max(1.2, w * 0.7).toFixed(1)}"`) + s.slice(b);
     return s;
   }
-  function villageSVG(gs, story) { const s = hubSoftMap(villageSVGraw(gs, story)); return story ? s : hubOpenSea(s); }
+  function villageSVG(gs, story) { return story ? hubSoftMap(villageSVGraw(gs, story)) : isleSVG(gs); }
+  // ---------- 새 섬 지도: 모닥불 → 텐트 → 집 → 좋은 집 → 더 좋은 집 → 시계탑으로 이어지는 지그재그 길, 섬 안 상점, 밤 불빛 ----------
+  const ISLE = { path: 'M60 330 C40 200 150 95 330 85 C480 60 640 70 780 95 C900 110 975 220 962 340 C955 470 860 560 700 568 C540 590 380 580 240 560 C120 545 70 440 60 330 Z', H: [[215, 455], [300, 240], [470, 470], [600, 255], [735, 505]], T: [888, 318], sc: [1, 1, 1, .7, .56], S: [150, 238], side: [1, 1, 1, 1, 1], BR: [676, 390] };
+  function isleSVG(gs) {
+    const OL = '#2b3a55', names = unitsOf(gs), pcs = names.map((_, u) => piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
+    const won0 = M.won || {}, fresh = lit.map((v, u) => v && !won0[ukey(gs, u)]);
+    let defs = '', tower = '';
+    try { const t = document.createElement('div'); t.innerHTML = villageSVGraw(gs, false); const d = t.querySelector('defs'); if (d) defs = d.innerHTML;
+      const e = t.querySelector('ellipse[cx="450"][cy="300"][rx="70"]'); if (e) { const g = e.parentNode; g.querySelectorAll('[data-cmp]').forEach(x => x.remove()); tower = g.outerHTML; } } catch (_) {}
+    const stars = names.map((_, u) => ((M.prog[ukey(gs, u)] || {}).st || []).reduce((a, v) => a + v, 0));
+    const win = (x, y, w, h, arch) => `<path d="${arch ? `M${x} ${y + h} V${y + w / 2} a${w / 2} ${w / 2} 0 0 1 ${w} 0 V${y + h} Z` : `M${x} ${y} h${w} v${h} h${-w} Z`}" fill="#bfe6ff" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M${x + w / 2} ${y + (arch ? 2 : 0)} V${y + h} M${x} ${y + h * 0.55} h${w}" stroke="${OL}" stroke-width="1.2" opacity=".7"/><path class="nl" d="${arch ? `M${x + 1} ${y + h - 1} V${y + w / 2} a${w / 2 - 1} ${w / 2 - 1} 0 0 1 ${w - 2} 0 V${y + h - 1} Z` : `M${x + 1} ${y + 1} h${w - 2} v${h - 2} h${2 - w} Z`}" fill="#ffd86b" opacity=".92"/>`;
+    const glow = (x, y, r) => `<circle class="nl" cx="${x}" cy="${y}" r="${r}" fill="url(#isGlow)"/>`;
+    const rows = (x1, x2, y1, y2, k, c) => { let d = ''; for (let i = 1; i < k; i++) { const y = y1 + (y2 - y1) * i / k; d += `M${x1} ${y} H${x2} `; } return `<path d="${d}" stroke="${c}" stroke-width="1.5" opacity=".55"/>`; };
+    const tree = (x, y, s = 1, c = ['#3f9a52', '#57b862', '#86d37c']) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="30" rx="21" ry="5" fill="#2f7d3c" opacity=".22"/><path d="M-5 30 C-3 20 -3 10 -6 0 H6 C3 10 3 20 6 30 Z" fill="#8f5d36"/><path d="M-27 -3 C-34 -15 -24 -28 -13 -25 C-12 -39 9 -43 15 -30 C27 -33 34 -18 27 -8 C32 3 21 11 10 6 C4 13 -8 13 -13 5 C-23 9 -32 3 -27 -3 Z" fill="${c[0]}"/><path d="M-23 -7 C-28 -17 -19 -26 -11 -22 C-9 -34 8 -38 12 -27 C23 -29 27 -17 22 -10 C19 -3 9 -1 3 -6 C-4 0 -17 0 -23 -7 Z" fill="${c[1]}"/><path d="M-15 -18 C-15 -27 -4 -31 2 -26 C8 -29 13 -22 9 -18 C4 -13 -9 -12 -15 -18 Z" fill="${c[2]}" opacity=".85"/></g>`;
+    const pine = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="24" rx="16" ry="4.5" fill="#2f7d3c" opacity=".22"/><rect x="-3" y="12" width="6" height="12" rx="2" fill="#7a4d2b"/><path d="M0 -36 L13 -14 L7 -15 L18 3 L10 2 L22 19 H-22 L-10 2 L-18 3 L-7 -15 L-13 -14 Z" fill="#3a9a66"/><path d="M0 -36 L13 -14 L7 -15 L18 3 L10 2 L22 19 H0 Z" fill="#2c8052"/></g>`;
+    const bush = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><circle cx="-8" cy="0" r="8" fill="#5cb565"/><circle cx="6" cy="1" r="7" fill="#4aa457"/><circle cx="-1" cy="-5" r="8" fill="#6cc474"/></g>`;
+    // 건물 5단계: 땅(0,0) 기준으로 그려요. [그림, 반폭, 높이, 불빛]
+    const B5 = [
+      () => [`<ellipse cx="0" cy="2" rx="50" ry="11" fill="#d9c9a3" opacity=".8"/>
+        <g><rect x="-64" y="-20" width="34" height="17" rx="8" fill="#a8743c" stroke="${OL}" stroke-width="2.5"/><ellipse cx="-30" cy="-11.5" rx="5" ry="8.5" fill="#e0b47a" stroke="${OL}" stroke-width="2"/><ellipse cx="-30" cy="-11.5" rx="2" ry="4" fill="none" stroke="#a8743c" stroke-width="1.3"/><path d="M-56 -14 h14 M-58 -8 h10" stroke="#7a4d2b" stroke-width="1.5" stroke-linecap="round"/></g>
+        <g><rect x="36" y="-36" width="26" height="32" rx="8" fill="#3f9a72" stroke="${OL}" stroke-width="2.5"/><path d="M36 -24 h26" stroke="${OL}" stroke-width="2"/><rect x="42" y="-18" width="14" height="10" rx="3" fill="#57b88c" stroke="${OL}" stroke-width="1.8"/><rect x="40" y="-42" width="18" height="9" rx="4.5" fill="#e5484d" stroke="${OL}" stroke-width="2"/><path d="M46 -24 v6 M52 -24 v6" stroke="#f2c94c" stroke-width="2"/></g>
+        <g><path d="M-24 -30 L0 -62 L24 -30" fill="none" stroke="#6b5a48" stroke-width="3" stroke-linecap="round"/><path d="M0 -62 v-5" stroke="#6b5a48" stroke-width="3" stroke-linecap="round"/><path d="M0 -60 v14" stroke="#4a4f5a" stroke-width="1.5"/><path d="M-9 -46 h18 l-2 11 a7 4 0 0 1 -14 0 Z" fill="#4a4f5a" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M-9 -46 a9 6 0 0 1 18 0" fill="none" stroke="${OL}" stroke-width="1.5"/></g>
+        <g fill="#b9bfc8" stroke="${OL}" stroke-width="2"><ellipse cx="-22" cy="0" rx="8" ry="6"/><ellipse cx="-9" cy="5" rx="8" ry="6"/><ellipse cx="7" cy="6" rx="8" ry="6"/><ellipse cx="21" cy="1" rx="8" ry="6"/><ellipse cx="-15" cy="-7" rx="7" ry="5" fill="#a3aab5"/><ellipse cx="15" cy="-7" rx="7" ry="5" fill="#a3aab5"/></g>
+        <g stroke="${OL}" stroke-width="2"><rect x="-19" y="-9" width="38" height="8" rx="4" fill="#8a5a33" transform="rotate(-16)"/><rect x="-19" y="-9" width="38" height="8" rx="4" fill="#a8743c" transform="rotate(16)"/></g>
+        <g class="vg-fire"><path d="M0 -40 C10 -30 15 -22 12 -12 C10 -4 -10 -4 -12 -12 C-14 -20 -6 -24 -7 -32 C-3 -30 -1 -34 0 -40 Z" fill="#ff8a3d" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M0 -27 C6 -21 8 -16 6 -11 C4 -7 -5 -7 -6 -12 C-7 -17 -2 -20 0 -27 Z" fill="#ffd34d"/><path d="M0 -18 C3 -15 3 -12 2 -10 C0 -8 -3 -9 -3 -12 C-3 -14 -1 -15 0 -18 Z" fill="#fff6c2"/></g>
+        <g class="vg-spark" fill="#ffb347"><circle cx="-10" cy="-46" r="1.8"/><circle cx="9" cy="-52" r="1.5"/><circle cx="3" cy="-70" r="1.3"/></g>`, 46, 66, [[0, -20, 62]]],
+      () => [`<rect x="-46" y="2" width="80" height="12" rx="4" fill="#ff9fb5" stroke="${OL}" stroke-width="2" transform="skewX(-18)"/><path d="M-36 6 h64 M-38 10 h64" stroke="#fff" stroke-width="1.6" opacity=".8"/>
+        <path d="M-60 -52 Q-30 -40 0 -86 Q30 -40 60 -52" fill="none" stroke="#7a6a58" stroke-width="1.5"/><g stroke="${OL}" stroke-width="1.2" stroke-linejoin="round"><path d="M-50 -49 l8 3 l-7 8 z" fill="#ff8fab"/><path d="M-36 -52 l8 -1 l-3 10 z" fill="#ffd34d"/><path d="M-22 -60 l8 -4 l0 11 z" fill="#7cc7ff"/><path d="M50 -49 l-8 3 l7 8 z" fill="#7cc7ff"/><path d="M36 -52 l-8 -1 l3 10 z" fill="#ff8fab"/><path d="M22 -60 l-8 -4 l0 11 z" fill="#ffd34d"/></g>
+        <path d="M-60 -52 V0 M60 -52 V0" stroke="#8a5a33" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M-50 0 L0 -84 L50 0 Z" fill="#fff3dc" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/><path d="M-50 0 L0 -84 L-14 0 Z" fill="#3fb3a6"/><path d="M50 0 L0 -84 L14 0 Z" fill="#3fb3a6"/><path d="M-37 -22 l6 -7 l6 7 l6 -7 M37 -22 l-6 -7 l-6 7 l-6 -7" fill="none" stroke="#fff3dc" stroke-width="2.5" stroke-linejoin="round"/><path d="M-27 -40 h9 M27 -40 h-9" stroke="#fff3dc" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M-14 0 L0 -58 L14 0 Z" fill="#2b3a55"/><path class="nl" d="M-12 0 L0 -50 L12 0 Z" fill="#ffcf6b" opacity=".85"/><path d="M-14 0 L0 -58 L-5 -20 Q-10 -8 -20 0 Z" fill="#f7dfb0" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/><path d="M14 0 L0 -58 L5 -20 Q10 -8 20 0 Z" fill="#f7dfb0" stroke="${OL}" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M-50 0 L0 -84 L50 0" fill="none" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/><path d="M0 -84 v-9" stroke="${OL}" stroke-width="2.5"/><path d="M1 -93 h13 l-4 4 4 4 h-13 z" fill="#ff6b6b" stroke="${OL}" stroke-width="1.3"/>
+        <g><path d="M0 -58 v8" stroke="${OL}" stroke-width="1.6"/><rect x="-5" y="-51" width="10" height="12" rx="2.5" fill="#ffe27a" stroke="${OL}" stroke-width="2"/><path d="M-6 -51 h12 M-6 -39 h12" stroke="#7c8794" stroke-width="2.4" stroke-linecap="round"/></g>
+        <path d="M-50 0 l-12 6 M50 0 l12 6" stroke="#7a6a58" stroke-width="1.6"/><path d="M-64 2 l4 8 M64 2 l-4 8" stroke="#8a5a33" stroke-width="3.5" stroke-linecap="round"/>`, 54, 96, [[0, -44, 34], [0, -18, 40]]],
+      () => [`<rect x="22" y="-96" width="14" height="30" fill="#c9694a" stroke="${OL}" stroke-width="2.5"/><rect x="19" y="-100" width="20" height="6" rx="2" fill="#8f4a36" stroke="${OL}" stroke-width="2"/><path d="M24 -86 h10 M24 -78 h10" stroke="#8f4a36" stroke-width="1.3"/><g class="vg-smoke" fill="#fff" opacity=".8"><circle cx="30" cy="-108" r="5"/><circle cx="35" cy="-118" r="4"/><circle cx="31" cy="-127" r="3"/></g>
+        <rect x="-42" y="-50" width="84" height="50" rx="3" fill="#f3d9b0" stroke="${OL}" stroke-width="2.8"/><path d="M-42 -38 h84 M-42 -26 h84" stroke="#c9a06a" stroke-width="1.6"/><path d="M-28 -50 v12 M-10 -50 v12 M8 -50 v12 M26 -50 v12 M-19 -38 v12 M-1 -38 v12 M17 -38 v12 M33 -38 v12" stroke="#c9a06a" stroke-width="1.3"/>
+        <rect x="-42" y="-18" width="84" height="18" fill="#c9694a" stroke="${OL}" stroke-width="2.5"/><path d="M-42 -12 h84 M-42 -6 h84 M-30 -18 v6 M-12 -18 v6 M6 -18 v6 M24 -18 v6 M-21 -12 v6 M-3 -12 v6 M15 -12 v6 M33 -12 v6 M-30 -6 v6 M-12 -6 v6 M6 -6 v6 M24 -6 v6" stroke="#8f4a36" stroke-width="1.2"/>
+        <path d="M-52 -48 L0 -92 L52 -48 Z" fill="#5b7fa8" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/><path d="M-39 -59 H39 M-26 -70 H26 M-13 -81 H13" stroke="#3d5f88" stroke-width="1.8"/><path d="M-30 -59 v11 M-10 -59 v11 M10 -59 v11 M30 -59 v11 M-20 -70 v11 M0 -70 v11 M20 -70 v11 M-8 -81 v11 M8 -81 v11" stroke="#3d5f88" stroke-width="1.3"/>
+        <circle cx="0" cy="-64" r="6" fill="#bfe6ff" stroke="${OL}" stroke-width="2"/><circle class="nl" cx="0" cy="-64" r="5" fill="#ffd86b"/>
+        <g><rect x="-33" y="-38" width="24" height="20" rx="2" fill="#fff" stroke="${OL}" stroke-width="2"/>${win(-30, -35, 18, 14)}<rect x="-35" y="-18" width="28" height="6" rx="2" fill="#8a5a33" stroke="${OL}" stroke-width="1.6"/><circle cx="-29" cy="-20" r="3" fill="#ff8fab"/><circle cx="-21" cy="-21" r="3" fill="#ffd34d"/><circle cx="-13" cy="-20" r="3" fill="#ff8fab"/><path d="M-29 -18 v-3 M-21 -18 v-3 M-13 -18 v-3" stroke="#3f9a52" stroke-width="1.5"/></g>
+        <g><path d="M6 0 V-30 a11 11 0 0 1 22 0 V0 Z" fill="#8a5a33" stroke="${OL}" stroke-width="2.5"/><path d="M13 -38 V0 M21 -38 V0" stroke="#6f4526" stroke-width="1.4"/><circle cx="24" cy="-16" r="1.8" fill="#ffd34d"/><path d="M2 0 h30 v4 h-30 z" fill="#d8cdb8" stroke="${OL}" stroke-width="1.8"/></g>
+        <rect x="32" y="-36" width="6" height="9" rx="2" fill="#ffe27a" stroke="${OL}" stroke-width="1.5"/>`, 48, 104, [[-21, -28, 22], [17, -20, 20], [35, -32, 14]]],
+      () => [`<g stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M-84 0 v-14 M-76 0 v-14 M-68 0 v-14 M-88 -9 h24 M68 0 v-14 M76 0 v-14 M84 0 v-14 M64 -9 h24"/></g>
+        <rect x="-54" y="-10" width="108" height="10" fill="#b9bfc8" stroke="${OL}" stroke-width="2.5"/><path d="M-38 -10 v10 M-20 -10 v10 M-2 -10 v10 M16 -10 v10 M34 -10 v10 M-54 -5 h108" stroke="#8d95a1" stroke-width="1.2"/>
+        <rect x="-50" y="-92" width="100" height="82" rx="3" fill="#fff0dc" stroke="${OL}" stroke-width="2.8"/><path d="M-50 -52 h100" stroke="#d9c4a0" stroke-width="2"/>
+        <rect x="-26" y="-126" width="12" height="22" fill="#b9b3c4" stroke="${OL}" stroke-width="2.5"/><rect x="-28" y="-130" width="16" height="6" rx="2" fill="#8d879a" stroke="${OL}" stroke-width="1.8"/>
+        <path d="M-60 -90 L-38 -124 H38 L60 -90 Z" fill="#2fa67c" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/>${rows(-52, 52, -124, -90, 4, '#1d7a5a')}<path d="M-34 -124 v34 M-12 -124 v34 M12 -124 v34 M34 -124 v34" stroke="#1d7a5a" stroke-width="1.2" opacity=".5"/>
+        <g><path d="M-16 -94 L0 -116 L16 -94 Z" fill="#3cba8d" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/><rect x="-11" y="-98" width="22" height="12" fill="#fff0dc" stroke="${OL}" stroke-width="2"/>${win(-6, -96, 12, 9)}</g>
+        ${win(-42, -84, 16, 20, true)}${win(26, -84, 16, 20, true)}${win(-9, -86, 18, 26, true)}
+        <g><rect x="-24" y="-58" width="48" height="6" rx="2" fill="#fff" stroke="${OL}" stroke-width="2"/><path d="M-22 -72 h44 M-22 -72 v14 M-14 -72 v14 M-6 -72 v14 M2 -72 v14 M10 -72 v14 M22 -72 v14" stroke="${OL}" stroke-width="1.8" fill="none"/><path d="M-20 -52 v10 M20 -52 v10" stroke="#fff" stroke-width="4"/><path d="M-20 -52 v10 M20 -52 v10" stroke="${OL}" stroke-width="1.2"/></g>
+        ${win(-42, -42, 17, 20)}${win(25, -42, 17, 20)}<path d="M-44 -42 v20 M-23 -42 v20 M23 -42 v20 M44 -42 v20" stroke="#2fa67c" stroke-width="3.5"/>
+        <path d="M-11 -10 V-36 a11 11 0 0 1 22 0 V-10 Z" fill="#7a4d2b" stroke="${OL}" stroke-width="2.5"/><path d="M0 -47 V-10" stroke="${OL}" stroke-width="1.5"/><circle cx="-3" cy="-26" r="1.6" fill="#ffd34d"/><circle cx="3" cy="-26" r="1.6" fill="#ffd34d"/>
+        <path d="M-16 -10 h32 v5 h6 v5 h-44 v-5 h6 z" fill="#d8cdb8" stroke="${OL}" stroke-width="1.8" stroke-linejoin="round"/>
+        <g><circle cx="-66" cy="-12" r="9" fill="#57b862"/><circle cx="66" cy="-12" r="9" fill="#57b862"/><circle cx="-69" cy="-15" r="3" fill="#ff8fab"/><circle cx="68" cy="-16" r="3" fill="#ffd34d"/></g>`, 60, 132, [[-34, -72, 20], [34, -72, 20], [0, -72, 24], [-33, -32, 20], [33, -32, 20], [0, -100, 14]]],
+      () => [`<g><path d="M-92 0 v-18 M92 0 v-18" stroke="#8a5a33" stroke-width="4" stroke-linecap="round"/><circle cx="-92" cy="-26" r="11" fill="#3f9a52" stroke="${OL}" stroke-width="2"/><circle cx="-92" cy="-42" r="8" fill="#57b862" stroke="${OL}" stroke-width="2"/><circle cx="92" cy="-26" r="11" fill="#3f9a52" stroke="${OL}" stroke-width="2"/><circle cx="92" cy="-42" r="8" fill="#57b862" stroke="${OL}" stroke-width="2"/></g>
+        <rect x="-44" y="-96" width="88" height="96" rx="3" fill="#fff6e6" stroke="${OL}" stroke-width="2.8"/><path d="M-44 -50 h88" stroke="#f2c94c" stroke-width="5"/><path d="M-44 -52.5 h88 M-44 -47.5 h88" stroke="${OL}" stroke-width="1.3"/>
+        <path d="M-52 -94 L-34 -132 H34 L52 -94 Z" fill="#8a63d2" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/>${rows(-46, 46, -132, -94, 4, '#6442b0')}<path d="M-34 -132 H34" stroke="#f2c94c" stroke-width="4.5" stroke-linecap="round"/>
+        <g><path d="M-14 -100 L0 -122 L14 -100 Z" fill="#a17fe6" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/><rect x="-10" y="-104" width="20" height="12" fill="#fff6e6" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="-99" r="4.5" fill="#bfe6ff" stroke="${OL}" stroke-width="1.6"/><circle class="nl" cx="0" cy="-99" r="3.6" fill="#ffd86b"/></g>
+        ${win(-34, -86, 15, 26, true)}${win(-8, -86, 16, 26, true)}${win(19, -86, 15, 26, true)}${win(-34, -40, 15, 22, true)}${win(19, -40, 15, 22, true)}
+        <g><path d="M-13 0 V-30 a13 13 0 0 1 26 0 V0 Z" fill="#7a4d2b" stroke="${OL}" stroke-width="2.8"/><path d="M0 -43 V0" stroke="${OL}" stroke-width="1.6"/><path d="M-13 -30 a13 13 0 0 1 26 0" fill="none" stroke="#f2c94c" stroke-width="2.5"/><circle cx="-4" cy="-16" r="1.8" fill="#ffd34d"/><circle cx="4" cy="-16" r="1.8" fill="#ffd34d"/></g>
+        <path d="M-20 0 h40 v5 h7 v5 h7 v5 h-68 v-5 h7 v-5 h7 z" fill="#d8cdb8" stroke="${OL}" stroke-width="1.8" stroke-linejoin="round"/><path d="M-27 5 h54 M-34 10 h68" stroke="#b3a892" stroke-width="1.3"/>
+        ${[-1, 1].map(s => `<g transform="scale(${s},1)"><rect x="44" y="-124" width="30" height="124" rx="4" fill="#fff0d6" stroke="${OL}" stroke-width="2.8"/><path d="M44 -100 h30 M44 -60 h30" stroke="#f2c94c" stroke-width="4"/><path d="M44 -102 h30 M44 -98 h30 M44 -62 h30 M44 -58 h30" stroke="${OL}" stroke-width="1.1"/><path d="M40 -122 L59 -168 L78 -122 Z" fill="#7350c4" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/><path d="M46 -136 H72 M51 -150 H67" stroke="#55389e" stroke-width="1.8"/><path d="M59 -168 v-16" stroke="${OL}" stroke-width="2.5"/></g>`).join('')}
+        <path d="M-58 -184 h-15 l5 5 -5 5 h15 z M60 -184 h15 l-5 5 5 5 h-15 z" fill="#f2c94c" stroke="${OL}" stroke-width="1.5" stroke-linejoin="round"/>
+        ${win(-66, -92, 14, 22, true)}${win(52, -92, 14, 22, true)}${win(-66, -50, 14, 22, true)}${win(52, -50, 14, 22, true)}${win(-66, -20, 14, 14)}${win(52, -20, 14, 14)}`, 76, 186, [[-59, -80, 20], [59, -80, 20], [-27, -72, 20], [27, -72, 20], [0, -72, 20], [-27, -28, 20], [27, -28, 20], [-59, -38, 20], [59, -38, 20]]]
+    ];
+    const lock = p => `<g><circle r="13" fill="#fff" stroke="${OL}" stroke-width="2.2"/><path d="M-4.5 -2 v-4 a4.5 4.5 0 0 1 9 0 v4" stroke="#7c8794" stroke-width="2.6" fill="none"/><rect x="-7" y="-3" width="14" height="11" rx="2.5" fill="#f2c94c" stroke="${OL}" stroke-width="1.6"/><circle cy="2" r="1.6" fill="${OL}"/><rect x="15" y="-8" width="46" height="16" rx="8" fill="${OL}" stroke="#fff" stroke-width="1.5"/><text x="38" y="4" text-anchor="middle" font-family="Jua" font-size="11" fill="#fff"><tspan fill="#ffd34d">★</tspan>${p}/${NSTG * 3}</text></g>`;
+    const { H, T, S, side, sc } = ISLE, pts = [...H.map(([x, y]) => [x, y + 16]), [T[0], T[1] + 36]];
+    const rp = [[S[0] + 34, S[1] + 40], pts[0], pts[1], pts[2], pts[3], ISLE.BR, pts[4], pts[5]];
+    let road = `M${rp[0][0]} ${rp[0][1]}`; for (let i = 0; i < rp.length - 1; i++) { const p0 = rp[i - 1] || rp[i], p1 = rp[i], p2 = rp[i + 1], p3 = rp[i + 2] || p2, t = 0.24; road += ` C${(p1[0] + (p2[0] - p0[0]) * t).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) * t).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) * t).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) * t).toFixed(1)} ${p2[0]} ${p2[1]}`; }
+    const houses = H.map(([x, y], i) => {
+      const G = GUARD[i], on = lit[i], cur = i === M.sel.u, met = on || cur, [body, hw0, top0, lights] = B5[i](), sd = side[i], k = sc[i], hw = hw0 * k, top = top0 * k;
+      const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, ''), cx = sd > 0 ? x + hw + 2 : x - hw - 66;
+      return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(names[i])}, 퍼즐 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
+        ${cur ? `<ellipse class="vg-cur" cx="${x + sd * 18}" cy="${y + 4}" rx="${hw + 54}" ry="24" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
+        <ellipse cx="${x}" cy="${y + 3}" rx="${hw + 8}" ry="9" fill="#2f7d3c" opacity=".22"/>
+        <g transform="translate(${x},${y}) scale(${k})">${on ? body : `<g filter="url(#isDim)">${body}</g>`}${lights.map(l => glow(...l)).join('')}</g>
+        <ellipse cx="${cx + 32}" cy="${y + 3}" rx="26" ry="6.5" fill="#2f7d3c" opacity="${met ? .26 : .14}"/>
+        <g class="${fresh[i] ? 'vg-jump' : met ? 'vg-bob' : ''}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 74}) scale(.8)" filter="url(#${met ? 'isStick' : 'isFog'})" opacity="${met ? 1 : .78}">${art}</g></g>
+        <g transform="translate(${x - hw + 2},${y - Math.min(top, 118) + 8})"><circle r="14" fill="${OL}" stroke="#fff" stroke-width="2.5"/><text y="5.5" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text></g>
+        ${on ? '' : `<g transform="translate(${x - hw + 6},${y + 20})">${lock(stars[i])}</g>`}
+        ${on ? `<g class="vg-spark" fill="${fresh[i] ? '#ffd34d' : '#fff'}"><path d="M${x + hw - 4} ${y - top + 4} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/></g>` : ''}
+      </g>`;
+    }).join('');
+    const [sx, sy] = S, dot = notifications.hasShopNotice;
+    const shop = `<g class="vg-shop" data-shopbtn="1" role="button" tabindex="0" aria-label="꾸미기 상점 열기${dot ? ', 새 소식 있음' : ''}" style="cursor:pointer"><g transform="translate(${sx},${sy})">
+      <ellipse cx="0" cy="4" rx="62" ry="10" fill="#2f7d3c" opacity=".22"/>
+      <rect x="-46" y="-62" width="92" height="62" rx="4" fill="#fff7e6" stroke="${OL}" stroke-width="2.8"/><rect x="-46" y="-10" width="92" height="10" fill="#e6b877" stroke="${OL}" stroke-width="2"/>
+      <rect x="-38" y="-46" width="44" height="30" rx="3" fill="#bfe6ff" stroke="${OL}" stroke-width="2.2"/><rect class="nl" x="-37" y="-45" width="42" height="28" rx="2" fill="#ffd86b" opacity=".9"/><path d="M-16 -46 v30" stroke="${OL}" stroke-width="1.4"/>
+      <g stroke="${OL}" stroke-width="1.4"><rect x="-33" y="-30" width="10" height="12" rx="2" fill="#ff8fab"/><circle cx="-6" cy="-25" r="6" fill="#ffd34d"/><path d="M-12 -36 h12 l-2 5 h-8 z" fill="#7cc7ff"/></g>
+      <path d="M14 0 V-38 h24 V0 Z" fill="#8a5a33" stroke="${OL}" stroke-width="2.4"/><rect x="18" y="-34" width="16" height="12" rx="2" fill="#bfe6ff" stroke="${OL}" stroke-width="1.6"/><rect class="nl" x="19" y="-33" width="14" height="10" rx="1.5" fill="#ffd86b"/><circle cx="34" cy="-14" r="1.8" fill="#ffd34d"/>
+      <path d="M-54 -60 L-44 -86 H44 L54 -60 Z" fill="#e5484d" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/><path d="M-30 -86 L-34 -60 H-14 L-15 -86 Z M0 -86 L0 -60 H0 M15 -86 L14 -60 H34 L30 -86 Z" fill="#fff"/><path d="M-7 -86 h14 l1 26 h-16 z" fill="#e5484d"/>
+      <path d="M-54 -60 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0" fill="#e5484d" stroke="${OL}" stroke-width="2.4" stroke-linejoin="round"/><path d="M-36 -60 a9 8 0 0 0 18 0 M0 -60 a9 8 0 0 0 18 0 M36 -60 a9 8 0 0 0 18 0" fill="#fff" stroke="${OL}" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M-44 -86 H44" stroke="${OL}" stroke-width="2.8" stroke-linecap="round"/>
+      <g><path d="M-30 30 v-16 M30 30 v-16" stroke="#8a5a33" stroke-width="4" stroke-linecap="round"/><rect x="-42" y="6" width="84" height="30" rx="8" fill="#ffd34d" stroke="${OL}" stroke-width="3"/><rect x="-38" y="10" width="76" height="22" rx="5" fill="none" stroke="#fff" stroke-width="1.5" opacity=".8"/><text x="0" y="29" text-anchor="middle" font-family="Jua" font-size="22" fill="${OL}">상점</text></g>
+      ${glow(-16, -31, 34)}${glow(26, -28, 20)}
+      ${dot ? `<g class="vg-shopdot"><circle cx="48" cy="-88" r="12" fill="#e5484d" stroke="#fff" stroke-width="2.5"/><text x="48" y="-83.500" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-weight="700" font-size="13" fill="#fff">N</text></g>` : ''}
+    </g></g>`;
+    const decor = [[92, 372, .85], [286, 150, .8], [520, 132, .85], [770, 180, .8], [930, 430, .7], [398, 330, .75], [585, 520, .75]].map((a, k) => tree(a[0], a[1], a[2], k % 2 ? ['#4a9a4a', '#69bd5c', '#9bdc82'] : undefined)).join('')
+      + [[110, 300, .7], [452, 150, .7], [830, 520, .7], [305, 520, .7], [690, 150, .65], [545, 380, .6]].map(a => pine(...a)).join('')
+      + [[250, 330, 1], [420, 380, .9], [640, 430, .8], [820, 250, .8], [180, 520, .9], [520, 300, .8], [700, 300, .8]].map(a => bush(...a)).join('')
+      + [[300, 400], [560, 440], [410, 500], [760, 300], [240, 280], [650, 190], [860, 470]].map(([x, y], k) => `<g><circle cx="${x}" cy="${y}" r="4.5" fill="${['#ff8fab', '#ffd34d', '#c79bff'][k % 3]}"/><circle cx="${x}" cy="${y}" r="1.6" fill="#fff"/><circle cx="${x + 11}" cy="${y + 6}" r="3.6" fill="#fff"/><circle cx="${x + 11}" cy="${y + 6}" r="1.4" fill="#ffd34d"/></g>`).join('');
+    const river = 'M770 84 C750 170 740 240 700 320 C670 390 650 480 628 578';
+    return `<svg viewBox="0 0 1000 600" role="img" aria-label="수학 섬 지도. ${gsLabel(gs)} 단원 건물 5곳 중 ${n}곳을 정복했어요">
+      <defs>${defs}
+        <radialGradient id="isGlow"><stop offset="0" stop-color="#fff2a8" stop-opacity=".95"/><stop offset=".45" stop-color="#ffc94d" stop-opacity=".5"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+        <filter id="isDim"><feColorMatrix type="matrix" values=".2 .45 .1 0 .28  .2 .45 .1 0 .28  .2 .45 .1 0 .28  0 0 0 1 0"/></filter>
+        <filter id="isStick" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="o"/><feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="isFog" x="-20%" y="-20%" width="140%" height="140%"><feColorMatrix in="SourceGraphic" type="saturate" values=".4" result="s"/><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff" flood-opacity=".65"/><feComposite in2="d" operator="in" result="o"/><feMerge><feMergeNode in="o"/><feMergeNode in="s"/></feMerge></filter>
+        <clipPath id="isClip"><path d="${ISLE.path}"/></clipPath></defs>
+      <g class="is-foam"><path class="wv wv1" d="${ISLE.path}" fill="none" stroke="#fff" stroke-width="16" stroke-linejoin="round"/><path class="wv wv2" d="${ISLE.path}" fill="none" stroke="#fff" stroke-width="10" stroke-linejoin="round"/></g>
+      <path d="${ISLE.path}" fill="#F4E6C8" stroke="#F4E6C8" stroke-width="26" stroke-linejoin="round"/><path d="${ISLE.path}" fill="none" stroke="#fff" stroke-width="3" opacity=".7" transform="translate(500 325) scale(1.026) translate(-500 -325)"/>
+      <path d="${ISLE.path}" fill="#D8EFC2"/>
+      <g clip-path="url(#isClip)"><ellipse cx="330" cy="300" rx="150" ry="70" fill="#cbe8b0" opacity=".7"/><ellipse cx="690" cy="420" rx="170" ry="80" fill="#cbe8b0" opacity=".7"/><ellipse cx="150" cy="250" rx="86" ry="46" fill="#F7EEDB"/>
+        <path d="${river}" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round" opacity=".7"/><path d="${river}" fill="none" stroke="#B8E1FA" stroke-width="26" stroke-linecap="round"/><path class="vg-flow" d="${river}" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="14 46" opacity=".8"/></g>
+      <path d="${road}" fill="none" stroke="#DECBA0" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/><path d="${road}" fill="none" stroke="#EFE0BE" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(676 390) rotate(60)"><rect x="-30" y="-17" width="60" height="34" rx="5" fill="#D6B48F" stroke="${OL}" stroke-width="2.5"/><path d="M-20 -17 v34 M-10 -17 v34 M0 -17 v34 M10 -17 v34 M20 -17 v34" stroke="#a8743c" stroke-width="1.6"/><path d="M-32 -17 h64 M-32 17 h64" stroke="#8a5a33" stroke-width="5" stroke-linecap="round"/></g>
+      ${[[92, 372, .85], [520, 128, .8], [792, 165, .85], [930, 440, .7], [590, 532, .75]].map(a => tree(...a)).join('')}${[[110, 300, .7], [410, 140, .7], [860, 520, .7], [330, 530, .7]].map(a => pine(...a)).join('')}
+      ${shop}
+      <g transform="translate(${T[0] - 450},${T[1] - 268})">${tower}${glow(450, 174, 46)}${glow(450, 280, 26)}</g>
+      ${houses}
+      <path class="is-night" d="${ISLE.path}" fill="#16245e" stroke="#16245e" stroke-width="26" stroke-linejoin="round"/>
+    </svg>`;
+  }
+  // ---------- 낮·노을·밤: 실시간 해/달, 바다색, 파도, 별 ----------
+  const SKY = { mode: 'auto', day: ['#CDEBFF', '#E6F6FF', '#B8E6FE', '#A9DFFC', '#9EDBFA'], dusk: ['#FF9E7A', '#FFD3A0', '#F5B79C', '#B7B0DA', '#8AAEE0'], night: ['#121B45', '#24336C', '#2A4283', '#27407F', '#1F3470'] };
+  function skyTick() {
+    const host = $('homeModal'), el = host.querySelector(':scope > .daysky'); if (!el) return;
+    const d = new Date(), h = SKY.mode === 'day' ? 10.5 : SKY.mode === 'dusk' ? 17.9 : SKY.mode === 'night' ? 22 : d.getHours() + d.getMinutes() / 60;
+    const hex = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)), mix = (a, b, t) => a.map((c, k) => { const x = hex(c), y = hex(b[k]); return 'rgb(' + x.map((v, j) => Math.round(v + (y[j] - v) * t)).join(',') + ')'; });
+    const { day, dusk, night } = SKY;
+    const cols = h >= 7 && h < 17 ? day : h >= 17 && h < 18 ? mix(day, dusk, h - 17) : h >= 18 && h < 19 ? mix(dusk, night, h - 18) : h >= 5 && h < 6 ? mix(night, dusk, h - 5) : h >= 6 && h < 7 ? mix(dusk, day, h - 6) : night;
+    cols.forEach((c, k) => host.style.setProperty('--sk' + k, c));
+    const isDay = h >= 6 && h < 18, p = isDay ? (h - 6) / 12 : ((h - 18 + 24) % 24) / 12, orb = el.querySelector('.orb');
+    orb.style.left = `calc(var(--ox0) + (var(--ox1) - var(--ox0)) * ${p.toFixed(3)})`; orb.style.top = (72 - 42 * Math.sin(Math.PI * p)).toFixed(1) + 'px';
+    orb.classList.toggle('moon', !isDay);
+    host.classList.toggle('is-night', h >= 18.5 || h < 5.5); host.classList.toggle('is-dusk', (h >= 17 && h < 18.5) || (h >= 5.5 && h < 7));
+  }
+  function skyInit() {
+    const host = $('homeModal'); if (!host || host.querySelector(':scope > .daysky')) return;
+    const rn = (k, m) => ((k * 7919 + 13) * 104729 % 1000) / 1000 * m;
+    host.insertAdjacentHTML('afterbegin', `<div class="daysky" aria-hidden="true"><span class="orb"><i></i></span>${Array.from({ length: 34 }, (_, k) => `<i class="star" style="left:${rn(k + 1, 100).toFixed(1)}%;top:${rn(k + 40, 42).toFixed(1)}%;animation-delay:${-rn(k + 90, 4).toFixed(2)}s"></i>`).join('')}${Array.from({ length: 22 }, (_, k) => `<i class="rip" style="left:${rn(k + 200, 96).toFixed(1)}%;top:${(26 + rn(k + 300, 72)).toFixed(1)}%;animation-delay:${-rn(k + 400, 6).toFixed(2)}s"></i>`).join('')}</div>`);
+    // 도트 타이틀: 스쿨GO (얇은 선의 각진 픽셀 글자)
+    const G = { s: ['....#....', '....#....', '....#....', '...#.#...', '..#...#..', '.#.....#.', '#.......#', '.........', '.........', '#########', '.........'], k: ['#######..', '......#..', '#######..', '......#..', '.........', '#########', '....#....', '#######..', '......#..', '#######..', '#######..'], g: ['#######', '#.....#', '#......', '#......', '#......', '#..####', '#.....#', '#.....#', '#.....#', '#.....#', '#######'], o: ['#######', '#.....#', '#.....#', '#.....#', '#.....#', '#.....#', '#.....#', '#.....#', '#.....#', '#.....#', '#######'] };
+    G.s = ['.....###.....', '.....###.....', '.....###.....', '....##.##....', '....##.##....', '...##...##...', '..##.....##..', '.##.......##.', '##.........##', '.............', '.............', '.............', '#############', '#############', '.............', '.............'];
+    G.k = ['###########..', '###########..', '.........##..', '###########..', '.........##..', '.............', '#############', '#############', '.....###.....', '.............', '###########..', '.........##..', '###########..', '##...........', '###########..', '###########..'];
+    G.g = ['##########', '##########', '##........', '##........', '##........', '##........', '##........', '##...#####', '##...#####', '##......##', '##......##', '##......##', '##......##', '##......##', '##########', '##########'];
+    G.o = ['##########', '##########', '##......##', '##......##', '##......##', '##......##', '##......##', '##......##', '##......##', '##......##', '##......##', '##......##', '##......##', '##......##', '##########', '##########'];
+    let x0 = 2, px = [];
+    [['s', '#ffc53d'], ['k', '#ffc53d'], ['g', '#58c13c'], ['o', '#58c13c']].forEach(([ch, col]) => { G[ch].forEach((row, y) => [...row].forEach((c, x) => { if (c === '#') px.push([x0 + x, y + 2, col]); })); x0 += G[ch][0].length + 2; });
+    const W = x0, rect = (dx, dy, f, grow = 0) => px.map(([x, y, c]) => `<rect x="${x + dx - grow}" y="${y + dy - grow}" width="${1 + grow * 2}" height="${1 + grow * 2}" fill="${f || c}"/>`).join('');
+    const t = $('homeTitle'); if (t && !t.querySelector('.px-logo')) t.insertAdjacentHTML('beforeend', `<svg class="px-logo" viewBox="0 0 ${W} 20" shape-rendering="crispEdges" aria-hidden="true">${rect(1, 1, 'rgba(30,58,95,.28)', .02)}${rect(0, 0, '', .02)}</svg>`);
+    // 설정 창: 낮/노을/밤 미리보기 (테스트용)
+    const card = document.querySelector('#setModal .set-card');
+    if (card && !card.querySelector('.sky-prev')) { card.insertAdjacentHTML('beforeend', `<div class="set-row sky-prev"><span class="set-lb"><b>하늘 미리보기</b><small>테스트용 · 평소에는 실제 시각을 따라요</small></span><span class="seg" role="radiogroup" aria-label="하늘 미리보기">${[['auto', '자동'], ['day', '낮'], ['dusk', '노을'], ['night', '밤']].map(([k, l]) => `<button type="button" role="radio" data-sky="${k}" aria-checked="${k === SKY.mode}">${l}</button>`).join('')}</span></div>`);
+      card.querySelector('.sky-prev').addEventListener('click', e => { const b = e.target.closest('[data-sky]'); if (!b) return; SKY.mode = b.dataset.sky; card.querySelectorAll('[data-sky]').forEach(x => x.setAttribute('aria-checked', x === b)); skyTick(); }); }
+    skyTick(); setInterval(skyTick, 60000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) skyTick(); });
+  }
+  // ---------- 탐험 지도 풀스크린: 복귀 버튼·방 제목, 코인 HUD, 단원별 테마 배경, 테스트 도구 접기 ----------
+  function mapGear(r, teeth, c1, c2) { let d = ''; const n = teeth * 2; for (let k = 0; k < n; k++) { const a = k * Math.PI / teeth, rr = k % 2 ? r : r + r * 0.16 + 4; const p = t => `${(rr * Math.cos(a + t)).toFixed(1)} ${(rr * Math.sin(a + t)).toFixed(1)}`; d += `${k ? 'L' : 'M'}${p(-0.3 * Math.PI / teeth)} L${p(0.3 * Math.PI / teeth)} `; }
+    return `<path d="${d}Z" fill="${c1}" stroke="#7a5a12" stroke-width="2.5" stroke-linejoin="round"/><circle r="${r * 0.72}" fill="${c2}" stroke="#7a5a12" stroke-width="2"/><circle r="${r * 0.72}" fill="none" stroke="#fff" stroke-width="2" opacity=".35" stroke-dasharray="${r} ${r * 3.5}"/>${[0, 60, 120].map(a => `<rect x="${-r * 0.7}" y="${-r * 0.07}" width="${r * 1.4}" height="${r * 0.14}" fill="${c1}" stroke="#7a5a12" stroke-width="1.5" transform="rotate(${a})"/>`).join('')}<circle r="${r * 0.22}" fill="${c1}" stroke="#7a5a12" stroke-width="2"/><circle r="${r * 0.08}" fill="#7a5a12"/>`; }
+  function mapThemeSVG(t) {
+    const arch = (x, y, w, h, f, s) => `<path d="M${x} ${y + h} V${y + w / 2} a${w / 2} ${w / 2} 0 0 1 ${w} 0 V${y + h} Z" fill="${f}"${s ? ` stroke="${s}" stroke-width="4"` : ''}/>`;
+    const art = [
+      () => `<rect width="1000" height="640" fill="#fdeedd"/><g stroke="#f3d9bd" stroke-width="3">${Array.from({ length: 9 }, (_, k) => `<path d="M${k * 125} 0 V640"/>`).join('')}</g><path d="M0 120 H1000 M0 330 H1000" stroke="#f3d9bd" stroke-width="3"/>
+        ${arch(360, 60, 280, 380, '#f6d2ae', '#e9bd94')}${arch(400, 110, 200, 330, '#f1bf93')}<path d="M330 440 h340 v22 h-340 z" fill="#e2ae84"/><ellipse class="mt-flick" cx="500" cy="420" rx="90" ry="60" fill="#ffb86b" opacity=".45"/>
+        <g fill="#eecba6"><rect x="60" y="230" width="150" height="14" rx="4"/><rect x="800" y="200" width="150" height="14" rx="4"/><rect x="80" y="190" width="26" height="40" rx="5"/><rect x="118" y="176" width="22" height="54" rx="5"/><rect x="830" y="160" width="34" height="40" rx="8"/><rect x="880" y="150" width="20" height="50" rx="5"/></g><rect y="590" width="1000" height="50" fill="#ecc9a3"/>`,
+      () => `<rect width="1000" height="640" fill="#e4f6ea"/><g fill="#f2fbf2" stroke="#c4e6cf" stroke-width="4">${[60, 250, 440, 630, 820].map(x => `<path d="M${x} 600 V190 a65 65 0 0 1 130 0 V600 Z"/><path d="M${x + 65} 125 V600 M${x} 300 h130 M${x} 440 h130" fill="none"/>`).join('')}</g>
+        <g fill="none" stroke="#9fd3ae" stroke-width="5" stroke-linecap="round"><path d="M0 40 C120 90 160 20 260 70 S420 30 520 80 S760 20 1000 60"/><path d="M30 60 q-10 60 10 120 M300 70 q20 50 0 110 M720 60 q-16 60 6 130 M940 60 q14 40 -4 90"/></g><g fill="#a9dbb6">${[[40, 150], [22, 110], [306, 150], [296, 110], [730, 160], [716, 110], [938, 130], [948, 96], [150, 62], [450, 60], [600, 66], [860, 48]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="14" ry="8" transform="rotate(${(x * 7) % 90 - 45} ${x} ${y})"/>`).join('')}</g>
+        <g class="mt-rays" fill="#fffbe0"><path d="M620 0 L760 0 L420 640 L240 640 Z" opacity=".35"/><path d="M820 0 L900 0 L640 640 L540 640 Z" opacity=".25"/></g><rect y="592" width="1000" height="48" fill="#cdeacb"/>`,
+      () => `<rect width="1000" height="640" fill="#fbf1cf"/>${arch(390, 50, 220, 330, '#fff8de', '#ecd79c')}<path d="M500 50 V380 M390 230 h220" stroke="#ecd79c" stroke-width="4"/>
+        ${[[30, 300], [690, 300]].map(([x, w]) => `<g><rect x="${x}" y="90" width="${w - 20}" height="500" rx="8" fill="#f1dca6"/>${[150, 270, 390, 510].map((y, r) => `<rect x="${x + 10}" y="${y + 60}" width="${w - 40}" height="8" fill="#e3c887"/>${Array.from({ length: 11 }, (_, k) => `<rect x="${x + 16 + k * 23}" y="${y + 60 - 44 - (k * 7 + r * 5) % 18}" width="17" height="${44 + (k * 7 + r * 5) % 18}" rx="3" fill="${['#ead091', '#e6c27c', '#f4e2b4', '#dfc68a'][(k + r) % 4]}"/>`).join('')}`).join('')}</g>`).join('')}<rect y="590" width="1000" height="50" fill="#ecd79c"/>`,
+      () => `<rect width="1000" height="640" fill="#dcdcf6"/><path d="M40 640 V330 A460 300 0 0 1 960 330 V640 Z" fill="#c9cbf1"/><path d="M90 640 V340 A410 262 0 0 1 910 340 V640 Z" fill="#b9bdec"/><g fill="none" stroke="#dfe1fb" stroke-width="2.5" opacity=".9"><path d="M500 78 V330 M300 120 Q360 240 340 330 M700 120 Q640 240 660 330 M90 340 H910"/><path d="M180 200 L250 160 L330 210 L300 280 M640 150 L720 190 L800 160 L850 230 L780 270"/></g>
+        <g fill="#fff">${[[180, 200], [250, 160], [330, 210], [300, 280], [640, 150], [720, 190], [800, 160], [850, 230], [780, 270], [460, 130], [560, 200], [420, 250], [120, 300], [900, 300]].map(([x, y], k) => `<circle class="mt-tw" style="animation-delay:${-(k % 5) * 0.6}s" cx="${x}" cy="${y}" r="${k % 3 ? 4 : 6}"/>`).join('')}</g>
+        <g><path d="M140 0 v90 M860 0 v130 M500 0 v40" stroke="#a9adde" stroke-width="2.5"/><circle cx="140" cy="108" r="20" fill="#f6d9a8"/><ellipse cx="140" cy="108" rx="34" ry="8" fill="none" stroke="#e9bf7d" stroke-width="3"/><circle cx="860" cy="146" r="16" fill="#f3b9c8"/><path d="M500 40 l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" fill="#ffe9a0"/></g><rect y="592" width="1000" height="48" fill="#a9adde"/>`,
+      () => `<rect width="1000" height="640" fill="#f8efd6"/>${arch(300, 40, 400, 560, '#f3e3ba', '#e2c98a')}${arch(350, 96, 300, 504, '#efdcab')}
+        <g class="mt-pend" style="transform-origin:500px 60px"><path d="M500 60 V470" stroke="#b8892a" stroke-width="6"/><circle cx="500" cy="490" r="34" fill="#e3b54a" stroke="#7a5a12" stroke-width="3"/><circle cx="490" cy="480" r="10" fill="#fff" opacity=".4"/></g>
+        <g transform="translate(70 150)" opacity=".9"><g class="mt-g1">${mapGear(96, 16, '#d9a93a', '#f0d27a')}</g></g><g transform="translate(206 262)" opacity=".85"><g class="mt-g2">${mapGear(58, 10, '#c8922c', '#e8c468')}</g></g><g transform="translate(60 560)" opacity=".8"><g class="mt-g3">${mapGear(70, 12, '#b98428', '#e3bd5e')}</g></g>
+        <g transform="translate(940 130)" opacity=".9"><g class="mt-g2">${mapGear(58, 10, '#d9a93a', '#f0d27a')}</g></g><g transform="translate(822 236)" opacity=".85"><g class="mt-g1 rev">${mapGear(96, 16, '#c8922c', '#e8c468')}</g></g><g transform="translate(950 540)" opacity=".8"><g class="mt-g3">${mapGear(70, 12, '#b98428', '#e3bd5e')}</g></g>
+        <rect y="592" width="1000" height="48" fill="#e2c98a"/>`
+    ];
+    return `<svg viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${art[t - 1]()}</svg>${Array.from({ length: 16 }, (_, k) => `<i class="mt-p" style="left:${(k * 61 + 7) % 100}%;top:${(k * 37 + 11) % 100}%;animation-delay:${-(k * 0.83).toFixed(2)}s"></i>`).join('')}`;
+  }
+  function mapDeco() {
+    const mm = $('mapModal'), body = $('homeBody'); if (!body.querySelector('.mapwrap')) return;
+    const t = Math.min(5, Math.max(1, (M.sel.u | 0) + 1));
+    let bg = mm.querySelector(':scope > .mth'); if (!bg) { mm.insertAdjacentHTML('afterbegin', '<div class="mth" aria-hidden="true"></div>'); bg = mm.querySelector(':scope > .mth'); }
+    if (mm.dataset.th !== String(t)) { mm.dataset.th = t; bg.innerHTML = mapThemeSVG(t); }
+    const h = $('mapTitle'), back = h.querySelector('#toHome'), zone = body.querySelector('.zone');
+    if (back && !h.dataset.fs) { h.dataset.fs = '1'; [...h.childNodes].forEach(n => { if (n.nodeType === 3) n.remove(); }); back.textContent = '← 섬으로'; if (zone) h.appendChild(zone); }
+    const desc = $('mapDesc'), chip = desc.querySelector('span.chip');
+    if (chip) { const ic = $('homeWallet').querySelector('.coin-ic'); desc.innerHTML = `<button type="button" class="chip chip-btn map-coin" id="mapCoin" aria-label="코인 ${M.coins}개. 꾸미기 상점 열기">${ic ? ic.outerHTML : ''}${(+M.coins).toLocaleString('en-US')}</button>`; }
+    const tools = mm.querySelector('.tools'); if (tools && !tools.querySelector('.tools-tg')) tools.insertAdjacentHTML('afterbegin', '<button type="button" class="tools-tg" aria-expanded="false">🛠 테스트</button>');
+  }
+  setTimeout(() => { try { new MutationObserver(() => { const h = $('mapTitle'); if (h && !h.querySelector('.zone')) delete h.dataset.fs; mapDeco(); }).observe($('homeBody'), { childList: true });
+    $('mapModal').addEventListener('click', e => { if (e.target.closest('#mapCoin')) openModal('shop', { tab: 'closet' }); const tg = e.target.closest('.tools-tg'); if (tg) { const o = tg.parentNode.classList.toggle('open'); tg.setAttribute('aria-expanded', o); } }); mapDeco(); } catch (e) { console.error(e); } }, 0);
+  // 테스트용 코인 20,000개 (한 번만 채워요) + 코인 표시 천 단위 쉼표
+  function testCoins() { if (M.t20k) return false; M.coins = 20000; M.t20k = 1; try { saveM(); } catch (_) {} return true; }
+  function coinFmt() { const c = $('homeWallet').querySelector('#coinOpen, span.chip'); if (!c) return; [...c.childNodes].forEach(n => { if (n.nodeType === 3 && /\d{4,}/.test(n.textContent)) n.textContent = n.textContent.replace(/\d{4,}/, m => (+m).toLocaleString('en-US')); }); }
+  setTimeout(() => { try { skyInit(); const w = $('homeWallet'); new MutationObserver(() => { if (testCoins()) { try { renderBar(); } catch (_) {} } setTimeout(coinFmt, 0); }).observe(w, { childList: true }); if (testCoins() && !$('homeModal').hidden) { try { openHome(); } catch (_) {} } coinFmt(); } catch (e) { console.error(e); } }, 0);
   function villageSVGraw(gs, story) {
     const names = unitsOf(gs), pcs = names.map((_, u) => story ? (u < story.n ? NSTG : 0) : piecesOf(ukey(gs, u))), lit = pcs.map(v => v >= NSTG), n = lit.filter(Boolean).length;
     // 방금 정복한 집: 캐릭터가 점프하고 축하 팝업이 떠요 (한 번만)
@@ -5495,7 +5801,7 @@ body.touch .tutbar { top: 22%; }
   // 상점 버튼은 상단 바(코인·설정 아래)에, 퍼즐 위젯은 섬을 감싸는 .isle 상자의 오른쪽 아래에 붙여요
   function hubDecoMap() {
     const hm = $('homeMap'), top = document.querySelector('#homeModal .sf-top');
-    if (top && !top.querySelector(':scope > .shop-fab')) { top.insertAdjacentHTML('beforeend', `<button type="button" class="shop-fab" data-shopbtn="1"><svg viewBox="910 29 56 48" aria-hidden="true"><rect x="918" y="50" width="40" height="24" rx="2" fill="#fff7e6" stroke="#2b3a55" stroke-width="2.5"/><rect x="923" y="57" width="12" height="10" rx="1.5" fill="#bfe6ff" stroke="#2b3a55" stroke-width="1.8"/><rect x="941" y="56" width="11" height="18" rx="1.5" fill="#8a5a33" stroke="#2b3a55" stroke-width="1.8"/><path d="M914 52 L920 34 H956 L962 52 Z" fill="#e5484d" stroke="#2b3a55" stroke-width="2.5" stroke-linejoin="round"/><path d="M929 35.5 L926.5 51 H933.5 L934.5 35.5 Z M941.5 35.5 L942.5 51 H949.5 L947 35.5 Z" fill="#fff"/><path d="M914 52 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0" fill="#e5484d" stroke="#2b3a55" stroke-width="2.2" stroke-linejoin="round"/></svg><b>상점</b></button>`);
+    if (false) { top.insertAdjacentHTML('beforeend', `<button type="button" class="shop-fab" data-shopbtn="1"><svg viewBox="910 29 56 48" aria-hidden="true"><rect x="918" y="50" width="40" height="24" rx="2" fill="#fff7e6" stroke="#2b3a55" stroke-width="2.5"/><rect x="923" y="57" width="12" height="10" rx="1.5" fill="#bfe6ff" stroke="#2b3a55" stroke-width="1.8"/><rect x="941" y="56" width="11" height="18" rx="1.5" fill="#8a5a33" stroke="#2b3a55" stroke-width="1.8"/><path d="M914 52 L920 34 H956 L962 52 Z" fill="#e5484d" stroke="#2b3a55" stroke-width="2.5" stroke-linejoin="round"/><path d="M929 35.5 L926.5 51 H933.5 L934.5 35.5 Z M941.5 35.5 L942.5 51 H949.5 L947 35.5 Z" fill="#fff"/><path d="M914 52 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0 a6 5 0 0 0 12 0" fill="#e5484d" stroke="#2b3a55" stroke-width="2.2" stroke-linejoin="round"/></svg><b>상점</b></button>`);
       top.querySelector(':scope > .shop-fab').addEventListener('click', () => openModal('shop', { tab: 'closet' })); }
     hubFabDot();
     const svg = hm.querySelector(':scope > svg'); if (!svg) return;
@@ -5765,6 +6071,7 @@ body.touch .tutbar { top: 22%; }
   openHome();
 })();
 </script>
+
 
 
 
