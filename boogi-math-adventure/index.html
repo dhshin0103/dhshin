@@ -1383,13 +1383,15 @@ body.touch .stage canvas { object-fit: contain; }
 body.touch .stage .pad { display: none !important; }
 body.touch.pad-on:not(.q-on) .stage .pad { display: block !important; position: absolute !important; inset: 0 !important; width: auto; max-width: none; margin: 0; z-index: 3; pointer-events: none; --dp: clamp(132px, 19vw, 190px); --dl: max(20px, env(safe-area-inset-left, 0px)); --db: max(20px, env(safe-area-inset-bottom, 0px)); }
 body.touch .pad .nums, body.touch .pad .keyshow { display: none !important; }
-/* 왼쪽 아래 십자 패드: 왼쪽·오른쪽 팔을 누르면 이동 */
-body.touch .stage .pad::before { content: ''; position: absolute; left: var(--dl); bottom: var(--db); width: var(--dp); height: var(--dp); background: rgba(255, 255, 255, .62); clip-path: polygon(34% 0, 66% 0, 66% 34%, 100% 34%, 100% 66%, 66% 66%, 66% 100%, 34% 100%, 34% 66%, 0 66%, 0 34%, 34% 34%); border-radius: 18%; }
-body.touch .stage .pad::after { content: ''; position: absolute; left: calc(var(--dl) + var(--dp) * .41); bottom: calc(var(--db) + var(--dp) * .41); width: calc(var(--dp) * .18); height: calc(var(--dp) * .18); border-radius: 50%; background: rgba(0, 58, 92, .28); }
-body.touch .pad #btnLeft, body.touch .pad #btnRight { display: flex !important; align-items: center; justify-content: center; position: absolute; bottom: calc(var(--db) + var(--dp) * .28); width: calc(var(--dp) * .5) !important; height: calc(var(--dp) * .44); min-width: 0 !important; min-height: 0 !important; padding: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; opacity: 1 !important; color: #003a5c; font-size: calc(var(--dp) * .26) !important; pointer-events: auto; touch-action: none; border-radius: 14px !important; }
-body.touch .pad #btnLeft { left: var(--dl); padding-right: calc(var(--dp) * .16) !important; } body.touch .pad #btnRight { left: calc(var(--dl) + var(--dp) * .5); padding-left: calc(var(--dp) * .16) !important; }
-body.touch .pad #btnLeft.on, body.touch .pad #btnRight.on, body.touch .pad #btnLeft:active, body.touch .pad #btnRight:active { color: #c2410c; transform: scale(1.18); }
-body.touch .pad button.tut-hl { box-shadow: none !important; color: #e8590c !important; }
+/* 왼쪽 아래 둥근 조이스틱: 가운데 손잡이를 왼쪽·오른쪽으로 밀면 이동 (게임 패드의 아날로그 스틱처럼) */
+.joy { display: none; }
+body.touch .pad #btnLeft, body.touch .pad #btnRight { display: none !important; }
+body.touch .pad .joy { display: block; position: absolute; left: var(--dl); bottom: var(--db); width: var(--dp); height: var(--dp); border-radius: 50%; pointer-events: auto; touch-action: none; background: radial-gradient(circle at 50% 45%, rgba(40, 52, 78, .5), rgba(14, 24, 46, .68)); border: 4px solid rgba(255, 255, 255, .8); box-shadow: 0 6px 0 rgba(0, 0, 0, .28), inset 0 0 0 7px rgba(255, 255, 255, .1); }
+.joy-ar { position: absolute; top: 50%; transform: translateY(-50%); font-size: calc(var(--dp) * .13); color: rgba(255, 255, 255, .75); pointer-events: none; } .joy-ar.l { left: 7%; } .joy-ar.r { right: 7%; }
+.joy-knob { position: absolute; left: 50%; top: 50%; width: 46%; height: 46%; margin: -23% 0 0 -23%; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 38% 32%, #ffffff, #cfd9e6 55%, #9fb0c4); border: 3px solid #25324d; box-shadow: 0 5px 0 rgba(0, 0, 0, .35), inset 0 -5px 8px rgba(0, 0, 0, .12); transition: transform .09s ease-out; }
+.joy.drag .joy-knob { transition: none; background: radial-gradient(circle at 38% 32%, #fff6c8, #ffd34d 55%, #f2a900); }
+.joy.dl .joy-ar.l, .joy.dr .joy-ar.r { color: #ffd34d; }
+.pad .joy.tut-hl { box-shadow: 0 0 0 5px var(--sun), 0 6px 0 rgba(0, 0, 0, .28); animation: tuthl 1s ease-in-out infinite; }
 body.touch .pad .dir { display: block; }
 body.touch .pad button.jump { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); bottom: max(20px, env(safe-area-inset-bottom, 0px)); pointer-events: auto; display: flex !important; width: clamp(84px, 13vw, 124px) !important; height: clamp(84px, 13vw, 124px); min-width: 0 !important; min-height: 0 !important; border-radius: 50% !important; border: 4px solid #fff !important; background: rgba(0, 152, 230, .82) !important; color: #fff; font-size: clamp(2rem, 5vw, 3rem) !important; opacity: 1 !important; box-shadow: 0 6px 0 rgba(0, 58, 92, .55), 0 0 0 4px rgba(0, 58, 92, .35) !important; touch-action: none; }
 body.touch .pad button.jump small { font-size: clamp(.8rem, 1.6vw, 1.05rem) !important; margin-top: -2px; }
@@ -1409,7 +1411,7 @@ body.touch .tutbar { top: 22%; }
   <div class="top">
     <h1>스쿨 go</h1>
     <p id="subline">학년 친구를 고르고, 단원마다 별 3개를 모아 퍼즐을 맞춰요</p>
-    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><div class="itembar" id="itemBar" role="group" aria-label="내 아이템 바로 쓰기"></div><button type="button" class="ctlbtn" id="soundBtn">🔊 소리 켬</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
+    <div class="ctl" id="ctl" hidden><button type="button" class="ctlbtn result" id="reopenResult" hidden>결과 보기</button><div class="itembar" id="itemBar" role="group" aria-label="내 아이템 바로 쓰기"></div><button type="button" class="ctlbtn" id="soundBtn">🔊 소리 켬</button><button type="button" class="ctlbtn fsbtn" data-fs="1">⛶ 전체 화면</button><button type="button" class="ctlbtn" data-act="restart">↺ 처음부터</button><button type="button" class="ctlbtn quit" data-act="quit">✕ 그만하기</button></div>
   </div>
   <div class="stage" id="stage">
     <canvas id="game" width="960" height="540" aria-label="부기가 달리는 수학 모험 게임 화면"></canvas>
@@ -1425,6 +1427,7 @@ body.touch .tutbar { top: 22%; }
       <button type="button" class="num" data-n="3">3</button>
       <button type="button" class="num" data-n="4">4</button>
     </div>
+    <div class="joy" id="joy" role="group" aria-label="이동 조이스틱. 왼쪽이나 오른쪽으로 밀어요"><span class="joy-ar l" aria-hidden="true">◀</span><span class="joy-ar r" aria-hidden="true">▶</span><span class="joy-knob" id="joyKnob"></span></div>
     <div class="dir">
       <button type="button" id="btnLeft" aria-label="왼쪽으로 이동"><span class="ar-k">←</span><span class="ar-t" aria-hidden="true">◀</span></button>
       <button type="button" class="jump" id="btnJump" aria-label="점프">↑<small>점프</small></button>
@@ -1522,6 +1525,8 @@ body.touch .tutbar { top: 22%; }
     <div class="set-row"><div class="set-lb"><b>소리 크기</b></div><input type="range" id="volRange" min="0" max="100" step="5" value="80" aria-label="소리 크기" class="vol"></div>
     <div class="set-row"><div class="set-lb"><b>조작법 안내</b><small>단계를 시작할 때 보여 줘요</small></div><div class="seg" id="segGuide" role="radiogroup" aria-label="조작법 안내"><button type="button" role="radio" data-guide="on">보기</button><button type="button" role="radio" data-guide="off">안 보기</button></div></div>
     <div class="set-row"><div class="set-lb"><b>조작법 튜토리얼</b><small>직접 눌러 보며 배우는 연습이에요</small></div><button type="button" class="btn ghost set-story" id="tutReset">다음 판에 다시 하기</button></div>
+    <div class="set-row"><div class="set-lb"><b>전체 화면</b><small>주소창 없이 화면 가득 보여 줘요</small></div><button type="button" class="btn ghost set-story fsbtn" data-fs="1">⛶ 전체 화면</button></div>
+    <p class="note" id="fsHelp" hidden>전체 화면이 막혀 있어요. 태블릿에서는 브라우저 메뉴의 「홈 화면에 추가」로 열면 주소창 없이 가득 차게 볼 수 있어요.</p>
     <h3 class="set-sec">이야기</h3>
     <div class="set-row"><div class="set-lb"><b>매쓰 아일랜드 이야기</b><small>멈춰 버린 시계탑 이야기를 다시 봐요</small></div><button type="button" class="btn ghost set-story" id="storyOpen">📖 이야기 보기</button></div>
     <p class="note" id="setNote"></p>
@@ -2260,6 +2265,15 @@ body.touch .tutbar { top: 22%; }
   canvas.addEventListener('pointerdown', e => { if (!TOUCH_DRAG || e.pointerType === 'mouse' || state !== 'play') return; e.preventDefault(); TOUCH.id = e.pointerId; TOUCH.x = touchX(e); try { canvas.setPointerCapture(e.pointerId); } catch (_) {} });
   canvas.addEventListener('pointermove', e => { if (e.pointerId === TOUCH.id) TOUCH.x = touchX(e); });
   ['pointerup', 'pointercancel'].forEach(t => canvas.addEventListener(t, e => { if (e.pointerId === TOUCH.id) { TOUCH.id = null; keys.left = keys.right = false; } }));
+  // 둥근 조이스틱: 손잡이를 민 쪽으로 걸어가요
+  { const joy = $('joy'), knob = $('joyKnob'); let jid = null;
+    const set = e => { const r = joy.getBoundingClientRect(), R = r.width / 2, max = R * 0.5; let dx = e.clientX - (r.left + R), dy = e.clientY - (r.top + R); const d = Math.hypot(dx, dy); if (d > max) { dx *= max / d; dy *= max / d; }
+      knob.style.transform = `translate(${dx}px, ${dy}px)`; const th = R * 0.16; keys.right = state === 'play' && dx > th; keys.left = state === 'play' && dx < -th; joy.classList.toggle('dr', keys.right); joy.classList.toggle('dl', keys.left); };
+    const end = () => { jid = null; knob.style.transform = ''; keys.left = keys.right = false; joy.classList.remove('drag', 'dl', 'dr'); };
+    joy.addEventListener('pointerdown', e => { e.preventDefault(); jid = e.pointerId; joy.classList.add('drag'); try { joy.setPointerCapture(e.pointerId); } catch (_) {} set(e); });
+    joy.addEventListener('pointermove', e => { if (e.pointerId === jid) set(e); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => joy.addEventListener(t, e => { if (e.pointerId === jid) end(); }));
+    joy.addEventListener('contextmenu', e => e.preventDefault()); }
   function touchTick() {
     if (TOUCH.id === null) return;
     if (state !== 'play') { TOUCH.id = null; keys.left = keys.right = false; return; }
@@ -2269,11 +2283,11 @@ body.touch .tutbar { top: 22%; }
   // ---------- 조작법 튜토리얼: 처음 한 번, 직접 눌러 보며 배워요 ----------
   const TUT = { on: false, step: 0, x0: 0, t: 0 };
   const TUT_STEPS = [
-    { key: IS_TOUCH ? '▶' : '→', btn: 'btnRight', text: IS_TOUCH ? '왼쪽 아래 십자 패드의 ▶ 를 꾹 누르면 앞으로 가요' : '오른쪽 화살표를 눌러 앞으로 가 보세요', done: () => player.x > TUT.x0 + 140 },
-    { key: IS_TOUCH ? '◀' : '←', btn: 'btnLeft', text: IS_TOUCH ? '십자 패드의 ◀ 를 누르면 뒤로 돌아가요' : '왼쪽 화살표를 누르면 뒤로 돌아가요', done: () => keys.left && player.vx < -20 && (TUT.t += 1) > 12 },
+    { key: IS_TOUCH ? '🕹 ▶' : '→', btn: IS_TOUCH ? 'joy' : 'btnRight', text: IS_TOUCH ? '왼쪽 아래 조이스틱을 오른쪽으로 밀면 앞으로 가요' : '오른쪽 화살표를 눌러 앞으로 가 보세요', done: () => player.x > TUT.x0 + 140 },
+    { key: IS_TOUCH ? '◀ 🕹' : '←', btn: IS_TOUCH ? 'joy' : 'btnLeft', text: IS_TOUCH ? '조이스틱을 왼쪽으로 밀면 뒤로 돌아가요' : '왼쪽 화살표를 누르면 뒤로 돌아가요', done: () => keys.left && player.vx < -20 && (TUT.t += 1) > 12 },
     { key: IS_TOUCH ? '점프' : '스페이스', btn: 'btnJump', text: IS_TOUCH ? '오른쪽 아래 점프 버튼을 눌러 보세요' : '스페이스(또는 ↑ 점프 버튼)를 눌러 점프!', done: () => (player.jumps || 0) >= 1 && !player.onGround },
     { key: IS_TOUCH ? '점프 ×2' : '스페이스 ×2', btn: 'btnJump', text: IS_TOUCH ? '공중에서 점프 버튼을 한 번 더! 이단 점프예요' : '공중에서 한 번 더! 이단 점프를 해 보세요', done: () => player.jumps === 2 },
-    { key: '🚪', btn: 'btnRight', text: '코인을 모으며 문제의 문까지 가요. 문에 닿으면 문제가 나와요', done: () => state === 'question' },
+    { key: '🚪', btn: IS_TOUCH ? 'joy' : 'btnRight', text: '코인을 모으며 문제의 문까지 가요. 문에 닿으면 문제가 나와요', done: () => state === 'question' },
     { key: IS_TOUCH ? '👆' : '1~4', btn: '', text: IS_TOUCH ? '보기 중 하나를 눌러 답해 보세요' : '숫자키 1~4 중 하나를 눌러 답해 보세요', inQ: true, done: () => !!current && (current.gate.solved || current.attempts > 0 || state === 'play') }
   ];
   function tutDraw() {
@@ -2303,7 +2317,7 @@ body.touch .tutbar { top: 22%; }
   function openGuide() {
     if (IS_TOUCH && !$('guideModal').dataset.touch) { $('guideModal').dataset.touch = '1';
       const main = $('guideModal').querySelector('.gd-main'), grid = $('guideModal').querySelector('.guide-grid'), sub = $('guideModal').querySelector('.gd-sub');
-      if (main) main.innerHTML = `<div class="gd-main-tx"><b>왼쪽 십자 패드로 움직여요!</b><small>화면 <strong>왼쪽 아래 십자 패드</strong>의 ▶ 를 꾹 누르면 앞으로, ◀ 를 누르면 뒤로 가요. 손을 떼면 멈춰요</small></div><div class="gd-touch" aria-hidden="true"><span class="gt-l">◀ 뒤로</span><span class="gt-c">✚</span><span class="gt-r">앞으로 ▶</span></div>`;
+      if (main) main.innerHTML = `<div class="gd-main-tx"><b>왼쪽 조이스틱으로 움직여요!</b><small>화면 <strong>왼쪽 아래 둥근 조이스틱</strong>을 오른쪽으로 밀면 앞으로, 왼쪽으로 밀면 뒤로 가요. 손을 떼면 멈춰요</small></div><div class="gd-touch" aria-hidden="true"><span class="gt-l">◀ 뒤로</span><span class="gt-c">🕹</span><span class="gt-r">앞으로 ▶</span></div>`;
       if (grid) { const cs = grid.querySelectorAll('.gd'); if (cs[0]) cs[0].innerHTML = '<span class="gd-k"><span class="gd-jump">↑</span></span><b>점프 버튼</b><small>오른쪽 아래 버튼! 공중에서 한 번 더 누르면 이단 점프</small>'; if (cs[1]) cs[1].innerHTML = '<span class="gd-k"><span class="gd-ic">👆</span></span><b>정답 고르기</b><small>문제가 나오면 보기를 한 번만 누르면 답이 돼요</small>'; }
       if (sub) sub.textContent = '위쪽 [내 아이템]을 누르면 거대화 · 시간 멈춤 · 하트 · 보호막을 쓸 수 있어요.'; }
     let mis = ''; try { mis = `<b>이번 단계 별 3개 조건</b> ${missionText(pick.i)}`; } catch (_) {}
@@ -6011,6 +6025,19 @@ body.touch .tutbar { top: 22%; }
   document.addEventListener('click', e => { if (e.target.closest('#setOpen')) drawGuideSeg(); });
   drawGuideSeg();
   $('tutReset').addEventListener('click', () => { M.set.tutDone = false; saveM(); $('tutReset').textContent = '✓ 다음 판에 나와요'; });
+  // ---------- 전체 화면 ----------
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+  function fsDraw() { document.querySelectorAll('[data-fs]').forEach(b => { b.textContent = fsEl() ? '⛶ 전체 화면 끝내기' : '⛶ 전체 화면'; }); }
+  async function fsToggle() {
+    const el = document.documentElement;
+    try {
+      if (fsEl()) { await (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+      else { const req = el.requestFullscreen || el.webkitRequestFullscreen; if (!req) throw new Error('unsupported'); await req.call(el); try { await screen.orientation.lock('landscape'); } catch (_) {} }
+    } catch (_) { showToast('이 화면에서는 전체 화면을 켤 수 없어요'); const t = $('fsHelp'); if (t) t.hidden = false; }
+    fsDraw();
+  }
+  document.addEventListener('click', e => { if (e.target.closest('[data-fs]')) fsToggle(); });
+  document.addEventListener('fullscreenchange', fsDraw); document.addEventListener('webkitfullscreenchange', fsDraw);
   $('storyOpen').addEventListener('click', () => { $('setModal').hidden = true; storyBack = 'home'; openStory(); });
   $('setClose').addEventListener('click', () => { $('setModal').hidden = true; const b = $('setOpen'); if (b) b.focus({ preventScroll: true }); });
   $('setModal').addEventListener('click', e => {
