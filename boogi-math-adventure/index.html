@@ -1018,6 +1018,76 @@ input.vol { width: min(200px, 50%); accent-color: #2f6fdb; }
 @media (max-height: 500px) and (max-width: 800px) { .homefs .att { padding: 4px 8px; } .homefs .att .att-row { gap: 4px; } .homefs .att .att-d i { width: 22px; height: 22px; } }
 @media (max-width: 860px) and (orientation: portrait) { .daysky { --ox0: 34%; --ox1: 50%; } .homefs .att .att-row { justify-content: space-around; } }
 @media (prefers-reduced-motion: reduce) { .homefs .att .att-d.today.on i { animation: none; } }
+/* 학년 월드 테마 파티클 · 수직 전환 · 하단 슬림 플로팅 바 */
+.daysky .gp { position: absolute; top: -20px; width: 10px; height: 8px; opacity: 0; pointer-events: none; }
+#homeModal[data-gt="1"] .gp { background: #f9b5cb; border-radius: 70% 30% 70% 30%; animation: gpfall 16s linear infinite; }
+#homeModal[data-gt="2"] .gp { background: #8fd27a; border-radius: 80% 10% 80% 10%; animation: gpfall 14s linear infinite; }
+#homeModal[data-gt="4"] .gp { background: #f0954a; border-radius: 60% 10% 60% 10%; animation: gpfall 17s linear infinite; }
+#homeModal[data-gt="5"] .gp { width: 7px; height: 7px; background: #fff; border-radius: 50%; animation: gpfall 18s linear infinite; }
+#homeModal[data-gt="6"] .gp { width: 4px; height: 4px; top: auto; background: #fff; border-radius: 50%; box-shadow: 0 0 6px 2px rgba(255,255,255,.7); animation: startw 4s ease-in-out infinite; opacity: .5; } #homeModal[data-gt="6"] .gp:nth-child(odd) { top: 22%; } #homeModal[data-gt="6"] .gp:nth-child(even) { top: 9%; }
+#homeModal[data-gt="6"] .daysky .rip { display: none; } #homeModal[data-gt="6"] .daysky .star { opacity: .45; }
+@keyframes gpfall { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: .5; } 90% { opacity: .45; } 100% { transform: translate(-60px, 105vh) rotate(260deg); opacity: 0; } }
+.isle .lm-spin { animation: spin 16s linear infinite; transform-box: view-box; } .isle .lm-float { animation: lmfloat 4s ease-in-out infinite alternate; } @keyframes lmfloat { from { transform: translateY(-6px); } to { transform: translateY(-16px); } }
+.gwind { position: absolute; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; } .gwind i { position: absolute; top: 0; width: 3px; height: 26vh; border-radius: 3px; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0)); opacity: 0; }
+.gwind.up i { animation: gwdn .7s ease-in both; } .gwind.dn i { animation: gwup .7s ease-in both; }
+@keyframes gwdn { 0% { transform: translateY(-30vh); opacity: 0; } 30% { opacity: .8; } 100% { transform: translateY(110vh); opacity: 0; } } @keyframes gwup { 0% { transform: translateY(110vh); opacity: 0; } 30% { opacity: .8; } 100% { transform: translateY(-30vh); opacity: 0; } }
+.gtoast { position: absolute; left: 50%; top: 84px; z-index: 6; transform: translateX(-50%); white-space: nowrap; font-family: var(--display); font-size: 1.15rem; color: var(--deep); background: rgba(255,255,255,.95); border: 2px solid var(--deep); border-radius: 999px; padding: 6px 20px; box-shadow: 0 6px 18px rgba(0,46,74,.2); animation: gtoast 1.9s ease both; pointer-events: none; }
+@keyframes gtoast { 0% { opacity: 0; margin-top: -10px; } 12%, 80% { opacity: 1; margin-top: 0; } 100% { opacity: 0; margin-top: -6px; } }
+.cheer-next { position: relative; margin-top: 8px; min-height: 48px; font-size: 1.05rem; background: #7b5ce0; color: #fff; }
+#homeModal .home-box { flex-direction: row; align-items: center; gap: 8px; width: auto; max-width: 100%; height: 58px; padding: 6px 7px 6px 12px; border-radius: 999px; background: rgba(255,255,255,.92); border: 1.5px solid rgba(255,255,255,.95); box-shadow: 0 10px 28px rgba(30,90,140,.22), 0 2px 6px rgba(30,90,140,.12); backdrop-filter: blur(6px); }
+#homeModal .home-box .home-chap { flex: 0 1 auto; flex-direction: row; align-items: center; min-width: 0; gap: 0; }
+#homeModal .home-box .cb-top { flex-wrap: nowrap; gap: 8px; min-width: 0; } #homeModal .home-box .cb-top .cg-av { display: none; }
+#homeModal .home-box .chap-gsel select { font-size: 1rem; padding: 6px 8px; border-radius: 999px; max-width: 128px; }
+#homeModal .home-box .cur-unit { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 240px; height: 40px; padding: 0 14px; border: 2px solid #ffb627; border-radius: 999px; background: #fff8e1; color: var(--deep); font-family: var(--display); font-size: 1.02rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; } #homeModal .cur-unit b { font-weight: 400; font-size: 1.15rem; } #homeModal .cur-unit i { font-style: normal; font-size: .8rem; opacity: .6; }
+#homeModal .home-box .chap-units { display: none; position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%); width: min(380px, 92vw); padding: 12px; gap: 6px; background: #fff; border: 2px solid var(--deep); border-radius: 20px; box-shadow: 0 12px 30px rgba(0,46,74,.25); z-index: 8; grid-template-columns: none; }
+#homeModal .home-box.pop .chap-units { display: flex; flex-direction: column; }
+#homeModal .home-box .chap-units .cb-pct { flex: none; min-width: 0; padding: 0 2px 4px; }
+#homeModal .home-box .chap-units .chap-u { flex: none; flex-direction: row; align-items: center; gap: 8px; min-height: 40px; padding: 6px 10px 6px 36px; font-size: .95rem; } #homeModal .home-box .chap-units .chap-u .cu-n { top: 50%; transform: translateY(-50%); } #homeModal .home-box .chap-units .chap-u .cu-nm { width: auto; flex: 1; }
+#homeModal .home-box .home-acts { width: auto; flex: none; } #homeModal .home-box .home-start { height: 44px; min-height: 0; padding: 0 20px; border-radius: 999px; font-size: 1.15rem; white-space: nowrap; box-shadow: 0 3px 0 var(--deep); }
+@media (max-height: 500px) { #homeModal .home-box { height: 46px; padding: 4px 5px 4px 9px; gap: 6px; } #homeModal .home-box .cur-unit { height: 34px; font-size: .9rem; padding: 0 10px; max-width: 190px; } #homeModal .home-box .home-start { height: 36px; font-size: 1rem; padding: 0 14px; } #homeModal .home-box .chap-gsel select { font-size: .88rem; padding: 4px 6px; } #homeModal .home-box .chap-units { max-height: 62vh; overflow-y: auto; padding: 8px; } #homeModal .home-box .chap-units .chap-u { min-height: 32px; font-size: .84rem; } .gtoast { top: 56px; font-size: .95rem; } }
+@media (max-width: 860px) and (orientation: portrait) { #homeModal .home-box { height: auto; flex-wrap: wrap; justify-content: center; border-radius: 24px; padding: 8px 10px; } #homeModal .home-box .cb-top { flex-wrap: wrap; justify-content: center; } #homeModal .home-box .home-acts { width: 100%; } #homeModal .home-box .home-start { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .daysky .gp, .isle .lm-spin, .isle .lm-float, .gwind i { animation: none !important; } }
+/* 하단 바 삭제 → 로고 아래 미니 컨트롤, 왼쪽 층수 바, 시작 태그 */
+#homeModal .home-box { position: absolute; left: 50%; top: calc(12px + clamp(40px, 7vh, 62px)); transform: translateX(-50%); z-index: 5; width: auto; height: auto; padding: 0; gap: 6px; background: none; border: 0; box-shadow: none; backdrop-filter: none; }
+#homeModal .home-box .chap-gsel, #homeModal .home-box .home-acts { display: none; }
+#homeModal .home-box .cb-top .chap-sem { background: rgba(255,255,255,.9); border-radius: 999px; padding: 3px; gap: 3px; box-shadow: 0 3px 10px rgba(30,90,140,.18); } #homeModal .home-box .cb-top .chap-sem button { border: 0; font-size: .86rem; padding: 3px 12px; }
+#homeModal .home-box .cur-unit { height: 32px; padding: 0 12px; font-size: .9rem; border: 0; background: rgba(255,255,255,.9); box-shadow: 0 3px 10px rgba(30,90,140,.18); max-width: none; }
+#homeModal .home-box .chap-units { top: calc(100% + 8px); bottom: auto; width: min(360px, 92vw); max-height: 70vh; overflow-y: auto; } #homeModal .home-box .chap-units .chap-u .cu-nm { white-space: normal; overflow: visible; text-overflow: clip; }
+.homefs .home-map { padding-left: 60px; }
+.gfloor { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: 152px; z-index: 4; width: 48px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 5px 0; border-radius: 999px; background: rgba(255,255,255,.82); box-shadow: 0 6px 18px rgba(30,90,140,.2); backdrop-filter: blur(6px); }
+.gfloor button { width: 40px; height: 32px; border: 0; border-radius: 999px; background: none; font-family: var(--display); font-size: .92rem; color: var(--deep); cursor: pointer; white-space: nowrap; padding: 0; transition: transform .15s; } .gfloor .gf-ar { height: 22px; font-size: .7rem; opacity: .55; }
+.gfloor button:focus-visible { outline: 3px solid var(--sun); }
+#homeModal[data-gt="1"] .gfloor [data-g="1"], #homeModal[data-gt="2"] .gfloor [data-g="2"], #homeModal[data-gt="3"] .gfloor [data-g="3"], #homeModal[data-gt="4"] .gfloor [data-g="4"], #homeModal[data-gt="5"] .gfloor [data-g="5"], #homeModal[data-gt="6"] .gfloor [data-g="6"] { background: #ffc53d; box-shadow: 0 2px 0 #c98a00; transform: scale(1.14); }
+.isle .start-tag { animation: tagfloat 1.6s ease-in-out infinite alternate; } @keyframes tagfloat { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+.isle .vg-house.nope { animation: nope .4s ease-in-out; transform-box: fill-box; }
+@media (max-height: 500px) { #homeModal .home-box { top: 42px; } #homeModal .home-box .cur-unit { height: 26px; font-size: .78rem; padding: 0 9px; } #homeModal .home-box .cb-top .chap-sem button { font-size: .74rem; padding: 2px 9px; } .gfloor { top: 112px; width: 42px; padding: 3px 0; gap: 0; } .gfloor button { width: 36px; height: 27px; font-size: .78rem; } .gfloor .gf-ar { height: 16px; } .homefs .home-map { padding-left: 54px; } }
+@media (max-height: 500px) and (max-width: 800px) { #homeModal .home-box { top: 36px; } }
+@media (max-width: 860px) and (orientation: portrait) { #homeModal .home-box { position: relative; left: auto; top: auto; transform: none; order: 1; align-self: center; flex-direction: row; } #homeModal .home-box .cb-top { flex-wrap: nowrap; } .gfloor { top: auto; bottom: 16px; } }
+@media (prefers-reduced-motion: reduce) { .isle .start-tag, .isle .vg-house.nope { animation: none; } }
+/* 학년 바(글자 표기·진남색 테두리)와 하단 학습 메뉴 바 */
+.gfloor { width: 70px; gap: 1px; padding: 5px 0; border-radius: 18px; background: #fff; border: 2px solid #1E3A5F; box-shadow: 0 5px 0 rgba(0,58,92,.3), 0 10px 22px rgba(0,46,74,.16); backdrop-filter: none; }
+.gfloor button { width: 58px; height: 30px; font-size: .92rem; color: #1E3A5F; } .gfloor .gf-ar { height: 20px; opacity: .6; }
+#homeModal[data-gt="1"] .gfloor [data-g="1"], #homeModal[data-gt="2"] .gfloor [data-g="2"], #homeModal[data-gt="3"] .gfloor [data-g="3"], #homeModal[data-gt="4"] .gfloor [data-g="4"], #homeModal[data-gt="5"] .gfloor [data-g="5"], #homeModal[data-gt="6"] .gfloor [data-g="6"] { background: #1E3A5F; color: #fff; font-weight: 700; box-shadow: none; transform: none; }
+.homefs .home-map { padding-left: 84px; }
+#homeModal .home-box { position: relative; left: auto; top: auto; transform: none; align-self: center; flex: 0 0 auto; height: 48px; padding: 0 8px 0 6px; gap: 0; background: #fff; border: 2px solid #1E3A5F; border-radius: 999px; box-shadow: 0 5px 0 rgba(0,58,92,.3), 0 10px 22px rgba(0,46,74,.16); }
+#homeModal .home-box .cb-top { gap: 0; }
+#homeModal .home-box .cb-top .chap-sem { background: none; box-shadow: none; padding: 0; gap: 4px; } #homeModal .home-box .cb-top .chap-sem button { font-size: .95rem; padding: 5px 14px; color: #1E3A5F; background: none; } #homeModal .home-box .cb-top .chap-sem button.on { background: #1E3A5F; color: #fff; }
+#homeModal .home-box .cur-unit { height: 28px; margin-left: 10px; padding: 0 10px 0 14px; border: 0; border-left: 1.5px solid #c3cfdb; border-radius: 0; background: none; box-shadow: none; color: #1E3A5F; font-size: 1rem; }
+#homeModal .home-box .chap-units { top: auto; bottom: calc(100% + 12px); }
+@media (max-height: 500px) { .gfloor { width: 60px; top: 112px; padding: 2px 0; gap: 0; border-radius: 15px; } .gfloor button { width: 50px; height: 25px; font-size: .78rem; } .gfloor .gf-ar { height: 14px; font-size: .6rem; } .homefs .home-map { padding-left: 74px; } #homeModal .home-box { height: 38px; top: auto; } #homeModal .home-box .cb-top .chap-sem button { font-size: .82rem; padding: 3px 11px; } #homeModal .home-box .cur-unit { height: 24px; font-size: .86rem; } #homeModal .home-box .chap-units { max-height: 66vh; } }
+@media (max-width: 860px) and (orientation: portrait) { #homeModal .home-box { order: 3; } .gfloor { top: auto; bottom: 76px; } .homefs .home-map { padding-left: 0; } }
+/* 전 단원 개방 + 학년·학기·목차를 하단 바 한 곳으로 통합 */
+.gfloor { display: none !important; } .homefs .home-map { padding-left: 0; }
+#homeModal .home-box .chap-gsel { display: inline-flex; } #homeModal .home-box .chap-gsel select { border: 0; background: none; font-family: var(--display); font-size: 1.02rem; color: #1E3A5F; padding: 4px 2px; max-width: 96px; border-radius: 8px; cursor: pointer; }
+#homeModal .home-box .gstep { width: 30px; height: 30px; border: 1.5px solid #1E3A5F; border-radius: 50%; background: #fff; color: #1E3A5F; font-size: .72rem; cursor: pointer; padding: 0; flex: none; } #homeModal .home-box .gstep:disabled { opacity: .3; cursor: default; } #homeModal .home-box .gstep:focus-visible { outline: 3px solid #8fb6e6; }
+#homeModal .home-box { padding: 0 8px 0 9px; } #homeModal .home-box .cb-top { gap: 4px; }
+#homeModal .home-box .cb-top .chap-sem { margin-left: 8px; padding-left: 10px; border-left: 1.5px solid #c3cfdb; border-radius: 0; }
+@media (max-height: 500px) { .homefs .home-map { padding-left: 0; } #homeModal .home-box .gstep { width: 26px; height: 26px; } #homeModal .home-box .chap-gsel select { font-size: .88rem; } }
+/* 단원 목차: 헤더·닫기·상태 문구 */
+#homeModal .home-box .cur-unit { max-width: min(300px, 38vw); } #homeModal .home-box .cur-unit i { font-size: .7rem; opacity: .7; margin-right: 2px; }
+#homeModal .home-box .chap-units .toc-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--display); font-size: 1.05rem; color: #1E3A5F; padding: 0 2px 2px; }
+#homeModal .home-box .chap-units .toc-x { border: 1.5px solid #1E3A5F; background: #fff; color: #1E3A5F; border-radius: 999px; font-family: var(--display); font-size: .85rem; padding: 3px 12px; cursor: pointer; }
+#homeModal .home-box .chap-units .cu-p { display: none; } #homeModal .home-box .chap-units .cu-st { flex: none; font-size: .8rem; font-weight: 700; color: #5b6878; white-space: nowrap; } #homeModal .home-box .chap-units .cu-st.done { color: #b07800; } #homeModal .home-box .chap-units .cu-st.go { color: #1d7a4a; }
 /* 전체 화면 지도 + 오른쪽 위 나침반 위젯 */
 .mapwrap { position: relative; border-radius: 22px; overflow: hidden; border: 3px solid var(--deep); background: #fdf3df; }
 .mapscroll { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -1556,13 +1626,13 @@ body.touch .tutbar { top: 22%; }
 
 <div class="vn" id="vn" hidden role="dialog" aria-modal="true" aria-labelledby="vnName">
   <div class="vn-scene" aria-hidden="true"><div class="vn-deco d1"></div><div class="vn-deco d2"></div><div class="vn-floor"></div></div>
-  <div class="vn-top"><button type="button" class="vn-btn" id="vnBack">← 지도</button><span class="vn-place" id="vnPlace"></span><button type="button" class="vn-btn" id="vnSkip">대화 넘기기 ▶▶</button></div>
+  <div class="vn-top"><button type="button" class="vn-btn" id="vnBack">← 공방 지도</button><span class="vn-place" id="vnPlace"></span><button type="button" class="vn-btn" id="vnSkip">이야기 건너뛰기 ▶▶</button></div>
   <div class="vn-char" id="vnChar"></div>
   <div class="vn-box" id="vnBox" tabindex="0">
     <span class="vn-name" id="vnName"></span>
     <p class="vn-text" id="vnText" aria-live="polite"></p>
     <span class="vn-more" id="vnMore">터치해서 계속 ▼</span>
-    <div class="vn-go" id="vnGo" hidden><div class="vn-items" id="vnItems"></div><button type="button" class="btn" id="vnStart">문제 풀러 출발! ▶</button></div>
+    <div class="vn-go" id="vnGo" hidden><div class="vn-items" id="vnItems"></div><button type="button" class="btn" id="vnStart">블록 맞추러 가기 ▶</button></div>
   </div>
 </div>
 
@@ -4519,23 +4589,23 @@ body.touch .tutbar { top: 22%; }
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, '');
       const title = `${i + 1}단계 · ${G.step}`, sea = SEASONS[i] || SEASONS[0];
       return `<g class="jnode" data-stage="${i}" role="button" tabindex="0" aria-label="${title}. ${open ? '별 ' + st + '개' : '잠김'}${got ? ', 시계 퍼즐 조각 획득' : ''}">
-        <g ${fog ? 'filter="url(#fogblur)" opacity=".6"' : ''}>
+        <g>
         <ellipse cx="${x}" cy="${y + 54}" rx="70" ry="14" fill="#c9a46a" opacity=".45"/>
         <circle class="ring" cx="${x}" cy="${y}" r="62" fill="${G.bg}" stroke="${open ? '#ffffff' : '#cfd6de'}" stroke-width="7"/>
-        <g transform="translate(${x - 47},${y - 50}) scale(0.94)" ${open ? '' : 'filter="url(#jgs)" opacity=".5"'}>${art}</g>
+        <g transform="translate(${x - 47},${y - 50}) scale(0.94)" ${open ? '' : 'filter="url(#jgs)" opacity=".75"'}>${art}</g>
         <rect x="${x - 94}" y="${y + 72}" width="188" height="72" rx="16" fill="#fff" stroke="${open ? '#2b3a55' : '#cfd6de'}" stroke-width="2"/>
-        <text x="${x}" y="${y + 97}" text-anchor="middle" font-family="Jua" font-size="20" fill="${open ? '#1f2a40' : '#8b95a3'}">${title}</text>${sea.ic ? `<g aria-hidden="true" opacity="${open ? 1 : .5}"><circle cx="${x + 84}" cy="${y + 74}" r="13" fill="#fff" stroke="#2b3a55" stroke-width="2"/><text x="${x + 84}" y="${y + 79.5}" text-anchor="middle" font-size="14">${sea.ic}</text></g>` : ''}
-        <text x="${x}" y="${y + 130}" text-anchor="middle" font-family="Jua" font-size="18" fill="${open ? '#b07800' : '#a3acb8'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : '잠김'}</text>
+        <text x="${x}" y="${y + 97}" text-anchor="middle" font-family="Jua" font-size="20" fill="${open ? '#1f2a40' : '#7a6f66'}">${title}</text>${sea.ic ? `<g aria-hidden="true" opacity="${open ? 1 : .5}"><circle cx="${x + 84}" cy="${y + 74}" r="13" fill="#fff" stroke="#2b3a55" stroke-width="2"/><text x="${x + 84}" y="${y + 79.5}" text-anchor="middle" font-size="14">${sea.ic}</text></g>` : ''}
+        <text x="${x}" y="${y + 130}" text-anchor="middle" font-family="Jua" font-size="${open ? 18 : 15}" fill="${open ? '#b07800' : '#9a8f84'}">${open ? '★'.repeat(st) + '☆'.repeat(3 - st) : ['기초 개념 익히기', '대표 유형 연습', '생각 힘 키우기', '단원 핵심 총정리', '도전! 비밀 보스 퀴즈'][i]}</text>
         </g>
-        ${fog ? `<g pointer-events="none" transform="translate(${x - 17},${y - 20})"><rect x="0" y="15" width="34" height="27" rx="6" fill="#5b6672"/><path d="M7 16v-6a10 10 0 0 1 20 0v6" stroke="#5b6672" stroke-width="5.5" fill="none"/></g>` : ''}
+        ${fog ? `<g pointer-events="none" transform="translate(${x + 46},${y - 44})"><circle r="13" fill="#fff" stroke="#9aa2ae" stroke-width="2"/><path d="M-4 -1 v-3 a4 4 0 0 1 8 0 v3" stroke="#7c8794" stroke-width="2.2" fill="none"/><rect x="-6" y="-2" width="12" height="9.500" rx="2.2" fill="#f2c94c" stroke="#7c8794" stroke-width="1.3"/></g>` : ''}
         ${done ? `<circle cx="${x + 46}" cy="${y - 44}" r="15" fill="#30a46c"/><path d="M${x + 39} ${y - 44}l5 6 9-11" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>` : ''}
         ${got ? `<g class="${popI === i ? 'piece-got' : ''}"><circle cx="${x - 46}" cy="${y - 44}" r="17" fill="#ffd34d" stroke="#b07800" stroke-width="2.5"/><path d="M${x - 46} ${y - 56} L${x - 40} ${y - 44} L${x - 46} ${y - 32} L${x - 52} ${y - 44} Z" fill="#e5484d"/></g>` : ''}</g>`;
     }).join('');
     const pin = cur === null ? '' : (() => { const [px, py] = P[cur]; return `<g pointer-events="none" class="pinbounce"><g transform="translate(${px} ${py - 66}) scale(.78)"><path d="M0 0 c-14 -17 -17 -26 -17 -33 a17 17 0 0 1 34 0 c0 7 -3 16 -17 33z" fill="#e5484d" stroke="#fff" stroke-width="3"/><circle cx="0" cy="-33" r="6" fill="#fff"/></g></g>`; })();
     const CX = 560, CY = 138, NVc = '#2b3a55';
-    const heart = clockHeart(key, popI, CX, CY) + `<g><rect id="hudBtn" role="button" tabindex="0" aria-label="시계 퍼즐 ${n}/${NSTG}조각. 눌러서 수집 현황 보기" style="cursor:pointer" x="${CX - 134}" y="${CY + 108}" width="268" height="30" rx="15" fill="${n === NSTG ? '#b07800' : NVc}" stroke="#fff" stroke-width="2"/><text pointer-events="none" x="${CX}" y="${CY + 129}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${n === NSTG ? '시계 수리 완료! 다시 움직여요' : `시계 퍼즐 ${n}/${NSTG} · 별 3개로 한 조각`}</text></g>`;
+    const heart = clockHeart(key, popI, CX, CY) + `<g><rect id="hudBtn" role="button" tabindex="0" aria-label="시계 퍼즐 ${n}/${NSTG}조각. 눌러서 수집 현황 보기" style="cursor:pointer" x="${CX - 134}" y="${CY + 108}" width="268" height="30" rx="15" fill="${n === NSTG ? '#b07800' : NVc}" stroke="#fff" stroke-width="2"/><text pointer-events="none" x="${CX}" y="${CY + 129}" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${n === NSTG ? '시계 수리 완료! 다시 움직여요' : `시계 퍼즐 ${n} / ${NSTG}`}</text></g>`;
     return `<svg viewBox="0 0 1000 640" role="group" aria-label="시계탑 ${floorOf(M.sel.gs)}층 ${unitName(M.sel.gs, M.sel.u)}의 방 지도, 시계 퍼즐 ${n}/${NSTG}조각">
-      <defs><filter id="jgs"><feColorMatrix type="saturate" values="0"/></filter><filter id="fogblur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.5"/></filter>
+      <defs><filter id="jgs"><feColorMatrix type="saturate" values=".45"/></filter><filter id="fogblur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.5"/></filter>
         <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf3df"/><stop offset="1" stop-color="#f1dcb2"/></linearGradient></defs>
       <rect width="1000" height="640" rx="22" fill="url(#wall)"/>
       ${gear(110, 120, 70, false)}${gear(870, 170, 56, true)}${gear(300, 230, 40, true)}${gear(930, 560, 46, false)}
@@ -4613,12 +4683,12 @@ body.touch .tutbar { top: 22%; }
   function openVN(i) {
     const G = GUARD[i];
     vnStage = i; vnI = 0;
-    vnLines = [G.line, `오늘의 미션: ${questOf(pick.key, i)}`, vnRule(i)];
+    vnLines = [...vnIntro(i), `오늘의 미션: ${questOf(pick.key, i)}`, vnRule(i)];
     try { const im = heroImage(curHero()); if (im.decode) im.decode().catch(() => {}); } catch (_) {}   // 주인공 그림을 미리 불러 둬요 (출발 순간 끊김 방지)
     $('vn').style.setProperty('--vnbg', G.bg); $('vn').style.setProperty('--vnfloor', G.floor);
     $('vnChar').innerHTML = charSVG(G.art);
     $('vnName').textContent = G.name;
-    $('vnPlace').textContent = `${i + 1}단계 ${G.step} · ${G.place}`;
+    $('vnPlace').textContent = `${i + 1}단계 ${G.step} · ${unitName(M.sel.gs, M.sel.u)} 공방`;
     $('vn').classList.remove('zoomout');
     $('vn').hidden = false; hideModals();
     drawVN();
@@ -4953,7 +5023,92 @@ body.touch .tutbar { top: 22%; }
     if (a > 0 && b > a) s = s.slice(0, a) + s.slice(a, b).replace(/stroke="#2b3a55" stroke-width="(\d[\d.]*)"/g, (m, w) => `stroke="#566783" stroke-width="${Math.max(1.2, w * 0.7).toFixed(1)}"`) + s.slice(b);
     return s;
   }
-  function villageSVG(gs, story) { return story ? hubSoftMap(villageSVGraw(gs, story)) : isleSVG(gs); }
+  function villageSVG(gs, story) { return story ? hubSoftMap(villageSVGraw(gs, story)) : isleTheme(isleSVG(gs), gs); }
+  // ---------- 학년별 월드 테마 · 수직 전환 · 하단 슬림 바 ----------
+  const GRADE_THEMES = {
+    1: { name: '봄꽃 해변 섬', lm: '등대 불 켜기', sea: ['#D5F5EF', '#EAFBF7', '#BFEFE4', '#AEE8DC', '#A0E1D5'], grass: '#DDF2C4', patch: '#D0EBB4', sand: '#F8EBD0', tree: ['#f29bb8', '#f8bcd0', '#fde0ea'], pine: ['#7cc48a', '#62b276'] },
+    2: { name: '바람 들판 섬', lm: '풍차 수리', sea: ['#C4E8FF', '#DEF3FF', '#A6DCFB', '#96D3F8', '#88CBF5'], grass: '#CDEEA6', patch: '#BEE596', sand: '#F4E6C8', tree: ['#3fa652', '#5cc264', '#93df84'], pine: ['#3fa860', '#2f8f52'] },
+    3: { name: '숲속 마을 섬', lm: '시계탑 수리' },
+    4: { name: '단풍 고원 섬', lm: '열기구 준비', sea: ['#FFE2C6', '#FFF0DE', '#CBE4F2', '#BCDAEE', '#B0D1EA'], grass: '#ECE7A8', patch: '#E2DA94', sand: '#F3E2C2', tree: ['#dd6a36', '#ee9148', '#f6c05a'], pine: ['#c9843a', '#b06f2c'] },
+    5: { name: '눈꽃 설산 섬', lm: '천문대 수리', sea: ['#DCEAF6', '#EEF6FC', '#C3DCEF', '#B5D2E9', '#A9CAE4'], grass: '#F5F9FC', patch: '#E7EFF5', sand: '#E1ECF4', tree: ['#9fc4b4', '#c5ddd2', '#ffffff'], pine: ['#7fb3a0', '#6a9f8c'] },
+    6: { name: '천공의 별빛 섬', lm: '로켓 조립', sea: ['#C5C0EE', '#D8D4F6', '#CFCBF3', '#C6CAF2', '#C0D0F3'], grass: '#D6E9E6', patch: '#CBDDEE', sand: '#ECE9FB', tree: ['#8fd0c8', '#b5a5ec', '#e6defc'], pine: ['#a79aeb', '#8f80dd'] }
+  };
+  function isleLM(gs, n, tower, glow) {
+    const g = +gs[0], th = GRADE_THEMES[g] || GRADE_THEMES[3], OL = '#2b3a55';
+    if (g === 3 || !th.sea) return tower + glow(450, 174, 46) + glow(450, 280, 26);
+    const P = (k, s) => n >= k ? s : `<g filter="url(#isDim)" opacity=".42">${s}</g>`, S = `stroke="${OL}" stroke-width="2.6" stroke-linejoin="round"`;
+    const art = {
+      1: () => `<ellipse cx="450" cy="298" rx="52" ry="12" fill="#b9bfc8" ${S}/>${['#ff8fab', '#ffd34d', '#7fd0f5', '#b995f5'].map((c, k) => P(k + 1, `<path d="M${450 - 30 + k * 3} ${296 - k * 38} L${450 - 27 + k * 3} ${258 - k * 38} H${450 + 27 - k * 3} L${450 + 30 - k * 3} ${296 - k * 38} Z" fill="${k % 2 ? '#fff7e6' : c}" ${S}/><path d="M${450 - 28 + k * 3} ${277 - k * 38} H${450 + 28 - k * 3}" stroke="${c}" stroke-width="7"/>`)).join('')}
+        ${P(5, `<rect x="428" y="118" width="44" height="26" rx="3" fill="#fff2a8" ${S}/><path d="M439 118 v26 M450 118 v26 M461 118 v26" stroke="${OL}" stroke-width="1.5"/><rect x="422" y="142" width="56" height="6" rx="2" fill="#e5484d" ${S}/><path d="M424 118 L450 92 L476 118 Z" fill="#e5484d" ${S}/><circle cx="450" cy="88" r="4" fill="#ffd34d" ${S}/>`)}
+        ${n >= 5 ? `<g class="vg-spark"><path d="M428 124 L340 96 V150 Z M472 124 L560 96 V150 Z" fill="#fff2a8" opacity=".55"/></g><circle cx="450" cy="131" r="40" fill="url(#isGlow)"/>` : ''}<path d="M442 296 v-20 a8 8 0 0 1 16 0 v20 Z" fill="#7a4d2b" ${S}/>`,
+      2: () => `<ellipse cx="450" cy="298" rx="50" ry="11" fill="#2f7d3c" opacity=".22"/><path d="M418 298 L432 176 H468 L482 298 Z" fill="#fbf0dc" ${S}/><path d="M424 250 h52 M428 212 h44" stroke="#d9c4a0" stroke-width="2"/><path d="M426 178 L450 146 L474 178 Z" fill="#c9694a" ${S}/><path d="M441 298 v-24 a9 9 0 0 1 18 0 v24 Z" fill="#7a4d2b" ${S}/><rect x="442" y="222" width="16" height="18" rx="8" fill="#bfe6ff" ${S}/>
+        <g class="${n >= 5 ? 'lm-spin' : ''}" style="transform-origin:450px 176px">${[0, 1, 2, 3].map(k => P(k + 1, `<g transform="rotate(${k * 90 + 20} 450 176)"><path d="M450 176 V96" stroke="#8a5a33" stroke-width="5" stroke-linecap="round"/><path d="M454 166 h22 v-66 h-22 z" fill="#fff7e6" ${S}/><path d="M454 144 h22 M454 122 h22 M465 166 v-66" stroke="#c9a06a" stroke-width="1.5"/></g>`)).join('')}</g><circle cx="450" cy="176" r="8" fill="#f2c94c" ${S}/>`,
+      4: () => `<ellipse cx="450" cy="300" rx="44" ry="10" fill="#2f7d3c" opacity=".22"/><g class="${n >= 5 ? 'lm-float' : ''}">${P(1, `<rect x="432" y="262" width="36" height="30" rx="5" fill="#c98f52" ${S}/><path d="M432 272 h36 M432 282 h36 M444 262 v30 M456 262 v30" stroke="#8a5a33" stroke-width="1.5"/>`)}${P(2, `<path d="M434 262 L420 214 M466 262 L480 214 M446 262 L442 218 M454 262 L458 218" stroke="#8a5a33" stroke-width="2.5" stroke-linecap="round"/>`)}
+        ${P(3, `<path d="M450 92 C400 92 384 140 392 176 C398 200 414 212 422 218 H450 Z" fill="#e5484d" ${S}/>`)}${P(4, `<path d="M450 92 C500 92 516 140 508 176 C502 200 486 212 478 218 H450 Z" fill="#f59e0b" ${S}/>`)}${P(5, `<path d="M450 92 C430 110 426 170 436 218 H464 C474 170 470 110 450 92 Z" fill="#fff2a8" ${S}/><rect x="420" y="214" width="60" height="8" rx="3" fill="#7a4d2b" ${S}/>`)}</g>`,
+      5: () => `<ellipse cx="450" cy="298" rx="62" ry="12" fill="#5d7f96" opacity=".2"/>${P(1, `<rect x="396" y="232" width="108" height="66" rx="4" fill="#eef3f8" ${S}/><path d="M396 250 h108" stroke="#c9d6e2" stroke-width="2"/><path d="M440 298 v-26 a10 10 0 0 1 20 0 v26 Z" fill="#5a6f8c" ${S}/><rect x="408" y="262" width="16" height="18" rx="8" fill="#bfe6ff" ${S}/><rect x="476" y="262" width="16" height="18" rx="8" fill="#bfe6ff" ${S}/>`)}
+        ${P(2, `<rect x="390" y="224" width="120" height="10" rx="3" fill="#8fa3ba" ${S}/>`)}${P(3, `<path d="M400 224 a50 50 0 0 1 100 0 Z" fill="#b9c7dc" ${S}/><path d="M440 176 q10 -3 20 0 v48 h-20 z" fill="#3a4766" ${S}/>`)}${P(4, `<g transform="rotate(-38 450 206)"><rect x="443" y="150" width="14" height="52" rx="3" fill="#f2c94c" ${S}/><rect x="440" y="142" width="20" height="10" rx="3" fill="#e0a82a" ${S}/></g>`)}
+        ${P(5, `<path d="M396 136 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z" fill="#ffe680" ${S}/>`)}${n >= 5 ? `<g class="vg-spark" fill="#fff"><circle cx="430" cy="120" r="3"/><circle cx="372" cy="168" r="2.5"/><circle cx="416" cy="96" r="2"/></g>` : ''}`,
+      6: () => `<path d="M400 298 h100 l-10 -12 h-80 z" fill="#8d95a1" ${S}/><path d="M408 286 V200 M492 286 V200 M408 230 h14 M492 230 h-14" stroke="#8d95a1" stroke-width="4" stroke-linecap="round"/>
+        ${P(1, `<path d="M436 286 l-6 -14 h40 l-6 14 z" fill="#5a6f8c" ${S}/>`)}${P(2, `<rect x="428" y="212" width="44" height="62" fill="#f4f6fb" ${S}/><path d="M428 250 h44" stroke="#e5484d" stroke-width="7"/>`)}${P(3, `<rect x="428" y="158" width="44" height="56" fill="#f4f6fb" ${S}/><circle cx="450" cy="186" r="10" fill="#bfe6ff" ${S}/>`)}
+        ${P(4, `<path d="M428 232 L404 276 H428 Z M472 232 L496 276 H472 Z" fill="#e5484d" ${S}/>`)}${P(5, `<path d="M428 158 C430 126 442 108 450 100 C458 108 470 126 472 158 Z" fill="#e5484d" ${S}/>`)}${n >= 5 ? `<g class="vg-fire"><path d="M438 286 q12 30 24 0 z" fill="#ffb347"/></g>` : ''}`
+    }[g]();
+    return `${art}${glow(450, 200, 44)}<g><rect x="372" y="310" width="156" height="30" rx="15" fill="${n >= 5 ? '#b07800' : OL}" stroke="#fff" stroke-width="2"/><text x="450" y="331" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${n >= 5 ? th.lm + ' 완료!' : th.lm + ' ' + n + '/5'}</text></g>`;
+  }
+  function isleTheme(s, gs) {
+    const g = +gs[0], th = GRADE_THEMES[g] || GRADE_THEMES[3], host = $('homeModal'), nx = isleNext(gs), u = nx < 0 ? 0 : nx, [hx, hy] = ISLE.H[u] || ISLE.H[0];
+    const nm = `▶ ${u + 1}. ${unitName(gs, u)}`, w = 30 + nm.length * 14.500, tx = Math.min(Math.max(hx, w / 2 + 8), 992 - w / 2);
+    s = s.replace('<path class="is-night"', `<g pointer-events="none" class="start-tag"${nx < 0 ? ' display="none"' : ''}><rect x="${tx - w / 2}" y="${hy + 38}" width="${w}" height="30" rx="15" fill="#ffd34d" stroke="#2b3a55" stroke-width="2.5"/><text x="${tx}" y="${hy + 59}" text-anchor="middle" font-family="Jua" font-size="16" fill="#2b3a55">${esc(nm)}</text></g><path class="is-night"`);
+    host.dataset.gt = g; let sky = host.querySelector(':scope > .daysky'); if (sky && !sky.querySelector('.gp')) sky.insertAdjacentHTML('beforeend', Array.from({ length: 8 }, (_, k) => `<i class="gp" style="left:${(k * 13 + 6) % 100}%;animation-delay:${-k * 1.7}s"></i>`).join(''));
+    setTimeout(skyTick, 0);
+    if (!th.sea) return s;
+    const deep = c => gs[2] === '2' ? '#' + [1, 3, 5].map(i => Math.round(parseInt(c.slice(i, i + 2), 16) * 0.93 + (i === 5 ? 0 : 8)).toString(16).padStart(2, '0')).join('') : c;
+    const map = { '#D8EFC2': deep(th.grass), '#cbe8b0': deep(th.patch), '#F4E6C8': th.sand, '#3f9a52': deep(th.tree[0]), '#57b862': deep(th.tree[1]), '#86d37c': th.tree[2], '#4a9a4a': deep(th.tree[0]), '#69bd5c': deep(th.tree[1]), '#9bdc82': th.tree[2], '#3a9a66': th.pine[0], '#2c8052': th.pine[1] };
+    s = s.replace(/#D8EFC2|#cbe8b0|#F4E6C8|#3f9a52|#57b862|#86d37c|#4a9a4a|#69bd5c|#9bdc82|#3a9a66|#2c8052/g, m => map[m]);
+    const hull = { 1: ['#f7a8bf', '#fff7e6', '#ffd9e2'], 2: ['#4f8de0', '#ffffff', '#bfe0ff'], 4: ['#a8743c', '#f0954a', '#f6c05a'], 5: ['#e5484d', '#f4f6fb', '#8fa3ba'], 6: ['#b5a5ec', '#e6defc', '#8fd0c8'] }[g];
+    const boat = g === 6 ? `<g class="vg-sail"><ellipse cx="72" cy="512" rx="40" ry="20" fill="${hull[0]}"/><path d="M36 512 h72" stroke="${hull[1]}" stroke-width="4"/><path d="M108 506 l14 -8 v28 l-14 -8 z" fill="${hull[2]}"/><rect x="56" y="534" width="32" height="12" rx="6" fill="${hull[2]}"/><path d="M60 530 v6 M84 530 v6" stroke="#8f80dd" stroke-width="2"/></g>`
+      : g === 5 ? `<g class="vg-sail"><path d="M40 544 h66 l-10 18 h-44 z" fill="${hull[0]}"/><rect x="58" y="524" width="30" height="20" rx="3" fill="${hull[1]}"/><rect x="64" y="529" width="7" height="7" rx="2" fill="#bfe6ff"/><rect x="76" y="529" width="7" height="7" rx="2" fill="#bfe6ff"/><rect x="68" y="508" width="10" height="16" rx="2" fill="${hull[2]}"/><path d="M40 544 h66" stroke="#fff" stroke-width="3"/></g>`
+      : `<g class="vg-sail"><path d="M70 548 V494" stroke="#8a5a33" stroke-width="3" stroke-linecap="round"/><path d="M74 500 L100 540 H74 Z" fill="${hull[1]}"/><path d="M66 508 L48 540 H66 Z" fill="${hull[2]}"/>${g === 2 ? '<path d="M74 518 h12 M74 530 h19" stroke="#4f8de0" stroke-width="4"/>' : ''}<path d="M44 546 h56 l-9 15 h-38 z" fill="${hull[0]}"/></g>`;
+    s = s.replace(/<g class="vg-sail">[\s\S]*?<\/g>/, boat);
+    if (g === 5) s = s.replace('<g class="is-foam">', '<g fill="#fff" opacity=".9"><path d="M14 96 l34 -10 l22 14 l-12 16 l-36 4 z"/><path d="M930 548 l30 -8 l18 12 l-14 14 l-30 0 z"/><path d="M946 70 l24 -6 l14 12 l-18 10 z"/><path d="M20 250 l16 -6 l10 8 l-12 8 z"/></g><g class="is-foam">');
+    if (g === 6) s = s.replace('<g class="is-foam">', `<path d="${ISLE.path}" fill="none" stroke="#fff" stroke-width="64" stroke-linecap="round" stroke-dasharray="0.1 46" opacity=".9"/><path d="${ISLE.path}" fill="none" stroke="#f1eefd" stroke-width="44" stroke-linecap="round" stroke-dasharray="0.1 46" stroke-dashoffset="23"/><g class="is-foam" display="none">`);
+    return s;
+  }
+  function gradeFly(gh, up, g1) {
+    const host = $('homeModal'), nw = $('homeMap').querySelector('.isle:not(.isle-ghost)'), d = '85vh', ez = { duration: 700, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' };
+    gh.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${up ? '' : '-'}${d})`, opacity: 0 }], ez).onfinish = () => gh.remove();
+    if (nw) nw.animate([{ transform: `translateY(${up ? '-' : ''}${d})`, opacity: 0 }, { transform: 'translateY(0)', opacity: 1 }], ez);
+    host.querySelectorAll(':scope > .gwind, :scope > .gtoast').forEach(x => x.remove());
+    host.insertAdjacentHTML('beforeend', `<div class="gwind ${up ? 'up' : 'dn'}" aria-hidden="true">${[4, 10, 17, 84, 90, 96].map((x, k) => `<i style="left:${x}%;animation-delay:${k * 0.07}s"></i>`).join('')}</div><div class="gtoast" role="status">${up ? '⬆️' : '⬇️'} ${g1}학년 · ${GRADE_THEMES[g1].name}</div>`);
+    setTimeout(() => host.querySelectorAll(':scope > .gwind').forEach(x => x.remove()), 1000); setTimeout(() => host.querySelectorAll(':scope > .gtoast').forEach(x => x.remove()), 1900);
+  }
+  const isleNext = gs => unitsOf(gs).findIndex((_, i) => piecesOf(ukey(gs, i)) < NSTG);
+  function vnIntro(i) { const nm = unitName(M.sel.gs, M.sel.u); return [[`어라? ${nm} 공방의 핵심 톱니가 딸깍 멈춰 버렸어! 빈칸에 꼭 맞는 블록이 필요해.`, '먼저 기본 원리부터 차근차근 확인해서 첫 번째 동력 블록을 끼워 보자!'], ['좋아, 톱니가 조금씩 움직이기 시작했어! 이번엔 연결해야 할 블록이 더 많아졌대.', '배운 원리를 떠올리며 알맞은 블록을 찾아 빈자리를 쏙쏙 채워 줘!']][i] || [GUARD[i].line]; }
+  function unitGoal(nm) { return /도형|각도|삼각형|사각형|다각형|원$|원의|합동|대칭|직육면체|입체/.test(nm) ? '알맞은 모양 조각을 끼워 도형 설계도를 완성해!' : /나눗셈/.test(nm) ? '블록을 똑같이 나누어 동력 상자를 채워 보자!' : /길이|시간|들이|무게|넓이|부피|측정|어림/.test(nm) ? '눈금과 시계 톱니를 정확히 맞춰 장치를 고쳐!' : /분수|소수|비와|비율|비례/.test(nm) ? '조각난 에너지 블록을 알맞은 크기로 연결해!' : '수 블록을 맞춰 멈춘 계산 톱니를 돌려 보자!'; }
+  function isleLocked(u) { return false; }
+  function isleNope(u) { const host = $('homeModal'), h = $('homeMap').querySelector(`[data-house="${u}"]`); if (h) { h.classList.remove('nope'); void h.getBoundingClientRect(); h.classList.add('nope'); }
+    host.querySelectorAll(':scope > .gtoast').forEach(x => x.remove()); host.insertAdjacentHTML('beforeend', '<div class="gtoast" role="status">🔒 이전 단원을 완료하면 열려요!</div>'); setTimeout(() => host.querySelectorAll(':scope > .gtoast').forEach(x => x.remove()), 1900); }
+  function barDeco() {
+    const ch = $('homeChap'), top = ch.querySelector('.cb-top'), units = ch.querySelector('.chap-units'); if (!top || !units || top.querySelector('.cur-unit')) return;
+    const g = +M.sel.gs[0], u = M.sel.u, sel = $('chapGrade'), pct = top.querySelector('.cb-pct');
+    const sm = top.querySelector('.chap-sem'); (sm || top).insertAdjacentHTML('afterend', `<button type="button" class="cur-unit" aria-expanded="false"><i>▲</i> 단원 목차 · ${(isleNext(M.sel.gs) < 0 ? u : isleNext(M.sel.gs)) + 1}. ${esc(unitName(M.sel.gs, isleNext(M.sel.gs) < 0 ? u : isleNext(M.sel.gs)))}</button>`);
+    if (pct) units.insertBefore(pct, units.firstChild);
+    units.insertAdjacentHTML('afterbegin', '<div class="toc-h"><span>▼ 단원 목차 (전체 5개)</span><button type="button" class="toc-x">닫기</button></div>');
+    units.querySelectorAll('.chap-u').forEach(b => { const k = ukey(M.sel.gs, +b.dataset.unit), pc = hasContent(k) ? piecesOf(k) : -1; b.insertAdjacentHTML('beforeend', `<span class="cu-st ${pc >= NSTG ? 'done' : pc > 0 ? 'go' : ''}">${pc < 0 ? '준비 중' : pc >= NSTG ? '완료 ★★★' : pc > 0 ? `진행 중 (${pc}/${NSTG}단계)` : '도전 가능'}</span>`); });
+    const gl = top.querySelector('.chap-gsel'); if (gl) { gl.insertAdjacentHTML('beforebegin', `<button type="button" class="gstep" data-gd="-1" aria-label="아래 학년으로"${g <= 1 ? ' disabled' : ''}>▼</button>`); gl.insertAdjacentHTML('afterend', `<button type="button" class="gstep" data-gd="1" aria-label="위 학년으로"${g >= 6 ? ' disabled' : ''}>▲</button>`); }
+    if (sel) { const gp = gr => { let t = 0, got = 0; ['1', '2'].forEach(x => unitsOf(`${gr}-${x}`).forEach((_, i) => { const k = ukey(`${gr}-${x}`, i); if (hasContent(k)) { t += NSTG; got += piecesOf(k); } })); return t ? Math.round(got / t * 100) + '%' : '준비 중'; };
+      sel.innerHTML = [6, 5, 4, 3, 2, 1].map(x => `<option value="${x}"${x === g ? ' selected' : ''}>${x === g ? `${x}학년` : `${x}학년 (${GRADE_THEMES[x].name}) · ${gp(x)}`}</option>`).join(''); }
+  }
+  setTimeout(() => { try { const host = $('homeModal'), ch = $('homeChap'), box = host.querySelector('.home-box');
+    host.insertAdjacentHTML('beforeend', `<div class="gfloor" role="group" aria-label="학년 층 이동"><button type="button" class="gf-ar" data-gd="1" aria-label="위 학년으로">▲</button>${[[6, '☁️'], [5, '❄️'], [4, '🍁'], [3, '🌲'], [2, '🌿'], [1, '🌸']].map(([g, ic]) => `<button type="button" data-g="${g}" aria-label="${g}학년 ${GRADE_THEMES[g].name}">${g}학년</button>`).join('')}<button type="button" class="gf-ar" data-gd="-1" aria-label="아래 학년으로">▼</button></div>`);
+    host.addEventListener('click', e => { const b = e.target.closest('.gfloor button, .gstep'); if (!b) return; const g0 = +M.sel.gs[0], g1 = b.dataset.g ? +b.dataset.g : g0 + +b.dataset.gd, s = $('chapGrade'); if (!s || g1 < 1 || g1 > 6 || g1 === g0) return; s.value = g1; s.dispatchEvent(new Event('change', { bubbles: true })); });
+    host.addEventListener('click', e => { const du = e.target.closest('.chap-units [data-unit]'); if (!du) return; e.stopPropagation(); box.classList.remove('pop'); pickHouse(+du.dataset.unit); }, true);
+    new MutationObserver(barDeco).observe(ch, { childList: true }); barDeco();
+    host.addEventListener('change', e => { if (e.target.id !== 'chapGrade') return; const o = $('homeMap').querySelector('.isle'), g0 = +M.sel.gs[0], g1 = +e.target.value; if (!o || g0 === g1) return;
+      const r = o.getBoundingClientRect(), gh = o.cloneNode(true); gh.classList.add('isle-ghost'); Object.assign(gh.style, { position: 'fixed', left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', zIndex: 2, pointerEvents: 'none' }); host.appendChild(gh); setTimeout(() => gradeFly(gh, g1 > g0, g1), 30); }, true);
+    host.addEventListener('click', e => { const cu = e.target.closest('.cur-unit'); if (cu) { const o = box.classList.toggle('pop'); cu.setAttribute('aria-expanded', o); return; } if (e.target.closest('[data-unit]') || e.target.closest('.toc-x') || !e.target.closest('.chap-units')) box.classList.remove('pop');
+      if (e.target.closest('.cheer-next')) { const c = $('cheer'); if (c) c.remove(); const s = $('chapGrade'); if (s) { s.value = +M.sel.gs[0] + 1; s.dispatchEvent(new Event('change', { bubbles: true })); } } });
+    new MutationObserver(() => { const c = $('cheer'), g = +M.sel.gs[0]; if (!c || c.querySelector('.cheer-next') || g >= 6) return; if (unitsOf(M.sel.gs).every((_, i) => piecesOf(ukey(M.sel.gs, i)) >= NSTG)) c.querySelector('.cheer-ok').insertAdjacentHTML('afterend', '<button type="button" class="btn cheer-next">🚀 다음 학년 섬으로 올라가기</button>'); }).observe(host, { childList: true });
+  } catch (e) { console.error(e); } }, 0);
   // ---------- 새 섬 지도: 모닥불 → 텐트 → 집 → 좋은 집 → 더 좋은 집 → 시계탑으로 이어지는 지그재그 길, 섬 안 상점, 밤 불빛 ----------
   const ISLE = { path: 'M60 330 C40 200 150 95 330 85 C480 60 640 70 780 95 C900 110 975 220 962 340 C955 470 860 560 700 568 C540 590 380 580 240 560 C120 545 70 440 60 330 Z', H: [[215, 455], [300, 240], [470, 470], [600, 255], [770, 515]], T: [888, 318], sc: [1, 1, 1, .9, .86], S: [150, 238], side: [1, 1, 1, 1, 1], BR: [705, 346] };
   function isleSVG(gs) {
@@ -5038,46 +5193,68 @@ body.touch .tutbar { top: 22%; }
         <path d="M-8 -6 V-24 a8 8 0 0 1 16 0 V-6 Z" fill="#7a4d2b" stroke="${OL}" stroke-width="2.4"/><path d="M0 -32 V-6" stroke="${OL}" stroke-width="1.3"/>
         ${[-22, -12, 12, 22].map(x => `<rect x="${x - 2.500}" y="-38" width="5" height="32" rx="1.5" fill="#fff" stroke="${OL}" stroke-width="1.6"/>`).join('')}
         <path d="M-28 -6 h56 v3 h5 v3 h-66 v-3 h5 z" fill="#d8cdb8" stroke="${OL}" stroke-width="1.8" stroke-linejoin="round"/>`, 58, 110, [[-37, -30, 20], [37, -30, 20], [0, -56, 16], [0, -18, 14]]];
-    B5[4] = () => [`<rect x="-19" y="-98" width="38" height="60" fill="#f3ede2" stroke="${OL}" stroke-width="2.6"/><path d="M-19 -98 v-8 h8 v5 h7 v-5 h8 v5 h7 v-5 h8 v8 z" fill="#f3ede2" stroke="${OL}" stroke-width="2.4" stroke-linejoin="round"/>
-        <path d="M-17 -104 L0 -134 L17 -104 Z" fill="#7350c4" stroke="${OL}" stroke-width="2.6" stroke-linejoin="round"/><path d="M-9 -116 H9" stroke="#55389e" stroke-width="1.6"/><path d="M0 -134 v-14" stroke="${OL}" stroke-width="2.2"/><path d="M1 -148 h13 l-4 4 4 4 h-13 z" fill="#ff6b6b" stroke="${OL}" stroke-width="1.3" stroke-linejoin="round"/>
-        ${win(-6, -88, 12, 20, true)}
-        <rect x="-40" y="-44" width="80" height="44" fill="#e9e2d6" stroke="${OL}" stroke-width="2.6"/><path d="M-40 -44 v-8 h9 v5 h7 v-5 h9 v5 h7 v-5 h16 v5 h7 v-5 h9 v5 h7 v-5 h9 v8 z" fill="#e9e2d6" stroke="${OL}" stroke-width="2.4" stroke-linejoin="round"/>
-        <path d="M-30 -30 h10 M22 -34 h10 M-34 -14 h8 M26 -16 h9 M-24 -22 h7" stroke="#c4bbab" stroke-width="2" stroke-linecap="round"/>
-        <path d="M-16 0 V-24 a16 16 0 0 1 32 0 V0 Z" fill="#c4bbab" stroke="${OL}" stroke-width="2.4"/><path d="M-12 0 V-23 a12 12 0 0 1 24 0 V0 Z" fill="#7a4d2b" stroke="${OL}" stroke-width="2.2"/><path d="M0 -35 V0 M-12 -22 h24 M-12 -9 h24" stroke="#4a4f5a" stroke-width="2"/><circle cx="-4" cy="-15" r="1.6" fill="#ffd34d"/><circle cx="4" cy="-15" r="1.6" fill="#ffd34d"/><path class="nl" d="M-10 -24 a10 10 0 0 1 20 0 Z" fill="#ffcf6b" opacity=".7"/>
-        <g><rect x="-54" y="-80" width="20" height="80" rx="3" fill="#f3ede2" stroke="${OL}" stroke-width="2.6"/><path d="M-39 -78 v76" stroke="#d6cdbd" stroke-width="4"/><path d="M-58 -78 L-44 -114 L-30 -78 Z" fill="#8a63d2" stroke="${OL}" stroke-width="2.6" stroke-linejoin="round"/><path d="M-52 -90 H-36" stroke="#6442b0" stroke-width="1.6"/><path d="M-44 -114 v-12" stroke="${OL}" stroke-width="2"/><path d="M-43 -126 h11 l-3.500 3.500 3.500 3.500 h-11 z" fill="#f2c94c" stroke="${OL}" stroke-width="1.2" stroke-linejoin="round"/>${win(-48.500, -64, 9, 14, true)}<circle cx="-44" cy="-30" r="4" fill="#bfe6ff" stroke="${OL}" stroke-width="1.6"/><circle class="nl" cx="-44" cy="-30" r="3.200" fill="#ffd86b"/></g>
-        <g><rect x="34" y="-62" width="20" height="62" rx="3" fill="#f3ede2" stroke="${OL}" stroke-width="2.6"/><path d="M49 -60 v58" stroke="#d6cdbd" stroke-width="4"/><path d="M30 -60 L44 -90 L58 -60 Z" fill="#8a63d2" stroke="${OL}" stroke-width="2.6" stroke-linejoin="round"/><path d="M36 -70 H52" stroke="#6442b0" stroke-width="1.6"/>${win(39.500, -48, 9, 14, true)}</g>`, 56, 140, [[0, -78, 14], [-44, -57, 11], [44, -41, 11], [0, -16, 20]]];
+    // 집 3단계: 초가집 → 통나무집 → 벽돌집 (1 모닥불, 2 텐트 다음)
+    { const cabin = B5[2];
+      B5[2] = () => [`<path d="M-50 0 h100 v5 h-100 z" fill="#b9b3a8" stroke="${OL}" stroke-width="2"/><path d="M-36 0 v5 M-18 0 v5 M0 0 v5 M18 0 v5 M36 0 v5" stroke="#8d877c" stroke-width="1.3"/>
+        <rect x="-42" y="-42" width="84" height="42" rx="3" fill="#f6ecd6" stroke="${OL}" stroke-width="2.6"/><path d="M-42 -14 h84" stroke="#e3d3b0" stroke-width="2"/>
+        <path d="M-42 -42 v42 M42 -42 v42 M-16 -42 v42 M16 -42 v42" stroke="#8a5a33" stroke-width="4.500" stroke-linecap="round"/><path d="M-42 -40 h84" stroke="#8a5a33" stroke-width="4.500" stroke-linecap="round"/>
+        <rect x="-10" y="-30" width="20" height="30" rx="2" fill="#a8743c" stroke="${OL}" stroke-width="2.2"/><path d="M0 -30 v30 M-10 -15 h20" stroke="#7a4d2b" stroke-width="1.4"/><circle cx="6" cy="-13" r="1.8" fill="#ffd34d"/>
+        <rect x="-36" y="-32" width="15" height="15" rx="1.5" fill="#fff7e6" stroke="${OL}" stroke-width="2"/><rect class="nl" x="-35" y="-31" width="13" height="13" fill="#ffd86b"/><path d="M-28.500 -32 v15 M-36 -24.500 h15 M-32 -32 v15 M-25 -32 v15" stroke="#8a5a33" stroke-width="1.2"/>
+        <rect x="21" y="-32" width="15" height="15" rx="1.5" fill="#fff7e6" stroke="${OL}" stroke-width="2"/><rect class="nl" x="22" y="-31" width="13" height="13" fill="#ffd86b"/><path d="M28.500 -32 v15 M21 -24.500 h15 M25 -32 v15 M32 -32 v15" stroke="#8a5a33" stroke-width="1.2"/>
+        <path d="M-60 -38 C-58 -70 -30 -92 0 -92 C30 -92 58 -70 60 -38 C40 -46 20 -34 0 -42 C-20 -34 -40 -46 -60 -38 Z" fill="#e8c56a" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/>
+        <path d="M-46 -52 C-40 -72 -22 -84 0 -84 C22 -84 40 -72 46 -52" fill="none" stroke="#f6dc8f" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+        <path d="M-52 -50 Q0 -66 52 -50 M-40 -68 Q0 -80 40 -68 M-30 -90 L-44 -42 M0 -92 V-44 M30 -90 L44 -42 M-15 -92 L-22 -42 M15 -92 L22 -42" fill="none" stroke="#b98a35" stroke-width="1.6" opacity=".85"/>
+        <path d="M-60 -38 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0" fill="none" stroke="#b98a35" stroke-width="2" stroke-linecap="round"/>
+        <g><ellipse cx="52" cy="-4" rx="9" ry="7" fill="#8a5a33" stroke="${OL}" stroke-width="2"/><ellipse cx="52" cy="-9" rx="6" ry="2.500" fill="#5f3a1f"/></g>`, 56, 96, [[-28, -24, 16], [28, -24, 16]]];
+      B5[3] = cabin;
+      B5[4] = () => [`<rect x="22" y="-118" width="16" height="34" rx="2" fill="#a8482f" stroke="${OL}" stroke-width="2.4"/><path d="M22 -108 h16 M22 -98 h16 M30 -118 v10 M26 -108 v10 M34 -98 v10" stroke="#7d3220" stroke-width="1.2"/><rect x="19" y="-122" width="22" height="6" rx="2" fill="#8d877c" stroke="${OL}" stroke-width="2"/><g class="vg-smoke" fill="#fff" opacity=".8"><circle cx="30" cy="-130" r="5"/><circle cx="35" cy="-140" r="4"/><circle cx="31" cy="-149" r="3"/></g>
+        <rect x="-46" y="-70" width="92" height="70" fill="#c8573a" stroke="${OL}" stroke-width="2.6"/>
+        <path d="M-46 -60 h92 M-46 -50 h92 M-46 -40 h92 M-46 -30 h92 M-46 -20 h92 M-46 -10 h92" stroke="#9c3f28" stroke-width="1.4"/>
+        <path d="M-34 -70 v10 M-10 -70 v10 M14 -70 v10 M38 -70 v10 M-22 -60 v10 M2 -60 v10 M26 -60 v10 M-34 -50 v10 M-10 -50 v10 M14 -50 v10 M38 -50 v10 M-22 -40 v10 M2 -40 v10 M26 -40 v10 M-34 -30 v10 M-10 -30 v10 M14 -30 v10 M38 -30 v10 M-22 -20 v10 M2 -20 v10 M26 -20 v10 M-34 -10 v10 M-10 -10 v10 M14 -10 v10 M38 -10 v10" stroke="#9c3f28" stroke-width="1.4"/>
+        <path d="M-46 -64 h30 M10 -24 h28 M-40 -34 h22" stroke="#e07a5c" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+        <path d="M-56 -66 L0 -112 L56 -66 Z" fill="#4a5568" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/><path d="M-40 -74 H40 M-27 -85 H27 M-14 -96 H14" stroke="#343d4d" stroke-width="1.6"/><path d="M-56 -66 h112" stroke="#fff" stroke-width="3" opacity=".5"/>
+        <circle cx="0" cy="-82" r="7" fill="#bfe6ff" stroke="${OL}" stroke-width="2.2"/><circle class="nl" cx="0" cy="-82" r="5.800" fill="#ffd86b"/><path d="M0 -89 v14 M-7 -82 h14" stroke="${OL}" stroke-width="1.2"/>
+        <rect x="-38" y="-56" width="22" height="24" rx="2" fill="#fff" stroke="${OL}" stroke-width="2.2"/>${win(-35.500, -53.500, 17, 19)}<rect x="-40" y="-32" width="26" height="5" rx="2" fill="#f3ede2" stroke="${OL}" stroke-width="1.6"/>
+        <rect x="16" y="-56" width="22" height="24" rx="2" fill="#fff" stroke="${OL}" stroke-width="2.2"/>${win(18.500, -53.500, 17, 19)}<rect x="14" y="-32" width="26" height="5" rx="2" fill="#f3ede2" stroke="${OL}" stroke-width="1.6"/>
+        <path d="M-14 0 V-30 a14 14 0 0 1 28 0 V0 Z" fill="#f3ede2" stroke="${OL}" stroke-width="2.4"/><path d="M-10 0 V-29 a10 10 0 0 1 20 0 V0 Z" fill="#2f6f5e" stroke="${OL}" stroke-width="2.2"/><path d="M0 -39 V0" stroke="#1f4f43" stroke-width="1.4"/><circle cx="5" cy="-15" r="2" fill="#ffd34d" stroke="${OL}" stroke-width="1"/>
+        <path d="M-18 0 h36 v4 h-36 z" fill="#d8cdb8" stroke="${OL}" stroke-width="1.8"/>
+        <circle cx="-40" cy="-6" r="8" fill="#57b862" stroke="${OL}" stroke-width="2"/><circle cx="40" cy="-6" r="8" fill="#57b862" stroke="${OL}" stroke-width="2"/><circle cx="-42" cy="-9" r="2" fill="#ff8fab"/><circle cx="42" cy="-8" r="2" fill="#ffd34d"/>`, 54, 122, [[-27, -44, 18], [27, -44, 18], [0, -82, 13], [0, -16, 16]]]; }
     const lock = p => `<g><circle r="13" fill="#fff" stroke="${OL}" stroke-width="2.2"/><path d="M-4.5 -2 v-4 a4.5 4.5 0 0 1 9 0 v4" stroke="#7c8794" stroke-width="2.6" fill="none"/><rect x="-7" y="-3" width="14" height="11" rx="2.5" fill="#f2c94c" stroke="${OL}" stroke-width="1.6"/><circle cy="2" r="1.6" fill="${OL}"/><rect x="15" y="-8" width="46" height="16" rx="8" fill="${OL}" stroke="#fff" stroke-width="1.5"/><text x="38" y="4" text-anchor="middle" font-family="Jua" font-size="11" fill="#fff"><tspan fill="#ffd34d">★</tspan>${p}/${NSTG * 3}</text></g>`;
     const { H, T, S, side, sc } = ISLE, pts = [...H.map(([x, y]) => [x, y + 16]), [T[0], T[1] + 36]];
     const rp = [[180, 384], [300, 338], [420, 292], [580, 322], ISLE.BR, [790, 356], [T[0] - 20, T[1] + 38]];
     const spur = `M${S[0] + 16} ${S[1] + 40} C${S[0] + 20} ${S[1] + 100} 150 372 196 380 M${H[0][0]} ${H[0][1] - 6} Q${H[0][0] - 6} 410 212 374 M${H[1][0]} ${H[1][1] + 14} Q${H[1][0] + 2} 300 312 334 M436 300 C420 360 400 420 ${H[2][0] - 24} ${H[2][1] + 12} M${H[3][0]} ${H[3][1] + 12} Q${H[3][0] + 2} 300 606 326 M786 356 Q780 390 ${H[4][0]} ${H[4][1] - 90}`;
     let road = `M${rp[0][0]} ${rp[0][1]}`; for (let i = 0; i < rp.length - 1; i++) { const p0 = rp[i - 1] || rp[i], p1 = rp[i], p2 = rp[i + 1], p3 = rp[i + 2] || p2, t = 0.24; road += ` C${(p1[0] + (p2[0] - p0[0]) * t).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) * t).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) * t).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) * t).toFixed(1)} ${p2[0]} ${p2[1]}`; }
     const houses = H.map(([x, y], i) => {
-      const G = GUARD[i], on = lit[i], cur = i === M.sel.u, met = on || cur, [body, hw0, top0, lights] = B5[i](), sd = side[i], k = sc[i], hw = hw0 * k, top = top0 * k;
+      const nxt = lit.indexOf(false), G = GUARD[i], on = lit[i], cur = i === nxt, met = true, [body, hw0, top0, lights] = B5[i](), sd = side[i], k = sc[i], hw = hw0 * k, top = top0 * k;
       const art = charSVG(G.art).replace(/<\/?svg[^>]*>/g, ''), cx = sd > 0 ? x + hw + 2 : x - hw - 66;
       return `<g class="vg-house" data-house="${i}" role="button" tabindex="0" aria-label="${i + 1}단원 ${esc(names[i])}, 퍼즐 ${pcs[i]}/${NSTG}${on ? ', 완료' : ''}" style="cursor:pointer">
         ${cur ? `<ellipse class="vg-cur" cx="${x + sd * 18}" cy="${y + 4}" rx="${hw + 54}" ry="24" fill="#ffd34d" fill-opacity=".28" stroke="#ffd34d" stroke-width="5"/>` : ''}
         <ellipse cx="${x}" cy="${y + 3}" rx="${hw + 8}" ry="9" fill="#2f7d3c" opacity=".22"/>
-        <g transform="translate(${x},${y}) scale(${k})">${on ? body : `<g filter="url(#isDim)">${body}</g>`}${lights.map(l => glow(...l)).join('')}</g>
+        <g transform="translate(${x},${y}) scale(${k})">${body}${lights.map(l => glow(...l)).join('')}</g>
         <ellipse cx="${cx + 32}" cy="${y + 3}" rx="26" ry="6.5" fill="#2f7d3c" opacity="${met ? .26 : .14}"/>
         <g class="${fresh[i] ? 'vg-jump' : met ? 'vg-bob' : ''}" style="animation-delay:${fresh[i] ? 0 : -i * 0.5}s"><g transform="translate(${cx},${y - 74}) scale(.8)" filter="url(#${met ? 'isStick' : 'isFog'})" opacity="${met ? 1 : .78}">${art}</g></g>
-        <g transform="translate(${x - hw + 2},${y - Math.min(top, 118) + 8})"><circle r="14" fill="${OL}" stroke="#fff" stroke-width="2.5"/><text y="5.5" text-anchor="middle" font-family="Jua" font-size="16" fill="#fff">${i + 1}</text></g>
-        ${on ? '' : `<g transform="translate(${x - hw + 6},${y + 20})">${lock(stars[i])}</g>`}
+        
+        <g transform="translate(${x},${y + 22})"><rect x="-40" y="-11" width="80" height="22" rx="11" fill="#fff7e6" stroke="#a8743c" stroke-width="2"/><circle cx="-29" cy="0" r="8" fill="#d39a2c"/><text x="-29" y="4" text-anchor="middle" font-family="Jua" font-size="11" fill="#fff">${i + 1}</text><text x="8" y="4.500" text-anchor="middle" font-family="Jua" font-size="12" fill="#6b4a1f"><tspan fill="#e0a000">★</tspan> ${stars[i]}/${NSTG * 3}</text>${on ? `<g transform="translate(42 -9)"><circle r="7.500" fill="#30a46c" stroke="#fff" stroke-width="1.5"/><path d="M-3.500 0 l2.500 3 l4.500 -5.500" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>` : ''}</g>
         ${on ? `<g class="vg-spark" fill="${fresh[i] ? '#ffd34d' : '#fff'}"><path d="M${x + hw - 4} ${y - top + 4} l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/></g>` : ''}
       </g>`;
     }).join('');
     const [sx, sy] = S, dot = notifications.hasShopNotice;
-    const shop = `<g class="vg-shop" data-shopbtn="1" role="button" tabindex="0" aria-label="꾸미기 상점 열기${dot ? ', 새 소식 있음' : ''}" style="cursor:pointer"><g transform="translate(${sx},${sy + 4}) scale(.78)">
-      <ellipse cx="0" cy="4" rx="62" ry="10" fill="#2f7d3c" opacity=".22"/>
-      <rect x="-46" y="-62" width="92" height="62" rx="4" fill="#fff7e6" stroke="${OL}" stroke-width="2.8"/><rect x="-46" y="-10" width="92" height="10" fill="#e6b877" stroke="${OL}" stroke-width="2"/>
-      <rect x="-38" y="-46" width="44" height="30" rx="3" fill="#bfe6ff" stroke="${OL}" stroke-width="2.2"/><rect class="nl" x="-37" y="-45" width="42" height="28" rx="2" fill="#ffd86b" opacity=".9"/><path d="M-16 -46 v30" stroke="${OL}" stroke-width="1.4"/>
-      <g stroke="${OL}" stroke-width="1.4"><rect x="-33" y="-30" width="10" height="12" rx="2" fill="#ff8fab"/><circle cx="-6" cy="-25" r="6" fill="#ffd34d"/><path d="M-12 -36 h12 l-2 5 h-8 z" fill="#7cc7ff"/></g>
-      <path d="M14 0 V-38 h24 V0 Z" fill="#8a5a33" stroke="${OL}" stroke-width="2.4"/><rect x="18" y="-34" width="16" height="12" rx="2" fill="#bfe6ff" stroke="${OL}" stroke-width="1.6"/><rect class="nl" x="19" y="-33" width="14" height="10" rx="1.5" fill="#ffd86b"/><circle cx="34" cy="-14" r="1.8" fill="#ffd34d"/>
-      <path d="M-54 -60 L-44 -86 H44 L54 -60 Z" fill="#e5484d" stroke="${OL}" stroke-width="2.8" stroke-linejoin="round"/><path d="M-30 -86 L-34 -60 H-14 L-15 -86 Z M0 -86 L0 -60 H0 M15 -86 L14 -60 H34 L30 -86 Z" fill="#fff"/><path d="M-7 -86 h14 l1 26 h-16 z" fill="#e5484d"/>
-      <path d="M-54 -60 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0 a9 8 0 0 0 18 0" fill="#e5484d" stroke="${OL}" stroke-width="2.4" stroke-linejoin="round"/><path d="M-36 -60 a9 8 0 0 0 18 0 M0 -60 a9 8 0 0 0 18 0 M36 -60 a9 8 0 0 0 18 0" fill="#fff" stroke="${OL}" stroke-width="2.4" stroke-linejoin="round"/>
-      <path d="M-44 -86 H44" stroke="${OL}" stroke-width="2.8" stroke-linecap="round"/>
-      <g><path d="M-30 30 v-16 M30 30 v-16" stroke="#8a5a33" stroke-width="4" stroke-linecap="round"/><rect x="-42" y="6" width="84" height="30" rx="8" fill="#ffd34d" stroke="${OL}" stroke-width="3"/><rect x="-38" y="10" width="76" height="22" rx="5" fill="none" stroke="#fff" stroke-width="1.5" opacity=".8"/><text x="0" y="29" text-anchor="middle" font-family="Jua" font-size="22" fill="${OL}">상점</text></g>
-      ${glow(-16, -31, 34)}${glow(26, -28, 20)}
-      ${dot ? `<g class="vg-shopdot"><circle cx="48" cy="-88" r="12" fill="#e5484d" stroke="#fff" stroke-width="2.5"/><text x="48" y="-83.500" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-weight="700" font-size="13" fill="#fff">N</text></g>` : ''}
+    const shop = `<g class="vg-shop" data-shopbtn="1" role="button" tabindex="0" aria-label="마차 상점(꾸미기 상점) 열기${dot ? ', 새 소식 있음' : ''}" style="cursor:pointer"><g transform="translate(${sx},${sy + 6}) scale(.66)">
+      <defs><clipPath id="isWagon"><path d="M-52 -46 C-52 -100 52 -100 52 -46 Z"/></clipPath></defs>
+      <ellipse cx="0" cy="6" rx="64" ry="9" fill="#2f7d3c" opacity=".22"/>
+      <path d="M52 -22 h30 M82 -22 v20" stroke="#8a5a33" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <g clip-path="url(#isWagon)"><rect x="-56" y="-104" width="112" height="62" fill="#fff3dc"/><rect x="-56" y="-104" width="19" height="62" fill="#3f9a72"/><rect x="-19" y="-104" width="19" height="62" fill="#c8573a"/><rect x="19" y="-104" width="19" height="62" fill="#3f9a72"/><path d="M-52 -46 C-52 -84 52 -84 52 -46 Z" fill="#000" opacity=".1"/></g>
+      <path d="M-52 -46 C-52 -100 52 -100 52 -46 Z" fill="none" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M-52 -46 q6.500 8 13 0 q6.500 8 13 0 q6.500 8 13 0 q6.500 8 13 0 q6.500 8 13 0 q6.500 8 13 0 q6.500 8 13 0 q6.500 8 13 0" fill="#fff3dc" stroke="${OL}" stroke-width="2.4" stroke-linejoin="round"/>
+      <rect x="-44" y="-44" width="88" height="20" fill="#5a3a22" stroke="${OL}" stroke-width="2.4"/><rect class="nl" x="-42" y="-42" width="84" height="16" fill="#ffcf6b" opacity=".85"/>
+      <g stroke="${OL}" stroke-width="1.4"><rect x="-36" y="-40" width="10" height="13" rx="2" fill="#ff8fab"/><circle cx="-14" cy="-33" r="6" fill="#ffd34d"/><path d="M0 -40 h12 l-2 12 h-8 z" fill="#7cc7ff"/><rect x="20" y="-39" width="14" height="11" rx="5" fill="#b995f5"/></g>
+      <path d="M-46 -44 v22 M46 -44 v22" stroke="#8a5a33" stroke-width="5" stroke-linecap="round"/>
+      <rect x="-52" y="-26" width="104" height="22" rx="4" fill="#b5703a" stroke="${OL}" stroke-width="2.8"/><path d="M-52 -15 h104 M-26 -26 v22 M0 -26 v22 M26 -26 v22" stroke="#8a4f25" stroke-width="1.6"/>
+      <g><path d="M-58 -52 v10" stroke="${OL}" stroke-width="1.6"/><rect x="-63" y="-42" width="10" height="13" rx="3" fill="#ffd34d" stroke="${OL}" stroke-width="1.8"/><path d="M58 -52 v10" stroke="${OL}" stroke-width="1.6"/><rect x="53" y="-42" width="10" height="13" rx="3" fill="#ffd34d" stroke="${OL}" stroke-width="1.8"/></g>
+      ${[-28, 30].map(x => `<g transform="translate(${x} 0)"><circle r="17" fill="#8a5a33" stroke="${OL}" stroke-width="2.8"/><circle r="11.500" fill="#e9d2a6" stroke="${OL}" stroke-width="1.8"/><path d="M0 -11 v22 M-11 0 h22 M-8 -8 l16 16 M8 -8 l-16 16" stroke="#8a5a33" stroke-width="2.2"/><circle r="3.500" fill="#5a3a22" stroke="${OL}" stroke-width="1.4"/></g>`).join('')}
+      <g><rect x="-50" y="20" width="100" height="30" rx="9" fill="#ffd34d" stroke="${OL}" stroke-width="3"/><rect x="-46" y="24" width="92" height="22" rx="6" fill="none" stroke="#fff" stroke-width="1.5" opacity=".8"/><text x="0" y="43" text-anchor="middle" font-family="Jua" font-size="21" fill="${OL}">마차 상점</text></g>
+      ${glow(0, -34, 40)}
+      ${dot ? `<g class="vg-shopdot"><circle cx="52" cy="-90" r="13" fill="#e5484d" stroke="#fff" stroke-width="2.5"/><text x="52" y="-85" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-weight="700" font-size="14" fill="#fff">N</text></g>` : ''}
     </g></g>`;
     const decor = [[92, 372, .85], [286, 150, .8], [520, 132, .85], [770, 180, .8], [930, 430, .7], [398, 330, .75], [585, 520, .75]].map((a, k) => tree(a[0], a[1], a[2], k % 2 ? ['#4a9a4a', '#69bd5c', '#9bdc82'] : undefined)).join('')
       + [[110, 300, .7], [452, 150, .7], [830, 520, .7], [305, 520, .7], [690, 150, .65], [545, 380, .6]].map(a => pine(...a)).join('')
@@ -5101,7 +5278,7 @@ body.touch .tutbar { top: 22%; }
       <g transform="translate(705 346) rotate(10)"><rect x="-30" y="-17" width="60" height="34" rx="5" fill="#D6B48F" stroke="${OL}" stroke-width="2.5"/><path d="M-20 -17 v34 M-10 -17 v34 M0 -17 v34 M10 -17 v34 M20 -17 v34" stroke="#a8743c" stroke-width="1.6"/><path d="M-32 -17 h64 M-32 17 h64" stroke="#8a5a33" stroke-width="5" stroke-linecap="round"/></g>
       ${[[92, 372, .85], [520, 128, .8], [792, 165, .85], [930, 440, .7], [590, 532, .75]].map(a => tree(...a)).join('')}${[[110, 300, .7], [410, 140, .7], [232, 546, .7], [360, 540, .7]].map(a => pine(...a)).join('')}
       ${shop}
-      <g transform="translate(${T[0] - 450},${T[1] - 268})">${tower}${glow(450, 174, 46)}${glow(450, 280, 26)}</g>
+      <g transform="translate(${T[0] - 450},${T[1] - 268})">${isleLM(gs, n, tower, glow)}</g>
       ${houses}
       <path class="is-night" d="${ISLE.path}" fill="#16245e" stroke="#16245e" stroke-width="26" stroke-linejoin="round"/>
     </svg>`;
@@ -5112,7 +5289,7 @@ body.touch .tutbar { top: 22%; }
     const host = $('homeModal'), el = host.querySelector(':scope > .daysky'); if (!el) return;
     const d = new Date(), h = SKY.mode === 'day' ? 10.5 : SKY.mode === 'dusk' ? 17.9 : SKY.mode === 'night' ? 22 : d.getHours() + d.getMinutes() / 60;
     const hex = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)), mix = (a, b, t) => a.map((c, k) => { const x = hex(c), y = hex(b[k]); return 'rgb(' + x.map((v, j) => Math.round(v + (y[j] - v) * t)).join(',') + ')'; });
-    const { day, dusk, night } = SKY;
+    const { dusk, night } = SKY, day = (GRADE_THEMES[+M.sel.gs[0]] || {}).sea || SKY.day;
     const cols = h >= 7 && h < 17 ? day : h >= 17 && h < 18 ? mix(day, dusk, h - 17) : h >= 18 && h < 19 ? mix(dusk, night, h - 18) : h >= 5 && h < 6 ? mix(night, dusk, h - 5) : h >= 6 && h < 7 ? mix(dusk, day, h - 6) : night;
     cols.forEach((c, k) => host.style.setProperty('--sk' + k, c));
     const isDay = h >= 6 && h < 18, p = isDay ? (h - 6) / 12 : ((h - 18 + 24) % 24) / 12, orb = el.querySelector('.orb');
@@ -5145,6 +5322,20 @@ body.touch .tutbar { top: 22%; }
   function mapGear(r, teeth, c1, c2) { let d = ''; const n = teeth * 2; for (let k = 0; k < n; k++) { const a = k * Math.PI / teeth, rr = k % 2 ? r : r + r * 0.16 + 4; const p = t => `${(rr * Math.cos(a + t)).toFixed(1)} ${(rr * Math.sin(a + t)).toFixed(1)}`; d += `${k ? 'L' : 'M'}${p(-0.3 * Math.PI / teeth)} L${p(0.3 * Math.PI / teeth)} `; }
     return `<path d="${d}Z" fill="${c1}" stroke="#7a5a12" stroke-width="2.5" stroke-linejoin="round"/><circle r="${r * 0.72}" fill="${c2}" stroke="#7a5a12" stroke-width="2"/><circle r="${r * 0.72}" fill="none" stroke="#fff" stroke-width="2" opacity=".35" stroke-dasharray="${r} ${r * 3.5}"/>${[0, 60, 120].map(a => `<rect x="${-r * 0.7}" y="${-r * 0.07}" width="${r * 1.4}" height="${r * 0.14}" fill="${c1}" stroke="#7a5a12" stroke-width="1.5" transform="rotate(${a})"/>`).join('')}<circle r="${r * 0.22}" fill="${c1}" stroke="#7a5a12" stroke-width="2"/><circle r="${r * 0.08}" fill="#7a5a12"/>`; }
   function mapThemeSVG(t) {
+    const C = [null, ['#fdf0e0', '#f7e2cb', '#d9a876', '#b98554', '#f3cfa9', '#fbe6cf', '#cfe9f7'], ['#e8f6ec', '#d6eedd', '#cdb892', '#a8956c', '#c9e6d1', '#f1faf2', '#d3effa'], ['#fbf2d3', '#f3e6b6', '#d2a868', '#ad8446', '#ecd9a0', '#fff8de', '#d6ecf5'], ['#e2e1f7', '#d3d2f0', '#a899c4', '#8676a8', '#c4c3ec', '#ebeafb', '#343c78'], ['#f8f0d9', '#efe2bd', '#c9a25a', '#a5803c', '#e6d2a0', '#fbf3dc', '#d9ecf3']][t], [wall, stripe, wood, woodD, frame, niche, sky] = C;
+    const arch = (x, y, w, h, f, s, sw) => `<path d="M${x} ${y + h} V${y + w / 2} a${w / 2} ${w / 2} 0 0 1 ${w} 0 V${y + h} Z" fill="${f}"${s ? ` stroke="${s}" stroke-width="${sw || 4}"` : ''}/>`;
+    const win = x => `${arch(x, 110, 150, 350, frame, woodD, 3)}${arch(x + 13, 124, 124, 322, sky)}${t === 4 ? `<g fill="#fff"><circle class="mt-tw" cx="${x + 50}" cy="230" r="3"/><circle class="mt-tw" cx="${x + 100}" cy="300" r="2.5" style="animation-delay:-1s"/><circle class="mt-tw" cx="${x + 70}" cy="370" r="2" style="animation-delay:-2s"/></g>` : `<ellipse cx="${x + 60}" cy="250" rx="34" ry="12" fill="#fff" opacity=".8"/><ellipse cx="${x + 96}" cy="330" rx="26" ry="9" fill="#fff" opacity=".7"/>`}<path d="M${x + 75} 124 V446 M${x + 13} 270 h124 M${x + 13} 360 h124" stroke="${frame}" stroke-width="7"/><rect x="${x - 8}" y="456" width="166" height="12" rx="4" fill="${wood}" stroke="${woodD}" stroke-width="2"/>`;
+    const lamp = x => `<path d="M${x} 0 V70" stroke="${woodD}" stroke-width="3"/><circle class="mt-flick" cx="${x}" cy="96" r="54" fill="url(#mlg)"/><path d="M${x - 16} 70 h32 l8 26 h-48 z" fill="${woodD}"/><path d="M${x - 20} 96 h40 l-6 12 h-28 z" fill="#ffe9a0"/>`;
+    return `<svg viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="mlg"><stop offset="0" stop-color="#fff2a8" stop-opacity=".8"/><stop offset="1" stop-color="#fff2a8" stop-opacity="0"/></radialGradient><radialGradient id="mng"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="mry" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+      <rect width="1000" height="640" fill="${wall}"/>${Array.from({ length: 25 }, (_, k) => `<rect x="${k * 40 + 10}" width="16" height="500" fill="${stripe}" opacity=".6"/>`).join('')}
+      ${arch(318, 30, 364, 476, frame, woodD, 3)}${arch(338, 52, 324, 454, niche, stripe, 6)}<circle cx="500" cy="180" r="210" fill="url(#mng)"/>
+      ${win(60)}${win(790)}
+      <g class="mt-rays"><path d="M210 130 L470 640 H250 L73 300 Z" fill="url(#mry)"/><path d="M790 130 L530 640 H750 L927 300 Z" fill="url(#mry)"/></g>
+      ${t === 5 ? `<g class="mt-pend" style="transform-origin:500px 60px" opacity=".5"><path d="M500 60 V440" stroke="#b8892a" stroke-width="6"/><circle cx="500" cy="460" r="30" fill="#e3b54a"/></g><g transform="translate(20 430)" opacity=".4"><g class="mt-g1">${mapGear(80, 14, '#d9a93a', '#f0d27a')}</g></g><g transform="translate(980 430)" opacity=".4"><g class="mt-g1 rev">${mapGear(80, 14, '#c8922c', '#e8c468')}</g></g>` : ''}
+      <rect y="500" width="1000" height="140" fill="${wood}"/><rect y="494" width="1000" height="14" fill="${woodD}"/><rect y="508" width="1000" height="5" fill="#fff" opacity=".25"/>${Array.from({ length: 8 }, (_, k) => `<rect x="${k * 125 + 12}" y="528" width="101" height="82" rx="6" fill="none" stroke="${woodD}" stroke-width="3" opacity=".7"/><rect x="${k * 125 + 18}" y="534" width="89" height="70" rx="4" fill="#fff" opacity=".08"/>`).join('')}<rect y="622" width="1000" height="18" fill="${woodD}"/>
+      ${lamp(135)}${lamp(865)}</svg>${Array.from({ length: 10 }, (_, k) => `<i class="mt-p" style="left:${(k * 61 + 7) % 100}%;top:${(k * 37 + 11) % 100}%;animation-delay:${-(k * 0.83).toFixed(2)}s"></i>`).join('')}`;
+  }
+  function mapThemeSVGOld(t) {
     const arch = (x, y, w, h, f, s) => `<path d="M${x} ${y + h} V${y + w / 2} a${w / 2} ${w / 2} 0 0 1 ${w} 0 V${y + h} Z" fill="${f}"${s ? ` stroke="${s}" stroke-width="4"` : ''}/>`;
     const art = [
       () => `<rect width="1000" height="640" fill="#fdeedd"/><g stroke="#f3d9bd" stroke-width="3">${Array.from({ length: 9 }, (_, k) => `<path d="M${k * 125} 0 V640"/>`).join('')}</g><path d="M0 120 H1000 M0 330 H1000" stroke="#f3d9bd" stroke-width="3"/>
@@ -6100,7 +6291,7 @@ body.touch .tutbar { top: 22%; }
     if (e.target.id === 'unitSel') { M.sel.u = Number(e.target.value); M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, M.sel.u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); $('unitSel').focus(); }
   });
   $('homeStart').addEventListener('click', () => { if (!$('homeStart').disabled) openMap(); });
-  const pickHouse = u => { M.sel.u = u; M.news = { good: false, text: `시계탑 ${floorOf(M.sel.gs)}층 [${unitName(M.sel.gs, u)}]의 방에 도착했어요! 1단계부터 시작해요.` }; renderHome(); if (hasContent(ukey(M.sel.gs, u))) { openMap(); return; } const h = $('homeMap').querySelector(`[data-house="${u}"]`); if (h) h.focus({ preventScroll: true }); };
+  const pickHouse = u => { if (isleLocked(u)) { isleNope(u); return; } const was = true; M.sel.u = u; M.news = { good: false, text: unitGoal(unitName(M.sel.gs, u)) }; renderHome(); if (was && hasContent(ukey(M.sel.gs, u))) { openMap(); return; } const h = $('homeMap').querySelector(`[data-house="${u}"]`); if (h) h.focus({ preventScroll: true }); };
   $('homeMap').addEventListener('click', e => { if (e.target.closest('[data-cmp]')) { cmpBack = 'home'; openCompass(); return; } const h = e.target.closest('[data-house]'); if (h) pickHouse(+h.dataset.house); });
   $('homeMap').addEventListener('keydown', e => { if (e.target.closest('[data-cmp]') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); cmpBack = 'home'; openCompass(); return; } const h = e.target.closest('[data-house]'); if (h && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickHouse(+h.dataset.house); } });
   $('homeShop').addEventListener('click', () => openShop('homeModal'));
@@ -6128,6 +6319,7 @@ body.touch .tutbar { top: 22%; }
   openHome();
 })();
 </script>
+
 
 
 
